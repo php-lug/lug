@@ -25,7 +25,7 @@ env:
 matrix:
     include:
         - php: 5.6
-          env: UNIT_BUILD=true MONGODB_BUILD=true
+          env: UNIT_BUILD=true MONGODB_BUILD=true COVERAGE_BUILD=true
         - php: 7.0
           env: UNIT_BUILD=true
         - php: hhvm
@@ -39,3 +39,4 @@ matrix:
 
 install: bin/travis/install.sh
 script: bin/travis/script.sh
+after_success: bin/travis/after-success.sh
