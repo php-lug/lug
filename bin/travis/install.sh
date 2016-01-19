@@ -16,14 +16,11 @@ CS_BUILD=${CS_BUILD-false}
 DISPLAY=${DISPLAY-:99}
 PHP_INI=~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
 
-if [ "$TRAVIS_PHP_VERSION" != "hhvm" ]; then
-    phpenv config-rm xdebug.ini
-fi
-
+mysql -e "CREATE DATABASE lug_test;"
 printf "\ndate.timezone = Europe/Paris" >> ${PHP_INI}
 
-if [ "$LUG_DRIVER" = "doctrine/orm" ]; then
-    mysql -e "CREATE DATABASE lug_test;"
+if [ "$TRAVIS_PHP_VERSION" != "hhvm" ]; then
+    phpenv config-rm xdebug.ini
 fi
 
 composer self-update
