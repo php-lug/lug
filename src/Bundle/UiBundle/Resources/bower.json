@@ -1,0 +1,10 @@
+{
+  "name": "lug/ui-bundle",
+  "dependencies": {
+    "admin-lte": "^2.0",
+    "font-awesome": "^4.0",
+    "ionicons": "^2.0",
+    "html5shiv": "^3.0",
+    "respond": "^1.0"
+  }
+}

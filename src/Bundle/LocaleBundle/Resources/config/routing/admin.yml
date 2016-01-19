@@ -1,0 +1,124 @@
+# This file is part of the Lug package.
+#
+# (c) Eric GELOEN <geloen.eric@gmail.com>
+#
+# For the full copyright and license information, please read the LICENSE
+# file that was distributed with this source code.
+
+lug_admin_locale_index:
+    path: /
+    methods: [GET]
+    defaults:
+        _controller: lug.controller.locale:gridAction
+        _lug_template: "@LugAdmin/Resource/index.html.twig"
+        _lug_grid: &grid
+            filters:
+                code:
+                    type: text
+                enabled:
+                    type: boolean
+                required:
+                    type: boolean
+                createdAt:
+                    type: datetime
+                updatedAt:
+                    type: datetime
+            columns:
+                code:
+                    type: text
+                enabled:
+                    type: boolean
+                required:
+                    type: boolean
+                createdAt:
+                    type: datetime
+                updatedAt:
+                    type: datetime
+            sorts:
+                code:
+                    type: column
+                enabled:
+                    type: column
+                required:
+                    type: column
+                createdAt:
+                    type: column
+                updatedAt:
+                    type: column
+            global_actions:
+                create:
+                    type: link
+                    options:
+                        route: lug_admin_locale_create
+            column_actions:
+                show:
+                    type: link
+                    options:
+                        route: lug_admin_locale_show
+                        route_parameters: [code]
+                update:
+                    type: link
+                    options:
+                        route: lug_admin_locale_update
+                        route_parameters: [code]
+                delete:
+                    type: link_secure
+                    options:
+                        method: delete
+                        route: lug_admin_locale_delete
+                        route_parameters: [code]
+            batches:
+                delete:
+                    type: delete
+            data:
+                sorting: code
+            options:
+                grid_route: lug_admin_locale_index
+                batch_route: lug_admin_locale_batch
+                persistent: true
+                xml_http_request: true
+
+lug_admin_locale_batch:
+    path: /batch
+    methods: [POST]
+    defaults:
+        _controller: lug.controller.locale:batchAction
+        _lug_template: "@LugAdmin/Resource/index.html.twig"
+        _lug_redirect_route: lug_admin_locale_index
+        _lug_grid:
+            <<: *grid
+
+lug_admin_locale_create:
+    path: /create
+    methods: [GET, POST]
+    defaults:
+        _controller: lug.controller.locale:createAction
+        _lug_template: "@LugAdmin/Resource/create.html.twig"
+        _lug_redirect_route: lug_admin_locale_show
+        _lug_redirect_route_parameters: [code]
+
+lug_admin_locale_show:
+    path: /{code}
+    methods: [GET]
+    defaults:
+        _controller: lug.controller.locale:showAction
+        _lug_criteria: [code]
+        _lug_template: "@LugAdmin/Resource/show.html.twig"
+
+lug_admin_locale_update:
+    path: /{code}/update
+    methods: [GET, POST, PUT]
+    defaults:
+        _controller: lug.controller.locale:updateAction
+        _lug_criteria: [code]
+        _lug_template: "@LugAdmin/Resource/update.html.twig"
+        _lug_redirect_route: lug_admin_locale_show
+        _lug_redirect_route_parameters: [code]
+
+lug_admin_locale_delete:
+    path: /{code}/delete
+    methods: [DELETE]
+    defaults:
+        _controller: lug.controller.locale:deleteAction
+        _lug_criteria: [code]
+        _lug_redirect_route: lug_admin_locale_index

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+
+This file is part of the Lug package.
+
+(c) Eric GELOEN <geloen.eric@gmail.com>
+
+For the full copyright and license information, please read the LICENSE
+file that was distributed with this source code.
+
+-->
+
+<container xmlns="http://symfony.com/schema/dic/services">
+    <services>
+        <service id="lug.grid.handler" class="Lug\Bundle\GridBundle\Handler\GridHandler">
+            <argument type="service" id="lug.grid.handler.internal" />
+        </service>
+
+        <service id="lug.grid.handler.internal" class="Lug\Component\Grid\Handler\GridHandler">
+            <argument type="service" id="lug.resource.registry.repository" />
+            <argument type="service" id="lug.grid.view.factory" />
+            <argument type="service" id="lug.grid.filterer" />
+            <argument type="service" id="lug.grid.sorter" />
+            <argument type="service" id="lug.grid.slicer" />
+        </service>
+    </services>
+</container>

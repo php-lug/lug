@@ -1,0 +1,16 @@
+{#
+
+This file is part of the Lug package.
+
+(c) Eric GELOEN <geloen.eric@gmail.com>
+
+For the full copyright and license information, please read the LICENSE
+file that was distributed with this source code.
+
+#}
+
+{% extends '@LugGrid/column_sorting.html.twig' %}
+
+{% block grid_column_sorting_value %}
+    <i class="fa fa-sort-amount-{{ sorting |lower }}"></i>
+{% endblock %}

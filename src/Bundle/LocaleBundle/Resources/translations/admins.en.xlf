@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+
+This file is part of the Lug package.
+
+(c) Eric GELOEN <geloen.eric@gmail.com>
+
+For the full copyright and license information, please read the LICENSE
+file that was distributed with this source code.
+
+-->
+
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="1">
+                <source>lug.locale.index.title</source>
+                <target>Browse locales</target>
+            </trans-unit>
+
+            <trans-unit id="2">
+                <source>lug.locale.filter.title</source>
+                <target>Filter locales</target>
+            </trans-unit>
+
+            <trans-unit id="3">
+                <source>lug.locale.create.title</source>
+                <target>Create a locale</target>
+            </trans-unit>
+
+            <trans-unit id="4">
+                <source>lug.locale.show.title</source>
+                <target>Locale "%locale%"</target>
+            </trans-unit>
+
+            <trans-unit id="5">
+                <source>lug.locale.update.title</source>
+                <target>Edit the locale "%locale%"</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

@@ -1,0 +1,27 @@
+{#
+
+This file is part of the Lug package.
+
+(c) Eric GELOEN <geloen.eric@gmail.com>
+
+For the full copyright and license information, please read the LICENSE
+file that was distributed with this source code.
+
+#}
+
+{% extends '@LugGrid/Action/link_secure.html.twig' %}
+
+{% use '@LugAdmin/Grid/Action/icons.html.twig' %}
+
+{% block grid_action_link_secure %}
+    {% form_theme value '@LugUi/Form/theme.html.twig' %}
+    {% set form_attr = {'class': 'inline'} %}
+    {{ parent() }}
+{% endblock %}
+
+{% block grid_action_link_secure_inner %}
+    {{ form_widget(value['submit'], {
+        'icon': block('grid_action_' ~ action.name ~ '_icon'),
+        'attr': (attr is defined ? attr: [])
+    }) }}
+{% endblock %}

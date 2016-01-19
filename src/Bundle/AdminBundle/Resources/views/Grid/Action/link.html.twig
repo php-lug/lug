@@ -1,0 +1,19 @@
+{#
+
+This file is part of the Lug package.
+
+(c) Eric GELOEN <geloen.eric@gmail.com>
+
+For the full copyright and license information, please read the LICENSE
+file that was distributed with this source code.
+
+#}
+
+{% extends '@LugGrid/Action/link.html.twig' %}
+
+{% use '@LugAdmin/Grid/Action/icons.html.twig' %}
+
+{% block grid_action_link_inner %}
+    {{ block('grid_action_' ~ action.name ~ '_icon') }}
+    {{ parent() }}
+{% endblock %}

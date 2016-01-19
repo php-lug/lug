@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+
+This file is part of the Lug package.
+
+(c) Eric GELOEN <geloen.eric@gmail.com>
+
+For the full copyright and license information, please read the LICENSE
+file that was distributed with this source code.
+
+-->
+
+<container xmlns="http://symfony.com/schema/dic/services">
+    <services>
+        <service id="lug.ui.form.extension.icon.form" class="Lug\Bundle\UiBundle\Form\Extension\IconFormExtension">
+            <tag name="form.type_extension" extended-type="Symfony\Component\Form\Extension\Core\Type\FormType" />
+        </service>
+
+        <service id="lug.ui.form.extension.icon.button" class="Lug\Bundle\UiBundle\Form\Extension\IconButtonExtension">
+            <tag name="form.type_extension" extended-type="Symfony\Component\Form\Extension\Core\Type\ButtonType" />
+        </service>
+    </services>
+</container>

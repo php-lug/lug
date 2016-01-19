@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+
+This file is part of the Lug package.
+
+(c) Eric GELOEN <geloen.eric@gmail.com>
+
+For the full copyright and license information, please read the LICENSE
+file that was distributed with this source code.
+
+-->
+
+<serializer>
+    <class
+        name="Lug\Component\Locale\Model\Locale"
+        exclusion-policy="ALL"
+        xml-root-name="locale"
+        accessor-order="custom"
+        custom-accessor-order="code,enabled,required,createdAt,updatedAt"
+    >
+        <property name="code" expose="true" type="string" />
+        <property name="enabled" expose="true" type="boolean" />
+        <property name="required" expose="true" type="boolean" />
+        <property name="createdAt" expose="true" type="DateTime" />
+        <property name="updatedAt" expose="true" type="DateTime" />
+    </class>
+</serializer>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+
+This file is part of the Lug package.
+
+(c) Eric GELOEN <geloen.eric@gmail.com>
+
+For the full copyright and license information, please read the LICENSE
+file that was distributed with this source code.
+
+-->
+
+<container xmlns="http://symfony.com/schema/dic/services">
+    <services>
+        <service id="lug.resource.registry" class="Lug\Component\Resource\Registry\ResourceRegistry">
+            <tag name="lug.registry" />
+        </service>
+
+        <service
+            id="lug.resource.registry.manager"
+            class="Lug\Component\Resource\Registry\ManagerRegistry"
+        >
+            <tag name="lug.registry" />
+        </service>
+
+        <service
+            id="lug.resource.registry.repository"
+            class="Lug\Component\Resource\Registry\RepositoryRegistry"
+        >
+            <tag name="lug.registry" />
+        </service>
+
+        <service
+            id="lug.resource.registry.factory"
+            class="Lug\Component\Resource\Registry\FactoryRegistry"
+        >
+            <tag name="lug.registry" />
+        </service>
+
+        <service
+            id="lug.resource.registry.domain_manager"
+            class="Lug\Component\Resource\Registry\DomainManagerRegistry"
+        >
+            <tag name="lug.registry" />
+        </service>
+    </services>
+</container>

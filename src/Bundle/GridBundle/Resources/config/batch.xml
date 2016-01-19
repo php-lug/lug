@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+
+This file is part of the Lug package.
+
+(c) Eric GELOEN <geloen.eric@gmail.com>
+
+For the full copyright and license information, please read the LICENSE
+file that was distributed with this source code.
+
+-->
+
+<container xmlns="http://symfony.com/schema/dic/services">
+    <services>
+        <service id="lug.grid.batcher" class="Lug\Bundle\GridBundle\Batch\Batcher">
+            <argument type="service" id="lug.grid.batcher.internal" />
+        </service>
+
+        <service id="lug.grid.batcher.internal" class="Lug\Component\Grid\Batch\Batcher">
+            <argument type="service" id="lug.grid.registry.batch" />
+        </service>
+
+        <service id="lug.grid.batch.type.batch" class="Lug\Bundle\GridBundle\Batch\Type\BatchType">
+            <tag name="lug.grid.batch" alias="batch" />
+        </service>
+
+        <service id="lug.grid.batch.type.delete" class="Lug\Bundle\GridBundle\Batch\Type\DeleteType">
+            <argument type="service" id="lug.resource.registry.domain_manager" />
+            <argument type="service" id="lug.resource.routing.parameter_resolver" />
+            <tag name="lug.grid.batch" alias="delete" />
+        </service>
+    </services>
+</container>

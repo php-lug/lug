@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+
+This file is part of the Lug package.
+
+(c) Eric GELOEN <geloen.eric@gmail.com>
+
+For the full copyright and license information, please read the LICENSE
+file that was distributed with this source code.
+
+-->
+
+<container xmlns="http://symfony.com/schema/dic/services">
+    <services>
+        <service
+            id="lug.resource.form.factory"
+            class="Lug\Bundle\ResourceBundle\Form\FormFactory"
+        >
+            <argument type="service" id="form.factory" />
+            <argument type="service" id="lug.resource.routing.parameter_resolver" />
+        </service>
+
+        <service
+            id="lug.resource.form.type.resource"
+            class="Lug\Component\Resource\Form\Type\ResourceType"
+        >
+            <tag name="form.type" />
+        </service>
+
+        <service
+            id="lug.resource.form.type.doctrine.orm.resource.choice"
+            class="Lug\Component\Resource\Form\Type\Doctrine\ORM\ResourceChoiceType"
+        >
+            <tag name="form.type" />
+        </service>
+
+        <service
+            id="lug.resource.form.type.doctrine.mongodb.resource.choice"
+            class="Lug\Component\Resource\Form\Type\Doctrine\MongoDB\ResourceChoiceType"
+        >
+            <tag name="form.type" />
+        </service>
+
+        <service
+            id="lug.resource.form.type.csrf_protection"
+            class="Lug\Bundle\ResourceBundle\Form\Type\CsrfProtectionType"
+        >
+            <argument type="service" id="lug.resource.form.subscriber.flash_csrf_protection" />
+            <tag name="form.type" />
+        </service>
+
+        <service
+            id="lug.resource.form.subscriber.flash_csrf_protection"
+            class="Lug\Bundle\ResourceBundle\Form\EventSubscriber\FlashCsrfProtectionSubscriber"
+        >
+            <argument type="service" id="session" />
+            <argument type="service" id="translator" />
+        </service>
+
+        <service
+            id="lug.resource.form.extension.collection"
+            class="Lug\Bundle\ResourceBundle\Form\Extension\CollectionExtension"
+        >
+            <argument type="service" id="lug.resource.form.subscriber.collection" />
+            <tag name="form.type_extension" extended-type="Symfony\Component\Form\Extension\Core\Type\CollectionType" />
+        </service>
+
+        <service
+            id="lug.resource.form.subscriber.collection"
+            class="Lug\Bundle\ResourceBundle\Form\EventSubscriber\CollectionSubscriber"
+        >
+            <argument type="service" id="lug.resource.registry" />
+            <argument type="service" id="lug.resource.registry.manager" />
+        </service>
+
+        <service
+            id="lug.resource.form.extension.label_form"
+            class="Lug\Bundle\ResourceBundle\Form\Extension\LabelFormExtension"
+        >
+            <tag name="form.type_extension" extended-type="Symfony\Component\Form\Extension\Core\Type\FormType" />
+        </service>
+
+        <service
+            id="lug.resource.form.extension.label_button"
+            class="Lug\Bundle\ResourceBundle\Form\Extension\LabelButtonExtension"
+        >
+            <tag name="form.type_extension" extended-type="Symfony\Component\Form\Extension\Core\Type\ButtonType" />
+        </service>
+
+        <service
+            id="lug.resource.form.extension.datetime"
+            class="Lug\Bundle\ResourceBundle\Form\Extension\DateTimeExtension"
+        >
+            <tag name="form.type_extension" extended-type="Symfony\Component\Form\Extension\Core\Type\DateTimeType" />
+        </service>
+
+        <service
+            id="lug.resource.form.extension.date"
+            class="Lug\Bundle\ResourceBundle\Form\Extension\DateExtension"
+        >
+            <tag name="form.type_extension" extended-type="Symfony\Component\Form\Extension\Core\Type\DateType" />
+        </service>
+
+        <service
+            id="lug.resource.form.extension.time"
+            class="Lug\Bundle\ResourceBundle\Form\Extension\TimeExtension"
+        >
+            <tag name="form.type_extension" extended-type="Symfony\Component\Form\Extension\Core\Type\TimeType" />
+        </service>
+
+        <service
+            id="lug.resource.form.extension.xml_http_request"
+            class="Lug\Bundle\ResourceBundle\Form\Extension\XmlHttpRequestExtension"
+        >
+            <argument type="service" id="lug.resource.form.subscriber.xml_http_request" />
+            <tag name="form.type_extension" extended-type="Symfony\Component\Form\Extension\Core\Type\FormType" />
+        </service>
+
+        <service
+            id="lug.resource.form.subscriber.xml_http_request"
+            class="Lug\Bundle\ResourceBundle\Form\EventSubscriber\XmlHttpRequestSubscriber"
+        />
+    </services>
+</container>

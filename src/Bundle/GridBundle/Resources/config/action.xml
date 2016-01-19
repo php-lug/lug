@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+
+This file is part of the Lug package.
+
+(c) Eric GELOEN <geloen.eric@gmail.com>
+
+For the full copyright and license information, please read the LICENSE
+file that was distributed with this source code.
+
+-->
+
+<container xmlns="http://symfony.com/schema/dic/services">
+    <services>
+        <service id="lug.grid.action.renderer" class="Lug\Component\Grid\Action\ActionRenderer">
+            <argument type="service" id="lug.grid.registry.action" />
+        </service>
+
+        <service
+            id="lug.grid.action.type.action"
+            class="Lug\Bundle\GridBundle\Action\Type\ActionType"
+        >
+            <tag name="lug.grid.action" alias="action" />
+        </service>
+
+        <service
+            id="lug.grid.action.type.link"
+            class="Lug\Bundle\GridBundle\Action\Type\LinkType"
+        >
+            <argument type="service" id="router" />
+            <argument type="service" id="property_accessor" />
+            <tag name="lug.grid.action" alias="link" />
+        </service>
+
+        <service
+            id="lug.grid.action.type.link_secure"
+            class="Lug\Bundle\GridBundle\Action\Type\LinkSecureType"
+            parent="lug.grid.action.type.link"
+        >
+            <argument type="service" id="form.factory" />
+            <tag name="lug.grid.action" alias="link_secure" />
+        </service>
+    </services>
+</container>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+
+This file is part of the Lug package.
+
+(c) Eric GELOEN <geloen.eric@gmail.com>
+
+For the full copyright and license information, please read the LICENSE
+file that was distributed with this source code.
+
+-->
+
+<container xmlns="http://symfony.com/schema/dic/services">
+    <services>
+        <service id="lug.grid.column.renderer" class="Lug\Component\Grid\Column\ColumnRenderer">
+            <argument type="service" id="lug.grid.registry.column" />
+        </service>
+
+        <service
+            id="lug.grid.column.type.abstract"
+            class="Lug\Component\Grid\Column\Type\AbstractType"
+            abstract="true"
+        >
+            <argument type="service" id="property_accessor" />
+        </service>
+
+        <service
+            id="lug.grid.column.type.boolean"
+            class="Lug\Component\Grid\Column\Type\BooleanType"
+            parent="lug.grid.column.type.twig"
+        >
+            <tag name="lug.grid.column" alias="boolean" />
+        </service>
+
+        <service
+            id="lug.grid.column.type.column"
+            class="Lug\Bundle\GridBundle\Column\Type\ColumnType"
+            parent="lug.grid.column.type.abstract"
+        >
+            <tag name="lug.grid.column" alias="column" />
+        </service>
+
+        <service
+            id="lug.grid.column.type.datetime"
+            class="Lug\Component\Grid\Column\Type\DateTimeType"
+            parent="lug.grid.column.type.abstract"
+        >
+            <argument type="service" id="lug.grid.column.type.datetime.formatter" />
+            <tag name="lug.grid.column" alias="datetime" />
+        </service>
+
+        <service
+            id="lug.grid.column.type.datetime.formatter"
+            class="Lug\Component\Grid\Column\Type\Formatter\DateTimeFormatter"
+        >
+            <argument type="service" id="lug.grid.context.locale" />
+        </service>
+
+        <service
+            id="lug.grid.column.type.json"
+            class="Lug\Component\Grid\Column\Type\JsonType"
+            parent="lug.grid.column.type.abstract"
+        >
+            <tag name="lug.grid.column" alias="json" />
+        </service>
+
+        <service
+            id="lug.grid.column.type.number"
+            class="Lug\Component\Grid\Column\Type\NumberType"
+            parent="lug.grid.column.type.abstract"
+        >
+            <argument type="service" id="lug.grid.column.type.number.formatter" />
+            <tag name="lug.grid.column" alias="number" />
+        </service>
+
+        <service
+            id="lug.grid.column.type.number.formatter"
+            class="Lug\Component\Grid\Column\Type\Formatter\NumberFormatter"
+        >
+            <argument type="service" id="lug.grid.context.locale" />
+        </service>
+
+        <service
+            id="lug.grid.column.type.resource"
+            class="Lug\Component\Grid\Column\Type\ResourceType"
+            parent="lug.grid.column.type.abstract"
+        >
+            <argument type="service" id="lug.resource.registry" />
+            <argument type="service" id="lug.grid.column.renderer" />
+            <tag name="lug.grid.column" alias="resource" />
+        </service>
+
+        <service
+            id="lug.grid.column.type.text"
+            class="Lug\Component\Grid\Column\Type\TextType"
+            parent="lug.grid.column.type.abstract"
+        >
+            <tag name="lug.grid.column" alias="text" />
+        </service>
+
+        <service
+            id="lug.grid.column.type.twig"
+            class="Lug\Component\Grid\Column\Type\TwigType"
+            parent="lug.grid.column.type.abstract"
+        >
+            <argument type="service" id="twig" />
+            <tag name="lug.grid.column" alias="twig" />
+        </service>
+    </services>
+</container>

@@ -1,0 +1,45 @@
+# This file is part of the Lug package.
+#
+# (c) Eric GELOEN <geloen.eric@gmail.com>
+#
+# For the full copyright and license information, please read the LICENSE
+# file that was distributed with this source code.
+
+sudo: false
+
+language: php
+
+services:
+    - mongodb
+
+addons:
+    apt:
+        packages:
+            - chromium-browser
+
+env:
+    global:
+        - SYMFONY_ENV=test
+        - SYMFONY_DEBUG=0
+
+matrix:
+    include:
+        - php: 5.6
+          env: UNIT_BUILD=true MONGODB_BUILD=true
+        - php: 7.0
+          env: UNIT_BUILD=true
+        - php: hhvm
+          env: UNIT_BUILD=true
+        - php: 5.6
+          env: BDD_BUILD=true LUG_DRIVER=doctrine/orm
+        - php: 5.6
+          env: BDD_BUILD=true LUG_DRIVER=doctrine/mongodb MONGODB_BUILD=true
+        - php: 5.6
+          env: CS_BUILD=true
+
+install: bin/travis/install.sh
+
+script: bin/travis/script.sh
+
+notifications:
+    email: geloen.eric@gmail.com

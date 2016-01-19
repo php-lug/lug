@@ -1,0 +1,18 @@
+{#
+
+This file is part of the Lug package.
+
+(c) Eric GELOEN <geloen.eric@gmail.com>
+
+For the full copyright and license information, please read the LICENSE
+file that was distributed with this source code.
+
+#}
+
+{% block grid_action_link_secure %}
+    {{ form_start(value, {'attr': (form_attr is defined ? form_attr : [])}) }}
+        {% block grid_action_link_secure_inner %}
+            {{ form_widget(value.children['submit'], {'attr': (attr is defined ? attr: [])}) }}
+        {% endblock %}
+    {{ form_end(value) }}
+{% endblock %}

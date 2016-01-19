@@ -1,0 +1,21 @@
+{#
+
+This file is part of the Lug package.
+
+(c) Eric GELOEN <geloen.eric@gmail.com>
+
+For the full copyright and license information, please read the LICENSE
+file that was distributed with this source code.
+
+#}
+
+{% extends '@LugAdmin/layout.html.twig' %}
+
+{% block header %}
+    <h1>
+        {{ ('lug.' ~ resource.name ~ '.show.title') | trans(
+            {'%locale%': attribute(data, resource.labelPropertyPath)},
+            'admins'
+        ) }}
+    </h1>
+{% endblock %}

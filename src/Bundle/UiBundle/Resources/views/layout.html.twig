@@ -1,0 +1,104 @@
+{#
+
+This file is part of the Lug package.
+
+(c) Eric GELOEN <geloen.eric@gmail.com>
+
+For the full copyright and license information, please read the LICENSE
+file that was distributed with this source code.
+
+#}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport" />
+
+        <title>{% block head_title %}Lug{% endblock %}</title>
+
+        {% block stylesheets %}
+            {% stylesheets
+                '@LugUiBundle/Resources/bower_components/admin-lte/bootstrap/css/bootstrap.css'
+                '@LugUiBundle/Resources/bower_components/font-awesome/css/font-awesome.css'
+                '@LugUiBundle/Resources/bower_components/ionicons/css/ionicons.css'
+                '@LugUiBundle/Resources/bower_components/admin-lte/dist/css/AdminLTE.css'
+                '@LugUiBundle/Resources/bower_components/admin-lte/dist/css/skins/skin-blue.css'
+                filter="lug_css_rewrite"
+                output="assets/ui.css"
+            %}
+                <link rel="stylesheet" href="{{ asset_url }}" />
+            {% endstylesheets %}
+        {% endblock %}
+    </head>
+    <body class="{% block body_skin %}skin-blue{% endblock %} hold-transition sidebar-mini">
+        <div class="wrapper">
+            <header class="main-header">
+                {% block logo %}
+                    <a href="{% block logo_href %}lug_admin_dashboard{% endblock %}" class="logo">
+                        <span class="logo-mini"><b>Lug</b></span>
+                        <span class="logo-lg"><b>Lug</b></span>
+                    </a>
+                {% endblock %}
+
+                <nav class="navbar navbar-static-top" role="navigation">
+                    <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                        <span class="sr-only">Toggle navigation</span>
+                    </a>
+                    <div class="navbar-left">
+                        {% block breadcrumb %}{% endblock %}
+                    </div>
+                    <div class="navbar-right">
+                        {% block toolbar %}{% endblock %}
+                    </div>
+                </nav>
+            </header>
+            <aside class="main-sidebar">
+                <section class="sidebar">
+                    {% block sidebar %}{% endblock %}
+                </section>
+            </aside>
+            <div class="content-wrapper">
+                <section class="content-header">
+                    {% block flashes %}
+                        {{ include('@LugUi/Flash/flashes.html.twig') }}
+                    {% endblock %}
+                    {% block header %}{% endblock %}
+                </section>
+                <section class="content">
+                    {% block content %}{% endblock %}
+                </section>
+            </div>
+            <footer class="main-footer">
+                {% block footer %}
+                    Created with love by <a href="http://egeloen.fr" target="_blank">GeLo</a>
+                    on top of <a href="https://almsaeedstudio.com/preview" target="_blank">AdminLTE</a>.
+                    Sponsored by <a href="http://www.widop.com">Wid'op</a>.
+                {% endblock %}
+            </footer>
+            {% block wrapper_extra %}{% endblock %}
+        </div>
+
+        {% block javascripts %}
+            {% javascripts
+                '@LugUiBundle/Resources/bower_components/html5shiv/dist/html5shiv.js'
+                '@LugUiBundle/Resources/bower_components/respond/dest/respond.src.js'
+                output="assets/ui-ie.js"
+            %}
+                <!--[if lt IE 9]>
+                    <script type="text/javascript" src="{{ asset_url }}"></script>
+                <![endif]-->
+            {% endjavascripts %}
+
+            {% javascripts
+                '@LugUiBundle/Resources/bower_components/admin-lte/plugins/jQuery/jQuery-2.1.4.min.js'
+                '@LugUiBundle/Resources/bower_components/admin-lte/bootstrap/js/bootstrap.js'
+                '@LugUiBundle/Resources/bower_components/admin-lte/dist/js/app.js'
+                output="assets/ui.js"
+            %}
+                <script type="text/javascript" src="{{ asset_url }}"></script>
+            {% endjavascripts %}
+        {% endblock %}
+    </body>
+</html>

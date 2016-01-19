@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+
+This file is part of the Lug package.
+
+(c) Eric GELOEN <geloen.eric@gmail.com>
+
+For the full copyright and license information, please read the LICENSE
+file that was distributed with this source code.
+
+-->
+
+<container xmlns="http://symfony.com/schema/dic/services">
+    <services>
+        <service
+            id="lug.resource.listener.message"
+            class="Lug\Bundle\ResourceBundle\EventListener\MessageListener"
+        >
+            <argument type="service" id="translator" />
+            <argument type="service" id="property_accessor" />
+        </service>
+
+        <service
+            id="lug.resource.listener.flash"
+            class="Lug\Bundle\ResourceBundle\EventListener\FlashListener"
+        >
+            <argument type="service" id="session" />
+            <argument type="service" id="lug.resource.routing.parameter_resolver" />
+        </service>
+    </services>
+</container>

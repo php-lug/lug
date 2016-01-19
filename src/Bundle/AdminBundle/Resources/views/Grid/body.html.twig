@@ -1,0 +1,51 @@
+{#
+
+This file is part of the Lug package.
+
+(c) Eric GELOEN <geloen.eric@gmail.com>
+
+For the full copyright and license information, please read the LICENSE
+file that was distributed with this source code.
+
+#}
+
+{% extends '@LugGrid/body.html.twig' %}
+
+{% block grid_body %}
+    {% set attr = {'class': 'table table-bordered table-hover'} %}
+    <div class="box">
+        <div class="box-body">
+            {{ parent() }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block grid_body_pager %}
+    {% if has_pager %}
+        {{ lug_grid_pager(data_source, 'twitter_bootstrap3', {
+            'routeName': definition.option('grid_route'),
+            'routeParams': app.request.query.all,
+            'pageParameter': '[grid][page]',
+            'css_container_class': 'pagination pagination-sm pull-right no-margin'
+        }) }}
+    {% endif %}
+{% endblock %}
+
+{% block grid_body_batch_action %}
+    {% if has_batch_form %}
+        {{ form_start(batch_form, {
+            'action': path(definition.option('batch_route'), app.request.query.all),
+            'attr': {'class': 'form-inline inline'}
+        }) }}
+            <div class="hidden">
+                {{ form_widget(batch_form.children['value']) }}
+            </div>
+            {{ form_errors(batch_value_form) }}
+            {{ form_widget(batch_form.type, {'attr': {'class': 'input-sm'}}) }}
+            {{ form_widget(batch_form.batch, {
+                'icon': '<i class="fa fa-bars"></i>',
+                'attr': {'class': 'btn-sm btn-default'}
+            }) }}
+        {{ form_end(batch_form) }}
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+
+This file is part of the Lug package.
+
+(c) Eric GELOEN <geloen.eric@gmail.com>
+
+For the full copyright and license information, please read the LICENSE
+file that was distributed with this source code.
+
+-->
+
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="1">
+                <source>lug.locale.code.not_blank</source>
+                <target>The locale code should not be blank.</target>
+            </trans-unit>
+
+            <trans-unit id="2">
+                <source>lug.locale.code.invalid</source>
+                <target>The locale code is not valid.</target>
+            </trans-unit>
+
+            <trans-unit id="3">
+                <source>lug.locale.code.unique</source>
+                <target>The locale code already exists.</target>
+            </trans-unit>
+
+            <trans-unit id="10">
+                <source>lug.locale.enabled.invalid</source>
+                <target>The locale enabled flag is not valid.</target>
+            </trans-unit>
+
+            <trans-unit id="20">
+                <source>lug.locale.required.invalid</source>
+                <target>The locale required flag is not valid.</target>
+            </trans-unit>
+
+            <trans-unit id="30">
+                <source>lug.locale.integrity.default.enabled</source>
+                <target>The locale is the default one. You can't disable it.</target>
+            </trans-unit>
+
+            <trans-unit id="31">
+                <source>lug.locale.integrity.default.required</source>
+                <target>The locale is the default one. You can't make it optional.</target>
+            </trans-unit>
+
+            <trans-unit id="32">
+                <source>lug.locale.integrity.last.enabled</source>
+                <target>The locale is the last enabled. You can't disable it.</target>
+            </trans-unit>
+
+            <trans-unit id="33">
+                <source>lug.locale.integrity.last.required</source>
+                <target>The locale is the last required. You can't make it optional.</target>
+            </trans-unit>
+
+            <trans-unit id="40">
+                <source>lug.locale.batch.empty</source>
+                <target>You must select at least one locale.</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

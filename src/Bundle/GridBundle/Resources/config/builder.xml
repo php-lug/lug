@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+
+This file is part of the Lug package.
+
+(c) Eric GELOEN <geloen.eric@gmail.com>
+
+For the full copyright and license information, please read the LICENSE
+file that was distributed with this source code.
+
+-->
+
+<container xmlns="http://symfony.com/schema/dic/services">
+    <services>
+        <service id="lug.grid.builder" class="Lug\Bundle\GridBundle\Model\Builder\GridBuilder">
+            <argument type="service" id="lug.grid.builder.column" />
+            <argument type="service" id="lug.grid.builder.filter" />
+            <argument type="service" id="lug.grid.builder.sort" />
+            <argument type="service" id="lug.grid.builder.action" />
+            <argument type="service" id="lug.grid.builder.batch" />
+        </service>
+
+        <service id="lug.grid.builder.batch" class="Lug\Component\Grid\Model\Builder\BatchBuilder" />
+        <service id="lug.grid.builder.column" class="Lug\Component\Grid\Model\Builder\ColumnBuilder" />
+        <service id="lug.grid.builder.sort" class="Lug\Component\Grid\Model\Builder\SortBuilder" />
+
+        <service id="lug.grid.builder.filter" class="Lug\Bundle\GridBundle\Model\Builder\FilterBuilder">
+            <argument type="service" id="lug.grid.registry.filter.form" />
+        </service>
+
+        <service id="lug.grid.builder.action" class="Lug\Component\Grid\Model\Builder\ActionBuilder" />
+    </services>
+</container>

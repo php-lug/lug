@@ -1,0 +1,62 @@
+{#
+
+This file is part of the Lug package.
+
+(c) Eric GELOEN <geloen.eric@gmail.com>
+
+For the full copyright and license information, please read the LICENSE
+file that was distributed with this source code.
+
+#}
+
+{% extends 'knp_menu.html.twig' %}
+
+{% import 'knp_menu.html.twig' as knp_menu %}
+
+{% block root %}
+    {%- set listClasses = [(item.getChildrenAttribute('class') ~ ' sidebar-menu') | trim] %}
+    {%- set listAttributes = item.childrenAttributes | merge({'class': listClasses | join(' ') }) %}
+    {{ block('list') -}}
+{% endblock %}
+
+{% block item %}
+    {% if item.displayed  %}
+        {% if item.level is same as(1) and item.uri is empty %}
+            {% do item.setAttribute('class', (item.getAttribute('class') ~ ' header') | trim) %}
+        {% endif %}
+
+        {% if item.children is not empty %}
+            {% do item.setAttribute('class', (item.getAttribute('class') ~ ' treeview') | trim) %}
+        {% endif %}
+
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block linkElement %}
+    <a href="{{ item.uri }}"{{ knp_menu.attributes(item.linkAttributes) }}>
+        {{ block('spanElement') }}
+    </a>
+{% endblock %}
+
+{% block spanElement %}
+    {{ block('icon') }}
+    <span>{{ block('label') }}</span>
+{% endblock %}
+
+{% block icon %}
+    {% set icon = item.labelAttribute('icon') %}
+    {% if icon %}
+        <i class="fa fa-{{ icon }}"></i>
+    {% endif %}
+{% endblock %}
+
+{% block label %}
+    {% if options.allow_safe_labels and item.getExtra('safe_label', false) %}
+        {{ item.label | raw }}
+    {% elseif item.extras.trans_domain is not defined or item.extras.trans_domain is not same as(false) %}
+        {{ item.label | trans(item.getExtra('trans_params', {}), item.getExtra('trans_domain', 'menus')) }}
+    {% else %}
+        {{ item.label }}
+    {% endif %}
+{% endblock %}

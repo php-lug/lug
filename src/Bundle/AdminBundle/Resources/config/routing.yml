@@ -1,0 +1,18 @@
+# This file is part of the Lug package.
+#
+# (c) Eric GELOEN <geloen.eric@gmail.com>
+#
+# For the full copyright and license information, please read the LICENSE
+# file that was distributed with this source code.
+
+lug_admin_main:
+    path: /admin
+    defaults:
+        _controller: FrameworkBundle:Redirect:redirect
+        route: lug_admin_dashboard
+        permanent: true
+
+lug_admin_dashboard:
+    path: /admin/dashboard
+    defaults:
+        _controller: lug.admin.controller.dashboard:indexAction

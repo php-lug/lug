@@ -1,0 +1,89 @@
+# This file is part of the Lug package.
+#
+# (c) Eric GELOEN <geloen.eric@gmail.com>
+#
+# For the full copyright and license information, please read the LICENSE
+# file that was distributed with this source code.
+
+default:
+    extensions:
+        Behat\Symfony2Extension: ~
+        Lug\Component\Behat\Extension\Api:
+            base_url: http://127.0.0.1:8080/app_test.php/api/
+        Behat\MinkExtension:
+            base_url: http://127.0.0.1:8080/app_test.php/
+            browser_name: chrome
+            default_session: symfony2
+            symfony2: ~
+            selenium2:
+                capabilities:
+                    browserName: chrome
+                    browser: chrome
+                    version: ~
+                    chrome:
+                        switches:
+                            - start-maximized
+                            - no-sandbox
+    formatters:
+        progress:
+            verbose: true
+    gherkin:
+        filters:
+            tags: ~@javascript
+    suites:
+        lug.api.locale:
+            contexts: &api_contexts
+                - Lug\Bundle\GridBundle\Behat\Context\GridApiContext
+                - Lug\Bundle\LocaleBundle\Behat\Context\LocaleApiContext
+                - Lug\Bundle\ResourceBundle\Behat\Context\ResourceApiContext
+                - Lug\Component\Behat\Context\PurgerContext
+                - Lug\Component\Behat\Extension\Api\Context\ApiContext
+            filters:
+                tags: @lug.api.locale
+        lug.admin.dashboard:
+            contexts: &admin_contexts
+                - Behat\MinkExtension\Context\MinkContext
+                - Lug\Bundle\AdminBundle\Behat\Context\DashboardContext
+                - Lug\Bundle\GridBundle\Behat\Context\GridWebContext
+                - Lug\Bundle\LocaleBundle\Behat\Context\LocaleWebContext
+                - Lug\Bundle\ResourceBundle\Behat\Context\ResourceWebContext
+                - Lug\Component\Behat\Context\AjaxContext
+                - Lug\Component\Behat\Context\FormContext
+                - Lug\Component\Behat\Context\PagerContext
+                - Lug\Component\Behat\Context\PurgerContext
+                - Lug\Component\Behat\Context\RoutingContext
+            filters:
+                tags: @lug.admin.dashboard
+        lug.admin.locale:
+            contexts:
+                <<: *admin_contexts
+            filters:
+                tags: @lug.admin.locale
+
+api:
+    gherkin:
+        filters:
+            tags: @lug.api
+
+admin:
+    gherkin:
+        filters:
+            tags: @lug.admin
+
+javascript:
+    gherkin:
+        filters:
+            tags: @javascript
+
+ui:
+    extensions:
+        Behat\MinkExtension:
+            default_session: selenium2
+    gherkin:
+        filters:
+            tags: ~@all && ~@lug.api
+
+all:
+    gherkin:
+        filters:
+            tags: ~@all

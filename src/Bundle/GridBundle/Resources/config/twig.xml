@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+
+This file is part of the Lug package.
+
+(c) Eric GELOEN <geloen.eric@gmail.com>
+
+For the full copyright and license information, please read the LICENSE
+file that was distributed with this source code.
+
+-->
+
+<container xmlns="http://symfony.com/schema/dic/services">
+    <services>
+        <service id="lug.grid.twig.extension" class="Lug\Bundle\GridBundle\Twig\GridExtension">
+            <argument type="service" id="lug.grid.renderer" />
+            <argument type="service" id="twig.extension.pagerfanta" />
+            <tag name="twig.extension" />
+        </service>
+    </services>
+</container>

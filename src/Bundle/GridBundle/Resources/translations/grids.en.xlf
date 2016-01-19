@@ -1,0 +1,458 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+
+This file is part of the Lug package.
+
+(c) Eric GELOEN <geloen.eric@gmail.com>
+
+For the full copyright and license information, please read the LICENSE
+file that was distributed with this source code.
+
+-->
+
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="1">
+                <source>lug.batches</source>
+                <target></target>
+            </trans-unit>
+
+            <trans-unit id="2">
+                <source>lug.actions</source>
+                <target>Actions</target>
+            </trans-unit>
+
+            <trans-unit id="10">
+                <source>lug.sorting.asc</source>
+                <target>Ascending</target>
+            </trans-unit>
+
+            <trans-unit id="11">
+                <source>lug.sorting.desc</source>
+                <target>Descending</target>
+            </trans-unit>
+
+            <trans-unit id="20">
+                <source>lug.limit</source>
+                <target>Limit</target>
+            </trans-unit>
+
+            <trans-unit id="30">
+                <source>lug.filter.submit</source>
+                <target>Filter</target>
+            </trans-unit>
+
+            <trans-unit id="31">
+                <source>lug.filter.reset</source>
+                <target>Reset</target>
+            </trans-unit>
+
+            <trans-unit id="32">
+                <source>lug.batch.submit</source>
+                <target>Batch</target>
+            </trans-unit>
+
+            <trans-unit id="40">
+                <source>lug.column.boolean.true</source>
+                <target>Yes</target>
+            </trans-unit>
+
+            <trans-unit id="41">
+                <source>lug.column.boolean.false</source>
+                <target>No</target>
+            </trans-unit>
+
+            <trans-unit id="50">
+                <source>lug.filter.boolean.true</source>
+                <target>Yes</target>
+            </trans-unit>
+
+            <trans-unit id="51">
+                <source>lug.filter.boolean.false</source>
+                <target>No</target>
+            </trans-unit>
+
+            <trans-unit id="60">
+                <source>lug.filter.datetime.type</source>
+                <target>Type</target>
+            </trans-unit>
+
+            <trans-unit id="61">
+                <source>lug.filter.datetime.value</source>
+                <target>Value</target>
+            </trans-unit>
+
+            <trans-unit id="62">
+                <source>lug.filter.datetime.from</source>
+                <target>From</target>
+            </trans-unit>
+
+            <trans-unit id="63">
+                <source>lug.filter.datetime.to</source>
+                <target>To</target>
+            </trans-unit>
+
+            <trans-unit id="64">
+                <source>lug.filter.datetime.type.greater_than_or_equals</source>
+                <target>Greater than or equals</target>
+            </trans-unit>
+
+            <trans-unit id="65">
+                <source>lug.filter.datetime.type.greater_than</source>
+                <target>Greater than</target>
+            </trans-unit>
+
+            <trans-unit id="66">
+                <source>lug.filter.datetime.type.less_than_or_equals</source>
+                <target>Less than or equals</target>
+            </trans-unit>
+
+            <trans-unit id="67">
+                <source>lug.filter.datetime.type.less_than</source>
+                <target>Less than</target>
+            </trans-unit>
+
+            <trans-unit id="68">
+                <source>lug.filter.datetime.type.equals</source>
+                <target>Equals</target>
+            </trans-unit>
+
+            <trans-unit id="69">
+                <source>lug.filter.datetime.type.not_equals</source>
+                <target>Not equals</target>
+            </trans-unit>
+
+            <trans-unit id="70">
+                <source>lug.filter.datetime.type.between</source>
+                <target>Between</target>
+            </trans-unit>
+
+            <trans-unit id="71">
+                <source>lug.filter.datetime.type.not_between</source>
+                <target>Not between</target>
+            </trans-unit>
+
+            <trans-unit id="72">
+                <source>lug.filter.datetime.type.empty</source>
+                <target>Empty</target>
+            </trans-unit>
+
+            <trans-unit id="73">
+                <source>lug.filter.datetime.type.not_empty</source>
+                <target>Not empty</target>
+            </trans-unit>
+
+            <trans-unit id="80">
+                <source>lug.filter.date.type</source>
+                <target>Type</target>
+            </trans-unit>
+
+            <trans-unit id="81">
+                <source>lug.filter.date.value</source>
+                <target>Value</target>
+            </trans-unit>
+
+            <trans-unit id="82">
+                <source>lug.filter.date.from</source>
+                <target>From</target>
+            </trans-unit>
+
+            <trans-unit id="83">
+                <source>lug.filter.date.to</source>
+                <target>To</target>
+            </trans-unit>
+
+            <trans-unit id="84">
+                <source>lug.filter.date.type.greater_than_or_equals</source>
+                <target>Greater than or equals</target>
+            </trans-unit>
+
+            <trans-unit id="85">
+                <source>lug.filter.date.type.greater_than</source>
+                <target>Greater than</target>
+            </trans-unit>
+
+            <trans-unit id="86">
+                <source>lug.filter.date.type.less_than_or_equals</source>
+                <target>Less than or equals</target>
+            </trans-unit>
+
+            <trans-unit id="87">
+                <source>lug.filter.date.type.less_than</source>
+                <target>Less than</target>
+            </trans-unit>
+
+            <trans-unit id="88">
+                <source>lug.filter.date.type.equals</source>
+                <target>Equals</target>
+            </trans-unit>
+
+            <trans-unit id="89">
+                <source>lug.filter.date.type.not_equals</source>
+                <target>Not equals</target>
+            </trans-unit>
+
+            <trans-unit id="90">
+                <source>lug.filter.date.type.between</source>
+                <target>Between</target>
+            </trans-unit>
+
+            <trans-unit id="91">
+                <source>lug.filter.date.type.not_between</source>
+                <target>Not between</target>
+            </trans-unit>
+
+            <trans-unit id="92">
+                <source>lug.filter.date.type.empty</source>
+                <target>Empty</target>
+            </trans-unit>
+
+            <trans-unit id="93">
+                <source>lug.filter.date.type.not_empty</source>
+                <target>Not empty</target>
+            </trans-unit>
+
+            <trans-unit id="100">
+                <source>lug.filter.number.type</source>
+                <target>Type</target>
+            </trans-unit>
+
+            <trans-unit id="101">
+                <source>lug.filter.number.value</source>
+                <target>Value</target>
+            </trans-unit>
+
+            <trans-unit id="102">
+                <source>lug.filter.number.from</source>
+                <target>From</target>
+            </trans-unit>
+
+            <trans-unit id="103">
+                <source>lug.filter.number.to</source>
+                <target>To</target>
+            </trans-unit>
+
+            <trans-unit id="104">
+                <source>lug.filter.number.type.greater_than_or_equals</source>
+                <target>Greater than or equals</target>
+            </trans-unit>
+
+            <trans-unit id="105">
+                <source>lug.filter.number.type.greater_than</source>
+                <target>Greater than</target>
+            </trans-unit>
+
+            <trans-unit id="106">
+                <source>lug.filter.number.type.less_than_or_equals</source>
+                <target>Less than or equals</target>
+            </trans-unit>
+
+            <trans-unit id="107">
+                <source>lug.filter.number.type.less_than</source>
+                <target>Less than</target>
+            </trans-unit>
+
+            <trans-unit id="108">
+                <source>lug.filter.number.type.equals</source>
+                <target>Equals</target>
+            </trans-unit>
+
+            <trans-unit id="109">
+                <source>lug.filter.number.type.not_equals</source>
+                <target>Not equals</target>
+            </trans-unit>
+
+            <trans-unit id="110">
+                <source>lug.filter.number.type.between</source>
+                <target>Between</target>
+            </trans-unit>
+
+            <trans-unit id="111">
+                <source>lug.filter.number.type.not_between</source>
+                <target>Not between</target>
+            </trans-unit>
+
+            <trans-unit id="112">
+                <source>lug.filter.number.type.empty</source>
+                <target>Empty</target>
+            </trans-unit>
+
+            <trans-unit id="113">
+                <source>lug.filter.number.type.not_empty</source>
+                <target>Not empty</target>
+            </trans-unit>
+
+            <trans-unit id="120">
+                <source>lug.filter.resource.type</source>
+                <target>Type</target>
+            </trans-unit>
+
+            <trans-unit id="121">
+                <source>lug.filter.resource.value</source>
+                <target>Value</target>
+            </trans-unit>
+
+            <trans-unit id="122">
+                <source>lug.filter.resource.type.equals</source>
+                <target>Equals</target>
+            </trans-unit>
+
+            <trans-unit id="123">
+                <source>lug.filter.resource.type.not_equals</source>
+                <target>Not equals</target>
+            </trans-unit>
+
+            <trans-unit id="124">
+                <source>lug.filter.resource.type.empty</source>
+                <target>Empty</target>
+            </trans-unit>
+
+            <trans-unit id="125">
+                <source>lug.filter.resource.type.not_empty</source>
+                <target>Not empty</target>
+            </trans-unit>
+
+            <trans-unit id="130">
+                <source>lug.filter.time.type</source>
+                <target>Type</target>
+            </trans-unit>
+
+            <trans-unit id="131">
+                <source>lug.filter.time.value</source>
+                <target>Value</target>
+            </trans-unit>
+
+            <trans-unit id="132">
+                <source>lug.filter.time.from</source>
+                <target>From</target>
+            </trans-unit>
+
+            <trans-unit id="133">
+                <source>lug.filter.time.to</source>
+                <target>To</target>
+            </trans-unit>
+
+            <trans-unit id="134">
+                <source>lug.filter.time.type.greater_than_or_equals</source>
+                <target>Greater than or equals</target>
+            </trans-unit>
+
+            <trans-unit id="135">
+                <source>lug.filter.time.type.greater_than</source>
+                <target>Greater than</target>
+            </trans-unit>
+
+            <trans-unit id="136">
+                <source>lug.filter.time.type.less_than_or_equals</source>
+                <target>Less than or equals</target>
+            </trans-unit>
+
+            <trans-unit id="137">
+                <source>lug.filter.time.type.less_than</source>
+                <target>Less than</target>
+            </trans-unit>
+
+            <trans-unit id="138">
+                <source>lug.filter.time.type.equals</source>
+                <target>Equals</target>
+            </trans-unit>
+
+            <trans-unit id="139">
+                <source>lug.filter.time.type.not_equals</source>
+                <target>Not equals</target>
+            </trans-unit>
+
+            <trans-unit id="140">
+                <source>lug.filter.time.type.between</source>
+                <target>Between</target>
+            </trans-unit>
+
+            <trans-unit id="141">
+                <source>lug.filter.time.type.not_between</source>
+                <target>Not between</target>
+            </trans-unit>
+
+            <trans-unit id="142">
+                <source>lug.filter.time.type.empty</source>
+                <target>Empty</target>
+            </trans-unit>
+
+            <trans-unit id="143">
+                <source>lug.filter.time.type.not_empty</source>
+                <target>Not empty</target>
+            </trans-unit>
+
+            <trans-unit id="150">
+                <source>lug.filter.text.type</source>
+                <target>Type</target>
+            </trans-unit>
+
+            <trans-unit id="151">
+                <source>lug.filter.text.value</source>
+                <target>Value</target>
+            </trans-unit>
+
+            <trans-unit id="152">
+                <source>lug.filter.text.type.contains</source>
+                <target>Contains</target>
+            </trans-unit>
+
+            <trans-unit id="153">
+                <source>lug.filter.text.type.not_contains</source>
+                <target>Not contains</target>
+            </trans-unit>
+
+            <trans-unit id="154">
+                <source>lug.filter.text.type.equals</source>
+                <target>Equals</target>
+            </trans-unit>
+
+            <trans-unit id="155">
+                <source>lug.filter.text.type.not_equals</source>
+                <target>Not equals</target>
+            </trans-unit>
+
+            <trans-unit id="156">
+                <source>lug.filter.text.type.empty</source>
+                <target>Empty</target>
+            </trans-unit>
+
+            <trans-unit id="157">
+                <source>lug.filter.text.type.not_empty</source>
+                <target>Not empty</target>
+            </trans-unit>
+
+            <trans-unit id="158">
+                <source>lug.filter.text.type.starts_with</source>
+                <target>Starts with</target>
+            </trans-unit>
+
+            <trans-unit id="159">
+                <source>lug.filter.text.type.not_starts_with</source>
+                <target>Not starts with</target>
+            </trans-unit>
+
+            <trans-unit id="160">
+                <source>lug.filter.text.type.ends_with</source>
+                <target>Ends with</target>
+            </trans-unit>
+
+            <trans-unit id="161">
+                <source>lug.filter.text.type.not_ends_with</source>
+                <target>Not ends with</target>
+            </trans-unit>
+
+            <trans-unit id="162">
+                <source>lug.filter.text.type.in</source>
+                <target>In</target>
+            </trans-unit>
+
+            <trans-unit id="163">
+                <source>lug.filter.text.type.not_in</source>
+                <target>Not in</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

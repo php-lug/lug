@@ -1,0 +1,25 @@
+# This file is part of the Lug package.
+#
+# (c) Eric GELOEN <geloen.eric@gmail.com>
+#
+# For the full copyright and license information, please read the LICENSE
+# file that was distributed with this source code.
+
+fos_rest:
+    body_listener: true
+    exception:
+        codes:
+            Lug\Component\Translation\Exception\TranslationNotFoundException: HTTP_NOT_ACCEPTABLE
+    format_listener:
+        rules:
+            - { path: ^/api, priorities: [json, xml], fallback_format: json }
+            - { path: ^/, stop: true }
+    view:
+        empty_content: 204
+        formats:
+            json: true
+            xml: true
+        mime_types:
+            formats:
+                json: [application/json]
+                xml: [application/xml]

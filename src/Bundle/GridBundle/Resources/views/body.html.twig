@@ -1,0 +1,138 @@
+{#
+
+This file is part of the Lug package.
+
+(c) Eric GELOEN <geloen.eric@gmail.com>
+
+For the full copyright and license information, please read the LICENSE
+file that was distributed with this source code.
+
+#}
+
+{% use '@LugGrid/attributes.html.twig' %}
+
+{% set data_source = grid.dataSource %}
+{% set definition = grid.definition %}
+{% set resource = definition.resource %}
+{% set columns = definition.columns %}
+{% set trans_domain = definition.option('trans_domain') %}
+{% set has_column_actions = definition.hasColumnActions %}
+{% set has_pager = data_source.haveToPaginate %}
+{% set has_batch_form = data_source | length and grid.batchForm is defined %}
+{% if has_batch_form %}
+    {% set batch_form = grid.batchForm %}
+    {% set batch_value_form = batch_form.children['value'] %}
+    {% set id_property_path = resource.idPropertyPath %}
+{% endif %}
+
+{% block grid_body %}
+    <table{{ block('grid_attributes') }}>
+        {% block grid_body_header %}
+            <thead>
+                <tr>
+                    {% block grid_body_batch_head %}
+                        {% if has_batch_form %}
+                            <th>
+                                <input type="checkbox" data-lug-grid-batch-toggle />
+                            </th>
+                        {% endif %}
+                    {% endblock %}
+                    {% for column in columns %}
+                        {% block grid_body_column_head %}
+                            <th>
+                                {{ column.label | trans([], column.option('trans_domain')) }}
+                                {% if definition.hasSort(column.name) %}
+                                    {{ lug_grid_column_sortings(grid, column) }}
+                                {% endif %}
+                            </th>
+                        {% endblock %}
+                    {% endfor %}
+                    {% if has_column_actions %}
+                        {% block grid_body_column_actions_head %}
+                            <th>
+                                {{ 'lug.actions' | trans([], trans_domain) }}
+                            </th>
+                        {% endblock %}
+                    {% endif %}
+                </tr>
+            </thead>
+        {% endblock %}
+        {% block grid_body_body %}
+            <tbody>
+                {% for data in data_source %}
+                    <tr>
+                        {% block grid_body_batch %}
+                            {% if has_batch_form %}
+                                <td>
+                                    <input type="checkbox" data-lug-grid-batch="{{ batch_value_form.children[attribute(data, id_property_path)].vars['id'] }}" />
+                                </td>
+                            {% endif %}
+                        {% endblock %}
+                        {% for column in columns %}
+                            {% block grid_body_column %}
+                                <td>
+                                    {{ lug_grid_column(grid, column, data) }}
+                                </td>
+                            {% endblock %}
+                        {% endfor %}
+                        {% block grid_body_column_actions %}
+                            {% if has_column_actions %}
+                                <td>
+                                    {{ lug_grid_column_actions(grid, data) }}
+                                </td>
+                            {% endif %}
+                        {% endblock %}
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="{{ (columns | length) + has_column_actions + has_batch_form }}">
+                            {{ ('lug.' ~ resource.name ~ '.grid.empty') | trans([], trans_domain) }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        {% endblock %}
+        {% block grid_body_footer %}
+            {% if has_batch_form or has_pager %}
+                <tfoot>
+                    <tr>
+                        <td colspan="{{ (columns | length) + has_column_actions + has_batch_form }}">
+                            {% block grid_body_footer_inner %}
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        {% block grid_body_batch_action %}
+                                            {% if has_batch_form %}
+                                                {{ form_start(batch_form, {
+                                                    'action': path(definition.option('batch_route'), app.request.query.all),
+                                                    'attr': (batch_form_attr is defined ? batch_form_attr : [])
+                                                }) }}
+                                                    <div class="hidden">
+                                                        {{ form_widget(batch_form.children['value']) }}
+                                                    </div>
+                                                    {{ form_errors(batch_value_form) }}
+                                                    {{ form_widget(batch_form.type) }}
+                                                    {{ form_widget(batch_form.batch) }}
+                                                {{ form_end(batch_form) }}
+                                            {% endif %}
+                                        {% endblock %}
+                                    </div>
+                                    <div class="col-md-6">
+                                        {% block grid_body_pager %}
+                                            {% if has_pager %}
+                                                {{ lug_grid_pager(data_source, null, {
+                                                    'routeName': definition.option('grid_route'),
+                                                    'routeParams': app.request.query.all,
+                                                    'pageParameter': '[grid][page]'
+                                                }) }}
+                                            {% endif %}
+                                        {% endblock %}
+                                    </div>
+                                </div>
+                            {% endblock %}
+                        </td>
+                    </tr>
+                </tfoot>
+            {% endif %}
+        {% endblock %}
+    </table>
+{% endblock %}

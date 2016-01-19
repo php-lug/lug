@@ -1,0 +1,24 @@
+{#
+
+This file is part of the Lug package.
+
+(c) Eric GELOEN <geloen.eric@gmail.com>
+
+For the full copyright and license information, please read the LICENSE
+file that was distributed with this source code.
+
+#}
+
+{% extends '@LugAdmin/layout.html.twig' %}
+
+{% block header %}
+    <div class="pull-right">
+        {{ lug_grid_global_actions(grid) }}
+        {{ lug_grid_filters(grid) }}
+    </div>
+    <h1>{{ ('lug.' ~ resource.name ~ '.index.title') | trans([], 'admins') }}</h1>
+{% endblock %}
+
+{% block content %}
+    {{ lug_grid_body(grid) }}
+{% endblock %}

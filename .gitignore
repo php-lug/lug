@@ -1,0 +1,25 @@
+# This file is part of the Lug package.
+#
+# (c) Eric GELOEN <geloen.eric@gmail.com>
+#
+# For the full copyright and license information, please read the LICENSE
+# file that was distributed with this source code.
+
+/.php_cs.cache
+/.puli/
+/app/cache/
+/app/config/config_local.yml
+/app/config/parameters.yml
+/app/bootstrap.php.cache
+/app/logs/
+/behat.yml
+/bin/
+/puli.json
+/web/assets/
+/web/bundles/
+
+bower_components/
+build/
+composer.lock
+phpunit.xml
+vendor/

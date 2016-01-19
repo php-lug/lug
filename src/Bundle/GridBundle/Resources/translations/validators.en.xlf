@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+
+This file is part of the Lug package.
+
+(c) Eric GELOEN <geloen.eric@gmail.com>
+
+For the full copyright and license information, please read the LICENSE
+file that was distributed with this source code.
+
+-->
+
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="1">
+                <source>lug.grid.limit.min</source>
+                <target>The grid limit should be upper or equal to {{ limit }}.</target>
+            </trans-unit>
+
+            <trans-unit id="2">
+                <source>lug.grid.limit.max</source>
+                <target>The grid limit should be lower or equal to {{ limit }}.</target>
+            </trans-unit>
+
+            <trans-unit id="10">
+                <source>lug.grid.sorting.invalid</source>
+                <target>The grid sorting is not valid.</target>
+            </trans-unit>
+
+            <trans-unit id="20">
+                <source>lug.batch.type.empty</source>
+                <target>The grid batch should not be blank.</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

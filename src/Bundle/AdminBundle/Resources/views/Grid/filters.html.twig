@@ -1,0 +1,54 @@
+{#
+
+This file is part of the Lug package.
+
+(c) Eric GELOEN <geloen.eric@gmail.com>
+
+For the full copyright and license information, please read the LICENSE
+file that was distributed with this source code.
+
+#}
+
+{% extends '@LugGrid/filters.html.twig' %}
+
+{% set definition = grid.definition %}
+{% set trans_domain = definition.option('trans_domain') %}
+
+{% block grid_filters %}
+    {% set modal_id = form.vars['id'] ~ '_modal' %}
+    <a class="btn btn-default" href="#" data-toggle="modal" data-target="#{{ modal_id }}">
+        <i class="fa fa-filter"></i>
+        {{ 'lug.filters' | trans([], trans_domain) }}
+    </a>
+    <div id="{{ modal_id }}" class="modal fade">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header no-border">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">
+                        {{ ('lug.' ~ definition.resource.name ~ '.filter.title') | trans([], 'admins') }}
+                    </h4>
+                </div>
+                {{ form_start(form, {'action': path(definition.option('grid_route'))}) }}
+                    <div class="modal-body no-pad-top">
+                        <div class="box box-{% if form.vars['valid'] or app.request.xmlHttpRequest %}default{% else %}danger{% endif %} no-margin">
+                            <div class="box-body">
+                                {{ form_widget(form.filters) }}
+                                {{ form_row(form.limit) }}
+                                {{ form_widget(form.sorting) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer no-pad-top no-border">
+                        <div class="pull-right">
+                            {{ form_widget(form.submit, {'icon': '<i class="fa fa-wrench"></i>'}) }}
+                            {{ form_widget(form.reset, {'icon': '<i class="fa fa-recycle"></i>'}) }}
+                        </div>
+                    </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,77 @@
+# This file is part of the Lug package.
+#
+# (c) Eric GELOEN <geloen.eric@gmail.com>
+#
+# For the full copyright and license information, please read the LICENSE
+# file that was distributed with this source code.
+
+lug_api_locale_index:
+    path: /
+    methods: [GET]
+    defaults:
+        _controller: lug.controller.locale:gridAction
+        _lug_grid: &grid
+            filters:
+                code:
+                    type: text
+                enabled:
+                    type: boolean
+                required:
+                    type: boolean
+                createdAt:
+                    type: datetime
+                updatedAt:
+                    type: datetime
+            sorts:
+                code:
+                    type: column
+                enabled:
+                    type: column
+                required:
+                    type: column
+                createdAt:
+                    type: column
+                updatedAt:
+                    type: column
+            batches:
+                delete:
+                    type: delete
+            data:
+                sorting: code
+
+lug_api_locale_batch:
+    path: /batch
+    methods: [POST]
+    defaults:
+        _controller: lug.controller.locale:batchAction
+        _lug_grid:
+            <<: *grid
+
+lug_api_locale_create:
+    path: /
+    methods: [POST]
+    defaults:
+        _controller: lug.controller.locale:createAction
+        _lug_location_route: lug_api_locale_show
+        _lug_location_route_parameters: [code]
+
+lug_api_locale_show:
+    path: /{code}
+    methods: [GET]
+    defaults:
+        _controller: lug.controller.locale:showAction
+        _lug_criteria: [code]
+
+lug_api_locale_update:
+    path: /{code}
+    methods: [PUT, PATCH]
+    defaults:
+        _controller: lug.controller.locale:updateAction
+        _lug_criteria: [code]
+
+lug_api_locale_delete:
+    path: /{code}
+    methods: [DELETE]
+    defaults:
+        _controller: lug.controller.locale:deleteAction
+        _lug_criteria: [code]

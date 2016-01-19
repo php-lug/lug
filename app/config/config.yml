@@ -1,0 +1,21 @@
+# This file is part of the Lug package.
+#
+# (c) Eric GELOEN <geloen.eric@gmail.com>
+#
+# For the full copyright and license information, please read the LICENSE
+# file that was distributed with this source code.
+
+imports:
+    - { resource: config_local.yml }
+    - { resource: parameters.yml }
+    - { resource: security.yml }
+    - { resource: bundles/a2lix_translation_form.yml }
+    - { resource: bundles/assetic.yml }
+    - { resource: bundles/fos_rest.yml }
+    - { resource: bundles/framework.yml }
+    - { resource: bundles/jms_serializer.yml }
+    - { resource: bundles/stof_doctrine_extensions.yml }
+    - { resource: bundles/twig.yml }
+    - { resource: bundles/white_october_pagerfanta.yml }
+    - { resource: "@LugAsseticBundle/Resources/config/config.yml" }
+    - { resource: "@LugStorageBundle/Resources/config/config.yml" }

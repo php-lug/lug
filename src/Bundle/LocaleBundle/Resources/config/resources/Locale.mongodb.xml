@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+
+This file is part of the Lug package.
+
+(c) Eric GELOEN <geloen.eric@gmail.com>
+
+For the full copyright and license information, please read the LICENSE
+file that was distributed with this source code.
+
+-->
+
+<doctrine-mongo-mapping
+    xmlns="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping"
+    xmlns:gedmo="http://gediminasm.org/schemas/orm/doctrine-extensions-mapping"
+>
+    <mapped-superclass name="Lug\Component\Locale\Model\Locale">
+        <field name="id" type="string" id="true" />
+        <field name="code" type="string" unique="true" />
+        <field name="enabled" type="boolean" />
+        <field name="required" type="boolean" />
+
+        <field name="createdAt" type="date">
+            <gedmo:timestampable on="create" />
+        </field>
+
+        <field name="updatedAt" type="date">
+            <gedmo:timestampable on="update" />
+        </field>
+    </mapped-superclass>
+</doctrine-mongo-mapping>

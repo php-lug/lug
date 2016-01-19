@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+
+This file is part of the Lug package.
+
+(c) Eric GELOEN <geloen.eric@gmail.com>
+
+For the full copyright and license information, please read the LICENSE
+file that was distributed with this source code.
+
+-->
+
+<constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping">
+    <class name="Lug\Component\Locale\Model\Locale">
+        <constraint name="Doctrine\Bundle\MongoDBBundle\Validator\Constraints\Unique">
+            <option name="fields">code</option>
+            <option name="message">lug.locale.code.unique</option>
+            <option name="groups">
+                <value>lug.locale</value>
+            </option>
+        </constraint>
+    </class>
+</constraint-mapping>

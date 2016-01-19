@@ -1,0 +1,31 @@
+{#
+
+This file is part of the Lug package.
+
+(c) Eric GELOEN <geloen.eric@gmail.com>
+
+For the full copyright and license information, please read the LICENSE
+file that was distributed with this source code.
+
+#}
+
+{% block box %}
+    <div class="box box-{% if form.vars['valid'] %}primary{% else %}danger{% endif %}">
+        {{ form_start(form) }}
+            {% block box_header %}{% endblock %}
+            {% block box_body %}
+                <div class="box-body">
+                    {{ form_errors(form) }}
+                    {% for name, child in form if name is not same as('submit') %}
+                        {{ form_row(child) }}
+                    {% endfor %}
+                </div>
+            {% endblock %}
+            {% block box_footer %}
+                <div class="box-footer">
+                    {{ form_widget(form['submit'], {'attr': {'class': 'btn-default pull-right'}}) }}
+                </div>
+            {% endblock %}
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

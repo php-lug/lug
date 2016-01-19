@@ -1,0 +1,24 @@
+{#
+
+This file is part of the Lug package.
+
+(c) Eric GELOEN <geloen.eric@gmail.com>
+
+For the full copyright and license information, please read the LICENSE
+file that was distributed with this source code.
+
+#}
+
+{% use '@LugGrid/attributes.html.twig' %}
+
+{% if grid.form is defined %}
+    {% set form = grid.form %}
+{% endif %}
+
+{% block grid_filters %}
+    {% if form is defined %}
+        {{ form_start(form, {'action': path(grid.definition.option('grid_route'))}) }}
+            {{ form_widget(form) }}
+        {{ form_end(form) }}
+    {% endif %}
+{% endblock %}

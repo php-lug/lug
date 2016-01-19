@@ -1,0 +1,19 @@
+{#
+
+This file is part of the Lug package.
+
+(c) Eric GELOEN <geloen.eric@gmail.com>
+
+For the full copyright and license information, please read the LICENSE
+file that was distributed with this source code.
+
+#}
+
+{% use '@LugGrid/attributes.html.twig' %}
+
+{% block grid_column_sortings %}
+    <div{{ block('grid_attributes') }}>
+        {{ lug_grid_column_sorting(grid, column, constant('Lug\\Component\\Grid\\Sort\\SorterInterface::ASC')) }}
+        {{ lug_grid_column_sorting(grid, column, constant('Lug\\Component\\Grid\\Sort\\SorterInterface::DESC')) }}
+    </div>
+{% endblock %}

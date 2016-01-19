@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+
+This file is part of the Lug package.
+
+(c) Eric GELOEN <geloen.eric@gmail.com>
+
+For the full copyright and license information, please read the LICENSE
+file that was distributed with this source code.
+
+-->
+
+<container xmlns="http://symfony.com/schema/dic/services">
+    <services>
+        <service
+            id="lug.admin.menu.builder.sidebar"
+            class="Lug\Bundle\AdminBundle\Menu\SidebarMenuBuilder"
+            parent="lug.ui.menu.builder"
+        >
+            <tag name="lug.menu.builder" alias="lug.admin.sidebar" />
+        </service>
+
+        <service
+            id="lug.admin.menu.builder.toolbar"
+            class="Lug\Bundle\AdminBundle\Menu\ToolbarMenuBuilder"
+            parent="lug.ui.menu.builder"
+        >
+            <tag name="lug.menu.builder" alias="lug.admin.toolbar" />
+        </service>
+    </services>
+</container>

@@ -1,0 +1,30 @@
+# This file is part of the Lug package.
+#
+# (c) Eric GELOEN <geloen.eric@gmail.com>
+#
+# For the full copyright and license information, please read the LICENSE
+# file that was distributed with this source code.
+
+framework:
+    csrf_protection: ~
+    default_locale: %locale%
+    form: ~
+    fragments: ~
+    http_method_override: true
+    secret: %secret%
+    translator: ~
+    trusted_hosts: ~
+    trusted_proxies: ~
+    validation: ~
+    assets:
+        version: 1
+        version_format: %%s?v=%%s
+    router:
+        resource: %kernel.root_dir%/config/routing.yml
+        strict_requirements: ~
+    session:
+        handler_id: ~
+    templating:
+        engines: [twig]
+    translator:
+        fallbacks: [%locale%]

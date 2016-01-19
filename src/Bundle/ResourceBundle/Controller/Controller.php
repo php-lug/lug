@@ -1,0 +1,384 @@
+<?php
+
+/*
+ * This file is part of the Lug package.
+ *
+ * (c) Eric GELOEN <geloen.eric@gmail.com>
+ *
+ * For the full copyright and license information, please read the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace Lug\Bundle\ResourceBundle\Controller;
+
+use FOS\RestBundle\Controller\FOSRestController;
+use FOS\RestBundle\View\View;
+use Lug\Bundle\GridBundle\Batch\BatcherInterface;
+use Lug\Bundle\GridBundle\Form\Type\Batch\GridBatchType;
+use Lug\Bundle\GridBundle\Form\Type\GridType;
+use Lug\Bundle\GridBundle\Handler\GridHandlerInterface;
+use Lug\Bundle\ResourceBundle\Form\FormFactoryInterface;
+use Lug\Bundle\ResourceBundle\Form\Type\CsrfProtectionType;
+use Lug\Bundle\ResourceBundle\Rest\Action\ActionEvent;
+use Lug\Bundle\ResourceBundle\Rest\RestEvents;
+use Lug\Bundle\ResourceBundle\Rest\View\ViewEvent;
+use Lug\Bundle\ResourceBundle\Routing\ParameterResolverInterface;
+use Lug\Component\Grid\Model\Builder\GridBuilderInterface;
+use Lug\Component\Grid\Model\GridInterface;
+use Lug\Component\Resource\Controller\ControllerInterface;
+use Lug\Component\Resource\Domain\DomainManagerInterface;
+use Lug\Component\Resource\Exception\DomainException;
+use Lug\Component\Resource\Factory\FactoryInterface;
+use Lug\Component\Resource\Model\ResourceInterface;
+use Pagerfanta\Pagerfanta;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\HttpException;
+
+/**
+ * @author GeLo <geloen.eric@gmail.com>
+ */
+class Controller extends FOSRestController implements ControllerInterface
+{
+    /**
+     * @var ResourceInterface
+     */
+    private $resource;
+
+    /**
+     * @param ResourceInterface $resource
+     */
+    public function __construct(ResourceInterface $resource)
+    {
+        $this->resource = $resource;
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function indexAction(Request $request)
+    {
+        return $this->processView($this->view($this->find('index', false)));
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function gridAction(Request $request)
+    {
+        return $this->processView($this->view([
+            'form' => $form = $this->submitGrid($grid = $this->buildGrid(), $request),
+            'grid' => $this->getGridHandler()->handle($grid, $form),
+        ]));
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function batchAction(Request $request)
+    {
+        $view = $this->getGridHandler()->handle(
+            $grid = $this->buildGrid(),
+            $form = $this->submitGrid($grid, $request)
+        );
+
+        if (($api = $this->getParameterResolver()->resolveApi()) && !$form->isValid()) {
+            return $this->processAction($form);
+        }
+
+        $batchForm = $this->buildForm(GridBatchType::class, null, ['grid' => $view]);
+
+        if ($this->submitForm($batchForm, $request)->isValid() && $form->isValid()) {
+            try {
+                $this->getGridBatcher()->batch($grid, $batchForm);
+            } catch (DomainException $e) {
+                $this->processException($e);
+            }
+        }
+
+        if (!$api && !$batchForm->isValid()) {
+            return $this->processView($this->view([
+                'batch_form' => $batchForm,
+                'form'       => $form,
+                'grid'       => $view,
+            ]));
+        }
+
+        return $this->processAction($batchForm);
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function showAction(Request $request)
+    {
+        return $this->processView($this->view($this->find('show')));
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function createAction(Request $request)
+    {
+        $form = $this->buildForm(null, $this->getFactory()->create());
+
+        if ($request->isMethod('POST') && $this->submitForm($form, $request)->isValid()) {
+            try {
+                $this->getDomainManager()->create($form->getData());
+            } catch (DomainException $e) {
+                $this->processException($e);
+            }
+        }
+
+        return $this->processAction($form, Response::HTTP_CREATED);
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function updateAction(Request $request)
+    {
+        $form = $this->buildForm(null, $this->find('update'));
+
+        if (in_array($request->getMethod(), ['POST', 'PUT', 'PATCH'], true)
+            && $this->submitForm($form, $request)->isValid()) {
+            try {
+                $this->getDomainManager()->update($form->getData());
+            } catch (DomainException $e) {
+                $this->processException($e);
+            }
+        }
+
+        return $this->processAction($form);
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function deleteAction(Request $request)
+    {
+        if ($this->submitForm($this->buildForm(CsrfProtectionType::class), $request)->isValid()) {
+            try {
+                $this->getDomainManager()->delete($this->find('delete'));
+            } catch (DomainException $e) {
+                $this->processException($e);
+            }
+        }
+
+        return $this->processAction();
+    }
+
+    /**
+     * @param string $action
+     * @param bool   $mandatory
+     *
+     * @return object|object[]
+     */
+    private function find($action, $mandatory = true)
+    {
+        $repositoryMethod = $this->getParameterResolver()->resolveRepositoryMethod($action);
+        $criteria = $this->getParameterResolver()->resolveCriteria($mandatory);
+        $sorting = $this->getParameterResolver()->resolveSorting();
+
+        if (($result = $this->getDomainManager()->find($action, $repositoryMethod, $criteria, $sorting)) === null) {
+            throw $this->createNotFoundException(sprintf(
+                'The %s does not exist (%s) (%s).',
+                str_replace('_', ' ', $this->resource->getName()),
+                json_encode($criteria),
+                json_encode($sorting)
+            ));
+        }
+
+        if ($result instanceof Pagerfanta) {
+            $result->setCurrentPage($this->getParameterResolver()->resolveCurrentPage());
+            $result->setMaxPerPage($this->getParameterResolver()->resolveMaxPerPage());
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param string|object|null $form
+     * @param object|null        $object
+     * @param mixed[]            $options
+     *
+     * @return FormInterface
+     */
+    private function buildForm($form = null, $object = null, array $options = [])
+    {
+        return $this->getFormFactory()->create($form ?: $this->resource, $object, $options);
+    }
+
+    /**
+     * @param FormInterface $form
+     * @param Request       $request
+     *
+     * @return FormInterface
+     */
+    private function submitForm(FormInterface $form, Request $request)
+    {
+        $bag = $request->isMethod('GET') || $form->getConfig()->getMethod() === 'GET'
+            ? $request->query
+            : $request->request;
+
+        if ($this->getParameterResolver()->resolveApi()) {
+            $data = $bag->all();
+        } else {
+            $data = $bag->get($form->getName(), []);
+        }
+
+        array_walk_recursive($data, function (&$value) {
+            if ($value === false) {
+                $value = 'false';
+            }
+        });
+
+        return $form->submit($data, !$request->isMethod('PATCH'));
+    }
+
+    /**
+     * @return GridInterface
+     */
+    private function buildGrid()
+    {
+        return $this->getGridBuilder()->build($this->getParameterResolver()->resolveGrid($this->resource));
+    }
+
+    /**
+     * @param GridInterface $grid
+     * @param Request       $request
+     *
+     * @return FormInterface
+     */
+    private function submitGrid(GridInterface $grid, Request $request)
+    {
+        return $this->submitForm($this->buildForm(GridType::class, null, ['grid' => $grid]), $request);
+    }
+
+    /**
+     * @param FormInterface|null $form
+     * @param int                $statusCode
+     *
+     * @return Response
+     */
+    private function processAction(FormInterface $form = null, $statusCode = Response::HTTP_NO_CONTENT)
+    {
+        $this->getEventDispatcher()->dispatch(
+            RestEvents::ACTION,
+            $event = new ActionEvent($this->resource, $form, $statusCode)
+        );
+
+        $view = $event->getView();
+        $statusCode = $view->getStatusCode();
+
+        return $statusCode >= 300 && $statusCode < 400
+            ? $this->handleView($view)
+            : $this->processView($view);
+    }
+
+    /**
+     * @param View $view
+     *
+     * @return Response
+     */
+    private function processView(View $view)
+    {
+        $this->getEventDispatcher()->dispatch(RestEvents::VIEW, $event = new ViewEvent($this->resource, $view));
+
+        return $this->handleView($event->getView());
+    }
+
+    /**
+     * @param DomainException $domainException
+     */
+    private function processException(DomainException $domainException)
+    {
+        if ($this->getParameterResolver()->resolveApi()) {
+            throw new HttpException(
+                $domainException->getStatusCode(),
+                $domainException->getMessage(),
+                $domainException
+            );
+        }
+    }
+
+    /**
+     * @return EventDispatcherInterface
+     */
+    private function getEventDispatcher()
+    {
+        return $this->get('event_dispatcher');
+    }
+
+    /**
+     * @return FormFactoryInterface
+     */
+    private function getFormFactory()
+    {
+        return $this->get('lug.resource.form.factory');
+    }
+
+    /**
+     * @return FactoryInterface
+     */
+    private function getFactory()
+    {
+        return $this->get('lug.resource.registry.factory')[$this->resource->getName()];
+    }
+
+    /**
+     * @return DomainManagerInterface
+     */
+    private function getDomainManager()
+    {
+        return $this->get('lug.resource.registry.domain_manager')[$this->resource->getName()];
+    }
+
+    /**
+     * @return ParameterResolverInterface
+     */
+    private function getParameterResolver()
+    {
+        return $this->get('lug.resource.routing.parameter_resolver');
+    }
+
+    /**
+     * @return GridBuilderInterface
+     */
+    private function getGridBuilder()
+    {
+        return $this->get('lug.grid.builder');
+    }
+
+    /**
+     * @return GridHandlerInterface
+     */
+    private function getGridHandler()
+    {
+        return $this->get('lug.grid.handler');
+    }
+
+    /**
+     * @return BatcherInterface
+     */
+    private function getGridBatcher()
+    {
+        return $this->get('lug.grid.batcher');
+    }
+}

@@ -1,0 +1,18 @@
+{#
+
+This file is part of the Lug package.
+
+(c) Eric GELOEN <geloen.eric@gmail.com>
+
+For the full copyright and license information, please read the LICENSE
+file that was distributed with this source code.
+
+#}
+
+{% use '@LugGrid/attributes.html.twig' %}
+
+{% block grid_column_actions %}
+    {% for action in grid.definition.columnActions %}
+        {{ lug_grid_column_action(grid, action, data) }}
+    {% endfor %}
+{% endblock %}

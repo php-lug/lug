@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+
+This file is part of the Lug package.
+
+(c) Eric GELOEN <geloen.eric@gmail.com>
+
+For the full copyright and license information, please read the LICENSE
+file that was distributed with this source code.
+
+-->
+
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="1">
+                <source>lug.locale.column.code</source>
+                <target>Code</target>
+            </trans-unit>
+
+            <trans-unit id="2">
+                <source>lug.locale.column.enabled</source>
+                <target>Enabled</target>
+            </trans-unit>
+
+            <trans-unit id="3">
+                <source>lug.locale.column.required</source>
+                <target>Required</target>
+            </trans-unit>
+
+            <trans-unit id="4">
+                <source>lug.locale.column.createdAt</source>
+                <target>Created at</target>
+            </trans-unit>
+
+            <trans-unit id="5">
+                <source>lug.locale.column.updatedAt</source>
+                <target>Updated at</target>
+            </trans-unit>
+
+            <trans-unit id="10">
+                <source>lug.locale.filters.title</source>
+                <target>Filter locales</target>
+            </trans-unit>
+
+            <trans-unit id="11">
+                <source>lug.locale.filter.code</source>
+                <target>Code</target>
+            </trans-unit>
+
+            <trans-unit id="12">
+                <source>lug.locale.filter.enabled</source>
+                <target>Enabled</target>
+            </trans-unit>
+
+            <trans-unit id="13">
+                <source>lug.locale.filter.required</source>
+                <target>Required</target>
+            </trans-unit>
+
+            <trans-unit id="14">
+                <source>lug.locale.filter.createdAt</source>
+                <target>Created at</target>
+            </trans-unit>
+
+            <trans-unit id="15">
+                <source>lug.locale.filter.updatedAt</source>
+                <target>Updated at</target>
+            </trans-unit>
+
+            <trans-unit id="20">
+                <source>lug.locale.column_action.show</source>
+                <target>Show</target>
+            </trans-unit>
+
+            <trans-unit id="21">
+                <source>lug.locale.column_action.update</source>
+                <target>Update</target>
+            </trans-unit>
+
+            <trans-unit id="23">
+                <source>lug.locale.column_action.delete</source>
+                <target>Delete</target>
+            </trans-unit>
+
+            <trans-unit id="30">
+                <source>lug.locale.global_action.create</source>
+                <target>New</target>
+            </trans-unit>
+
+            <trans-unit id="40">
+                <source>lug.locale.batch.delete</source>
+                <target>Delete</target>
+            </trans-unit>
+
+            <trans-unit id="50">
+                <source>lug.locale.grid.empty</source>
+                <target>There are no locales.</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

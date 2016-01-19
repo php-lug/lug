@@ -1,0 +1,26 @@
+{#
+
+This file is part of the Lug package.
+
+(c) Eric GELOEN <geloen.eric@gmail.com>
+
+For the full copyright and license information, please read the LICENSE
+file that was distributed with this source code.
+
+#}
+
+{% set label_trans = label | trans([], column.option('trans_domain')) %}
+
+{% block grid_column_sorting %}
+    {% if value is not null %}
+        <a href="{{ value }}" title="{{ label_trans }}">
+    {% endif %}
+
+    {% block grid_column_sorting_value %}
+        {{ label_trans }}
+    {% endblock %}
+
+    {% if value is not null %}
+        </a>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+
+This file is part of the Lug package.
+
+(c) Eric GELOEN <geloen.eric@gmail.com>
+
+For the full copyright and license information, please read the LICENSE
+file that was distributed with this source code.
+
+-->
+
+<container xmlns="http://symfony.com/schema/dic/services">
+    <services>
+        <service id="lug.grid.filter.manager" class="Lug\Bundle\GridBundle\Filter\FilterManager">
+            <argument type="service" id="lug.storage.session" />
+        </service>
+
+        <service id="lug.grid.filterer" class="Lug\Component\Grid\Filter\Filterer">
+            <argument type="service" id="lug.grid.registry.filter" />
+        </service>
+
+        <service id="lug.grid.filter.type.boolean" class="Lug\Component\Grid\Filter\Type\BooleanType">
+            <tag name="lug.grid.filter" alias="boolean" />
+        </service>
+
+        <service id="lug.grid.filter.type.datetime" class="Lug\Component\Grid\Filter\Type\DateTimeType">
+            <tag name="lug.grid.filter" alias="datetime" />
+        </service>
+
+        <service id="lug.grid.filter.type.filter" class="Lug\Bundle\GridBundle\Filter\Type\FilterType">
+            <tag name="lug.grid.filter" alias="filter" />
+        </service>
+
+        <service id="lug.grid.filter.type.number" class="Lug\Component\Grid\Filter\Type\NumberType">
+            <tag name="lug.grid.filter" alias="number" />
+        </service>
+
+        <service id="lug.grid.filter.type.resource" class="Lug\Component\Grid\Filter\Type\ResourceType">
+            <argument type="service" id="lug.resource.registry" />
+            <tag name="lug.grid.filter" alias="resource" />
+        </service>
+
+        <service id="lug.grid.filter.type.text" class="Lug\Component\Grid\Filter\Type\TextType">
+            <tag name="lug.grid.filter" alias="text" />
+        </service>
+    </services>
+</container>

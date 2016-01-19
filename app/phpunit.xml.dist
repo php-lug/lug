@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+
+This file is part of the Lug package.
+
+(c) Eric GELOEN <geloen.eric@gmail.com>
+
+For the full copyright and license information, please read the LICENSE
+file that was distributed with this source code.
+
+-->
+
+<phpunit
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/5.0/phpunit.xsd"
+    backupGlobals="false"
+    colors="true"
+    bootstrap="autoload.php"
+>
+    <testsuites>
+        <testsuite name="Lug Test Suite">
+            <directory>../src/*/*/Tests</directory>
+        </testsuite>
+    </testsuites>
+
+    <php>
+        <ini name="error_reporting" value="-1" />
+    </php>
+
+    <filter>
+        <whitelist>
+            <directory>../src</directory>
+            <exclude>
+                <directory>../src/*/*/Tests</directory>
+                <directory>../src/Bundle/*Bundle/Behat</directory>
+                <directory>../src/Bundle/*Bundle/DataFixtures</directory>
+                <directory>../src/Bundle/*Bundle/Resources</directory>
+                <directory>../src/Component/Behat</directory>
+            </exclude>
+        </whitelist>
+    </filter>
+</phpunit>

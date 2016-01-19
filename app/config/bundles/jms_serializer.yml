@@ -1,0 +1,13 @@
+# This file is part of the Lug package.
+#
+# (c) Eric GELOEN <geloen.eric@gmail.com>
+#
+# For the full copyright and license information, please read the LICENSE
+# file that was distributed with this source code.
+
+jms_serializer:
+    metadata:
+        directories:
+            lug_locale:
+                namespace_prefix: Lug\Component\Locale
+                path: "@LugLocaleBundle/Resources/config/serializer"

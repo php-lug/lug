@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+
+This file is part of the Lug package.
+
+(c) Eric GELOEN <geloen.eric@gmail.com>
+
+For the full copyright and license information, please read the LICENSE
+file that was distributed with this source code.
+
+-->
+
+<container xmlns="http://symfony.com/schema/dic/services">
+    <services>
+        <service id="lug.grid.form.grid" class="Lug\Bundle\GridBundle\Form\Type\GridType">
+            <argument type="service" id="lug.grid.subscriber.grid" />
+            <argument type="service" id="lug.grid.subscriber.persistent" />
+            <tag name="form.type" />
+        </service>
+
+        <service id="lug.grid.subscriber.grid" class="Lug\Bundle\GridBundle\Form\EventSubscriber\GridSubscriber" />
+
+        <service
+            id="lug.grid.subscriber.persistent"
+            class="Lug\Bundle\GridBundle\Form\EventSubscriber\PersistentGridSubscriber"
+        >
+            <argument type="service" id="lug.grid.filter.manager" />
+        </service>
+
+        <service id="lug.grid.form.type.filters" class="Lug\Bundle\GridBundle\Form\Type\GridFiltersType">
+            <tag name="form.type" />
+        </service>
+
+        <service id="lug.grid.form.type.sorting" class="Lug\Bundle\GridBundle\Form\Type\GridSortingType">
+            <argument type="service" id="lug.resource.routing.parameter_resolver" />
+            <argument type="service" id="lug.grid.form.transformer.sorting" />
+            <tag name="form.type" />
+        </service>
+
+        <service
+            id="lug.grid.form.transformer.sorting"
+            class="Lug\Bundle\GridBundle\Form\DataTransformer\GridSortingTransformer"
+        />
+
+        <service id="lug.grid.form.type.page" class="Lug\Bundle\GridBundle\Form\Type\GridPageType">
+            <tag name="form.type" />
+        </service>
+
+        <service id="lug.grid.form.type.limit" class="Lug\Bundle\GridBundle\Form\Type\GridLimitType">
+            <tag name="form.type" />
+        </service>
+
+        <service id="lug.grid.form.type.batch" class="Lug\Bundle\GridBundle\Form\Type\Batch\GridBatchType">
+            <argument type="service" id="lug.grid.registry.batch.form.subscriber" />
+            <tag name="form.type" />
+        </service>
+
+        <service id="lug.grid.form.type.batch_type" class="Lug\Bundle\GridBundle\Form\Type\Batch\GridBatchTypeType">
+            <tag name="form.type" />
+        </service>
+
+        <service
+            id="lug.grid.form.type.batch_value"
+            class="Lug\Bundle\GridBundle\Form\Type\Batch\GridBatchValueType"
+        >
+            <argument type="service" id="lug.resource.routing.parameter_resolver" />
+            <argument type="service" id="property_accessor" />
+            <tag name="form.type" />
+        </service>
+
+        <service
+            id="lug.grid.form.type.filter.boolean"
+            class="Lug\Bundle\GridBundle\Form\Type\Filter\BooleanFilterType"
+        >
+            <argument type="service" id="lug.grid.form.transformer.filter.boolean" />
+            <argument type="service" id="lug.grid.form.subscriber.filter.boolean" />
+            <tag name="form.type" />
+            <tag name="lug.grid.filter.form" filter="boolean" />
+        </service>
+
+        <service
+            id="lug.grid.form.type.filter.datetime"
+            class="Lug\Bundle\GridBundle\Form\Type\Filter\DateTimeFilterType"
+        >
+            <argument type="service" id="lug.grid.form.subscriber.filter.datetime" />
+            <tag name="form.type" />
+            <tag name="lug.grid.filter.form" filter="datetime" />
+        </service>
+
+        <service
+            id="lug.grid.form.type.filter.date"
+            class="Lug\Bundle\GridBundle\Form\Type\Filter\DateFilterType"
+        >
+            <argument type="service" id="lug.grid.form.subscriber.filter.date" />
+            <tag name="form.type" />
+            <tag name="lug.grid.filter.form" filter="date" />
+        </service>
+
+        <service
+            id="lug.grid.form.type.filter.number"
+            class="Lug\Bundle\GridBundle\Form\Type\Filter\NumberFilterType"
+        >
+            <argument type="service" id="lug.grid.form.subscriber.filter.number" />
+            <tag name="form.type" />
+            <tag name="lug.grid.filter.form" filter="number" />
+        </service>
+
+        <service
+            id="lug.grid.form.type.filter.resource"
+            class="Lug\Bundle\GridBundle\Form\Type\Filter\ResourceFilterType"
+        >
+            <argument type="service" id="lug.grid.form.subscriber.filter.resource" />
+            <tag name="form.type" />
+            <tag name="lug.grid.filter.form" filter="resource" />
+        </service>
+
+        <service
+            id="lug.grid.form.type.filter.time"
+            class="Lug\Bundle\GridBundle\Form\Type\Filter\TimeFilterType"
+        >
+            <argument type="service" id="lug.grid.form.subscriber.filter.time" />
+            <tag name="form.type" />
+            <tag name="lug.grid.filter.form" filter="time" />
+        </service>
+
+        <service id="lug.grid.form.type.filter.text" class="Lug\Bundle\GridBundle\Form\Type\Filter\TextFilterType">
+            <argument type="service" id="lug.grid.form.subscriber.filter.text" />
+            <tag name="form.type" />
+            <tag name="lug.grid.filter.form" filter="text" />
+        </service>
+
+        <service
+            id="lug.grid.form.transformer.filter.boolean"
+            class="Lug\Bundle\GridBundle\Form\DataTransformer\Filter\BooleanFilterTransformer"
+        />
+
+        <service
+            id="lug.grid.form.subscriber.batch"
+            class="Lug\Bundle\GridBundle\Form\EventSubscriber\Batch\AbstractGridBatchSubscriber"
+            abstract="true"
+        >
+            <argument type="service" id="lug.resource.registry.repository" />
+            <argument type="service" id="lug.resource.routing.parameter_resolver" />
+            <argument type="service" id="property_accessor" />
+        </service>
+
+        <service
+            id="lug.grid.form.subscriber.batch.mongodb"
+            class="Lug\Bundle\GridBundle\Form\EventSubscriber\Batch\Doctrine\MongoDB\GridBatchSubscriber"
+            parent="lug.grid.form.subscriber.batch"
+        >
+            <tag name="lug.grid.batch.form.subscriber" driver="doctrine/mongodb" />
+        </service>
+
+        <service
+            id="lug.grid.form.subscriber.batch.orm"
+            class="Lug\Bundle\GridBundle\Form\EventSubscriber\Batch\Doctrine\ORM\GridBatchSubscriber"
+            parent="lug.grid.form.subscriber.batch"
+        >
+            <tag name="lug.grid.batch.form.subscriber" driver="doctrine/orm" />
+        </service>
+
+        <service
+            id="lug.grid.form.subscriber.filter.boolean"
+            class="Lug\Bundle\GridBundle\Form\EventSubscriber\Filter\BooleanFilterSubscriber"
+        />
+
+        <service
+            id="lug.grid.form.subscriber.filter.datetime"
+            class="Lug\Bundle\GridBundle\Form\EventSubscriber\Filter\DateTimeFilterSubscriber"
+        />
+
+        <service
+            id="lug.grid.form.subscriber.filter.date"
+            class="Lug\Bundle\GridBundle\Form\EventSubscriber\Filter\DateFilterSubscriber"
+        />
+
+        <service
+            id="lug.grid.form.subscriber.filter.number"
+            class="Lug\Bundle\GridBundle\Form\EventSubscriber\Filter\NumberFilterSubscriber"
+        />
+
+        <service
+            id="lug.grid.form.subscriber.filter.resource"
+            class="Lug\Bundle\GridBundle\Form\EventSubscriber\Filter\ResourceFilterSubscriber"
+        >
+            <argument type="service" id="lug.resource.registry" />
+        </service>
+
+        <service
+            id="lug.grid.form.subscriber.filter.text"
+            class="Lug\Bundle\GridBundle\Form\EventSubscriber\Filter\TextFilterSubscriber"
+        />
+
+        <service
+            id="lug.grid.form.subscriber.filter.time"
+            class="Lug\Bundle\GridBundle\Form\EventSubscriber\Filter\TimeFilterSubscriber"
+        />
+    </services>
+</container>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+
+This file is part of the Lug package.
+
+(c) Eric GELOEN <geloen.eric@gmail.com>
+
+For the full copyright and license information, please read the LICENSE
+file that was distributed with this source code.
+
+-->
+
+<container xmlns="http://symfony.com/schema/dic/services">
+    <services>
+        <service id="lug.grid.sorter" class="Lug\Component\Grid\Sort\Sorter">
+            <argument type="service" id="lug.grid.registry.sort" />
+        </service>
+
+        <service id="lug.grid.sorter.renderer" class="Lug\Bundle\GridBundle\Sort\SorterRenderer">
+            <argument type="service" id="request_stack" />
+            <argument type="service" id="lug.grid.filter.manager" />
+            <argument type="service" id="router" />
+        </service>
+
+        <service id="lug.grid.sort.type.column" class="Lug\Component\Grid\Sort\Type\ColumnType">
+            <tag name="lug.grid.sort" alias="column" />
+        </service>
+
+        <service id="lug.grid.sort.type.resource" class="Lug\Component\Grid\Sort\Type\ResourceType">
+            <argument type="service" id="lug.resource.registry" />
+            <argument type="service" id="lug.resource.registry.repository" />
+            <tag name="lug.grid.sort" alias="resource" />
+        </service>
+
+        <service id="lug.grid.sort.type.sort" class="Lug\Bundle\GridBundle\Sort\Type\SortType">
+            <tag name="lug.grid.sort" alias="sort" />
+        </service>
+    </services>
+</container>

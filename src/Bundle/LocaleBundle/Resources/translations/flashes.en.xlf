@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+
+This file is part of the Lug package.
+
+(c) Eric GELOEN <geloen.eric@gmail.com>
+
+For the full copyright and license information, please read the LICENSE
+file that was distributed with this source code.
+
+-->
+
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="1">
+                <source>lug.locale.create.success</source>
+                <target>The locale "%locale%" has been created.</target>
+            </trans-unit>
+
+            <trans-unit id="2">
+                <source>lug.locale.create.error</source>
+                <target>An error occurred while creating the locale "%locale%".</target>
+            </trans-unit>
+
+            <trans-unit id="3">
+                <source>lug.locale.update.success</source>
+                <target>The locale "%locale%" has been updated.</target>
+            </trans-unit>
+
+            <trans-unit id="4">
+                <source>lug.locale.update.error</source>
+                <target>An error occurred while updating the locale "%locale%".</target>
+            </trans-unit>
+
+            <trans-unit id="5">
+                <source>lug.locale.delete.success</source>
+                <target>The locale "%locale%" has been deleted.</target>
+            </trans-unit>
+
+            <trans-unit id="6">
+                <source>lug.locale.delete.error</source>
+                <target>An error occurred while deleting the locale "%locale%".</target>
+            </trans-unit>
+
+            <trans-unit id="7">
+                <source>lug.locale.delete.default</source>
+                <target>The default locale "%locale%" can't be deleted.</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

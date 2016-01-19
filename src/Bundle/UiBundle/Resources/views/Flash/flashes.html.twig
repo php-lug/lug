@@ -1,0 +1,33 @@
+{#
+
+This file is part of the Lug package.
+
+(c) Eric GELOEN <geloen.eric@gmail.com>
+
+For the full copyright and license information, please read the LICENSE
+file that was distributed with this source code.
+
+#}
+
+{% set classes = {'error': 'danger'} %}
+{% set icons = {'success': 'check', 'error': 'remove'} %}
+
+{% block flahes %}
+    {% if app.request.hasPreviousSession %}
+        {% for type, flashes in app.session.flashbag.all %}
+            {% set has_icon = icons[type] is defined %}
+            <div class="alert alert-{{ classes[type] is defined ? classes[type] : type }} alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                {% for flash in flashes %}
+                    {% if has_icon %}
+                        <i class="icon fa fa-{{ icons[type] }}"></i>
+                    {% endif %}
+                    {{ flash }}
+                    {% if not loop.last %}
+                        <br/>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,16 @@
+# This file is part of the Lug package.
+#
+# (c) Eric GELOEN <geloen.eric@gmail.com>
+#
+# For the full copyright and license information, please read the LICENSE
+# file that was distributed with this source code.
+
+lug_api_locale:
+    resource: "@LugLocaleBundle/Resources/config/routing/api.yml"
+    prefix: /api/locale
+    defaults:
+        _lug_api: true
+
+lug_admin_locale:
+    resource: "@LugLocaleBundle/Resources/config/routing/admin.yml"
+    prefix: /admin/locale

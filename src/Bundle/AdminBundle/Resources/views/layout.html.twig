@@ -1,0 +1,40 @@
+{#
+
+This file is part of the Lug package.
+
+(c) Eric GELOEN <geloen.eric@gmail.com>
+
+For the full copyright and license information, please read the LICENSE
+file that was distributed with this source code.
+
+#}
+
+{% extends '@LugUi/layout.html.twig' %}
+
+{% block logo_href %}{{ path('lug_admin_dashboard') }}{% endblock %}
+
+{% block toolbar %}
+    {{ knp_menu_render('lug.admin.toolbar', {
+        'currentClass': 'active',
+        'template': '@LugUi/Menu/knp_menu.html.twig'
+    }) }}
+{% endblock %}
+
+{% block sidebar %}
+    {{ knp_menu_render('lug.admin.sidebar', {
+        'currentClass': 'active',
+        'template': '@LugUi/Menu/knp_menu.html.twig'
+    }) }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% javascripts
+        '@LugGridBundle/Resources/js/*.js'
+        '@LugResourceBundle/Resources/js/*/*.js'
+        output="assets/admin.js"
+    %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
