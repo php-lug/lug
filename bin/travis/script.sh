@@ -12,6 +12,8 @@ BDD_BUILD=${BDD_BUILD-false}
 CS_BUILD=${CS_BUILD-false}
 COVERAGE_BUILD=${COVERAGE_BUILD-false}
 
+set -e
+
 if [ "$UNIT_BUILD" = true ]; then
     bin/phpunit -c app `if [ "$COVERAGE_BUILD" = true ]; then echo "--coverage-clover build/clover.xml"; fi`
 

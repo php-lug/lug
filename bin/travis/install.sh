@@ -17,6 +17,8 @@ COVERAGE_BUILD=${COVERAGE_BUILD-false}
 DISPLAY=${DISPLAY-:99}
 PHP_INI=~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
 
+set -e
+
 mysql -e "CREATE DATABASE lug_test;"
 printf "\ndate.timezone = Europe/Paris" >> ${PHP_INI}
 
