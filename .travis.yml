@@ -38,8 +38,4 @@ matrix:
           env: CS_BUILD=true
 
 install: bin/travis/install.sh
-
 script: bin/travis/script.sh
-
-notifications:
-    email: geloen.eric@gmail.com
