@@ -22,6 +22,10 @@ fi
 
 printf "\ndate.timezone = Europe/Paris" >> ${PHP_INI}
 
+if [ "$LUG_DRIVER" = "doctrine/orm" ]; then
+    mysql -e "CREATE DATABASE lug_test;"
+fi
+
 composer self-update
 
 if [ "$MONGODB_BUILD" = true ]; then
@@ -52,8 +56,6 @@ if [ "$BDD_BUILD" = true ]; then
         composer remove --no-update doctrine/orm
         composer remove --no-update doctrine/doctrine-bundle
         composer remove --dev --no-update doctrine/doctrine-fixtures-bundle
-    else
-        mysql -e "CREATE DATABASE lug_test;"
     fi
 
     if [ "$LUG_DRIVER" = "doctrine/mongodb" ]; then
