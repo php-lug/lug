@@ -13,9 +13,9 @@ services:
     - mongodb
 
 addons:
-    apt:
-        packages:
-            - chromium-browser
+    apt_packages:
+        - chromium-browser
+        - parallel
 
 env:
     global:

@@ -13,6 +13,8 @@ CS_BUILD=${CS_BUILD-false}
 
 if [ "$UNIT_BUILD" = true ]; then
     bin/phpunit -c app
+    find src -maxdepth 3 -type f -name phpunit.xml.dist -printf "%h\n" \
+        | parallel --gnu -j10% "cd {}; printf \"\\n\\n-> Testing {}\\n\\n\"; bin/phpunit"
 fi
 
 if [ "$BDD_BUILD" = true ]; then

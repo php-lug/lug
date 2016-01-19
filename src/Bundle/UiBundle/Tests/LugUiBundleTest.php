@@ -55,6 +55,6 @@ class LugUiBundleTest extends \PHPUnit_Framework_TestCase
      */
     private function createContainerBuilderMock()
     {
-        return $this->getMock(ContainerBuilder::class);
+        return $this->getMock(ContainerBuilder::class, ['addCompilerPass']);
     }
 }

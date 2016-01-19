@@ -15,6 +15,7 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+use Symfony\Component\Form\Forms;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -28,7 +29,13 @@ class LugUiExtension extends Extension
     {
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
 
-        foreach (['form', 'menu'] as $resource) {
+        $resources = ['menu'];
+
+        if (class_exists(Forms::class)) {
+            $resources[] = 'form';
+        }
+
+        foreach ($resources as $resource) {
             $loader->load($resource.'.xml');
         }
     }

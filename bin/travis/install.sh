@@ -72,6 +72,11 @@ fi
 npm install -g bower
 composer install --prefer-source
 
+if [ "$UNIT_BUILD" = true ]; then
+    find src -maxdepth 3 -type f -name phpunit.xml.dist -printf "%h\n" \
+        | parallel --gnu -j10% "cd {}; printf \"\\n\\n-> Installing {}\\n\\n\"; composer install --prefer-source"
+fi
+
 if [ "$BDD_BUILD" = true ]; then
     php app/console server:run 127.0.0.1:8080 > /dev/null 2>&1 &
     php app/console assetic:dump
