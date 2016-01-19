@@ -1,6 +1,5 @@
 # Lug Framework
 
-[![Latest Version](https://img.shields.io/github/release/php-lug/lug.svg?style=flat-square)](https://github.com/php-lug/lug/releases)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 [![Build Status](https://img.shields.io/travis/php-lug/lug.svg?style=flat-square)](https://travis-ci.org/php-lug/lug)
 [![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/php-lug/lug.svg?style=flat-square)](https://scrutinizer-ci.com/g/php-lug/lug)
@@ -14,4 +13,6 @@ integrate transparently into Symfony!
 
 It is also format-agnostic (HTML, JSON, XML, ...) and compatible with Doctrine ORM/ODM.
 
-For more information, you can read the [official documentation](http://doc.php-lug.org).
+## Documentation
+
+Please, see the [official documentation](http://doc.php-lug.org).
