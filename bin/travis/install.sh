@@ -13,13 +13,14 @@ MONGODB_BUILD=${MONGODB_BUILD-false}
 UNIT_BUILD=${UNIT_BUILD-false}
 BDD_BUILD=${BDD_BUILD-false}
 CS_BUILD=${CS_BUILD-false}
+COVERAGE_BUILD=${COVERAGE_BUILD-false}
 DISPLAY=${DISPLAY-:99}
 PHP_INI=~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
 
 mysql -e "CREATE DATABASE lug_test;"
 printf "\ndate.timezone = Europe/Paris" >> ${PHP_INI}
 
-if [ "$TRAVIS_PHP_VERSION" != "hhvm" ]; then
+if [ "$TRAVIS_PHP_VERSION" != "hhvm" ] && [ "$COVERAGE_BUILD" != true ]; then
     phpenv config-rm xdebug.ini
 fi
 
