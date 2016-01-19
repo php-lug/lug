@@ -15,7 +15,12 @@ BDD_BUILD=${BDD_BUILD-false}
 CS_BUILD=${CS_BUILD-false}
 COVERAGE_BUILD=${COVERAGE_BUILD-false}
 DISPLAY=${DISPLAY-:99}
-PHP_INI=~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
+
+if [ "$TRAVIS_PHP_VERSION" = "hhvm" ]; then
+    PHP_INI=/etc/hhvm/php.ini
+else
+    PHP_INI=~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
+fi
 
 set -e
 
