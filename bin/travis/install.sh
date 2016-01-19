@@ -24,6 +24,10 @@ if [ "$TRAVIS_PHP_VERSION" != "hhvm" ] && [ "$COVERAGE_BUILD" != true ]; then
     phpenv config-rm xdebug.ini
 fi
 
+if [ "$COVERAGE_BUILD" = true ]; then
+    printf "\nmemory_limit = -1" >> ${PHP_INI}
+fi
+
 composer self-update
 
 if [ "$MONGODB_BUILD" = true ]; then
