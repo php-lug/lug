@@ -7,9 +7,9 @@
 # For the full copyright and license information, please read the LICENSE
 # file that was distributed with this source code.
 
-COVERAGE_BUILD=${COVERAGE_BUILD-false}
-
 set -e
+
+COVERAGE_BUILD=${COVERAGE_BUILD-false}
 
 if [ "$COVERAGE_BUILD" = true ]; then
     wget https://scrutinizer-ci.com/ocular.phar

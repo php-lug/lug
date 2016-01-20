@@ -7,6 +7,8 @@
 # For the full copyright and license information, please read the LICENSE
 # file that was distributed with this source code.
 
+set -e
+
 TRAVIS_PHP_VERSION=${TRAVIS_PHP_VERSION-unknown}
 LUG_DRIVER=${LUG_DRIVER-unknown}
 MONGODB_BUILD=${MONGODB_BUILD-false}
@@ -21,8 +23,6 @@ if [ "$TRAVIS_PHP_VERSION" = "hhvm" ]; then
 else
     PHP_INI=~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
 fi
-
-set -e
 
 mysql -e "CREATE DATABASE lug_test;"
 printf "\ndate.timezone = Europe/Paris" >> ${PHP_INI}

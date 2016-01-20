@@ -7,12 +7,12 @@
 # For the full copyright and license information, please read the LICENSE
 # file that was distributed with this source code.
 
+set -e
+
 UNIT_BUILD=${UNIT_BUILD-false}
 BDD_BUILD=${BDD_BUILD-false}
 CS_BUILD=${CS_BUILD-false}
 COVERAGE_BUILD=${COVERAGE_BUILD-false}
-
-set -e
 
 if [ "$UNIT_BUILD" = true ]; then
     bin/phpunit -c app `if [ "$COVERAGE_BUILD" = true ]; then echo "--coverage-clover build/clover.xml"; fi`
