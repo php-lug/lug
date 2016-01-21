@@ -25,14 +25,6 @@
     "config": {
         "bin-dir": "bin"
     },
-    "scripts": {
-        "post-install-cmd": [
-            "cd Resources && bower install"
-        ],
-        "post-update-cmd": [
-            "cd Resources && bower update"
-        ]
-    },
     "extra": {
         "branch-alias": {
             "dev-master": "1.0-dev"

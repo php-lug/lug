@@ -81,7 +81,6 @@ if [ "$CS_BUILD" != true ]; then
     composer remove --dev --no-update fabpot/php-cs-fixer
 fi
 
-npm install -g bower
 composer install --prefer-source
 
 if [ "$UNIT_BUILD" = true ]; then
@@ -90,8 +89,12 @@ if [ "$UNIT_BUILD" = true ]; then
 fi
 
 if [ "$BDD_BUILD" = true ]; then
+    npm install
+
+    GULP_ENV=prod
+    node_modules/.bin/gulp
+
     php app/console server:run 127.0.0.1:8080 > /dev/null 2>&1 &
-    php app/console assetic:dump
 
     if [ "$LUG_DRIVER" = "doctrine/orm" ]; then
         php app/console doctrine:schema:update --force

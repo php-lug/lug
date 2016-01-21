@@ -1,0 +1,29 @@
+{
+  "name": "lug-ui-bundle",
+  "version": "1.0.0",
+  "description": "Lug Ui Bundle",
+  "main": "gulpfile.js",
+  "dependencies": {
+    "admin-lte": "^2.3.2",
+    "bootstrap": "^3.3.6",
+    "font-awesome": "^4.5.0",
+    "jquery": "^2.2.0"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-concat": "^2.6.0",
+    "gulp-if": "^2.0.0",
+    "gulp-uglify": "^1.5.1",
+    "gulp-uglifycss": "^1.0.5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/php-lug/lug.git"
+  },
+  "author": "Eric GELOEN",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/php-lug/lug/issues"
+  },
+  "homepage": "http://php-lug.org"
+}

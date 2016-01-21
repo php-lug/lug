@@ -7,6 +7,5 @@
 
 imports:
     - { resource: config_dev.yml }
-    - { resource: bundles/test/assetic.yml }
     - { resource: bundles/test/framework.yml }
     - { resource: bundles/test/web_profiler.yml }
