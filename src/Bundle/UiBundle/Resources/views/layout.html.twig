@@ -19,17 +19,7 @@ file that was distributed with this source code.
         <title>{% block head_title %}Lug{% endblock %}</title>
 
         {% block stylesheets %}
-            {% stylesheets
-                '@LugUiBundle/Resources/bower_components/admin-lte/bootstrap/css/bootstrap.css'
-                '@LugUiBundle/Resources/bower_components/font-awesome/css/font-awesome.css'
-                '@LugUiBundle/Resources/bower_components/ionicons/css/ionicons.css'
-                '@LugUiBundle/Resources/bower_components/admin-lte/dist/css/AdminLTE.css'
-                '@LugUiBundle/Resources/bower_components/admin-lte/dist/css/skins/skin-blue.css'
-                filter="lug_css_rewrite"
-                output="assets/ui.css"
-            %}
-                <link rel="stylesheet" href="{{ asset_url }}" />
-            {% endstylesheets %}
+            <link rel="stylesheet" href="{{ asset('assets/css/app.css') }}" />
         {% endblock %}
     </head>
     <body class="{% block body_skin %}skin-blue{% endblock %} hold-transition sidebar-mini">
@@ -81,24 +71,7 @@ file that was distributed with this source code.
         </div>
 
         {% block javascripts %}
-            {% javascripts
-                '@LugUiBundle/Resources/bower_components/html5shiv/dist/html5shiv.js'
-                '@LugUiBundle/Resources/bower_components/respond/dest/respond.src.js'
-                output="assets/ui-ie.js"
-            %}
-                <!--[if lt IE 9]>
-                    <script type="text/javascript" src="{{ asset_url }}"></script>
-                <![endif]-->
-            {% endjavascripts %}
-
-            {% javascripts
-                '@LugUiBundle/Resources/bower_components/admin-lte/plugins/jQuery/jQuery-2.1.4.min.js'
-                '@LugUiBundle/Resources/bower_components/admin-lte/bootstrap/js/bootstrap.js'
-                '@LugUiBundle/Resources/bower_components/admin-lte/dist/js/app.js'
-                output="assets/ui.js"
-            %}
-                <script type="text/javascript" src="{{ asset_url }}"></script>
-            {% endjavascripts %}
+            <script type="text/javascript" src="{{ asset('assets/js/app.js') }}"></script>
         {% endblock %}
     </body>
 </html>

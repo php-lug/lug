@@ -18,7 +18,6 @@ use FOS\RestBundle\FOSRestBundle;
 use JMS\SerializerBundle\JMSSerializerBundle;
 use Knp\Bundle\MenuBundle\KnpMenuBundle;
 use Lug\Bundle\AdminBundle\LugAdminBundle;
-use Lug\Bundle\AsseticBundle\LugAsseticBundle;
 use Lug\Bundle\GridBundle\LugGridBundle;
 use Lug\Bundle\LocaleBundle\LugLocaleBundle;
 use Lug\Bundle\RegistryBundle\LugRegistryBundle;
@@ -29,7 +28,6 @@ use Lug\Bundle\UiBundle\LugUiBundle;
 use Lug\Component\Resource\Model\ResourceInterface;
 use Sensio\Bundle\DistributionBundle\SensioDistributionBundle;
 use Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle;
-use Symfony\Bundle\AsseticBundle\AsseticBundle;
 use Symfony\Bundle\DebugBundle\DebugBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Bundle\MonologBundle\MonologBundle;
@@ -74,7 +72,6 @@ class AppKernel extends Kernel
             new SecurityBundle(),
             new TwigBundle(),
             new MonologBundle(),
-            new AsseticBundle(),
             new FOSRestBundle(),
             new JMSSerializerBundle(),
             new BazingaHateoasBundle(),
@@ -83,7 +80,6 @@ class AppKernel extends Kernel
             new StofDoctrineExtensionsBundle(),
 
             new LugAdminBundle(),
-            new LugAsseticBundle(),
             new LugGridBundle(),
             new LugLocaleBundle($this->driver),
             new LugResourceBundle(),

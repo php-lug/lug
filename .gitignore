@@ -14,11 +14,11 @@
 /app/logs/
 /behat.yml
 /bin/
+/node_modules/
 /puli.json
 /web/assets/
 /web/bundles/
 
-bower_components/
 build/
 composer.lock
 phpunit.xml

@@ -26,15 +26,3 @@ file that was distributed with this source code.
         'template': '@LugUi/Menu/knp_menu.html.twig'
     }) }}
 {% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-
-    {% javascripts
-        '@LugGridBundle/Resources/js/*.js'
-        '@LugResourceBundle/Resources/js/*/*.js'
-        output="assets/admin.js"
-    %}
-        <script type="text/javascript" src="{{ asset_url }}"></script>
-    {% endjavascripts %}
-{% endblock %}

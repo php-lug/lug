@@ -12,7 +12,6 @@
     "require": {
         "php": "^5.6|^7.0",
         "symfony/symfony": "^2.8",
-        "symfony/assetic-bundle": "2.7.x-dev",
         "symfony/monolog-bundle": "^2.4",
         "doctrine/dbal": "^2.5",
         "doctrine/orm": "^2.5",
@@ -53,7 +52,6 @@
     },
     "scripts": {
         "post-install-cmd": [
-            "cd src/Bundle/UiBundle/Resources && bower install",
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
@@ -62,7 +60,6 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
         ],
         "post-update-cmd": [
-            "cd src/Bundle/UiBundle/Resources && bower update",
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
