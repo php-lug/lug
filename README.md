@@ -7,4 +7,4 @@
 
 ## Documentation
 
-Please, see the [official documentation](http://doc.php-lug.org).
+Please, see the [official documentation](http://docs.php-lug.org).
