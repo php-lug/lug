@@ -7,6 +7,7 @@
 
 /.php_cs.cache
 /.puli/
+/.subsplit/
 /app/cache/
 /app/config/config_local.yml
 /app/config/parameters.yml
