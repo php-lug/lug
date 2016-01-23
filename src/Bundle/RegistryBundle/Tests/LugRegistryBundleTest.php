@@ -55,6 +55,6 @@ class LugRegistryBundleTest extends \PHPUnit_Framework_TestCase
      */
     private function createContainerMock()
     {
-        return $this->getMock(ContainerBuilder::class);
+        return $this->getMock(ContainerBuilder::class, ['addCompilerPass']);
     }
 }

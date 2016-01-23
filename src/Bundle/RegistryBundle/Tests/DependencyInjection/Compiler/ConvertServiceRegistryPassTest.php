@@ -161,7 +161,7 @@ class ConvertServiceRegistryPassTest extends \PHPUnit_Framework_TestCase
      */
     private function createContainerMock()
     {
-        return $this->getMock(ContainerBuilder::class);
+        return $this->getMock(ContainerBuilder::class, ['findTaggedServiceIds', 'getDefinition', 'setDefinition']);
     }
 
     /**
