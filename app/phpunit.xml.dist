@@ -32,6 +32,7 @@ file that was distributed with this source code.
         <whitelist>
             <directory>../src</directory>
             <exclude>
+                <directory>../src/*/*/vendor</directory>
                 <directory>../src/*/*/Tests</directory>
                 <directory>../src/Bundle/*Bundle/Behat</directory>
                 <directory>../src/Bundle/*Bundle/DataFixtures</directory>
