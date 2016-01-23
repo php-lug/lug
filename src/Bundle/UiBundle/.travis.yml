@@ -9,13 +9,20 @@ sudo: false
 
 language: php
 
-php:
-    - 5.6
-    - 7.0
-    - hhvm
+matrix:
+    include:
+        - php: 5.6
+          env: COVERAGE_BUILD=true
+        - php: 7.0
+        - php: hhvm
 
 install:
+    - if [ "$TRAVIS_PHP_VERSION" != "hhvm" ] && [ "$COVERAGE_BUILD" != true ]; then phpenv config-rm xdebug.ini; fi
     - composer self-update
     - composer install --prefer-source
 
-script: bin/phpunit
+script: bin/phpunit `if [ "$COVERAGE_BUILD" = true ]; then echo "--coverage-clover build/clover.xml"; fi`
+
+after_success:
+    - if [ "$COVERAGE_BUILD" = true ]; then wget https://scrutinizer-ci.com/ocular.phar; fi
+    - if [ "$COVERAGE_BUILD" = true ]; then php ocular.phar code-coverage:upload --format=php-clover build/clover.xml; fi
