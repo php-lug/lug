@@ -7,4 +7,4 @@
 
 ## Documentation
 
-Please, see the [official documentation](http://docs.php-lug.org/en/latest/components/Registry/index.html).
+Please, see the [official documentation](http://docs.php-lug.org/en/latest/components/registry/index.html).
