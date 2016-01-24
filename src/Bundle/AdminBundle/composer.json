@@ -1,0 +1,34 @@
+{
+    "name": "php-lug/admin-bundle",
+    "license": "MIT",
+    "type": "symfony-bundle",
+    "description": "Lug admin bundle",
+    "autoload": {
+        "psr-4": { "Lug\\Bundle\\AdminBundle\\": "" }
+    },
+    "prefer-stable": true,
+    "minimum-stability": "dev",
+    "require": {
+        "php": "^5.6|^7.0",
+        "php-lug/ui-bundle": "^1.0",
+        "symfony/config": "^3.0",
+        "symfony/dependency-injection": "^3.0",
+        "symfony/http-kernel": "^3.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^5.0",
+        "symfony/phpunit-bridge": "^3.0",
+        "symfony/framework-bundle": "^3.0"
+    },
+    "suggest": {
+        "symfony/framework-bundle": "Add controller support"
+    },
+    "config": {
+        "bin-dir": "bin"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    }
+}

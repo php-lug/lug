@@ -1,0 +1,19 @@
+# This file is part of the Lug package.
+#
+# (c) Eric GELOEN <geloen.eric@gmail.com>
+#
+# For the full copyright and license information, please read the LICENSE
+# file that was distributed with this source code.
+
+filter:
+    excluded_paths: [vendor/*, Tests/*]
+
+checks:
+    php:
+        code_rating: true
+        duplication: true
+
+tools:
+    external_code_coverage:
+        timeout: 1800
+        runs: 1
