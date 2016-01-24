@@ -30,51 +30,43 @@ class LugStorageExtension extends ConfigurableExtension
     {
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
 
-        $this->loadCookie($config['cookie'], $container, $loader);
-        $this->loadDoctrine($config['doctrine'], $container, $loader);
-        $this->loadSession($config['session'], $container, $loader);
+        $this->loadCookie($config['cookie'], $loader);
+        $this->loadDoctrine($config['doctrine'], $loader, $container);
+        $this->loadSession($config['session'], $loader);
+    }
+
+    /**
+     * @param mixed[]         $config
+     * @param LoaderInterface $loader
+     */
+    private function loadCookie(array $config, LoaderInterface $loader)
+    {
+        if ($config['enabled']) {
+            $loader->load('cookie.xml');
+        }
     }
 
     /**
      * @param mixed[]          $config
-     * @param ContainerBuilder $container
      * @param LoaderInterface  $loader
+     * @param ContainerBuilder $container
      */
-    private function loadCookie(array $config, ContainerBuilder $container, LoaderInterface $loader)
+    private function loadDoctrine(array $config, LoaderInterface $loader, ContainerBuilder $container)
     {
-        if (!$config['enabled']) {
-            return;
+        if ($config['enabled']) {
+            $loader->load('doctrine.xml');
+            $container->getDefinition('lug.storage.doctrine')->addArgument(new Reference($config['service']));
         }
-
-        $loader->load('cookie.xml');
     }
 
     /**
-     * @param mixed[]          $config
-     * @param ContainerBuilder $container
-     * @param LoaderInterface  $loader
+     * @param mixed[]         $config
+     * @param LoaderInterface $loader
      */
-    private function loadDoctrine(array $config, ContainerBuilder $container, LoaderInterface $loader)
+    private function loadSession(array $config, LoaderInterface $loader)
     {
-        if (!$config['enabled']) {
-            return;
+        if ($config['enabled']) {
+            $loader->load('session.xml');
         }
-
-        $loader->load('doctrine.xml');
-        $container->getDefinition('lug.storage.doctrine')->addArgument(new Reference($config['service']));
-    }
-
-    /**
-     * @param mixed[]          $config
-     * @param ContainerBuilder $container
-     * @param LoaderInterface  $loader
-     */
-    private function loadSession(array $config, ContainerBuilder $container, LoaderInterface $loader)
-    {
-        if (!$config['enabled']) {
-            return;
-        }
-
-        $loader->load('session.xml');
     }
 }
