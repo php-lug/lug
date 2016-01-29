@@ -40,7 +40,7 @@ composer self-update
 if [ "$MONGODB_BUILD" = true ]; then
     printf "\nextension = mongo.so" >> ${PHP_INI}
 else
-    composer remove --no-update doctrine/mongodb-odm-bundle
+    composer remove --dev --no-update doctrine/mongodb-odm-bundle
 fi
 
 if [ "$UNIT_BUILD" != true ] && [ "$BDD_BUILD" != true ]; then
@@ -61,9 +61,8 @@ if [ "$BDD_BUILD" = true ]; then
     printf "\nalways_populate_raw_post_data = -1" >> ${PHP_INI}
 
     if [ "$LUG_DRIVER" != "doctrine/orm" ]; then
-        composer remove --no-update doctrine/dbal
-        composer remove --no-update doctrine/orm
-        composer remove --no-update doctrine/doctrine-bundle
+        composer remove --dev --no-update doctrine/orm
+        composer remove --dev --no-update doctrine/doctrine-bundle
         composer remove --dev --no-update doctrine/doctrine-fixtures-bundle
     fi
 
