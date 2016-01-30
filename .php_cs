@@ -15,7 +15,6 @@ use Symfony\CS\FixerInterface;
 
 $finder = DefaultFinder::create()
     ->in(['src', 'web'])
-    ->exclude('bower_components')
     ->files([
         'app/AppKernel.php',
         'app/AppCache.php',
