@@ -11,7 +11,6 @@ set -e
 
 UNIT_BUILD=${UNIT_BUILD-false}
 BDD_BUILD=${BDD_BUILD-false}
-CS_BUILD=${CS_BUILD-false}
 COVERAGE_BUILD=${COVERAGE_BUILD-false}
 
 if [ "$UNIT_BUILD" = true ]; then
@@ -23,8 +22,4 @@ fi
 
 if [ "$BDD_BUILD" = true ]; then
     bin/behat -p all
-fi
-
-if [ "$CS_BUILD" = true ]; then
-    bin/php-cs-fixer fix --dry-run
 fi

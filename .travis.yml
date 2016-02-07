@@ -34,8 +34,6 @@ matrix:
           env: BDD_BUILD=true LUG_DRIVER=doctrine/orm
         - php: 5.6
           env: BDD_BUILD=true LUG_DRIVER=doctrine/mongodb MONGODB_BUILD=true
-        - php: 5.6
-          env: CS_BUILD=true
 
 install: bin/travis/install.sh
 script: bin/travis/script.sh

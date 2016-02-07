@@ -14,7 +14,6 @@ LUG_DRIVER=${LUG_DRIVER-unknown}
 MONGODB_BUILD=${MONGODB_BUILD-false}
 UNIT_BUILD=${UNIT_BUILD-false}
 BDD_BUILD=${BDD_BUILD-false}
-CS_BUILD=${CS_BUILD-false}
 COVERAGE_BUILD=${COVERAGE_BUILD-false}
 DISPLAY=${DISPLAY-:99}
 
@@ -74,10 +73,6 @@ else
     composer remove --dev --no-update behat/mink-extension
     composer remove --dev --no-update behat/mink-browserkit-driver
     composer remove --dev --no-update behat/mink-selenium2-driver
-fi
-
-if [ "$CS_BUILD" != true ]; then
-    composer remove --dev --no-update fabpot/php-cs-fixer
 fi
 
 composer install --prefer-source
