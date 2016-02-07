@@ -18,9 +18,7 @@ use Lug\Bundle\ResourceBundle\EventSubscriber\ResolveTargetSubscriberInterface;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class ResolveTargetEntitySubscriber
-    extends ResolveTargetEntityListener
-    implements ResolveTargetSubscriberInterface
+class ResolveTargetEntitySubscriber extends ResolveTargetEntityListener implements ResolveTargetSubscriberInterface
 {
     /**
      * @var mixed[]
