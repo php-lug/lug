@@ -51,9 +51,6 @@
             "url": "https://github.com/egeloen/DoctrineMongoDBBundle.git"
         }
     ],
-    "config": {
-        "bin-dir": "bin"
-    },
     "scripts": {
         "post-install-cmd": [
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",

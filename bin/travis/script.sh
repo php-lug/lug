@@ -14,12 +14,12 @@ BDD_BUILD=${BDD_BUILD-false}
 COVERAGE_BUILD=${COVERAGE_BUILD-false}
 
 if [ "$UNIT_BUILD" = true ]; then
-    bin/phpunit -c app `if [ "$COVERAGE_BUILD" = true ]; then echo "--coverage-clover build/clover.xml"; fi`
+    vendor/bin/phpunit -c app `if [ "$COVERAGE_BUILD" = true ]; then echo "--coverage-clover build/clover.xml"; fi`
 
     find src -maxdepth 3 -type f -name phpunit.xml.dist -printf "%h\n" \
-        | parallel --gnu -j10% "cd {}; printf \"\\n\\n-> Testing {}\\n\\n\"; bin/phpunit"
+        | parallel --gnu -j10% "cd {}; printf \"\\n\\n-> Testing {}\\n\\n\"; vendor/bin/phpunit"
 fi
 
 if [ "$BDD_BUILD" = true ]; then
-    bin/behat -p all
+    vendor/bin/behat -p all
 fi
