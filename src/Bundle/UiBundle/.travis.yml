@@ -21,7 +21,7 @@ install:
     - composer self-update
     - composer install --prefer-source
 
-script: bin/phpunit `if [ "$COVERAGE_BUILD" = true ]; then echo "--coverage-clover build/clover.xml"; fi`
+script: vendor/bin/phpunit `if [ "$COVERAGE_BUILD" = true ]; then echo "--coverage-clover build/clover.xml"; fi`
 
 after_success:
     - if [ "$COVERAGE_BUILD" = true ]; then wget https://scrutinizer-ci.com/ocular.phar; fi

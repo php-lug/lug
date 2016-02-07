@@ -23,9 +23,6 @@
     "suggest": {
         "symfony/framework-bundle": "Add controller support"
     },
-    "config": {
-        "bin-dir": "bin"
-    },
     "extra": {
         "branch-alias": {
             "dev-master": "1.0-dev"

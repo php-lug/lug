@@ -19,9 +19,6 @@
         "phpunit/phpunit": "^5.0",
         "symfony/phpunit-bridge": "^3.0"
     },
-    "config": {
-        "bin-dir": "bin"
-    },
     "extra": {
         "branch-alias": {
             "dev-master": "1.0-dev"
