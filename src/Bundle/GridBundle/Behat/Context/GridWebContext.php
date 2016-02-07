@@ -55,6 +55,18 @@ class GridWebContext implements MinkAwareContext
         $this->findBatch($cell)->check();
     }
 
+    public function selectBatchAll()
+    {
+        $xpath = '//input[@id="grid_batch_all"]';
+
+        \PHPUnit_Framework_Assert::assertNotNull(
+            $node = $this->findGrid()->find('xpath', $xpath),
+            'The grid "all" batch could not be found.'
+        );
+
+        $node->check();
+    }
+
     /**
      * @param string|int $header
      * @param string     $sorting

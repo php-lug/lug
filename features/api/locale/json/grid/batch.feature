@@ -29,6 +29,7 @@ Feature: Batching locales
                     "message": "Validation Failed",
                     "errors": {
                         "children": {
+                            "all": {},
                             "type": {
                                 "errors": [
                                     "The grid batch should not be blank."
@@ -50,6 +51,28 @@ Feature: Batching locales
                 {
                     "type": "delete",
                     "value": ["be", "en", "fr"]
+                }
+            """
+        Then the response status code should be "409"
+        And the response should contain:
+            """
+                {
+                    "code": 409,
+                    "message": "Conflict"
+                }
+            """
+        And the locales should exist:
+            | code |
+            | en   |
+            | fr   |
+            | be   |
+
+    Scenario: Batching default locale (all - delete)
+        Given I send a "POST" request to "/locale/batch" with body:
+            """
+                {
+                    "type": "delete",
+                    "all": true
                 }
             """
         Then the response status code should be "409"

@@ -24,6 +24,14 @@ abstract class AbstractLabelExtension extends AbstractTypeExtension
     /**
      * {@inheritdoc}
      */
+    public function buildView(FormView $view, FormInterface $form, array $options)
+    {
+        $view->vars['label_translation_arguments'] = $options['label_translation_arguments'];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function finishView(FormView $view, FormInterface $form, array $options)
     {
         if ($view->vars['label'] !== null) {
@@ -48,7 +56,13 @@ abstract class AbstractLabelExtension extends AbstractTypeExtension
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefault('label_prefix', null);
+        $resolver
+            ->setDefaults([
+                'label_prefix'                => null,
+                'label_translation_arguments' => [],
+            ])
+            ->setAllowedTypes('label_prefix', ['string', 'null'])
+            ->setAllowedTypes('label_translation_arguments', 'array');
     }
 
     /**

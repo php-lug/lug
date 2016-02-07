@@ -51,18 +51,46 @@ class LabelButtonExtensionTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(ButtonType::class, $this->extension->getExtendedType());
     }
 
+    public function testDefault()
+    {
+        $form = $this->factory
+            ->createBuilder(FormType::class)
+            ->add($buttonName = 'button', ButtonType::class)
+            ->getForm();
+
+        $view = $form->createView();
+        $buttonView = $view->children[$buttonName];
+
+        $this->assertArrayHasKey('label', $buttonView->vars);
+        $this->assertNull($buttonView->vars['label']);
+
+        $this->assertArrayHasKey('label_translation_arguments', $buttonView->vars);
+        $this->assertEmpty($buttonView->vars['label_translation_arguments']);
+    }
+
     public function testLabelPrefix()
     {
-        $button = $this->factory
+        $form = $this->factory
             ->createBuilder(FormType::class, null, ['label_prefix' => $labelPrefix = 'prefix'])
             ->add($buttonName = 'button', ButtonType::class)
-            ->getForm()
-            ->submit([]);
+            ->getForm();
 
-        $view = $button->createView();
+        $view = $form->createView();
         $buttonView = $view->children[$buttonName];
 
         $this->assertArrayHasKey('label', $buttonView->vars);
         $this->assertSame($labelPrefix.'.'.$buttonName, $buttonView->vars['label']);
+    }
+
+    public function testLabelTranslationArguments()
+    {
+        $form = $this->factory->create(ButtonType::class, null, [
+            'label_translation_arguments' => $arguments = ['foo' => 'bar'],
+        ]);
+
+        $view = $form->createView();
+
+        $this->assertArrayHasKey('label_translation_arguments', $view->vars);
+        $this->assertSame($arguments, $view->vars['label_translation_arguments']);
     }
 }

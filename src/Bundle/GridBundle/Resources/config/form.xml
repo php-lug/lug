@@ -56,12 +56,16 @@ file that was distributed with this source code.
             <tag name="form.type" />
         </service>
 
-        <service id="lug.grid.form.type.batch_type" class="Lug\Bundle\GridBundle\Form\Type\Batch\GridBatchTypeType">
+        <service id="lug.grid.form.type.batch.type" class="Lug\Bundle\GridBundle\Form\Type\Batch\GridBatchTypeType">
+            <tag name="form.type" />
+        </service>
+
+        <service id="lug.grid.form.type.batch.all" class="Lug\Bundle\GridBundle\Form\Type\Batch\GridBatchAllType">
             <tag name="form.type" />
         </service>
 
         <service
-            id="lug.grid.form.type.batch_value"
+            id="lug.grid.form.type.batch.value"
             class="Lug\Bundle\GridBundle\Form\Type\Batch\GridBatchValueType"
         >
             <argument type="service" id="lug.resource.routing.parameter_resolver" />

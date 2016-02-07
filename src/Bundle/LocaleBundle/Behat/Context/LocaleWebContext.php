@@ -99,6 +99,14 @@ class LocaleWebContext extends AbstractLocaleContext
     }
 
     /**
+     * @Given I select the "all" locale grid batch
+     */
+    public function selectGridBatchAll()
+    {
+        $this->gridContext->selectBatchAll();
+    }
+
+    /**
      * @param string $code
      * @param string $sorting
      *

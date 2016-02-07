@@ -51,13 +51,29 @@ class LabelFormExtensionTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(FormType::class, $this->extension->getExtendedType());
     }
 
+    public function testDefault()
+    {
+        $form = $this->factory
+            ->createBuilder(FormType::class)
+            ->add($fieldName = 'field', FormType::class)
+            ->getForm();
+
+        $view = $form->createView();
+        $buttonView = $view->children[$fieldName];
+
+        $this->assertArrayHasKey('label', $buttonView->vars);
+        $this->assertNull($buttonView->vars['label']);
+
+        $this->assertArrayHasKey('label_translation_arguments', $buttonView->vars);
+        $this->assertEmpty($buttonView->vars['label_translation_arguments']);
+    }
+
     public function testLabelPrefix()
     {
         $form = $this->factory
             ->createBuilder(FormType::class, null, ['label_prefix' => $labelPrefix = 'prefix'])
             ->add($fieldName = 'field')
-            ->getForm()
-            ->submit([]);
+            ->getForm();
 
         $view = $form->createView();
         $fieldView = $view->children[$fieldName];
@@ -81,8 +97,7 @@ class LabelFormExtensionTest extends \PHPUnit_Framework_TestCase
             ->createBuilder(FormType::class, null, ['label_prefix' => $labelPrefix = 'prefix'])
             ->add($embedForm)
             ->add($fieldName = 'field')
-            ->getForm()
-            ->submit([]);
+            ->getForm();
 
         $view = $form->createView();
 
@@ -105,8 +120,7 @@ class LabelFormExtensionTest extends \PHPUnit_Framework_TestCase
         $form = $this->factory
             ->createBuilder(FormType::class, null, ['label_prefix' => 'prefix'])
             ->add($fieldName = 'field', null, ['label' => $explicitLabel = 'explicit'])
-            ->getForm()
-            ->submit([]);
+            ->getForm();
 
         $view = $form->createView();
         $fieldView = $view->children[$fieldName];
@@ -125,8 +139,7 @@ class LabelFormExtensionTest extends \PHPUnit_Framework_TestCase
         $form = $this->factory
             ->createBuilder(FormType::class, null, ['label_prefix' => $labelPrefix = 'prefix'])
             ->add($fieldName = 'field', CollectionType::class, ['allow_add' => true])
-            ->getForm()
-            ->submit([]);
+            ->getForm();
 
         $view = $form->createView();
         $fieldView = $view->children[$fieldName];
@@ -148,8 +161,7 @@ class LabelFormExtensionTest extends \PHPUnit_Framework_TestCase
         $form = $this->factory
             ->createBuilder(FormType::class, null, ['label_prefix' => $labelPrefix = 'prefix'])
             ->add($fieldName = 'field', CollectionType::class, ['allow_delete' => true])
-            ->getForm()
-            ->submit([]);
+            ->getForm();
 
         $view = $form->createView();
         $fieldView = $view->children[$fieldName];
@@ -159,5 +171,17 @@ class LabelFormExtensionTest extends \PHPUnit_Framework_TestCase
 
         $this->assertArrayHasKey('label_delete', $fieldView->vars);
         $this->assertSame($labelPrefix.'.'.$fieldName.'.delete', $fieldView->vars['label_delete']);
+    }
+
+    public function testLabelTranslationArguments()
+    {
+        $form = $this->factory->create(FormType::class, null, [
+            'label_translation_arguments' => $arguments = ['foo' => 'bar'],
+        ]);
+
+        $view = $form->createView();
+
+        $this->assertArrayHasKey('label_translation_arguments', $view->vars);
+        $this->assertSame($arguments, $view->vars['label_translation_arguments']);
     }
 }
