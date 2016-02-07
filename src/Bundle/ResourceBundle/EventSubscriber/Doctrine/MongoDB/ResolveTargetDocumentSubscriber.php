@@ -20,9 +20,7 @@ use Lug\Bundle\ResourceBundle\EventSubscriber\ResolveTargetSubscriberInterface;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class ResolveTargetDocumentSubscriber
-    extends ResolveTargetDocumentListener
-    implements EventSubscriber, ResolveTargetSubscriberInterface
+class ResolveTargetDocumentSubscriber extends ResolveTargetDocumentListener implements EventSubscriber, ResolveTargetSubscriberInterface
 {
     /**
      * @var mixed[]

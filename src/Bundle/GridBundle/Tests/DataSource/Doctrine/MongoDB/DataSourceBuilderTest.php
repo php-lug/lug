@@ -122,8 +122,7 @@ class DataSourceBuilderTest extends \PHPUnit_Framework_TestCase
             ->with(
                 $this->identicalTo($sort = 'expression'),
                 $this->identicalTo('ASC')
-            )
-            ;
+            );
 
         $this->assertSame($this->builder, $this->builder->orderBy($sort));
     }
