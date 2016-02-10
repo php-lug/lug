@@ -90,6 +90,11 @@ file that was distributed with this source code.
             </trans-unit>
 
             <trans-unit id="40">
+                <source>lug.locale.batch.all</source>
+                <target>All locales (%count%)</target>
+            </trans-unit>
+
+            <trans-unit id="41">
                 <source>lug.locale.batch.delete</source>
                 <target>Delete</target>
             </trans-unit>

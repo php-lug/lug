@@ -45,6 +45,7 @@ class GridBatchType extends AbstractType
         $driver = $grid->getDefinition()->getResource()->getDriver();
 
         $builder
+            ->add('all', GridBatchAllType::class, ['grid' => $grid])
             ->add('type', GridBatchTypeType::class, ['grid' => $grid])
             ->add('batch', SubmitType::class, ['label' => 'lug.batch.submit'])
             ->addEventSubscriber($this->gridBatchSubscriberRegistry[$driver]);

@@ -59,3 +59,17 @@ Feature: Batching locales
             | code |
             | fr   |
             | be   |
+
+    Scenario: Batching all locales (delete)
+        Given I am on the locale listing page
+        And I select the "all" locale grid batch
+        And I press "Batch"
+        Then I should be on the locale listing page
+        And I should see "The default locale \"en\" can't be deleted."
+        And I should see "The locale \"fr\" has been deleted."
+        And I should see "The locale \"be\" has been deleted."
+        And the locale "en" should exist
+        And the locales should not exist:
+            | code |
+            | fr   |
+            | be   |

@@ -42,10 +42,34 @@ file that was distributed with this source code.
         {% endif %}
         <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
             {{ icon | raw }}
-            {{ label | trans({}, translation_domain) }}
+            {{ label | trans(label_translation_arguments, translation_domain) }}
         </label>
     {%- endif %}
 {%- endblock %}
+
+{% block checkbox_radio_label %}
+    {% if widget is defined %}
+        {% if required %}
+            {% set label_attr = label_attr | merge({class: (label_attr.class | default('') ~ ' required') | trim}) %}
+        {% endif %}
+        {% if parent_label_class is defined %}
+            {% set label_attr = label_attr | merge({class: (label_attr.class | default('') ~ ' ' ~ parent_label_class) | trim}) %}
+        {% endif %}
+        {% if label is not same as(false) and label is empty %}
+            {% set label = name | humanize %}
+        {% endif %}
+        <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+            {{- widget | raw }}
+            {% if label is not same as(false) %}
+                {% if translation_domain is same as(false) %}
+                    {{ label }}
+                 {% else %}
+                    {{ label | trans(label_translation_arguments, translation_domain) }}
+                {% endif %}
+            {% endif %}
+        </label>
+    {% endif %}
+{% endblock %}
 
 {% block button_widget %}
     {% set attr = attr | merge({class: (attr.class | default('btn-default') ~ ' btn') | trim}) %}
@@ -58,6 +82,6 @@ file that was distributed with this source code.
     {%- endif -%}
     <button type="{{ type | default('button') }}" {{ block('button_attributes') }}>
         {{ icon | raw }}
-        {{ label | trans({}, translation_domain) }}
+        {{ label | trans(label_translation_arguments, translation_domain) }}
     </button>
 {% endblock %}

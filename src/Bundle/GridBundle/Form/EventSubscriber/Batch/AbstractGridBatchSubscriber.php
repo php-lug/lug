@@ -70,27 +70,12 @@ abstract class AbstractGridBatchSubscriber implements EventSubscriberInterface
         $form = $event->getForm();
         $data = $event->getData();
 
-        $values = isset($data['value']) ? $data['value'] : [];
-
-        if (!is_array($values) || empty($values)) {
-            return;
+        if (isset($data['all'])) {
+            $data['value'] = $this->handleAll($form);
+            $event->setData($data);
+        } else {
+            $this->handleValue($form, $data);
         }
-
-        $config = $form->get('value')->getConfig();
-        $choices = $config->getOption('choices');
-        $indexedChoices = $config->getOption('choice_list')->getChoices();
-
-        foreach ($values as $key => $value) {
-            if (isset($indexedChoices[$value])) {
-                unset($values[$key]);
-            }
-        }
-
-        $this->buildForm($form, array_merge($choices, $this->findChoices(
-            $config->getOption('grid')->getDefinition(),
-            $this->repositoryRegistry[$config->getOption('grid')->getDefinition()->getResource()->getName()],
-            $values
-        )));
     }
 
     /**
@@ -125,5 +110,52 @@ abstract class AbstractGridBatchSubscriber implements EventSubscriberInterface
                 'choices' => $choices,
                 'grid'    => $form->getConfig()->getOption('grid'),
             ]);
+    }
+
+    /**
+     * @param FormInterface $form
+     *
+     * @return mixed[]
+     */
+    private function handleAll(FormInterface $form)
+    {
+        $config = $form->get('value')->getConfig();
+        $choiceValue = $config->getOption('choice_value');
+        $choices = iterator_to_array($config->getOption('grid')->getDataSource(['all' => true]));
+
+        $this->buildForm($form, $choices);
+
+        return array_map(function ($choice) use ($choiceValue) {
+            return call_user_func($choiceValue, $choice);
+        }, $choices);
+    }
+
+    /**
+     * @param FormInterface $form
+     * @param mixed[]       $data
+     */
+    private function handleValue(FormInterface $form, $data)
+    {
+        $values = isset($data['value']) ? $data['value'] : [];
+
+        if (!is_array($values) || empty($values)) {
+            return;
+        }
+
+        $config = $form->get('value')->getConfig();
+        $choices = $config->getOption('choices');
+        $indexedChoices = $config->getOption('choice_list')->getChoices();
+
+        foreach ($values as $key => $value) {
+            if (isset($indexedChoices[$value])) {
+                unset($values[$key]);
+            }
+        }
+
+        $this->buildForm($form, array_merge($choices, $this->findChoices(
+            $config->getOption('grid')->getDefinition(),
+            $this->repositoryRegistry[$config->getOption('grid')->getDefinition()->getResource()->getName()],
+            $values
+        )));
     }
 }

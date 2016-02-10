@@ -33,6 +33,9 @@ Feature: Batching locales
                     <errors>
                         <form name="grid_batch">
                             <errors/>
+                            <form name="all">
+                                <errors/>
+                            </form>
                             <form name="type">
                                 <errors>
                                     <entry>
@@ -60,6 +63,31 @@ Feature: Batching locales
                     <value>be</value>
                     <value>en</value>
                     <value>fr</value>
+                </batch>
+            """
+        Then the response status code should be "409"
+        And the response should contain:
+            """
+                <result xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                    <code>409</code>
+                    <message>
+                        <![CDATA[Conflict]]>
+                    </message>
+                    <errors xsi:nil="true"/>
+                </result>
+            """
+        And the locales should exist:
+            | code |
+            | en   |
+            | fr   |
+            | be   |
+
+    Scenario: Batching default locale (all - delete)
+        Given I send a "POST" request to "/locale/batch" with body:
+            """
+                <batch>
+                    <type>delete</type>
+                    <all>true</all>
                 </batch>
             """
         Then the response status code should be "409"

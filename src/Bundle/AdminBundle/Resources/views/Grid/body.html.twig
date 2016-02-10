@@ -41,6 +41,7 @@ file that was distributed with this source code.
                 {{ form_widget(batch_form.children['value']) }}
             </div>
             {{ form_errors(batch_value_form) }}
+            {{ form_widget(batch_form.all) }}
             {{ form_widget(batch_form.type, {'attr': {'class': 'input-sm'}}) }}
             {{ form_widget(batch_form.batch, {
                 'icon': '<i class="fa fa-bars"></i>',
