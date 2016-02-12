@@ -13,13 +13,13 @@ namespace Lug\Bundle\RegistryBundle\Model;
 
 use Lug\Bundle\RegistryBundle\Exception\LazyServiceAlreadyExistsException;
 use Lug\Bundle\RegistryBundle\Exception\LazyServiceNotFoundException;
-use Lug\Component\Registry\Model\ServiceRegistryInterface;
+use Lug\Component\Registry\Model\RegistryInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class LazyServiceRegistry implements LazyServiceRegistryInterface
+class LazyRegistry implements LazyRegistryInterface
 {
     /**
      * @var ContainerInterface
@@ -27,7 +27,7 @@ class LazyServiceRegistry implements LazyServiceRegistryInterface
     private $container;
 
     /**
-     * @var ServiceRegistryInterface
+     * @var RegistryInterface
      */
     private $registry;
 
@@ -37,11 +37,11 @@ class LazyServiceRegistry implements LazyServiceRegistryInterface
     private $services = [];
 
     /**
-     * @param ContainerInterface       $container
-     * @param ServiceRegistryInterface $registry
-     * @param string[]                 $services
+     * @param ContainerInterface $container
+     * @param RegistryInterface  $registry
+     * @param string[]           $services
      */
-    public function __construct(ContainerInterface $container, ServiceRegistryInterface $registry, array $services = [])
+    public function __construct(ContainerInterface $container, RegistryInterface $registry, array $services = [])
     {
         $this->container = $container;
         $this->registry = $registry;

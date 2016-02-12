@@ -11,13 +11,13 @@
 
 namespace Lug\Component\Resource\Registry;
 
-use Lug\Component\Registry\Model\ServiceRegistry;
+use Lug\Component\Registry\Model\Registry;
 use Lug\Component\Resource\Domain\DomainManagerInterface;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class DomainManagerRegistry extends ServiceRegistry
+class DomainManagerRegistry extends Registry
 {
     /**
      * @param DomainManagerInterface[] $domainManagers

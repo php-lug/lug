@@ -12,7 +12,7 @@
 namespace Lug\Bundle\GridBundle\Form\Type\Batch;
 
 use Lug\Component\Grid\View\GridViewInterface;
-use Lug\Component\Registry\Model\ServiceRegistryInterface;
+use Lug\Component\Registry\Model\RegistryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -24,14 +24,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class GridBatchType extends AbstractType
 {
     /**
-     * @var ServiceRegistryInterface
+     * @var RegistryInterface
      */
     private $gridBatchSubscriberRegistry;
 
     /**
-     * @param ServiceRegistryInterface $gridBatchSubscriberRegistry
+     * @param RegistryInterface $gridBatchSubscriberRegistry
      */
-    public function __construct(ServiceRegistryInterface $gridBatchSubscriberRegistry)
+    public function __construct(RegistryInterface $gridBatchSubscriberRegistry)
     {
         $this->gridBatchSubscriberRegistry = $gridBatchSubscriberRegistry;
     }

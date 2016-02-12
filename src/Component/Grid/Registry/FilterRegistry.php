@@ -12,12 +12,12 @@
 namespace Lug\Component\Grid\Registry;
 
 use Lug\Component\Grid\Filter\Type\TypeInterface;
-use Lug\Component\Registry\Model\ServiceRegistry;
+use Lug\Component\Registry\Model\Registry;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class FilterRegistry extends ServiceRegistry
+class FilterRegistry extends Registry
 {
     /**
      * @param TypeInterface[] $types

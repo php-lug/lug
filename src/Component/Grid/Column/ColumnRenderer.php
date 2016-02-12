@@ -14,7 +14,7 @@ namespace Lug\Component\Grid\Column;
 use Lug\Component\Grid\Column\Type\TypeInterface;
 use Lug\Component\Grid\Model\ColumnInterface;
 use Lug\Component\Grid\View\GridViewInterface;
-use Lug\Component\Registry\Model\ServiceRegistryInterface;
+use Lug\Component\Registry\Model\RegistryInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -23,7 +23,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class ColumnRenderer implements ColumnRendererInterface
 {
     /**
-     * @var ServiceRegistryInterface
+     * @var RegistryInterface
      */
     private $columnRegistry;
 
@@ -33,9 +33,9 @@ class ColumnRenderer implements ColumnRendererInterface
     private $cache = [];
 
     /**
-     * @param ServiceRegistryInterface $columnRegistry
+     * @param RegistryInterface $columnRegistry
      */
-    public function __construct(ServiceRegistryInterface $columnRegistry)
+    public function __construct(RegistryInterface $columnRegistry)
     {
         $this->columnRegistry = $columnRegistry;
     }

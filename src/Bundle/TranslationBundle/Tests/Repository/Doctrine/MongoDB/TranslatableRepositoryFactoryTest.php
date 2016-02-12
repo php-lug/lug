@@ -20,7 +20,7 @@ use Lug\Bundle\ResourceBundle\Repository\Doctrine\MongoDB\Repository;
 use Lug\Bundle\ResourceBundle\Repository\Doctrine\MongoDB\RepositoryFactory;
 use Lug\Bundle\TranslationBundle\Repository\Doctrine\MongoDB\TranslatableRepository;
 use Lug\Bundle\TranslationBundle\Repository\Doctrine\MongoDB\TranslatableRepositoryFactory;
-use Lug\Component\Registry\Model\ServiceRegistryInterface;
+use Lug\Component\Registry\Model\RegistryInterface;
 use Lug\Component\Resource\Model\ResourceInterface;
 use Lug\Component\Translation\Context\LocaleContextInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -41,7 +41,7 @@ class TranslatableRepositoryFactoryTest extends \PHPUnit_Framework_TestCase
     private $container;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|ServiceRegistryInterface
+     * @var \PHPUnit_Framework_MockObject_MockObject|RegistryInterface
      */
     private $resourceRegistry;
 
@@ -208,11 +208,11 @@ class TranslatableRepositoryFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|ServiceRegistryInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|RegistryInterface
      */
     private function createServiceRegistryMock()
     {
-        return $this->getMock(ServiceRegistryInterface::class);
+        return $this->getMock(RegistryInterface::class);
     }
 
     /**

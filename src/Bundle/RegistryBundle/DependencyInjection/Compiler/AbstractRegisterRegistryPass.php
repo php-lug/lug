@@ -19,7 +19,7 @@ use Symfony\Component\DependencyInjection\Reference;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-abstract class AbstractRegisterServiceRegistryPass implements CompilerPassInterface
+abstract class AbstractRegisterRegistryPass implements CompilerPassInterface
 {
     /**
      * @var string

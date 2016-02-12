@@ -15,7 +15,7 @@ use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Events;
 use Lug\Bundle\ResourceBundle\Util\ClassUtils;
-use Lug\Component\Registry\Model\ServiceRegistryInterface;
+use Lug\Component\Registry\Model\RegistryInterface;
 use Lug\Component\Translation\Context\LocaleContextInterface;
 use Lug\Component\Translation\Model\TranslatableInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -82,7 +82,7 @@ class TranslatableResourceSubscriber implements EventSubscriber
     }
 
     /**
-     * @return ServiceRegistryInterface
+     * @return RegistryInterface
      */
     private function getResourceRegistry()
     {

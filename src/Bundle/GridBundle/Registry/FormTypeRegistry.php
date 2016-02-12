@@ -11,13 +11,13 @@
 
 namespace Lug\Bundle\GridBundle\Registry;
 
-use Lug\Component\Registry\Model\ServiceRegistry;
+use Lug\Component\Registry\Model\Registry;
 use Symfony\Component\Form\FormTypeInterface;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class FormTypeRegistry extends ServiceRegistry
+class FormTypeRegistry extends Registry
 {
     /**
      * @param FormTypeInterface[] $formTypes

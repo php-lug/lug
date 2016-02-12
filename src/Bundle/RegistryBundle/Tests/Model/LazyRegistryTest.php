@@ -11,26 +11,26 @@
 
 namespace Lug\Bundle\RegistryBundle\Tests\Model;
 
-use Lug\Bundle\RegistryBundle\Model\LazyServiceRegistry;
-use Lug\Bundle\RegistryBundle\Model\LazyServiceRegistryInterface;
-use Lug\Component\Registry\Model\ServiceRegistry;
-use Lug\Component\Registry\Model\ServiceRegistryInterface;
+use Lug\Bundle\RegistryBundle\Model\LazyRegistry;
+use Lug\Bundle\RegistryBundle\Model\LazyRegistryInterface;
+use Lug\Component\Registry\Model\Registry;
+use Lug\Component\Registry\Model\RegistryInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class LazyServiceRegistryTest extends \PHPUnit_Framework_TestCase
+class LazyRegistryTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var LazyServiceRegistry
+     * @var LazyRegistry
      */
-    private $lazyServiceRegistry;
+    private $lazyRegistry;
 
     /**
-     * @var ServiceRegistry|\PHPUnit_Framework_MockObject_MockObject
+     * @var Registry|\PHPUnit_Framework_MockObject_MockObject
      */
-    private $serviceRegistry;
+    private $registry;
 
     /**
      * @var ContainerInterface|\PHPUnit_Framework_MockObject_MockObject
@@ -61,30 +61,30 @@ class LazyServiceRegistryTest extends \PHPUnit_Framework_TestCase
         $this->containerServices = ['my.baz' => $this->createServiceMock(), 'my.bat' => $this->createServiceMock()];
         $this->lazyServices = ['baz' => 'my.baz', 'bat' => 'my.bat'];
         $this->container = $this->createContainerMock();
-        $this->serviceRegistry = new ServiceRegistry(ServiceInterface::class, $this->services);
+        $this->registry = new Registry(ServiceInterface::class, $this->services);
 
-        $this->lazyServiceRegistry = new LazyServiceRegistry(
+        $this->lazyRegistry = new LazyRegistry(
             $this->container,
-            $this->serviceRegistry,
+            $this->registry,
             $this->lazyServices
         );
     }
 
     public function testInheritance()
     {
-        $this->assertInstanceOf(ServiceRegistryInterface::class, $this->lazyServiceRegistry);
-        $this->assertInstanceOf(LazyServiceRegistryInterface::class, $this->lazyServiceRegistry);
+        $this->assertInstanceOf(RegistryInterface::class, $this->lazyRegistry);
+        $this->assertInstanceOf(LazyRegistryInterface::class, $this->lazyRegistry);
     }
 
     public function testDefaultState()
     {
-        $this->lazyServiceRegistry = new LazyServiceRegistry(
+        $this->lazyRegistry = new LazyRegistry(
             $this->container,
-            new ServiceRegistry(ServiceInterface::class)
+            new Registry(ServiceInterface::class)
         );
 
-        $this->assertEmpty(iterator_to_array($this->lazyServiceRegistry));
-        $this->assertCount(0, $this->lazyServiceRegistry);
+        $this->assertEmpty(iterator_to_array($this->lazyRegistry));
+        $this->assertCount(0, $this->lazyRegistry);
     }
 
     public function testInitialState()
@@ -94,25 +94,25 @@ class LazyServiceRegistryTest extends \PHPUnit_Framework_TestCase
             array_combine(array_flip($this->lazyServices), $this->containerServices)
         );
 
-        $this->assertSame($services, iterator_to_array($this->lazyServiceRegistry));
-        $this->assertCount(count($services), $this->lazyServiceRegistry);
+        $this->assertSame($services, iterator_to_array($this->lazyRegistry));
+        $this->assertCount(count($services), $this->lazyRegistry);
     }
 
     public function testHasLazy()
     {
         foreach (array_keys($this->lazyServices) as $type) {
-            $this->assertTrue($this->lazyServiceRegistry->hasLazy($type));
+            $this->assertTrue($this->lazyRegistry->hasLazy($type));
         }
 
         foreach (array_keys($this->services) as $type) {
-            $this->assertFalse($this->lazyServiceRegistry->hasLazy($type));
+            $this->assertFalse($this->lazyRegistry->hasLazy($type));
         }
     }
 
     public function testGetLazy()
     {
         foreach ($this->lazyServices as $type => $service) {
-            $this->assertSame($service, $this->lazyServiceRegistry->getLazy($type));
+            $this->assertSame($service, $this->lazyRegistry->getLazy($type));
         }
     }
 
@@ -122,7 +122,7 @@ class LazyServiceRegistryTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetLazyWithNonExistingLazy()
     {
-        $this->lazyServiceRegistry->getLazy('foo');
+        $this->lazyRegistry->getLazy('foo');
     }
 
     public function testSetLazy()
@@ -130,27 +130,27 @@ class LazyServiceRegistryTest extends \PHPUnit_Framework_TestCase
         $this->containerServices[$containerService = 'my.ban'] = $service = $this->createServiceMock();
 
         $this->container = $this->createContainerMock();
-        $this->serviceRegistry = new ServiceRegistry(ServiceInterface::class, $this->services);
+        $this->registry = new Registry(ServiceInterface::class, $this->services);
 
-        $this->lazyServiceRegistry = new LazyServiceRegistry(
+        $this->lazyRegistry = new LazyRegistry(
             $this->container,
-            $this->serviceRegistry,
+            $this->registry,
             $this->lazyServices
         );
 
         $this->lazyServices[$type = 'ban'] = $containerService;
-        $this->lazyServiceRegistry->setLazy($type, $containerService);
+        $this->lazyRegistry->setLazy($type, $containerService);
 
-        $this->assertTrue($this->lazyServiceRegistry->hasLazy($type));
-        $this->assertSame($containerService, $this->lazyServiceRegistry->getLazy($type));
+        $this->assertTrue($this->lazyRegistry->hasLazy($type));
+        $this->assertSame($containerService, $this->lazyRegistry->getLazy($type));
 
         $services = array_merge(
             $this->services,
             array_combine(array_flip($this->lazyServices), $this->containerServices)
         );
 
-        $this->assertSame($services, iterator_to_array($this->lazyServiceRegistry));
-        $this->assertCount(count($services), $this->lazyServiceRegistry);
+        $this->assertSame($services, iterator_to_array($this->lazyRegistry));
+        $this->assertCount(count($services), $this->lazyRegistry);
     }
 
     /**
@@ -159,7 +159,7 @@ class LazyServiceRegistryTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetLazyWithExistingLazy()
     {
-        $this->lazyServiceRegistry->setLazy('baz', 'my.baz');
+        $this->lazyRegistry->setLazy('baz', 'my.baz');
     }
 
     public function testRemoveLazy()
@@ -167,11 +167,11 @@ class LazyServiceRegistryTest extends \PHPUnit_Framework_TestCase
         $this->testInitialState();
 
         foreach (array_keys($this->lazyServices) as $type) {
-            $this->lazyServiceRegistry->removeLazy($type);
+            $this->lazyRegistry->removeLazy($type);
         }
 
-        $this->assertSame($this->services, iterator_to_array($this->lazyServiceRegistry));
-        $this->assertCount(count($this->services), $this->lazyServiceRegistry);
+        $this->assertSame($this->services, iterator_to_array($this->lazyRegistry));
+        $this->assertCount(count($this->services), $this->lazyRegistry);
     }
 
     /**
@@ -180,16 +180,16 @@ class LazyServiceRegistryTest extends \PHPUnit_Framework_TestCase
      */
     public function testRemoveLazyWithNonExistingLazy()
     {
-        $this->lazyServiceRegistry->removeLazy('ban');
+        $this->lazyRegistry->removeLazy('ban');
     }
 
     public function testOffsetExists()
     {
         foreach (array_keys(array_merge($this->services, $this->lazyServices)) as $type) {
-            $this->assertTrue(isset($this->lazyServiceRegistry[$type]));
+            $this->assertTrue(isset($this->lazyRegistry[$type]));
         }
 
-        $this->assertFalse(isset($this->lazyServiceRegistry['ban']));
+        $this->assertFalse(isset($this->lazyRegistry['ban']));
     }
 
     public function testOffsetGet()
@@ -200,7 +200,7 @@ class LazyServiceRegistryTest extends \PHPUnit_Framework_TestCase
         );
 
         foreach ($services as $type => $service) {
-            $this->assertSame($service, $this->lazyServiceRegistry[$type]);
+            $this->assertSame($service, $this->lazyRegistry[$type]);
         }
     }
 
@@ -210,14 +210,14 @@ class LazyServiceRegistryTest extends \PHPUnit_Framework_TestCase
      */
     public function testOffsetGetWithNonExistingService()
     {
-        $this->lazyServiceRegistry['ban'];
+        $this->lazyRegistry['ban'];
     }
 
     public function testOffsetSet()
     {
-        $this->lazyServiceRegistry[$type = 'ban'] = $service = $this->createServiceMock();
+        $this->lazyRegistry[$type = 'ban'] = $service = $this->createServiceMock();
 
-        $this->assertSame($service, $this->lazyServiceRegistry[$type]);
+        $this->assertSame($service, $this->lazyRegistry[$type]);
 
         $services = array_merge(
             $this->services,
@@ -225,8 +225,8 @@ class LazyServiceRegistryTest extends \PHPUnit_Framework_TestCase
             array_combine(array_flip($this->lazyServices), $this->containerServices)
         );
 
-        $this->assertSame($services, iterator_to_array($this->lazyServiceRegistry));
-        $this->assertCount(count($services), $this->lazyServiceRegistry);
+        $this->assertSame($services, iterator_to_array($this->lazyRegistry));
+        $this->assertCount(count($services), $this->lazyRegistry);
     }
 
     /**
@@ -235,19 +235,19 @@ class LazyServiceRegistryTest extends \PHPUnit_Framework_TestCase
      */
     public function testOffsetSetWithExistingService()
     {
-        $this->lazyServiceRegistry['baz'] = $this->createServiceMock();
+        $this->lazyRegistry['baz'] = $this->createServiceMock();
     }
 
     public function testOffsetUnset()
     {
         foreach (array_keys(array_merge($this->services, $this->lazyServices)) as $type) {
-            unset($this->lazyServiceRegistry[$type]);
+            unset($this->lazyRegistry[$type]);
 
-            $this->assertFalse(isset($this->lazyServiceRegistry[$type]));
+            $this->assertFalse(isset($this->lazyRegistry[$type]));
         }
 
-        $this->assertEmpty(iterator_to_array($this->lazyServiceRegistry));
-        $this->assertCount(0, $this->lazyServiceRegistry);
+        $this->assertEmpty(iterator_to_array($this->lazyRegistry));
+        $this->assertCount(0, $this->lazyRegistry);
     }
 
     /**

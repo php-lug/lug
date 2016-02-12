@@ -16,7 +16,7 @@ use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
 use Doctrine\ORM\Events;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Lug\Bundle\ResourceBundle\EventSubscriber\Doctrine\ORM\ResourceSubscriber;
-use Lug\Component\Registry\Model\ServiceRegistryInterface;
+use Lug\Component\Registry\Model\RegistryInterface;
 use Lug\Component\Resource\Model\ResourceInterface;
 
 /**
@@ -30,7 +30,7 @@ class ResourceSubscriberTest extends \PHPUnit_Framework_TestCase
     private $resourceSubscriber;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|ServiceRegistryInterface
+     * @var \PHPUnit_Framework_MockObject_MockObject|RegistryInterface
      */
     private $serviceRegistry;
 
@@ -123,11 +123,11 @@ class ResourceSubscriberTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|ServiceRegistryInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|RegistryInterface
      */
     private function createServiceRegistryMock()
     {
-        return $this->getMock(ServiceRegistryInterface::class);
+        return $this->getMock(RegistryInterface::class);
     }
 
     /**

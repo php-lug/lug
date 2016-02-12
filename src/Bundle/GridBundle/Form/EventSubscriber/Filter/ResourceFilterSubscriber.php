@@ -12,7 +12,7 @@
 namespace Lug\Bundle\GridBundle\Form\EventSubscriber\Filter;
 
 use Lug\Component\Grid\Filter\Type\ResourceType;
-use Lug\Component\Registry\Model\ServiceRegistryInterface;
+use Lug\Component\Registry\Model\RegistryInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -24,14 +24,14 @@ use Symfony\Component\Form\FormInterface;
 class ResourceFilterSubscriber implements EventSubscriberInterface
 {
     /**
-     * @var ServiceRegistryInterface
+     * @var RegistryInterface
      */
     private $resourceRegistry;
 
     /**
-     * @param ServiceRegistryInterface $resourceRegistry
+     * @param RegistryInterface $resourceRegistry
      */
-    public function __construct(ServiceRegistryInterface $resourceRegistry)
+    public function __construct(RegistryInterface $resourceRegistry)
     {
         $this->resourceRegistry = $resourceRegistry;
     }

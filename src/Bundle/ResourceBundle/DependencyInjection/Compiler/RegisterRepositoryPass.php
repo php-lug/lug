@@ -11,12 +11,12 @@
 
 namespace Lug\Bundle\ResourceBundle\DependencyInjection\Compiler;
 
-use Lug\Bundle\RegistryBundle\DependencyInjection\Compiler\AbstractRegisterServiceRegistryPass;
+use Lug\Bundle\RegistryBundle\DependencyInjection\Compiler\AbstractRegisterRegistryPass;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class RegisterRepositoryPass extends AbstractRegisterServiceRegistryPass
+class RegisterRepositoryPass extends AbstractRegisterRegistryPass
 {
     public function __construct()
     {

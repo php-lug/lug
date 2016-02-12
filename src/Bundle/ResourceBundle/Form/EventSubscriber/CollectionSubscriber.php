@@ -13,7 +13,7 @@ namespace Lug\Bundle\ResourceBundle\Form\EventSubscriber;
 
 use Doctrine\Common\Collections\Collection;
 use Lug\Bundle\ResourceBundle\Util\ClassUtils;
-use Lug\Component\Registry\Model\ServiceRegistryInterface;
+use Lug\Component\Registry\Model\RegistryInterface;
 use Lug\Component\Resource\Model\ResourceInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
@@ -27,12 +27,12 @@ use Symfony\Component\Form\FormEvents;
 class CollectionSubscriber implements EventSubscriberInterface
 {
     /**
-     * @var ServiceRegistryInterface
+     * @var RegistryInterface
      */
     private $resourceRegistry;
 
     /**
-     * @var ServiceRegistryInterface
+     * @var RegistryInterface
      */
     private $managerRegistry;
 
@@ -47,10 +47,10 @@ class CollectionSubscriber implements EventSubscriberInterface
     private $cache = [];
 
     /**
-     * @param ServiceRegistryInterface $resourceRegistry
-     * @param ServiceRegistryInterface $managerRegistry
+     * @param RegistryInterface $resourceRegistry
+     * @param RegistryInterface $managerRegistry
      */
-    public function __construct(ServiceRegistryInterface $resourceRegistry, ServiceRegistryInterface $managerRegistry)
+    public function __construct(RegistryInterface $resourceRegistry, RegistryInterface $managerRegistry)
     {
         $this->resourceRegistry = $resourceRegistry;
         $this->managerRegistry = $managerRegistry;

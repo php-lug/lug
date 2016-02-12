@@ -12,12 +12,12 @@
 namespace Lug\Component\Resource\Registry;
 
 use Doctrine\Common\Persistence\ObjectManager;
-use Lug\Component\Registry\Model\ServiceRegistry;
+use Lug\Component\Registry\Model\Registry;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class ManagerRegistry extends ServiceRegistry
+class ManagerRegistry extends Registry
 {
     /**
      * @param ObjectManager[] $managers

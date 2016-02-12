@@ -12,7 +12,7 @@
 namespace Lug\Bundle\ResourceBundle\DependencyInjection\Configurator;
 
 use Lug\Bundle\ResourceBundle\EventSubscriber\ResolveTargetSubscriberInterface;
-use Lug\Component\Registry\Model\ServiceRegistryInterface;
+use Lug\Component\Registry\Model\RegistryInterface;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -20,14 +20,14 @@ use Lug\Component\Registry\Model\ServiceRegistryInterface;
 class ResolveTargetSubscriberConfigurator
 {
     /**
-     * @var ServiceRegistryInterface
+     * @var RegistryInterface
      */
     private $resourceRegistry;
 
     /**
-     * @param ServiceRegistryInterface $resourceRegistry
+     * @param RegistryInterface $resourceRegistry
      */
-    public function __construct(ServiceRegistryInterface $resourceRegistry)
+    public function __construct(RegistryInterface $resourceRegistry)
     {
         $this->resourceRegistry = $resourceRegistry;
     }

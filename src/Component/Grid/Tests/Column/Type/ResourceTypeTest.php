@@ -16,7 +16,7 @@ use Lug\Component\Grid\Column\Type\ResourceType;
 use Lug\Component\Grid\Column\Type\TypeInterface;
 use Lug\Component\Grid\Model\ColumnInterface;
 use Lug\Component\Grid\View\GridViewInterface;
-use Lug\Component\Registry\Model\ServiceRegistryInterface;
+use Lug\Component\Registry\Model\RegistryInterface;
 use Lug\Component\Resource\Model\ResourceInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
@@ -37,7 +37,7 @@ class ResourceTypeTest extends \PHPUnit_Framework_TestCase
     private $propertyAccessor;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|ServiceRegistryInterface
+     * @var \PHPUnit_Framework_MockObject_MockObject|RegistryInterface
      */
     private $resourceRegistry;
 
@@ -317,11 +317,11 @@ class ResourceTypeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|ServiceRegistryInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|RegistryInterface
      */
     private function createServiceRegistryMock()
     {
-        return $this->getMock(ServiceRegistryInterface::class);
+        return $this->getMock(RegistryInterface::class);
     }
 
     /**

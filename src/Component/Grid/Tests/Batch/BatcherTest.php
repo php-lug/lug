@@ -16,7 +16,7 @@ use Lug\Component\Grid\Batch\BatcherInterface;
 use Lug\Component\Grid\Batch\Type\TypeInterface;
 use Lug\Component\Grid\Model\BatchInterface;
 use Lug\Component\Grid\Model\GridInterface;
-use Lug\Component\Registry\Model\ServiceRegistryInterface;
+use Lug\Component\Registry\Model\RegistryInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -30,7 +30,7 @@ class BatcherTest extends \PHPUnit_Framework_TestCase
     private $batcher;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|ServiceRegistryInterface
+     * @var \PHPUnit_Framework_MockObject_MockObject|RegistryInterface
      */
     private $batchRegistry;
 
@@ -114,11 +114,11 @@ class BatcherTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|ServiceRegistryInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|RegistryInterface
      */
     private function createServiceRegistryMock()
     {
-        return $this->getMock(ServiceRegistryInterface::class);
+        return $this->getMock(RegistryInterface::class);
     }
 
     /**

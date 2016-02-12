@@ -11,18 +11,18 @@
 
 namespace Lug\Component\Registry\Tests\Model;
 
-use Lug\Component\Registry\Model\ServiceRegistry;
-use Lug\Component\Registry\Model\ServiceRegistryInterface;
+use Lug\Component\Registry\Model\Registry;
+use Lug\Component\Registry\Model\RegistryInterface;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class ServiceRegistryTest extends \PHPUnit_Framework_TestCase
+class RegistryTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var ServiceRegistry
+     * @var Registry
      */
-    private $serviceRegistry;
+    private $registry;
 
     /**
      * @var ServiceInterface[]
@@ -35,44 +35,44 @@ class ServiceRegistryTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->services = ['foo' => $this->createServiceMock(), 'bar' => $this->createServiceMock()];
-        $this->serviceRegistry = new ServiceRegistry(ServiceInterface::class, $this->services);
+        $this->registry = new Registry(ServiceInterface::class, $this->services);
     }
 
     public function testInheritance()
     {
-        $this->assertInstanceOf(ServiceRegistryInterface::class, $this->serviceRegistry);
-        $this->assertInstanceOf(\ArrayAccess::class, $this->serviceRegistry);
-        $this->assertInstanceOf(\Countable::class, $this->serviceRegistry);
-        $this->assertInstanceOf(\IteratorAggregate::class, $this->serviceRegistry);
+        $this->assertInstanceOf(RegistryInterface::class, $this->registry);
+        $this->assertInstanceOf(\ArrayAccess::class, $this->registry);
+        $this->assertInstanceOf(\Countable::class, $this->registry);
+        $this->assertInstanceOf(\IteratorAggregate::class, $this->registry);
     }
 
     public function testDefaultState()
     {
-        $this->serviceRegistry = new ServiceRegistry(ServiceInterface::class);
+        $this->registry = new Registry(ServiceInterface::class);
 
-        $this->assertEmpty(iterator_to_array($this->serviceRegistry));
-        $this->assertCount(0, $this->serviceRegistry);
+        $this->assertEmpty(iterator_to_array($this->registry));
+        $this->assertCount(0, $this->registry);
     }
 
     public function testInitialState()
     {
-        $this->assertSame($this->services, iterator_to_array($this->serviceRegistry));
-        $this->assertCount(count($this->services), $this->serviceRegistry);
+        $this->assertSame($this->services, iterator_to_array($this->registry));
+        $this->assertCount(count($this->services), $this->registry);
     }
 
     public function testOffsetExists()
     {
         foreach (array_keys($this->services) as $type) {
-            $this->assertTrue(isset($this->serviceRegistry[$type]));
+            $this->assertTrue(isset($this->registry[$type]));
         }
 
-        $this->assertFalse(isset($this->serviceRegistry['baz']));
+        $this->assertFalse(isset($this->registry['baz']));
     }
 
     public function testOffsetGet()
     {
         foreach ($this->services as $type => $service) {
-            $this->assertSame($service, $this->serviceRegistry[$type]);
+            $this->assertSame($service, $this->registry[$type]);
         }
     }
 
@@ -82,16 +82,16 @@ class ServiceRegistryTest extends \PHPUnit_Framework_TestCase
      */
     public function testOffsetGetWithNonExistingService()
     {
-        $this->serviceRegistry['baz'];
+        $this->registry['baz'];
     }
 
     public function testOffsetSet()
     {
-        $this->serviceRegistry[$type = 'baz'] = $service = $this->createServiceMock();
+        $this->registry[$type = 'baz'] = $service = $this->createServiceMock();
 
-        $this->assertSame($service, $this->serviceRegistry[$type]);
-        $this->assertSame(array_merge($this->services, [$type => $service]), iterator_to_array($this->serviceRegistry));
-        $this->assertCount(count($this->services) + 1, $this->serviceRegistry);
+        $this->assertSame($service, $this->registry[$type]);
+        $this->assertSame(array_merge($this->services, [$type => $service]), iterator_to_array($this->registry));
+        $this->assertCount(count($this->services) + 1, $this->registry);
     }
 
     /**
@@ -100,37 +100,37 @@ class ServiceRegistryTest extends \PHPUnit_Framework_TestCase
      */
     public function testOffsetSetWithExistingService()
     {
-        $this->serviceRegistry['foo'] = $this->createServiceMock();
+        $this->registry['foo'] = $this->createServiceMock();
     }
 
     /**
      * @expectedException \Lug\Component\Registry\Exception\InvalidServiceException
-     * @expectedExceptionMessage The service for the registry "Lug\Component\Registry\Model\ServiceRegistry" must be an instance of "Lug\Component\Registry\Tests\Model\ServiceInterface", got "string".
+     * @expectedExceptionMessage The service for the registry "Lug\Component\Registry\Model\Registry" must be an instance of "Lug\Component\Registry\Tests\Model\ServiceInterface", got "string".
      */
     public function testOffsetSetWithScalarService()
     {
-        $this->serviceRegistry['baz'] = 'baz';
+        $this->registry['baz'] = 'baz';
     }
 
     /**
      * @expectedException \Lug\Component\Registry\Exception\InvalidServiceException
-     * @expectedExceptionMessage The service for the registry "Lug\Component\Registry\Model\ServiceRegistry" must be an instance of "Lug\Component\Registry\Tests\Model\ServiceInterface", got "stdClass".
+     * @expectedExceptionMessage The service for the registry "Lug\Component\Registry\Model\Registry" must be an instance of "Lug\Component\Registry\Tests\Model\ServiceInterface", got "stdClass".
      */
     public function testOffsetSetWithInvalidService()
     {
-        $this->serviceRegistry['baz'] = new \stdClass();
+        $this->registry['baz'] = new \stdClass();
     }
 
     public function testOffsetUnset()
     {
         foreach (array_keys($this->services) as $type) {
-            unset($this->serviceRegistry[$type]);
+            unset($this->registry[$type]);
 
-            $this->assertFalse(isset($this->serviceRegistry[$type]));
+            $this->assertFalse(isset($this->registry[$type]));
         }
 
-        $this->assertEmpty(iterator_to_array($this->serviceRegistry));
-        $this->assertCount(0, $this->serviceRegistry);
+        $this->assertEmpty(iterator_to_array($this->registry));
+        $this->assertCount(0, $this->registry);
     }
 
     /**
@@ -139,7 +139,7 @@ class ServiceRegistryTest extends \PHPUnit_Framework_TestCase
      */
     public function testOffsetUnsetWithNonExistingService()
     {
-        unset($this->serviceRegistry['baz']);
+        unset($this->registry['baz']);
     }
 
     /**

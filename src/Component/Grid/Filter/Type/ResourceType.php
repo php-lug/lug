@@ -11,7 +11,7 @@
 
 namespace Lug\Component\Grid\Filter\Type;
 
-use Lug\Component\Registry\Model\ServiceRegistryInterface;
+use Lug\Component\Registry\Model\RegistryInterface;
 use Lug\Component\Resource\Model\ResourceInterface;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -27,14 +27,14 @@ class ResourceType extends AbstractType
     const TYPE_NOT_EMPTY = 'not_empty';
 
     /**
-     * @var ServiceRegistryInterface
+     * @var RegistryInterface
      */
     private $resourceRegistry;
 
     /**
-     * @param ServiceRegistryInterface $resourceRegistry
+     * @param RegistryInterface $resourceRegistry
      */
-    public function __construct(ServiceRegistryInterface $resourceRegistry)
+    public function __construct(RegistryInterface $resourceRegistry)
     {
         $this->resourceRegistry = $resourceRegistry;
     }

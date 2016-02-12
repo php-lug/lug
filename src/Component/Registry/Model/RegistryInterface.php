@@ -14,7 +14,7 @@ namespace Lug\Component\Registry\Model;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-interface ServiceRegistryInterface extends
+interface RegistryInterface extends
     \ArrayAccess,
     \Countable,
     \IteratorAggregate

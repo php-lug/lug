@@ -16,7 +16,7 @@ use Lug\Component\Grid\Model\GridInterface;
 use Lug\Component\Grid\Slicer\SlicerInterface;
 use Lug\Component\Grid\Sort\SorterInterface;
 use Lug\Component\Grid\View\GridViewFactoryInterface;
-use Lug\Component\Registry\Model\ServiceRegistryInterface;
+use Lug\Component\Registry\Model\RegistryInterface;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -24,7 +24,7 @@ use Lug\Component\Registry\Model\ServiceRegistryInterface;
 class GridHandler implements GridHandlerInterface
 {
     /**
-     * @var ServiceRegistryInterface
+     * @var RegistryInterface
      */
     private $repositoryRegistry;
 
@@ -49,14 +49,14 @@ class GridHandler implements GridHandlerInterface
     private $slicer;
 
     /**
-     * @param ServiceRegistryInterface $repositoryRegistry
+     * @param RegistryInterface        $repositoryRegistry
      * @param GridViewFactoryInterface $gridViewFactory
      * @param FiltererInterface        $filterer
      * @param SorterInterface          $sorter
      * @param SlicerInterface          $slicer
      */
     public function __construct(
-        ServiceRegistryInterface $repositoryRegistry,
+        RegistryInterface $repositoryRegistry,
         GridViewFactoryInterface $gridViewFactory,
         FiltererInterface $filterer,
         SorterInterface $sorter,

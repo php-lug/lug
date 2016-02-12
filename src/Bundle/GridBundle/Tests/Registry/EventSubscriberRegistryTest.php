@@ -12,7 +12,7 @@
 namespace Lug\Bundle\GridBundle\Tests\Registry;
 
 use Lug\Bundle\GridBundle\Registry\EventSubscriberRegistry;
-use Lug\Component\Registry\Model\ServiceRegistry;
+use Lug\Component\Registry\Model\Registry;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
@@ -35,7 +35,7 @@ class EventSubscriberRegistryTest extends \PHPUnit_Framework_TestCase
 
     public function testInheritance()
     {
-        $this->assertInstanceOf(ServiceRegistry::class, $this->eventSubscriberRegistry);
+        $this->assertInstanceOf(Registry::class, $this->eventSubscriberRegistry);
     }
 
     public function testDefaultState()

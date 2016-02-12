@@ -13,7 +13,7 @@ namespace Lug\Component\Grid\Column\Type;
 
 use Lug\Component\Grid\Column\ColumnRendererInterface;
 use Lug\Component\Grid\Model\Column;
-use Lug\Component\Registry\Model\ServiceRegistryInterface;
+use Lug\Component\Registry\Model\RegistryInterface;
 use Lug\Component\Resource\Model\ResourceInterface;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -25,7 +25,7 @@ use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 class ResourceType extends AbstractType
 {
     /**
-     * @var ServiceRegistryInterface
+     * @var RegistryInterface
      */
     private $resourceRegistry;
 
@@ -46,12 +46,12 @@ class ResourceType extends AbstractType
 
     /**
      * @param PropertyAccessorInterface $propertyAccessor
-     * @param ServiceRegistryInterface  $resourceRegistry
+     * @param RegistryInterface         $resourceRegistry
      * @param ColumnRendererInterface   $renderer
      */
     public function __construct(
         PropertyAccessorInterface $propertyAccessor,
-        ServiceRegistryInterface $resourceRegistry,
+        RegistryInterface $resourceRegistry,
         ColumnRendererInterface $renderer
     ) {
         parent::__construct($propertyAccessor);

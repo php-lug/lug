@@ -13,7 +13,7 @@ namespace Lug\Component\Grid\Tests\Registry;
 
 use Lug\Component\Grid\Registry\SortRegistry;
 use Lug\Component\Grid\Sort\Type\TypeInterface;
-use Lug\Component\Registry\Model\ServiceRegistry;
+use Lug\Component\Registry\Model\Registry;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -35,7 +35,7 @@ class SortRegistryTest extends \PHPUnit_Framework_TestCase
 
     public function testInheritance()
     {
-        $this->assertInstanceOf(ServiceRegistry::class, $this->sortRegistry);
+        $this->assertInstanceOf(Registry::class, $this->sortRegistry);
     }
 
     public function testDefaultState()

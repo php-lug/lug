@@ -15,7 +15,7 @@ use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\Repository\RepositoryFactory as RepositoryFactoryInterface;
-use Lug\Component\Registry\Model\ServiceRegistryInterface;
+use Lug\Component\Registry\Model\RegistryInterface;
 use Lug\Component\Resource\Model\ResourceInterface;
 use Lug\Component\Resource\Repository\RepositoryInterface as BaseRepositoryInterface;
 
@@ -25,7 +25,7 @@ use Lug\Component\Resource\Repository\RepositoryInterface as BaseRepositoryInter
 class RepositoryFactory implements RepositoryFactoryInterface
 {
     /**
-     * @var ServiceRegistryInterface
+     * @var RegistryInterface
      */
     private $resourceRegistry;
 
@@ -35,9 +35,9 @@ class RepositoryFactory implements RepositoryFactoryInterface
     private $cache = [];
 
     /**
-     * @param ServiceRegistryInterface $resourceRegistry
+     * @param RegistryInterface $resourceRegistry
      */
-    public function __construct(ServiceRegistryInterface $resourceRegistry)
+    public function __construct(RegistryInterface $resourceRegistry)
     {
         $this->resourceRegistry = $resourceRegistry;
     }

@@ -12,12 +12,12 @@
 namespace Lug\Component\Grid\Registry;
 
 use Lug\Component\Grid\Batch\Type\TypeInterface;
-use Lug\Component\Registry\Model\ServiceRegistry;
+use Lug\Component\Registry\Model\Registry;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class BatchRegistry extends ServiceRegistry
+class BatchRegistry extends Registry
 {
     /**
      * @param TypeInterface[] $batches

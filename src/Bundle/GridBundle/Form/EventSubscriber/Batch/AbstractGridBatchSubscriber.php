@@ -14,7 +14,7 @@ namespace Lug\Bundle\GridBundle\Form\EventSubscriber\Batch;
 use Lug\Bundle\GridBundle\Form\Type\Batch\GridBatchValueType;
 use Lug\Bundle\ResourceBundle\Routing\ParameterResolverInterface;
 use Lug\Component\Grid\Model\GridInterface;
-use Lug\Component\Registry\Model\ServiceRegistryInterface;
+use Lug\Component\Registry\Model\RegistryInterface;
 use Lug\Component\Resource\Repository\RepositoryInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
@@ -27,7 +27,7 @@ use Symfony\Component\Form\FormInterface;
 abstract class AbstractGridBatchSubscriber implements EventSubscriberInterface
 {
     /**
-     * @var ServiceRegistryInterface
+     * @var RegistryInterface
      */
     private $repositoryRegistry;
 
@@ -37,11 +37,11 @@ abstract class AbstractGridBatchSubscriber implements EventSubscriberInterface
     private $parameterResolver;
 
     /**
-     * @param ServiceRegistryInterface   $repositoryRegistry
+     * @param RegistryInterface          $repositoryRegistry
      * @param ParameterResolverInterface $parameterResolver
      */
     public function __construct(
-        ServiceRegistryInterface $repositoryRegistry,
+        RegistryInterface $repositoryRegistry,
         ParameterResolverInterface $parameterResolver
     ) {
         $this->repositoryRegistry = $repositoryRegistry;

@@ -14,7 +14,7 @@ namespace Lug\Component\Grid\Action;
 use Lug\Component\Grid\Action\Type\TypeInterface;
 use Lug\Component\Grid\Model\ActionInterface;
 use Lug\Component\Grid\View\GridViewInterface;
-use Lug\Component\Registry\Model\ServiceRegistryInterface;
+use Lug\Component\Registry\Model\RegistryInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -23,7 +23,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class ActionRenderer implements ActionRendererInterface
 {
     /**
-     * @var ServiceRegistryInterface
+     * @var RegistryInterface
      */
     private $actionRegistry;
 
@@ -33,9 +33,9 @@ class ActionRenderer implements ActionRendererInterface
     private $cache = [];
 
     /**
-     * @param ServiceRegistryInterface $actionRegistry
+     * @param RegistryInterface $actionRegistry
      */
-    public function __construct(ServiceRegistryInterface $actionRegistry)
+    public function __construct(RegistryInterface $actionRegistry)
     {
         $this->actionRegistry = $actionRegistry;
     }
