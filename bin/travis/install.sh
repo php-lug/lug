@@ -10,6 +10,7 @@
 set -e
 
 TRAVIS_PHP_VERSION=${TRAVIS_PHP_VERSION-unknown}
+TRAVIS_PULL_REQUEST=${TRAVIS_PULL_REQUEST-false}
 LUG_DRIVER=${LUG_DRIVER-unknown}
 MONGODB_BUILD=${MONGODB_BUILD-false}
 UNIT_BUILD=${UNIT_BUILD-false}
@@ -77,7 +78,7 @@ fi
 
 composer install --prefer-source
 
-if [ "$UNIT_BUILD" = true ]; then
+if [ "$UNIT_BUILD" = true ] && [ "$TRAVIS_PULL_REQUEST" != false ]; then
     find src -maxdepth 3 -type f -name phpunit.xml.dist -printf "%h\n" \
         | parallel --gnu -j10% "cd {}; printf \"\\n\\n-> Installing {}\\n\\n\"; composer install --prefer-source"
 fi
