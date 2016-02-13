@@ -11,7 +11,7 @@
 
 namespace Lug\Bundle\RegistryBundle\Tests;
 
-use Lug\Bundle\RegistryBundle\DependencyInjection\Compiler\ConvertServiceRegistryPass;
+use Lug\Bundle\RegistryBundle\DependencyInjection\Compiler\ConvertRegistryPass;
 use Lug\Bundle\RegistryBundle\LugRegistryBundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
@@ -45,7 +45,7 @@ class LugRegistryBundleTest extends \PHPUnit_Framework_TestCase
         $container
             ->expects($this->once())
             ->method('addCompilerPass')
-            ->with($this->isInstanceOf(ConvertServiceRegistryPass::class));
+            ->with($this->isInstanceOf(ConvertRegistryPass::class));
 
         $this->bundle->build($container);
     }

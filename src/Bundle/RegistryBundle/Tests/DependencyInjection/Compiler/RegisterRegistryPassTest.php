@@ -11,7 +11,7 @@
 
 namespace Lug\Bundle\RegistryBundle\Tests\DependencyInjection\Compiler;
 
-use Lug\Bundle\RegistryBundle\DependencyInjection\Compiler\AbstractRegisterServiceRegistryPass;
+use Lug\Bundle\RegistryBundle\DependencyInjection\Compiler\AbstractRegisterRegistryPass;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
@@ -20,10 +20,10 @@ use Symfony\Component\DependencyInjection\Reference;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class RegisterServiceRegistryPassTest extends \PHPUnit_Framework_TestCase
+class RegisterRegistryPassTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var AbstractRegisterServiceRegistryPass
+     * @var AbstractRegisterRegistryPass
      */
     private $compiler;
 
@@ -51,7 +51,7 @@ class RegisterServiceRegistryPassTest extends \PHPUnit_Framework_TestCase
         $this->tag = 'my.tag';
         $this->attribute = 'my.alias';
 
-        $this->compiler = $this->getMockBuilder(AbstractRegisterServiceRegistryPass::class)
+        $this->compiler = $this->getMockBuilder(AbstractRegisterRegistryPass::class)
             ->setConstructorArgs([$this->registry, $this->tag, $this->attribute])
             ->getMockForAbstractClass();
     }

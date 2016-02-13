@@ -15,7 +15,7 @@ use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\Mapping\ClassMetadata;
 use Doctrine\ODM\MongoDB\Repository\DefaultRepositoryFactory;
-use Lug\Component\Registry\Model\ServiceRegistryInterface;
+use Lug\Component\Registry\Model\RegistryInterface;
 use Lug\Component\Resource\Model\ResourceInterface;
 use Lug\Component\Resource\Repository\RepositoryInterface as BaseRepositoryInterface;
 
@@ -25,14 +25,14 @@ use Lug\Component\Resource\Repository\RepositoryInterface as BaseRepositoryInter
 class RepositoryFactory extends DefaultRepositoryFactory
 {
     /**
-     * @var ServiceRegistryInterface
+     * @var RegistryInterface
      */
     private $resourceRegistry;
 
     /**
-     * @param ServiceRegistryInterface $resourceRegistry
+     * @param RegistryInterface $resourceRegistry
      */
-    public function __construct(ServiceRegistryInterface $resourceRegistry)
+    public function __construct(RegistryInterface $resourceRegistry)
     {
         $this->resourceRegistry = $resourceRegistry;
     }

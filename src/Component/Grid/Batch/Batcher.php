@@ -13,7 +13,7 @@ namespace Lug\Component\Grid\Batch;
 
 use Lug\Component\Grid\Batch\Type\TypeInterface;
 use Lug\Component\Grid\Model\GridInterface;
-use Lug\Component\Registry\Model\ServiceRegistryInterface;
+use Lug\Component\Registry\Model\RegistryInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -22,19 +22,19 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class Batcher implements BatcherInterface
 {
     /**
-     * @var ServiceRegistryInterface
+     * @var RegistryInterface
      */
     private $batchRegistry;
 
     /**
      * @var mixed[]
      */
-    private $cache;
+    private $cache = [];
 
     /**
-     * @param ServiceRegistryInterface $batchRegistry
+     * @param RegistryInterface $batchRegistry
      */
-    public function __construct(ServiceRegistryInterface $batchRegistry)
+    public function __construct(RegistryInterface $batchRegistry)
     {
         $this->batchRegistry = $batchRegistry;
     }

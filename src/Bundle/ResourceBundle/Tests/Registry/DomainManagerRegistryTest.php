@@ -11,8 +11,8 @@
 
 namespace Lug\Bundle\ResourceBundle\Tests\Registry;
 
-use Lug\Component\Registry\Model\ServiceRegistry;
-use Lug\Component\Registry\Model\ServiceRegistryInterface;
+use Lug\Component\Registry\Model\Registry;
+use Lug\Component\Registry\Model\RegistryInterface;
 use Lug\Component\Resource\Domain\DomainManagerInterface;
 use Lug\Component\Resource\Registry\DomainManagerRegistry;
 
@@ -36,8 +36,8 @@ class DomainManagerRegistryTest extends \PHPUnit_Framework_TestCase
 
     public function testInheritance()
     {
-        $this->assertInstanceOf(ServiceRegistryInterface::class, $this->domainManagerRegistry);
-        $this->assertInstanceOf(ServiceRegistry::class, $this->domainManagerRegistry);
+        $this->assertInstanceOf(RegistryInterface::class, $this->domainManagerRegistry);
+        $this->assertInstanceOf(Registry::class, $this->domainManagerRegistry);
     }
 
     public function testDefaultState()

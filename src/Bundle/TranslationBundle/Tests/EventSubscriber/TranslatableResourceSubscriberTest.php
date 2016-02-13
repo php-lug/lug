@@ -15,7 +15,7 @@ use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Events;
 use Lug\Bundle\TranslationBundle\EventSubscriber\TranslatableResourceSubscriber;
-use Lug\Component\Registry\Model\ServiceRegistryInterface;
+use Lug\Component\Registry\Model\RegistryInterface;
 use Lug\Component\Resource\Model\ResourceInterface;
 use Lug\Component\Translation\Context\LocaleContextInterface;
 use Lug\Component\Translation\Model\TranslatableInterface;
@@ -37,7 +37,7 @@ class TranslatableResourceSubscriberTest extends \PHPUnit_Framework_TestCase
     private $container;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|ServiceRegistryInterface
+     * @var \PHPUnit_Framework_MockObject_MockObject|RegistryInterface
      */
     private $resourceRegistry;
 
@@ -172,11 +172,11 @@ class TranslatableResourceSubscriberTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|ServiceRegistryInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|RegistryInterface
      */
     private function createResourceRegistryMock()
     {
-        return $this->getMock(ServiceRegistryInterface::class);
+        return $this->getMock(RegistryInterface::class);
     }
 
     /**

@@ -13,7 +13,7 @@ namespace Lug\Component\Grid\Tests\Registry;
 
 use Lug\Component\Grid\Action\Type\TypeInterface;
 use Lug\Component\Grid\Registry\ActionRegistry;
-use Lug\Component\Registry\Model\ServiceRegistry;
+use Lug\Component\Registry\Model\Registry;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -35,7 +35,7 @@ class ActionRegistryTest extends \PHPUnit_Framework_TestCase
 
     public function testInheritance()
     {
-        $this->assertInstanceOf(ServiceRegistry::class, $this->actionRegistry);
+        $this->assertInstanceOf(Registry::class, $this->actionRegistry);
     }
 
     public function testDefaultState()

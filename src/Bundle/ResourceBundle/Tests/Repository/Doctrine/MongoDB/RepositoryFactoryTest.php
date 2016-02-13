@@ -19,7 +19,7 @@ use Doctrine\ODM\MongoDB\Repository\RepositoryFactory as RepositoryFactoryInterf
 use Doctrine\ODM\MongoDB\UnitOfWork;
 use Lug\Bundle\ResourceBundle\Repository\Doctrine\MongoDB\Repository;
 use Lug\Bundle\ResourceBundle\Repository\Doctrine\MongoDB\RepositoryFactory;
-use Lug\Component\Registry\Model\ServiceRegistryInterface;
+use Lug\Component\Registry\Model\RegistryInterface;
 use Lug\Component\Resource\Model\ResourceInterface;
 
 /**
@@ -33,7 +33,7 @@ class RepositoryFactoryTest extends \PHPUnit_Framework_TestCase
     private $repositoryFactory;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|ServiceRegistryInterface
+     * @var \PHPUnit_Framework_MockObject_MockObject|RegistryInterface
      */
     private $resourceRegistry;
 
@@ -137,11 +137,11 @@ class RepositoryFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|ServiceRegistryInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|RegistryInterface
      */
     private function createResourceRegistryMock()
     {
-        return $this->getMock(ServiceRegistryInterface::class);
+        return $this->getMock(RegistryInterface::class);
     }
 
     /**

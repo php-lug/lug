@@ -18,7 +18,7 @@ use Lug\Component\Registry\Exception\ServiceNotFoundException;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class ServiceRegistry implements ServiceRegistryInterface
+class Registry implements RegistryInterface
 {
     /**
      * @var string

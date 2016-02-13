@@ -13,7 +13,7 @@ namespace Lug\Bundle\ResourceBundle\Tests\DependencyInjection\Configurator;
 
 use Lug\Bundle\ResourceBundle\DependencyInjection\Configurator\ResolveTargetSubscriberConfigurator;
 use Lug\Bundle\ResourceBundle\EventSubscriber\ResolveTargetSubscriberInterface;
-use Lug\Component\Registry\Model\ServiceRegistryInterface;
+use Lug\Component\Registry\Model\RegistryInterface;
 use Lug\Component\Resource\Model\ResourceInterface;
 
 /**
@@ -27,7 +27,7 @@ class ResolveTargetEntitySubscriberConfiguratorTest extends \PHPUnit_Framework_T
     private $configurator;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|ServiceRegistryInterface
+     * @var \PHPUnit_Framework_MockObject_MockObject|RegistryInterface
      */
     private $serviceRegistry;
 
@@ -70,11 +70,11 @@ class ResolveTargetEntitySubscriberConfiguratorTest extends \PHPUnit_Framework_T
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|ServiceRegistryInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|RegistryInterface
      */
     private function createServiceRegistryMock()
     {
-        return $this->getMock(ServiceRegistryInterface::class);
+        return $this->getMock(RegistryInterface::class);
     }
 
     /**

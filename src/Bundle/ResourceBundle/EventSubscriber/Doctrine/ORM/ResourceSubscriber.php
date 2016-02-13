@@ -14,7 +14,7 @@ namespace Lug\Bundle\ResourceBundle\EventSubscriber\Doctrine\ORM;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
 use Doctrine\ORM\Events;
-use Lug\Component\Registry\Model\ServiceRegistryInterface;
+use Lug\Component\Registry\Model\RegistryInterface;
 use Lug\Component\Resource\Model\ResourceInterface;
 
 /**
@@ -23,14 +23,14 @@ use Lug\Component\Resource\Model\ResourceInterface;
 class ResourceSubscriber implements EventSubscriber
 {
     /**
-     * @var ServiceRegistryInterface
+     * @var RegistryInterface
      */
     private $resourceRegistry;
 
     /**
-     * @param ServiceRegistryInterface $registry
+     * @param RegistryInterface $registry
      */
-    public function __construct(ServiceRegistryInterface $registry)
+    public function __construct(RegistryInterface $registry)
     {
         $this->resourceRegistry = $registry;
     }

@@ -21,7 +21,7 @@ use Lug\Bundle\TranslationBundle\Provider\A2lixLocaleProvider;
 use Lug\Bundle\TranslationBundle\Repository\Doctrine\MongoDB\TranslatableRepositoryFactory as DoctrineMongoDBTranslatableRepositoryFactory;
 use Lug\Bundle\TranslationBundle\Repository\Doctrine\ORM\TranslatableRepositoryFactory as DoctrineORMTranslatableRepositoryFactory;
 use Lug\Component\Locale\Provider\LocaleProviderInterface;
-use Lug\Component\Registry\Model\ServiceRegistryInterface;
+use Lug\Component\Registry\Model\RegistryInterface;
 use Lug\Component\Resource\Repository\RepositoryInterface;
 use Lug\Component\Translation\Context\LocaleContextInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -63,7 +63,7 @@ abstract class AbstractLugTranslationExtensionTest extends \PHPUnit_Framework_Te
     private $localeProvider;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|ServiceRegistryInterface
+     * @var \PHPUnit_Framework_MockObject_MockObject|RegistryInterface
      */
     private $resourceRegistry;
 
@@ -207,11 +207,11 @@ abstract class AbstractLugTranslationExtensionTest extends \PHPUnit_Framework_Te
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|ServiceRegistryInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|RegistryInterface
      */
     private function createServiceRegistryMock()
     {
-        return $this->getMock(ServiceRegistryInterface::class);
+        return $this->getMock(RegistryInterface::class);
     }
 
     /**

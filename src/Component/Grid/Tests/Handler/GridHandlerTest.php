@@ -20,7 +20,7 @@ use Lug\Component\Grid\Slicer\SlicerInterface;
 use Lug\Component\Grid\Sort\SorterInterface;
 use Lug\Component\Grid\View\GridViewFactoryInterface;
 use Lug\Component\Grid\View\GridViewInterface;
-use Lug\Component\Registry\Model\ServiceRegistryInterface;
+use Lug\Component\Registry\Model\RegistryInterface;
 use Lug\Component\Resource\Model\ResourceInterface;
 use Lug\Component\Resource\Repository\RepositoryInterface;
 
@@ -35,7 +35,7 @@ class GridHandlerTest extends \PHPUnit_Framework_TestCase
     private $handler;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|ServiceRegistryInterface
+     * @var \PHPUnit_Framework_MockObject_MockObject|RegistryInterface
      */
     private $repositoryRegistry;
 
@@ -154,11 +154,11 @@ class GridHandlerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|ServiceRegistryInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|RegistryInterface
      */
     private function createServiceRegistryMock()
     {
-        return $this->getMock(ServiceRegistryInterface::class);
+        return $this->getMock(RegistryInterface::class);
     }
 
     /**

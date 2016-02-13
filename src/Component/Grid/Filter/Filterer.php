@@ -14,7 +14,7 @@ namespace Lug\Component\Grid\Filter;
 use Lug\Component\Grid\DataSource\DataSourceBuilderInterface;
 use Lug\Component\Grid\Filter\Type\TypeInterface;
 use Lug\Component\Grid\Model\GridInterface;
-use Lug\Component\Registry\Model\ServiceRegistryInterface;
+use Lug\Component\Registry\Model\RegistryInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -23,14 +23,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class Filterer implements FiltererInterface
 {
     /**
-     * @var ServiceRegistryInterface
+     * @var RegistryInterface
      */
     private $filterRegistry;
 
     /**
-     * @param ServiceRegistryInterface $filterRegistry
+     * @param RegistryInterface $filterRegistry
      */
-    public function __construct(ServiceRegistryInterface $filterRegistry)
+    public function __construct(RegistryInterface $filterRegistry)
     {
         $this->filterRegistry = $filterRegistry;
     }

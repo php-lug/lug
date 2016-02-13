@@ -13,7 +13,7 @@ namespace Lug\Component\Grid\Tests\Registry;
 
 use Lug\Component\Grid\Column\Type\TypeInterface;
 use Lug\Component\Grid\Registry\ColumnRegistry;
-use Lug\Component\Registry\Model\ServiceRegistry;
+use Lug\Component\Registry\Model\Registry;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -35,7 +35,7 @@ class ColumnRegistryTest extends \PHPUnit_Framework_TestCase
 
     public function testInheritance()
     {
-        $this->assertInstanceOf(ServiceRegistry::class, $this->columnRegistry);
+        $this->assertInstanceOf(Registry::class, $this->columnRegistry);
     }
 
     public function testDefaultState()

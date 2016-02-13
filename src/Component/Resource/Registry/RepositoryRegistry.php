@@ -11,13 +11,13 @@
 
 namespace Lug\Component\Resource\Registry;
 
-use Lug\Component\Registry\Model\ServiceRegistry;
+use Lug\Component\Registry\Model\Registry;
 use Lug\Component\Resource\Repository\RepositoryInterface;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class RepositoryRegistry extends ServiceRegistry
+class RepositoryRegistry extends Registry
 {
     /**
      * @param RepositoryInterface[] $repositories

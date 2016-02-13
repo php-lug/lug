@@ -11,9 +11,9 @@
 
 namespace Lug\Bundle\RegistryBundle\Tests\DependencyInjection\Compiler;
 
-use Lug\Bundle\RegistryBundle\DependencyInjection\Compiler\ConvertServiceRegistryPass;
-use Lug\Bundle\RegistryBundle\Model\LazyServiceRegistry;
-use Lug\Component\Registry\Model\ServiceRegistry;
+use Lug\Bundle\RegistryBundle\DependencyInjection\Compiler\ConvertRegistryPass;
+use Lug\Bundle\RegistryBundle\Model\LazyRegistry;
+use Lug\Component\Registry\Model\Registry;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
@@ -21,10 +21,10 @@ use Symfony\Component\DependencyInjection\Reference;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class ConvertServiceRegistryPassTest extends \PHPUnit_Framework_TestCase
+class ConvertRegistryPassTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var ConvertServiceRegistryPass
+     * @var ConvertRegistryPass
      */
     private $compiler;
 
@@ -39,7 +39,7 @@ class ConvertServiceRegistryPassTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->container = $this->createContainerMock();
-        $this->compiler = new ConvertServiceRegistryPass();
+        $this->compiler = new ConvertRegistryPass();
     }
 
     public function testProcess()
@@ -59,7 +59,7 @@ class ConvertServiceRegistryPassTest extends \PHPUnit_Framework_TestCase
         $definition
             ->expects($this->once())
             ->method('getClass')
-            ->will($this->returnValue(ServiceRegistry::class));
+            ->will($this->returnValue(Registry::class));
 
         $definition
             ->expects($this->once())
@@ -100,7 +100,7 @@ class ConvertServiceRegistryPassTest extends \PHPUnit_Framework_TestCase
                 [$service.'.internal', $definition],
                 [$service, $this->callback(function ($definition) use ($service, $types) {
                     $result = $definition instanceof Definition
-                        && $definition->getClass() === LazyServiceRegistry::class
+                        && $definition->getClass() === LazyRegistry::class
                         && count($definition->getArguments()) === 2
                         && $definition->getArgument(0) instanceof Reference
                         && (string) $definition->getArgument(0) === 'service_container'
@@ -138,7 +138,7 @@ class ConvertServiceRegistryPassTest extends \PHPUnit_Framework_TestCase
         $definition
             ->expects($this->once())
             ->method('getClass')
-            ->will($this->returnValue(LazyServiceRegistry::class));
+            ->will($this->returnValue(LazyRegistry::class));
 
         $definition
             ->expects($this->never())

@@ -14,7 +14,7 @@ namespace Lug\Component\Grid\Sort;
 use Lug\Component\Grid\DataSource\DataSourceBuilderInterface;
 use Lug\Component\Grid\Model\GridInterface;
 use Lug\Component\Grid\Sort\Type\TypeInterface;
-use Lug\Component\Registry\Model\ServiceRegistryInterface;
+use Lug\Component\Registry\Model\RegistryInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -23,14 +23,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class Sorter implements SorterInterface
 {
     /**
-     * @var ServiceRegistryInterface
+     * @var RegistryInterface
      */
     private $sortRegistry;
 
     /**
-     * @param ServiceRegistryInterface $sortRegistry
+     * @param RegistryInterface $sortRegistry
      */
-    public function __construct(ServiceRegistryInterface $sortRegistry)
+    public function __construct(RegistryInterface $sortRegistry)
     {
         $this->sortRegistry = $sortRegistry;
     }

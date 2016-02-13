@@ -12,8 +12,8 @@
 namespace Lug\Component\Resource\Tests\Registry;
 
 use Doctrine\Common\Persistence\ObjectManager;
-use Lug\Component\Registry\Model\ServiceRegistry;
-use Lug\Component\Registry\Model\ServiceRegistryInterface;
+use Lug\Component\Registry\Model\Registry;
+use Lug\Component\Registry\Model\RegistryInterface;
 use Lug\Component\Resource\Registry\ManagerRegistry;
 
 /**
@@ -36,8 +36,8 @@ class ManagerRegistryTest extends \PHPUnit_Framework_TestCase
 
     public function testInheritance()
     {
-        $this->assertInstanceOf(ServiceRegistryInterface::class, $this->managerRegistry);
-        $this->assertInstanceOf(ServiceRegistry::class, $this->managerRegistry);
+        $this->assertInstanceOf(RegistryInterface::class, $this->managerRegistry);
+        $this->assertInstanceOf(Registry::class, $this->managerRegistry);
     }
 
     public function testDefaultState()

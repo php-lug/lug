@@ -13,7 +13,7 @@ namespace Lug\Bundle\GridBundle\Tests\Model\Builder;
 
 use Lug\Bundle\GridBundle\Model\Builder\FilterBuilder;
 use Lug\Component\Grid\Model\Builder\FilterBuilder as BaseFilterBuilder;
-use Lug\Component\Registry\Model\ServiceRegistryInterface;
+use Lug\Component\Registry\Model\RegistryInterface;
 use Symfony\Component\Form\FormTypeInterface;
 
 /**
@@ -27,7 +27,7 @@ class FilterBuilderTest extends \PHPUnit_Framework_TestCase
     private $builder;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|ServiceRegistryInterface
+     * @var \PHPUnit_Framework_MockObject_MockObject|RegistryInterface
      */
     private $filterFormRegistry;
 
@@ -86,11 +86,11 @@ class FilterBuilderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|ServiceRegistryInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|RegistryInterface
      */
     private function createServiceRegistryMock()
     {
-        return $this->getMock(ServiceRegistryInterface::class);
+        return $this->getMock(RegistryInterface::class);
     }
 
     /**

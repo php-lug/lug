@@ -11,7 +11,7 @@
 
 namespace Lug\Bundle\RegistryBundle;
 
-use Lug\Bundle\RegistryBundle\DependencyInjection\Compiler\ConvertServiceRegistryPass;
+use Lug\Bundle\RegistryBundle\DependencyInjection\Compiler\ConvertRegistryPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -25,6 +25,6 @@ class LugRegistryBundle extends Bundle
      */
     public function build(ContainerBuilder $container)
     {
-        $container->addCompilerPass(new ConvertServiceRegistryPass());
+        $container->addCompilerPass(new ConvertRegistryPass());
     }
 }

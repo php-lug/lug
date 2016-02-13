@@ -11,13 +11,13 @@
 
 namespace Lug\Component\Resource\Registry;
 
-use Lug\Component\Registry\Model\ServiceRegistry;
+use Lug\Component\Registry\Model\Registry;
 use Lug\Component\Resource\Factory\FactoryInterface;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class FactoryRegistry extends ServiceRegistry
+class FactoryRegistry extends Registry
 {
     /**
      * @param FactoryInterface[] $factories

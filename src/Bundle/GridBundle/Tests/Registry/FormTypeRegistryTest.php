@@ -12,7 +12,7 @@
 namespace Lug\Bundle\GridBundle\Tests\Registry;
 
 use Lug\Bundle\GridBundle\Registry\FormTypeRegistry;
-use Lug\Component\Registry\Model\ServiceRegistry;
+use Lug\Component\Registry\Model\Registry;
 use Symfony\Component\Form\FormTypeInterface;
 
 /**
@@ -35,7 +35,7 @@ class FormTypeRegistryTest extends \PHPUnit_Framework_TestCase
 
     public function testInheritance()
     {
-        $this->assertInstanceOf(ServiceRegistry::class, $this->formTypeRegistry);
+        $this->assertInstanceOf(Registry::class, $this->formTypeRegistry);
     }
 
     public function testDefaultState()

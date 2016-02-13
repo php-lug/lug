@@ -11,8 +11,8 @@
 
 namespace Lug\Bundle\RegistryBundle\DependencyInjection\Compiler;
 
-use Lug\Bundle\RegistryBundle\Model\LazyServiceRegistry;
-use Lug\Bundle\RegistryBundle\Model\LazyServiceRegistryInterface;
+use Lug\Bundle\RegistryBundle\Model\LazyRegistry;
+use Lug\Bundle\RegistryBundle\Model\LazyRegistryInterface;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
@@ -21,7 +21,7 @@ use Symfony\Component\DependencyInjection\Reference;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class ConvertServiceRegistryPass implements CompilerPassInterface
+class ConvertRegistryPass implements CompilerPassInterface
 {
     /**
      * {@inheritdoc}
@@ -31,7 +31,7 @@ class ConvertServiceRegistryPass implements CompilerPassInterface
         foreach (array_keys($container->findTaggedServiceIds($tag = 'lug.registry')) as $registry) {
             $definition = $container->getDefinition($registry);
 
-            if (is_subclass_of($definition->getClass(), LazyServiceRegistryInterface::class)) {
+            if (is_subclass_of($definition->getClass(), LazyRegistryInterface::class)) {
                 continue;
             }
 
@@ -50,7 +50,7 @@ class ConvertServiceRegistryPass implements CompilerPassInterface
      */
     private function createLazyDefinition($registry, Definition $definition)
     {
-        $lazy = new Definition(LazyServiceRegistry::class, [
+        $lazy = new Definition(LazyRegistry::class, [
             new Reference('service_container'),
             new Reference($registry),
         ]);

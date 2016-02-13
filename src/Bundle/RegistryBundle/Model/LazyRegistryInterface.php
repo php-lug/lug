@@ -11,12 +11,12 @@
 
 namespace Lug\Bundle\RegistryBundle\Model;
 
-use Lug\Component\Registry\Model\ServiceRegistryInterface;
+use Lug\Component\Registry\Model\RegistryInterface;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-interface LazyServiceRegistryInterface extends ServiceRegistryInterface
+interface LazyRegistryInterface extends RegistryInterface
 {
     /**
      * @param string $type

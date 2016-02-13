@@ -15,7 +15,7 @@ use Lug\Bundle\GridBundle\Batch\Type\DeleteType;
 use Lug\Bundle\ResourceBundle\Routing\ParameterResolverInterface;
 use Lug\Component\Grid\Batch\Type\AbstractType;
 use Lug\Component\Grid\Model\GridInterface;
-use Lug\Component\Registry\Model\ServiceRegistryInterface;
+use Lug\Component\Registry\Model\RegistryInterface;
 use Lug\Component\Resource\Domain\DomainManagerInterface;
 use Lug\Component\Resource\Exception\DomainException;
 use Lug\Component\Resource\Model\ResourceInterface;
@@ -31,7 +31,7 @@ class DeleteTypeTest extends \PHPUnit_Framework_TestCase
     private $type;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|ServiceRegistryInterface
+     * @var \PHPUnit_Framework_MockObject_MockObject|RegistryInterface
      */
     private $domainManagerRegistry;
 
@@ -230,11 +230,11 @@ class DeleteTypeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|ServiceRegistryInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|RegistryInterface
      */
     private function createServiceRegistryMock()
     {
-        return $this->getMock(ServiceRegistryInterface::class);
+        return $this->getMock(RegistryInterface::class);
     }
 
     /**

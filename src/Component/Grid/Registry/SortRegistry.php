@@ -12,12 +12,12 @@
 namespace Lug\Component\Grid\Registry;
 
 use Lug\Component\Grid\Sort\Type\TypeInterface;
-use Lug\Component\Registry\Model\ServiceRegistry;
+use Lug\Component\Registry\Model\Registry;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class SortRegistry extends ServiceRegistry
+class SortRegistry extends Registry
 {
     /**
      * @param TypeInterface[] $types

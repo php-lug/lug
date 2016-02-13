@@ -11,8 +11,8 @@
 
 namespace Lug\Component\Resource\Tests\Registry;
 
-use Lug\Component\Registry\Model\ServiceRegistry;
-use Lug\Component\Registry\Model\ServiceRegistryInterface;
+use Lug\Component\Registry\Model\Registry;
+use Lug\Component\Registry\Model\RegistryInterface;
 use Lug\Component\Resource\Model\ResourceInterface;
 use Lug\Component\Resource\Registry\ResourceRegistry;
 
@@ -36,8 +36,8 @@ class ResourceRegistryTest extends \PHPUnit_Framework_TestCase
 
     public function testInheritance()
     {
-        $this->assertInstanceOf(ServiceRegistryInterface::class, $this->resourceRegistry);
-        $this->assertInstanceOf(ServiceRegistry::class, $this->resourceRegistry);
+        $this->assertInstanceOf(RegistryInterface::class, $this->resourceRegistry);
+        $this->assertInstanceOf(Registry::class, $this->resourceRegistry);
     }
 
     public function testDefaultState()

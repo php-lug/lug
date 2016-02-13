@@ -13,7 +13,7 @@ namespace Lug\Bundle\GridBundle\Batch\Type;
 
 use Lug\Bundle\ResourceBundle\Routing\ParameterResolverInterface;
 use Lug\Component\Grid\Batch\Type\AbstractType;
-use Lug\Component\Registry\Model\ServiceRegistryInterface;
+use Lug\Component\Registry\Model\RegistryInterface;
 use Lug\Component\Resource\Exception\DomainException;
 
 /**
@@ -22,7 +22,7 @@ use Lug\Component\Resource\Exception\DomainException;
 class DeleteType extends AbstractType
 {
     /**
-     * @var ServiceRegistryInterface
+     * @var RegistryInterface
      */
     private $domainManagerRegistry;
 
@@ -32,11 +32,11 @@ class DeleteType extends AbstractType
     private $parameterResolver;
 
     /**
-     * @param ServiceRegistryInterface   $domainManagerRegistry
+     * @param RegistryInterface          $domainManagerRegistry
      * @param ParameterResolverInterface $parameterResolver
      */
     public function __construct(
-        ServiceRegistryInterface $domainManagerRegistry,
+        RegistryInterface $domainManagerRegistry,
         ParameterResolverInterface $parameterResolver
     ) {
         $this->domainManagerRegistry = $domainManagerRegistry;

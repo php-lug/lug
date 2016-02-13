@@ -14,7 +14,7 @@ namespace Lug\Bundle\GridBundle\Model\Builder;
 use Lug\Bundle\GridBundle\Model\Filter;
 use Lug\Bundle\ResourceBundle\Util\ClassUtils;
 use Lug\Component\Grid\Model\Builder\FilterBuilder as BaseFilterBuilder;
-use Lug\Component\Registry\Model\ServiceRegistryInterface;
+use Lug\Component\Registry\Model\RegistryInterface;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -22,14 +22,14 @@ use Lug\Component\Registry\Model\ServiceRegistryInterface;
 class FilterBuilder extends BaseFilterBuilder
 {
     /**
-     * @var ServiceRegistryInterface
+     * @var RegistryInterface
      */
     private $filterFormRegistry;
 
     /**
-     * @param ServiceRegistryInterface $filterFormRegistry
+     * @param RegistryInterface $filterFormRegistry
      */
-    public function __construct(ServiceRegistryInterface $filterFormRegistry)
+    public function __construct(RegistryInterface $filterFormRegistry)
     {
         $this->filterFormRegistry = $filterFormRegistry;
     }

@@ -11,7 +11,7 @@
 
 namespace Lug\Component\Grid\Sort\Type;
 
-use Lug\Component\Registry\Model\ServiceRegistryInterface;
+use Lug\Component\Registry\Model\RegistryInterface;
 use Lug\Component\Resource\Model\ResourceInterface;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -22,22 +22,22 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class ResourceType extends AbstractType
 {
     /**
-     * @var ServiceRegistryInterface
+     * @var RegistryInterface
      */
     private $resourceRegistry;
 
     /**
-     * @var ServiceRegistryInterface
+     * @var RegistryInterface
      */
     private $repositoryRegistry;
 
     /**
-     * @param ServiceRegistryInterface $resourceRegistry
-     * @param ServiceRegistryInterface $repositoryRegistry
+     * @param RegistryInterface $resourceRegistry
+     * @param RegistryInterface $repositoryRegistry
      */
     public function __construct(
-        ServiceRegistryInterface $resourceRegistry,
-        ServiceRegistryInterface $repositoryRegistry
+        RegistryInterface $resourceRegistry,
+        RegistryInterface $repositoryRegistry
     ) {
         $this->resourceRegistry = $resourceRegistry;
         $this->repositoryRegistry = $repositoryRegistry;

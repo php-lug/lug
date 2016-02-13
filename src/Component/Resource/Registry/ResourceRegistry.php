@@ -11,13 +11,13 @@
 
 namespace Lug\Component\Resource\Registry;
 
-use Lug\Component\Registry\Model\ServiceRegistry;
+use Lug\Component\Registry\Model\Registry;
 use Lug\Component\Resource\Model\ResourceInterface;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class ResourceRegistry extends ServiceRegistry
+class ResourceRegistry extends Registry
 {
     /**
      * @param ResourceInterface[] $resources

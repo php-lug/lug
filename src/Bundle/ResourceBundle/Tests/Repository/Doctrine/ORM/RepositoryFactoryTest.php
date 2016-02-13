@@ -18,7 +18,7 @@ use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\Repository\RepositoryFactory as RepositoryFactoryInterface;
 use Lug\Bundle\ResourceBundle\Repository\Doctrine\ORM\Repository;
 use Lug\Bundle\ResourceBundle\Repository\Doctrine\ORM\RepositoryFactory;
-use Lug\Component\Registry\Model\ServiceRegistryInterface;
+use Lug\Component\Registry\Model\RegistryInterface;
 use Lug\Component\Resource\Model\ResourceInterface;
 
 /**
@@ -32,7 +32,7 @@ class RepositoryFactoryTest extends \PHPUnit_Framework_TestCase
     private $repositoryFactory;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|ServiceRegistryInterface
+     * @var \PHPUnit_Framework_MockObject_MockObject|RegistryInterface
      */
     private $resourceRegistry;
 
@@ -122,11 +122,11 @@ class RepositoryFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|ServiceRegistryInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|RegistryInterface
      */
     private function createResourceRegistryMock()
     {
-        return $this->getMock(ServiceRegistryInterface::class);
+        return $this->getMock(RegistryInterface::class);
     }
 
     /**
