@@ -9,9 +9,15 @@
 
 set -e
 
+LUG_CACHE=${HOME}/.lug-cache
 COVERAGE_BUILD=${COVERAGE_BUILD-false}
 
 if [ "$COVERAGE_BUILD" = true ]; then
-    wget https://scrutinizer-ci.com/ocular.phar
-    php ocular.phar code-coverage:upload --format=php-clover build/clover.xml
+    OCULAR_PHAR=${LUG_CACHE}/ocular.phar
+
+    if [ ! -f ${OCULAR_PHAR} ]; then
+        curl https://scrutinizer-ci.com/ocular.phar > ${OCULAR_PHAR}
+    fi
+
+    php ${OCULAR_PHAR} code-coverage:upload --format=php-clover build/clover.xml
 fi

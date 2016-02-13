@@ -11,12 +11,17 @@ set -e
 
 TRAVIS_PHP_VERSION=${TRAVIS_PHP_VERSION-unknown}
 TRAVIS_PULL_REQUEST=${TRAVIS_PULL_REQUEST-false}
+LUG_CACHE=${HOME}/.lug-cache
 LUG_DRIVER=${LUG_DRIVER-unknown}
 MONGODB_BUILD=${MONGODB_BUILD-false}
 UNIT_BUILD=${UNIT_BUILD-false}
 BDD_BUILD=${BDD_BUILD-false}
 COVERAGE_BUILD=${COVERAGE_BUILD-false}
 DISPLAY=${DISPLAY-:99}
+
+if [ ! -d ${LUG_CACHE} ]; then
+    mkdir -p ${LUG_CACHE}
+fi
 
 if [ "$TRAVIS_PHP_VERSION" = "hhvm" ]; then
     PHP_INI=/etc/hhvm/php.ini
@@ -52,11 +57,21 @@ if [ "$BDD_BUILD" = true ]; then
     export DISPLAY=${DISPLAY}
     /sbin/start-stop-daemon -Sbmq -p /tmp/xvfb_99.pid -x /usr/bin/Xvfb -- ${DISPLAY} -ac -screen 0, 1600x1200x24
 
-    curl http://selenium-release.storage.googleapis.com/2.48/selenium-server-standalone-2.48.0.jar > selenium.jar
-    curl http://chromedriver.storage.googleapis.com/2.12/chromedriver_linux64.zip > chromedriver.zip
-    unzip chromedriver.zip
+    SELENIUM_JAR=${LUG_CACHE}/selenium.jar
+    CHROME_DRIVER_ZIP=${LUG_CACHE}/chromedriver.zip
+    CHROME_DRIVER=${LUG_CACHE}/chromedriver
 
-    java -jar selenium.jar -Dwebdriver.chrome.driver=./chromedriver > /dev/null 2>&1 &
+    if [ ! -f ${SELENIUM_JAR} ]; then
+        curl http://selenium-release.storage.googleapis.com/2.48/selenium-server-standalone-2.48.0.jar > ${SELENIUM_JAR}
+    fi
+
+    if [ ! -f ${CHROME_DRIVER} ]; then
+        curl http://chromedriver.storage.googleapis.com/2.12/chromedriver_linux64.zip > ${CHROME_DRIVER_ZIP}
+        unzip ${CHROME_DRIVER_ZIP} -d ${LUG_CACHE}
+        rm ${CHROME_DRIVER_ZIP}
+    fi
+
+    java -jar ${SELENIUM_JAR} -Dwebdriver.chrome.driver=${CHROME_DRIVER} > /dev/null 2>&1 &
 
     printf "\nalways_populate_raw_post_data = -1" >> ${PHP_INI}
 
