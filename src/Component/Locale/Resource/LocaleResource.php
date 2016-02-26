@@ -9,14 +9,14 @@
  * file that was distributed with this source code.
  */
 
-namespace Lug\Bundle\LocaleBundle\Resource;
+namespace Lug\Component\Locale\Resource;
 
-use Lug\Bundle\LocaleBundle\Form\Type\Doctrine\MongoDB\LocaleChoiceType as DoctrineMongoDBLocaleChoiceType;
-use Lug\Bundle\LocaleBundle\Form\Type\Doctrine\ORM\LocaleChoiceType as DoctrineORMLocaleChoiceType;
-use Lug\Bundle\LocaleBundle\Form\Type\LocaleType;
 use Lug\Bundle\ResourceBundle\Controller\Controller;
 use Lug\Bundle\ResourceBundle\Repository\Doctrine\MongoDB\Repository as DoctrineMongoDBRepository;
 use Lug\Bundle\ResourceBundle\Repository\Doctrine\ORM\Repository as DoctrineORMRepository;
+use Lug\Component\Locale\Form\Type\Doctrine\MongoDB\LocaleChoiceType as DoctrineMongoDBLocaleChoiceType;
+use Lug\Component\Locale\Form\Type\Doctrine\ORM\LocaleChoiceType as DoctrineORMLocaleChoiceType;
+use Lug\Component\Locale\Form\Type\LocaleType;
 use Lug\Component\Locale\Model\Locale;
 use Lug\Component\Locale\Model\LocaleInterface;
 use Lug\Component\Resource\Domain\DomainManager;

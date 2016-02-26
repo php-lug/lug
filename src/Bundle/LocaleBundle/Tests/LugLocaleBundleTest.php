@@ -13,8 +13,8 @@ namespace Lug\Bundle\LocaleBundle\Tests;
 
 use Lug\Bundle\LocaleBundle\DependencyInjection\Compiler\RegisterValidationMetadataPass;
 use Lug\Bundle\LocaleBundle\LugLocaleBundle;
-use Lug\Bundle\LocaleBundle\Resource\LocaleResource;
 use Lug\Bundle\ResourceBundle\AbstractResourceBundle;
+use Lug\Component\Locale\Resource\LocaleResource;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**

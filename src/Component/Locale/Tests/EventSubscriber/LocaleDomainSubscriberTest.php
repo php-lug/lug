@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Lug\Bundle\LocaleBundle\Tests\EventSubscriber;
+namespace Lug\Component\LocaleB\Tests\EventSubscriber;
 
-use Lug\Bundle\LocaleBundle\EventSubscriber\LocaleDomainSubscriber;
+use Lug\Component\Locale\EventSubscriber\LocaleDomainSubscriber;
 use Lug\Component\Locale\Model\LocaleInterface;
 use Lug\Component\Locale\Provider\LocaleProviderInterface;
 use Lug\Component\Resource\Domain\DomainEvent;

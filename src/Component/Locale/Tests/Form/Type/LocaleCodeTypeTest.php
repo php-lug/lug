@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Lug\Bundle\LocaleBundle\Tests\Form\Type;
+namespace Lug\Component\Locale\Tests\Form\Type;
 
-use Lug\Bundle\LocaleBundle\Form\Type\LocaleCodeType;
+use Lug\Component\Locale\Form\Type\LocaleCodeType;
 use Lug\Component\Locale\Model\LocaleInterface;
 use Lug\Component\Resource\Repository\RepositoryInterface;
 use Symfony\Component\Form\AbstractType;

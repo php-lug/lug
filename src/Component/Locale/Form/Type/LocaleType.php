@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Lug\Bundle\LocaleBundle\Form\Type;
+namespace Lug\Component\Locale\Form\Type;
 
 use Lug\Component\Locale\Provider\LocaleProviderInterface;
 use Lug\Component\Resource\Factory\FactoryInterface;

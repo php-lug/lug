@@ -15,7 +15,7 @@ file that was distributed with this source code.
     <services>
         <service
             id="lug.locale.form.type.locale_code"
-            class="Lug\Bundle\LocaleBundle\Form\Type\LocaleCodeType"
+            class="Lug\Component\Locale\Form\Type\LocaleCodeType"
         >
             <argument type="service" id="lug.repository.locale" />
             <tag name="form.type" />

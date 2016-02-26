@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Lug\Bundle\LocaleBundle\Form\Type\Doctrine\ORM;
+namespace Lug\Component\Locale\Form\Type\Doctrine\ORM;
 
 use Lug\Component\Resource\Form\Type\Doctrine\ORM\AbstractResourceChoiceType;
 

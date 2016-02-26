@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Lug\Bundle\LocaleBundle\EventSubscriber;
+namespace Lug\Component\Locale\EventSubscriber;
 
 use Lug\Component\Locale\Provider\LocaleProviderInterface;
 use Lug\Component\Resource\Domain\DomainEvent;

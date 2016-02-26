@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Lug\Bundle\LocaleBundle\Form\Type\Doctrine\MongoDB;
+namespace Lug\Component\Locale\Form\Type\Doctrine\MongoDB;
 
 use Lug\Component\Resource\Form\Type\Doctrine\MongoDB\AbstractResourceChoiceType;
 

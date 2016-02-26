@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace Lug\Bundle\LocaleBundle\Tests\Form\Type\Doctrine\MongoDB;
+namespace Lug\Component\Locale\Tests\Form\Type\Doctrine\ORM;
 
-use Lug\Bundle\LocaleBundle\Form\Type\Doctrine\MongoDB\LocaleChoiceType;
-use Lug\Component\Resource\Form\Type\Doctrine\MongoDB\AbstractResourceChoiceType;
+use Lug\Component\Locale\Form\Type\Doctrine\ORM\LocaleChoiceType;
+use Lug\Component\Resource\Form\Type\Doctrine\ORM\AbstractResourceChoiceType;
 use Lug\Component\Resource\Model\ResourceInterface;
 
 /**

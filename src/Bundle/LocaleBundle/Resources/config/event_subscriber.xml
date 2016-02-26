@@ -15,7 +15,7 @@ file that was distributed with this source code.
     <services>
         <service
             id="lug.locale.subscriber.domain"
-            class="Lug\Bundle\LocaleBundle\EventSubscriber\LocaleDomainSubscriber"
+            class="Lug\Component\Locale\EventSubscriber\LocaleDomainSubscriber"
         >
             <argument type="service" id="lug.locale.provider" />
             <argument type="service" id="translator" />
