@@ -34,6 +34,6 @@ class LugLocaleBundle extends AbstractResourceBundle
      */
     protected function createResources($driver)
     {
-        return [new LocaleResource($this->getPath(), $driver)];
+        return [new LocaleResource($driver)];
     }
 }

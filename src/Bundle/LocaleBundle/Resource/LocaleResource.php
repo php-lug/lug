@@ -20,11 +20,10 @@ use Lug\Component\Locale\Resource\LocaleResource as LugLocaleResource;
 class LocaleResource extends LugLocaleResource
 {
     /**
-     * @param string $bundlePath
      * @param string $driver
      */
-    public function __construct($bundlePath, $driver = self::DRIVER_DOCTRINE_ORM)
+    public function __construct($driver = self::DRIVER_DOCTRINE_ORM)
     {
-        parent::__construct(Controller::class, $bundlePath.'/Resources/config/resources', $driver);
+        parent::__construct(Controller::class, $driver);
     }
 }

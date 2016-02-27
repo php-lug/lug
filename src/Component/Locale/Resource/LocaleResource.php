@@ -29,10 +29,9 @@ class LocaleResource extends Resource
 {
     /**
      * @param string $controller
-     * @param string $resourcePath
      * @param string $driver
      */
-    public function __construct($controller, $resourcePath, $driver = self::DRIVER_DOCTRINE_ORM)
+    public function __construct($controller, $driver = self::DRIVER_DOCTRINE_ORM)
     {
         $orm = $driver === self::DRIVER_DOCTRINE_ORM;
 
@@ -40,7 +39,7 @@ class LocaleResource extends Resource
             'locale',
             $driver,
             'default',
-            $resourcePath,
+            realpath(__DIR__.'/../Resources/Doctrine'),
             self::DRIVER_MAPPING_FORMAT_XML,
             LocaleInterface::class,
             Locale::class,
