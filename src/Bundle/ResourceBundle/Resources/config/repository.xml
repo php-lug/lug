@@ -15,14 +15,14 @@ file that was distributed with this source code.
     <services>
         <service
             id="lug.resource.repository.doctrine.orm.factory"
-            class="Lug\Bundle\ResourceBundle\Repository\Doctrine\ORM\RepositoryFactory"
+            class="Lug\Component\Resource\Repository\Doctrine\ORM\RepositoryFactory"
         >
             <argument type="service" id="lug.resource.registry" />
         </service>
 
         <service
             id="lug.resource.repository.doctrine.mongodb.factory"
-            class="Lug\Bundle\ResourceBundle\Repository\Doctrine\MongoDB\RepositoryFactory"
+            class="Lug\Component\Resource\Repository\Doctrine\MongoDB\RepositoryFactory"
         >
             <argument type="service" id="lug.resource.registry" />
         </service>

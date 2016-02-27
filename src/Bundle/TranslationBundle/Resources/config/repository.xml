@@ -15,14 +15,14 @@ file that was distributed with this source code.
     <services>
         <service
             id="lug.translation.repository.doctrine.orm.factory"
-            class="Lug\Bundle\TranslationBundle\Repository\Doctrine\ORM\TranslatableRepositoryFactory"
+            class="Lug\Component\Translation\Repository\Doctrine\ORM\TranslatableRepositoryFactory"
         >
             <argument type="service" id="service_container" />
         </service>
 
         <service
             id="lug.translation.repository.doctrine.mongodb.factory"
-            class="Lug\Bundle\TranslationBundle\Repository\Doctrine\MongoDB\TranslatableRepositoryFactory"
+            class="Lug\Component\Translation\Repository\Doctrine\MongoDB\TranslatableRepositoryFactory"
         >
             <argument type="service" id="service_container" />
         </service>

@@ -11,9 +11,6 @@
 
 namespace Lug\Component\Locale\Resource;
 
-use Lug\Bundle\ResourceBundle\Controller\Controller;
-use Lug\Bundle\ResourceBundle\Repository\Doctrine\MongoDB\Repository as DoctrineMongoDBRepository;
-use Lug\Bundle\ResourceBundle\Repository\Doctrine\ORM\Repository as DoctrineORMRepository;
 use Lug\Component\Locale\Form\Type\Doctrine\MongoDB\LocaleChoiceType as DoctrineMongoDBLocaleChoiceType;
 use Lug\Component\Locale\Form\Type\Doctrine\ORM\LocaleChoiceType as DoctrineORMLocaleChoiceType;
 use Lug\Component\Locale\Form\Type\LocaleType;
@@ -22,6 +19,8 @@ use Lug\Component\Locale\Model\LocaleInterface;
 use Lug\Component\Resource\Domain\DomainManager;
 use Lug\Component\Resource\Factory\Factory;
 use Lug\Component\Resource\Model\Resource;
+use Lug\Component\Resource\Repository\Doctrine\MongoDB\Repository as DoctrineMongoDBRepository;
+use Lug\Component\Resource\Repository\Doctrine\ORM\Repository as DoctrineORMRepository;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -29,10 +28,11 @@ use Lug\Component\Resource\Model\Resource;
 class LocaleResource extends Resource
 {
     /**
-     * @param string $bundlePath
+     * @param string $controller
+     * @param string $resourcePath
      * @param string $driver
      */
-    public function __construct($bundlePath, $driver = self::DRIVER_DOCTRINE_ORM)
+    public function __construct($controller, $resourcePath, $driver = self::DRIVER_DOCTRINE_ORM)
     {
         $orm = $driver === self::DRIVER_DOCTRINE_ORM;
 
@@ -40,11 +40,11 @@ class LocaleResource extends Resource
             'locale',
             $driver,
             'default',
-            $bundlePath.'/Resources/config/resources',
+            $resourcePath,
             self::DRIVER_MAPPING_FORMAT_XML,
             LocaleInterface::class,
             Locale::class,
-            Controller::class,
+            $controller,
             Factory::class,
             $orm ? DoctrineORMRepository::class : DoctrineMongoDBRepository::class,
             DomainManager::class,

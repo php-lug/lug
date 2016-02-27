@@ -18,12 +18,12 @@ use Lug\Bundle\TranslationBundle\DependencyInjection\LugTranslationExtension;
 use Lug\Bundle\TranslationBundle\EventSubscriber\TranslatableResourceSubscriber;
 use Lug\Bundle\TranslationBundle\Form\Type\TranslatableType;
 use Lug\Bundle\TranslationBundle\Provider\A2lixLocaleProvider;
-use Lug\Bundle\TranslationBundle\Repository\Doctrine\MongoDB\TranslatableRepositoryFactory as DoctrineMongoDBTranslatableRepositoryFactory;
-use Lug\Bundle\TranslationBundle\Repository\Doctrine\ORM\TranslatableRepositoryFactory as DoctrineORMTranslatableRepositoryFactory;
 use Lug\Component\Locale\Provider\LocaleProviderInterface;
 use Lug\Component\Registry\Model\RegistryInterface;
 use Lug\Component\Resource\Repository\RepositoryInterface;
 use Lug\Component\Translation\Context\LocaleContextInterface;
+use Lug\Component\Translation\Repository\Doctrine\MongoDB\TranslatableRepositoryFactory as DoctrineMongoDBTranslatableRepositoryFactory;
+use Lug\Component\Translation\Repository\Doctrine\ORM\TranslatableRepositoryFactory as DoctrineORMTranslatableRepositoryFactory;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpFoundation\RequestStack;
 
