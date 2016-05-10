@@ -248,7 +248,7 @@ class CollectionSubscriberTest extends \PHPUnit_Framework_TestCase
 
         $this->managerRegistry
             ->expects($this->never())
-            ->method('getManagerForClass');
+            ->method('offsetGet');
 
         $this->subscriber->init($initEvent);
         $this->subscriber->manage($manageEvent);

@@ -26,13 +26,10 @@ fi
 
 mysql -e "CREATE DATABASE lug_test;"
 printf "\ndate.timezone = Europe/Paris" >> ${PHP_INI}
+printf "\nmemory_limit = -1" >> ${PHP_INI}
 
 if [ "$TRAVIS_PHP_VERSION" != "hhvm" ] && [ "$COVERAGE_BUILD" != true ]; then
     phpenv config-rm xdebug.ini
-fi
-
-if [ "$COVERAGE_BUILD" = true ]; then
-    printf "\nmemory_limit = -1" >> ${PHP_INI}
 fi
 
 composer self-update
