@@ -13,8 +13,8 @@ file that was distributed with this source code.
 
 <container xmlns="http://symfony.com/schema/dic/services">
     <services>
-        <service id="lug.grid.context.locale" class="Lug\Bundle\GridBundle\Context\LocaleContext">
-            <argument type="service" id="lug.locale.context" />
+        <service id="lug.grid.context.locale" class="Lug\Component\Grid\Context\LocaleContext">
+            <argument>%locale%</argument>
         </service>
     </services>
 </container>
