@@ -210,7 +210,11 @@ class TranslatableResourceSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     private function createStdClassMock()
     {
-        return $this->getMock(\stdClass::class);
+        return $this->getMock(\stdClass::class, [
+            'setCurrentLocale',
+            'setFallbackLocale',
+            'setTranslationClass',
+        ]);
     }
 
     /**

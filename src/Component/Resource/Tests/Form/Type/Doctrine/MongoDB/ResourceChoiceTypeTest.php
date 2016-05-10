@@ -142,43 +142,19 @@ class ResourceChoiceTypeTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($queryBuilder = $this->createQueryBuilderMock($documentManager)));
 
         $queryBuilder
-            ->expects($this->exactly(2))
+            ->expects($this->once())
             ->method('getQuery')
             ->will($this->returnValue($query = $this->createQueryMock()));
 
-        $queryBuilder
-            ->expects($this->once())
-            ->method('field')
-            ->with($this->identicalTo($identifierPath))
-            ->will($this->returnSelf());
-
-        $queryBuilder
-            ->expects($this->once())
-            ->method('in')
-            ->with($this->identicalTo([(string) $id]))
-            ->will($this->returnSelf());
-
         $query
-            ->expects($this->exactly(2))
+            ->expects($this->once())
             ->method('execute')
             ->will($this->returnValue($iterator = $this->createIteratorMock()));
 
         $iterator
-            ->expects($this->exactly(2))
+            ->expects($this->once())
             ->method('toArray')
             ->will($this->returnValue([$choice]));
-
-        $documentManager
-            ->expects($this->exactly(2))
-            ->method('contains')
-            ->with($this->identicalTo($choice))
-            ->will($this->returnValue(true));
-
-        $classMetadata
-            ->expects($this->exactly(2))
-            ->method('getIdentifierValues')
-            ->with($this->identicalTo($choice))
-            ->will($this->returnValue([$id]));
 
         $form = $this->factory
             ->create(ResourceChoiceType::class, null, ['resource' => $this->resource])

@@ -112,7 +112,7 @@ class ResourceChoiceTypeTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($repository = $this->createRepositoryMock()));
 
         $entityManager
-            ->expects($this->exactly(3))
+            ->expects($this->exactly(2))
             ->method('getClassMetadata')
             ->with($this->identicalTo($model))
             ->will($this->returnValue($classMetadata = $this->createClassMetadataMock()));
@@ -128,7 +128,7 @@ class ResourceChoiceTypeTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue([$identifier = $identifierPath]));
 
         $classMetadata
-            ->expects($this->exactly(2))
+            ->expects($this->once())
             ->method('getTypeOfField')
             ->with($this->identicalTo($identifier))
             ->will($this->returnValue('integer'));
@@ -139,7 +139,7 @@ class ResourceChoiceTypeTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($queryBuilder = $this->createQueryBuilderMock($entityManager)));
 
         $queryBuilder
-            ->expects($this->exactly(2))
+            ->expects($this->once())
             ->method('getQuery')
             ->will($this->returnValue($query = $this->createQueryMock()));
 
@@ -147,68 +147,6 @@ class ResourceChoiceTypeTest extends \PHPUnit_Framework_TestCase
             ->expects($this->once())
             ->method('execute')
             ->will($this->returnValue($choices = [$choice]));
-
-        $queryBuilder
-            ->expects($this->once())
-            ->method('getRootAliases')
-            ->will($this->returnValue([$rootAlias = 'root_alias']));
-
-        $queryBuilder
-            ->expects($this->once())
-            ->method('expr')
-            ->will($this->returnValue($expr = $this->createExprMock()));
-
-        $queryBuilder
-            ->expects($this->once())
-            ->method('getEntityManager')
-            ->will($this->returnValue($entityManager));
-
-        $queryBuilder
-            ->expects($this->once())
-            ->method('getRootEntities')
-            ->will($this->returnValue([$model]));
-
-        $expr
-            ->expects($this->once())
-            ->method('in')
-            ->with(
-                $this->identicalTo($rootAlias.'.'.$identifier),
-                $this->identicalTo(':'.($parameter = 'ORMQueryBuilderLoader_getEntitiesByIds_'.$identifier))
-            )
-            ->will($this->returnValue($where = 'where'));
-
-        $queryBuilder
-            ->expects($this->once())
-            ->method('andWhere')
-            ->with($this->identicalTo($where))
-            ->will($this->returnSelf());
-
-        $query
-            ->expects($this->once())
-            ->method('setParameter')
-            ->with(
-                $this->identicalTo($parameter),
-                $this->identicalTo([(string) $id]),
-                $this->identicalTo(Connection::PARAM_INT_ARRAY)
-            )
-            ->will($this->returnSelf());
-
-        $query
-            ->expects($this->once())
-            ->method('getResult')
-            ->will($this->returnValue([$choice]));
-
-        $entityManager
-            ->expects($this->exactly(2))
-            ->method('contains')
-            ->with($this->identicalTo($choice))
-            ->will($this->returnValue(true));
-
-        $classMetadata
-            ->expects($this->exactly(2))
-            ->method('getIdentifierValues')
-            ->with($this->identicalTo($choice))
-            ->will($this->returnValue([$id]));
 
         $form = $this->factory
             ->create(ResourceChoiceType::class, null, ['resource' => $this->resource])

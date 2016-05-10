@@ -18,6 +18,7 @@ use Lug\Bundle\GridBundle\DependencyInjection\Compiler\RegisterColumnPass;
 use Lug\Bundle\GridBundle\DependencyInjection\Compiler\RegisterFilterFormPass;
 use Lug\Bundle\GridBundle\DependencyInjection\Compiler\RegisterFilterPass;
 use Lug\Bundle\GridBundle\DependencyInjection\Compiler\RegisterSortPass;
+use Lug\Bundle\GridBundle\DependencyInjection\Compiler\ReplaceLocaleContextPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -38,6 +39,7 @@ class LugGridBundle extends Bundle
             ->addCompilerPass(new RegisterFilterPass())
             ->addCompilerPass(new RegisterSortPass())
             ->addCompilerPass(new RegisterBatchFormSubscriberPass())
-            ->addCompilerPass(new RegisterFilterFormPass());
+            ->addCompilerPass(new RegisterFilterFormPass())
+            ->addCompilerPass(new ReplaceLocaleContextPass());
     }
 }
