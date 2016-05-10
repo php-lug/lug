@@ -129,16 +129,7 @@ class ParameterResolver implements ParameterResolverInterface
             throw new RequestNotFoundException();
         }
 
-        $grid = $this->resolveParameter('grid');
-
-        if (empty($grid)) {
-            throw new RuntimeException(sprintf(
-                'The grid could not be found for the route "%s".',
-                $request->attributes->get('_route')
-            ));
-        }
-
-        return array_merge(['resource' => $resource], $grid);
+        return array_merge(['resource' => $resource], $this->resolveParameter('grid', []));
     }
 
     /**

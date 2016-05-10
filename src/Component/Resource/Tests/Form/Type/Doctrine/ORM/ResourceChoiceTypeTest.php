@@ -12,7 +12,6 @@
 namespace Lug\Component\Resource\Tests\Form\Type\Doctrine\ORM;
 
 use Doctrine\Common\Persistence\ManagerRegistry;
-use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping\ClassMetadata;

@@ -352,7 +352,7 @@ class ParameterResolverTest extends \PHPUnit_Framework_TestCase
         $request->attributes
             ->expects($this->once())
             ->method('get')
-            ->with($this->identicalTo('_lug_grid'), $this->isNull())
+            ->with($this->identicalTo('_lug_grid'), $this->identicalTo([]))
             ->will($this->returnValue($grid = ['foo' => 'bar']));
 
         $this->assertSame(
@@ -367,32 +367,6 @@ class ParameterResolverTest extends \PHPUnit_Framework_TestCase
      */
     public function testResolveGridWithoutRequest()
     {
-        $this->parameterResolver->resolveGrid($this->createResourceMock());
-    }
-
-    /**
-     * @expectedException \Lug\Bundle\ResourceBundle\Exception\RuntimeException
-     * @expectedExceptionMessage The grid could not be found for the route "route".
-     */
-    public function testResolveGridMissing()
-    {
-        $this->requestStack
-            ->expects($this->exactly(2))
-            ->method('getMasterRequest')
-            ->will($this->returnValue($request = $this->createRequestMock()));
-
-        $request->attributes
-            ->expects($this->at(0))
-            ->method('get')
-            ->with($this->identicalTo('_lug_grid'), $this->isNull())
-            ->will($this->returnValue(null));
-
-        $request->attributes
-            ->expects($this->at(1))
-            ->method('get')
-            ->with($this->identicalTo('_route'), $this->isNull())
-            ->will($this->returnValue('route'));
-
         $this->parameterResolver->resolveGrid($this->createResourceMock());
     }
 
