@@ -4,9 +4,7 @@
     "type": "project",
     "description": "Lug framework",
     "autoload": {
-        "psr-4": { "Lug\\": "src/" }
-    },
-    "autoload-dev": {
+        "psr-4": { "Lug\\": "src/" },
         "classmap": [ "app/AppKernel.php", "app/AppCache.php" ]
     },
     "prefer-stable": true,
@@ -36,10 +34,11 @@
         "behat/mink-extension": "^2.0",
         "behat/mink-browserkit-driver": "^1.0",
         "behat/mink-selenium2-driver": "^1.0",
-        "php-http/discovery": "^0.7",
-        "php-http/message": "^0.2",
-        "php-http/guzzle6-adapter": "^0.4",
-        "coduo/php-matcher": "^1.1"
+        "php-http/discovery": "^0.8",
+        "php-http/message": "^1.0",
+        "php-http/guzzle6-adapter": "^1.0",
+        "puli/composer-plugin": "^1.0",
+        "coduo/php-matcher": "^2.0"
     },
     "repositories": [
         {
