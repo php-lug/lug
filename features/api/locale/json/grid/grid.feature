@@ -20,7 +20,8 @@ Feature: Listing locales
 
     Scenario: Listing the locales
         Given I send a "GET" request to "/locale"
-        Then the response should contain:
+        Then the response status code should be "200"
+        And the response should contain:
             """
                 [
                     {
