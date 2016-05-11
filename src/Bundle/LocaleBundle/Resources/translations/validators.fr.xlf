@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+
+This file is part of the Lug package.
+
+(c) Eric GELOEN <geloen.eric@gmail.com>
+
+For the full copyright and license information, please read the LICENSE
+file that was distributed with this source code.
+
+-->
+
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="1">
+                <source>lug.locale.code.not_blank</source>
+                <target>Le code de la langue ne doit pas être vide.</target>
+            </trans-unit>
+
+            <trans-unit id="2">
+                <source>lug.locale.code.invalid</source>
+                <target>The code de la langue n'est pas valide.</target>
+            </trans-unit>
+
+            <trans-unit id="3">
+                <source>lug.locale.code.unique</source>
+                <target>Le code de la langue existe déjà.</target>
+            </trans-unit>
+
+            <trans-unit id="10">
+                <source>lug.locale.enabled.invalid</source>
+                <target>Le flag activé de la langue n'est pas valide.</target>
+            </trans-unit>
+
+            <trans-unit id="20">
+                <source>lug.locale.required.invalid</source>
+                <target>Le flag requis de la langue n'est pas valide.</target>
+            </trans-unit>
+
+            <trans-unit id="30">
+                <source>lug.locale.integrity.default.enabled</source>
+                <target>La langue est la langue pas défaut. Vous ne pouvez pas la désactiver.</target>
+            </trans-unit>
+
+            <trans-unit id="31">
+                <source>lug.locale.integrity.default.required</source>
+                <target>La langue est la langue pas défaut. Vous ne pouvez pas la rendre optionnelle.</target>
+            </trans-unit>
+
+            <trans-unit id="32">
+                <source>lug.locale.integrity.last.enabled</source>
+                <target>La langue est la dernière activée. Vous ne pouvez pas la désactiver.</target>
+            </trans-unit>
+
+            <trans-unit id="33">
+                <source>lug.locale.integrity.last.required</source>
+                <target>La langue est la dernière requise. Vous ne pouvez pas la rendre optionnelle.</target>
+            </trans-unit>
+
+            <trans-unit id="40">
+                <source>lug.locale.batch.empty</source>
+                <target>Vous devez sélectionner au moins une langue.</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
