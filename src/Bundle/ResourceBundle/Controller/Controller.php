@@ -311,8 +311,8 @@ class Controller extends FOSRestController implements ControllerInterface
     {
         if ($this->getParameterResolver()->resolveApi()) {
             throw new HttpException(
-                $domainException->getStatusCode(),
-                $domainException->getMessage(),
+                $domainException->getStatusCode() ?: 500,
+                $domainException->getMessage() ?: 'Internal Server Error',
                 $domainException
             );
         }
