@@ -6,7 +6,7 @@
 # file that was distributed with this source code.
 
 lug_api_locale_index:
-    path: /
+    path: /locale
     methods: [GET]
     defaults:
         _controller: lug.controller.locale:gridAction
@@ -40,7 +40,7 @@ lug_api_locale_index:
                 sorting: code
 
 lug_api_locale_batch:
-    path: /batch
+    path: /locale/batch
     methods: [POST]
     defaults:
         _controller: lug.controller.locale:batchAction
@@ -48,7 +48,7 @@ lug_api_locale_batch:
             <<: *grid
 
 lug_api_locale_create:
-    path: /
+    path: /locale
     methods: [POST]
     defaults:
         _controller: lug.controller.locale:createAction
@@ -56,21 +56,21 @@ lug_api_locale_create:
         _lug_location_route_parameters: [code]
 
 lug_api_locale_show:
-    path: /{code}
+    path: /locale/{code}
     methods: [GET]
     defaults:
         _controller: lug.controller.locale:showAction
         _lug_criteria: [code]
 
 lug_api_locale_update:
-    path: /{code}
+    path: /locale/{code}
     methods: [PUT, PATCH]
     defaults:
         _controller: lug.controller.locale:updateAction
         _lug_criteria: [code]
 
 lug_api_locale_delete:
-    path: /{code}
+    path: /locale/{code}
     methods: [DELETE]
     defaults:
         _controller: lug.controller.locale:deleteAction

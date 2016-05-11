@@ -211,15 +211,6 @@ class ApiContext implements ApiContextInterface
      */
     private function prepareUrl($url)
     {
-        // FIXME - Workaround for https://github.com/symfony/symfony/issues/12141
-        if (strrpos($url, '/') === 0) {
-            if (($queryPos = strpos($url, '?')) !== false) {
-                $url = substr($url, 0, $queryPos).'/'.substr($url, $queryPos);
-            } else {
-                $url .= '/';
-            }
-        }
-
         return $this->baseUrl.$url;
     }
 
