@@ -20,14 +20,14 @@ use Lug\Component\Storage\Model\StorageInterface;
 class FilterManager implements FilterManagerInterface
 {
     /**
-     * @var StorageInterface
+     * @var StorageInterface|null
      */
     private $storage;
 
     /**
-     * @param StorageInterface $storage
+     * @param StorageInterface|null $storage
      */
-    public function __construct(StorageInterface $storage)
+    public function __construct(StorageInterface $storage = null)
     {
         $this->storage = $storage;
     }
@@ -37,7 +37,7 @@ class FilterManager implements FilterManagerInterface
      */
     public function get(GridInterface $grid)
     {
-        return isset($this->storage[$key = $this->getKey($grid)])
+        return $this->storage !== null && isset($this->storage[$key = $this->getKey($grid)])
             ? $this->storage[$key]
             : $grid->getData();
     }
@@ -47,7 +47,9 @@ class FilterManager implements FilterManagerInterface
      */
     public function set(GridInterface $grid, array $filters)
     {
-        $this->storage[$this->getKey($grid)] = $filters;
+        if ($this->storage !== null) {
+            $this->storage[$this->getKey($grid)] = $filters;
+        }
     }
 
     /**

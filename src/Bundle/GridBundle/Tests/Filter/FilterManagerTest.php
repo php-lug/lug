@@ -101,6 +101,19 @@ class FilterManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($filters, $this->manager->get($grid));
     }
 
+    public function testGetWithoutStorage()
+    {
+        $this->manager = new FilterManager();
+
+        $grid = $this->createGridMock();
+        $grid
+            ->expects($this->once())
+            ->method('getData')
+            ->will($this->returnValue($filters = ['foo' => 'bar']));
+
+        $this->assertSame($filters, $this->manager->get($grid));
+    }
+
     public function testSet()
     {
         $grid = $this->createGridMock();

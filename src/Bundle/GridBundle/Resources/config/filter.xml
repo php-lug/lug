@@ -13,9 +13,7 @@ file that was distributed with this source code.
 
 <container xmlns="http://symfony.com/schema/dic/services">
     <services>
-        <service id="lug.grid.filter.manager" class="Lug\Bundle\GridBundle\Filter\FilterManager">
-            <argument type="service" id="lug.storage.session" />
-        </service>
+        <service id="lug.grid.filter.manager" class="Lug\Bundle\GridBundle\Filter\FilterManager" />
 
         <service id="lug.grid.filterer" class="Lug\Component\Grid\Filter\Filterer">
             <argument type="service" id="lug.grid.registry.filter" />
