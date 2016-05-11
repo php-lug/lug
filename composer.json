@@ -4,7 +4,9 @@
     "type": "project",
     "description": "Lug framework",
     "autoload": {
-        "psr-4": { "Lug\\": "src/" },
+        "psr-4": { "Lug\\": "src/" }
+    },
+    "autoload-dev": {
         "classmap": [ "app/AppKernel.php", "app/AppCache.php" ]
     },
     "prefer-stable": true,
