@@ -16,6 +16,7 @@ use Lug\Bundle\GridBundle\DependencyInjection\Compiler\RegisterBatchFormSubscrib
 use Lug\Bundle\GridBundle\DependencyInjection\Compiler\RegisterBatchPass;
 use Lug\Bundle\GridBundle\DependencyInjection\Compiler\RegisterColumnPass;
 use Lug\Bundle\GridBundle\DependencyInjection\Compiler\RegisterFilterFormPass;
+use Lug\Bundle\GridBundle\DependencyInjection\Compiler\RegisterFilterManagerStoragePass;
 use Lug\Bundle\GridBundle\DependencyInjection\Compiler\RegisterFilterPass;
 use Lug\Bundle\GridBundle\DependencyInjection\Compiler\RegisterSortPass;
 use Lug\Bundle\GridBundle\DependencyInjection\Compiler\ReplaceLocaleContextPass;
@@ -36,6 +37,7 @@ class LugGridBundle extends Bundle
             ->addCompilerPass(new RegisterActionPass())
             ->addCompilerPass(new RegisterBatchPass())
             ->addCompilerPass(new RegisterColumnPass())
+            ->addCompilerPass(new RegisterFilterManagerStoragePass())
             ->addCompilerPass(new RegisterFilterPass())
             ->addCompilerPass(new RegisterSortPass())
             ->addCompilerPass(new RegisterBatchFormSubscriberPass())
