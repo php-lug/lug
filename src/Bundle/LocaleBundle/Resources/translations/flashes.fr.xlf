@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+
+This file is part of the Lug package.
+
+(c) Eric GELOEN <geloen.eric@gmail.com>
+
+For the full copyright and license information, please read the LICENSE
+file that was distributed with this source code.
+
+-->
+
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="1">
+                <source>lug.locale.create.success</source>
+                <target>La langue "%locale%" a été créée.</target>
+            </trans-unit>
+
+            <trans-unit id="2">
+                <source>lug.locale.create.error</source>
+                <target>Une erreur s'est produite lors de la création de la langue "%locale%".</target>
+            </trans-unit>
+
+            <trans-unit id="3">
+                <source>lug.locale.update.success</source>
+                <target>La langue "%locale%" a été mise à jour.</target>
+            </trans-unit>
+
+            <trans-unit id="4">
+                <source>lug.locale.update.error</source>
+                <target>Une erreur s'est produite lors de la mise à jour de la langue "%locale%".</target>
+            </trans-unit>
+
+            <trans-unit id="5">
+                <source>lug.locale.delete.success</source>
+                <target>La langue "%locale%" a été supprimée.</target>
+            </trans-unit>
+
+            <trans-unit id="6">
+                <source>lug.locale.delete.error</source>
+                <target>Une erreur s'est produite lors de la suppression de la langue "%locale%".</target>
+            </trans-unit>
+
+            <trans-unit id="7">
+                <source>lug.locale.delete.default</source>
+                <target>La langue par défaut "%locale%" ne peut pas être supprimée.</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

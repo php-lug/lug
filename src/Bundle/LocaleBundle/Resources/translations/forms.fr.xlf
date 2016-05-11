@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+
+This file is part of the Lug package.
+
+(c) Eric GELOEN <geloen.eric@gmail.com>
+
+For the full copyright and license information, please read the LICENSE
+file that was distributed with this source code.
+
+-->
+
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="1">
+                <source>lug.locale.code</source>
+                <target>Code</target>
+            </trans-unit>
+
+            <trans-unit id="2">
+                <source>lug.locale.enabled</source>
+                <target>Activé</target>
+            </trans-unit>
+
+            <trans-unit id="3">
+                <source>lug.locale.required</source>
+                <target>Requis</target>
+            </trans-unit>
+
+            <trans-unit id="10">
+                <source>lug.locale.submit</source>
+                <target>Valider</target>
+            </trans-unit>
+
+            <trans-unit id="20">
+                <source>lug.settings.default_locale</source>
+                <target>Langue par défaut</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
