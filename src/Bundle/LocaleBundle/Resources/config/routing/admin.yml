@@ -6,7 +6,7 @@
 # file that was distributed with this source code.
 
 lug_admin_locale_index:
-    path: /
+    path: /locale
     methods: [GET]
     defaults:
         _controller: lug.controller.locale:gridAction
@@ -79,7 +79,7 @@ lug_admin_locale_index:
                 xml_http_request: true
 
 lug_admin_locale_batch:
-    path: /batch
+    path: /locale/batch
     methods: [POST]
     defaults:
         _controller: lug.controller.locale:batchAction
@@ -89,7 +89,7 @@ lug_admin_locale_batch:
             <<: *grid
 
 lug_admin_locale_create:
-    path: /create
+    path: /locale/create
     methods: [GET, POST]
     defaults:
         _controller: lug.controller.locale:createAction
@@ -98,7 +98,7 @@ lug_admin_locale_create:
         _lug_redirect_route_parameters: [code]
 
 lug_admin_locale_show:
-    path: /{code}
+    path: /locale/{code}
     methods: [GET]
     defaults:
         _controller: lug.controller.locale:showAction
@@ -106,7 +106,7 @@ lug_admin_locale_show:
         _lug_template: "@LugAdmin/Resource/show.html.twig"
 
 lug_admin_locale_update:
-    path: /{code}/update
+    path: /locale/{code}/update
     methods: [GET, POST, PUT]
     defaults:
         _controller: lug.controller.locale:updateAction
@@ -116,7 +116,7 @@ lug_admin_locale_update:
         _lug_redirect_route_parameters: [code]
 
 lug_admin_locale_delete:
-    path: /{code}/delete
+    path: /locale/{code}/delete
     methods: [DELETE]
     defaults:
         _controller: lug.controller.locale:deleteAction

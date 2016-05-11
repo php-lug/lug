@@ -7,10 +7,10 @@
 
 lug_api_locale:
     resource: "@LugLocaleBundle/Resources/config/routing/api.yml"
-    prefix: /api/locale
+    prefix: /api
     defaults:
         _lug_api: true
 
 lug_admin_locale:
     resource: "@LugLocaleBundle/Resources/config/routing/admin.yml"
-    prefix: /admin/locale
+    prefix: /admin
