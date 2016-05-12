@@ -118,8 +118,22 @@ class GridApiContext implements Context
     {
         $data = $this->decoder->decode((string) $this->apiContext->getResponse()->getBody(), $format);
 
+        if ($format === 'json' && isset($data['_embedded']['items'])) {
+            $data = $data['_embedded']['items'];
+        }
+
         if ($format === 'xml') {
-            $data = !empty($data) ? (is_int(key($data['entry'])) ? $data['entry'] : [$data['entry']]) : [];
+            if (!empty($data) && isset($data['entry'])) {
+                if (is_int(key($data['entry']))) {
+                    $data = $data['entry'];
+                } elseif (isset($data['entry']['@rel'])) {
+                    $data = array_pop($data['entry']);
+                } else {
+                    $data = [$data['entry']];
+                }
+            } else {
+                $data = [];
+            }
         }
 
         return $data;
