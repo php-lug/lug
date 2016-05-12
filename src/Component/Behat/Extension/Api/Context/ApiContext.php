@@ -101,7 +101,9 @@ class ApiContext implements ApiContextInterface
      */
     public function setHeader($header, $value)
     {
-        $this->headers[$header][] = $value;
+        if (!isset($this->headers[$header]) || !in_array($value, $this->headers[$header], true)) {
+            $this->headers[$header][] = $value;
+        }
     }
 
     /**
