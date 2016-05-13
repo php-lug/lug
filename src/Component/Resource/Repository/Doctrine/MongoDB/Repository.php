@@ -163,7 +163,7 @@ class Repository extends DocumentRepository implements RepositoryInterface
                 $queryBuilder->field($this->getProperty($property, $queryBuilder))->equals(null);
             } elseif (is_array($value)) {
                 $queryBuilder->field($this->getProperty($property, $queryBuilder))->in($value);
-            } elseif (!empty($value)) {
+            } elseif ($value !== null) {
                 $queryBuilder->field($this->getProperty($property, $queryBuilder))->equals($value);
             }
         }

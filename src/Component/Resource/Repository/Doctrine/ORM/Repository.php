@@ -175,7 +175,7 @@ class Repository extends EntityRepository implements RepositoryInterface
                         $this->createPlaceholder($parameter = $this->createParameter($property))
                     ))
                     ->setParameter($parameter, $value);
-            } elseif (!empty($value)) {
+            } elseif ($value !== null) {
                 $queryBuilder
                     ->andWhere($queryBuilder->expr()->eq(
                         $property = $this->getProperty($property, $queryBuilder),

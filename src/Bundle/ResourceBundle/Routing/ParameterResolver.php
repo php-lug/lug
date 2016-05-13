@@ -84,7 +84,7 @@ class ParameterResolver implements ParameterResolverInterface
         foreach ($value as $identifier) {
             $value = $request->get($identifier);
 
-            if (empty($value)) {
+            if ($value === null) {
                 throw new RuntimeException(sprintf(
                     'The criteria "%s" could not be found for the route "%s".',
                     $identifier,
