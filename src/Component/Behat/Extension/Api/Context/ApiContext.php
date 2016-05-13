@@ -94,6 +94,16 @@ class ApiContext implements ApiContextInterface
     }
 
     /**
+     * @BeforeScenario
+     */
+    public function reset()
+    {
+        $this->headers = [];
+        $this->request = null;
+        $this->response = null;
+    }
+
+    /**
      * @param string $header
      * @param string $value
      *
@@ -101,9 +111,7 @@ class ApiContext implements ApiContextInterface
      */
     public function setHeader($header, $value)
     {
-        if (!isset($this->headers[$header]) || !in_array($value, $this->headers[$header], true)) {
-            $this->headers[$header][] = $value;
-        }
+        $this->headers[$header][] = $value;
     }
 
     /**
