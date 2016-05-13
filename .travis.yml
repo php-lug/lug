@@ -17,8 +17,14 @@ addons:
         - chromium-browser
         - parallel
 
+cache:
+    apt: true
+    directories:
+        - $LUG_CACHE
+
 env:
     global:
+        - LUG_CACHE=$HOME/.lug-cache
         - SYMFONY_ENV=test
         - SYMFONY_DEBUG=0
 
