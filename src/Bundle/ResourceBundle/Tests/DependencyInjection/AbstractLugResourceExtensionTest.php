@@ -41,6 +41,7 @@ use Lug\Bundle\ResourceBundle\Rest\View\EventSubscriber\PagerfantaViewSubscriber
 use Lug\Bundle\ResourceBundle\Rest\View\EventSubscriber\ResourceViewSubscriber;
 use Lug\Bundle\ResourceBundle\Routing\CachedParameterResolver;
 use Lug\Bundle\ResourceBundle\Routing\ParameterResolver;
+use Lug\Bundle\ResourceBundle\Security\SecurityChecker;
 use Lug\Component\Resource\Form\Type\Doctrine\MongoDB\ResourceChoiceType as DoctrineMongoDBResourceChoiceType;
 use Lug\Component\Resource\Form\Type\Doctrine\ORM\ResourceChoiceType as DoctrineORMResourceChoiceType;
 use Lug\Component\Resource\Form\Type\ResourceType;
@@ -59,6 +60,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
@@ -75,6 +77,11 @@ abstract class AbstractLugResourceExtensionTest extends \PHPUnit_Framework_TestC
      * @var ContainerBuilder
      */
     private $container;
+
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject|AuthorizationCheckerInterface
+     */
+    private $authorizationChecker;
 
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject|TranslatorInterface
@@ -126,6 +133,7 @@ abstract class AbstractLugResourceExtensionTest extends \PHPUnit_Framework_TestC
      */
     protected function setUp()
     {
+        $this->authorizationChecker = $this->createAuthorizationCheckerMock();
         $this->translator = $this->createTranslatorMock();
         $this->propertyAccessor = $this->createPropertyAccessorMock();
         $this->session = $this->createSessionMock();
@@ -139,6 +147,7 @@ abstract class AbstractLugResourceExtensionTest extends \PHPUnit_Framework_TestC
         $this->extension = new LugResourceExtension();
         $this->container = new ContainerBuilder();
 
+        $this->container->set('security.authorization_checker', $this->authorizationChecker);
         $this->container->set('translator', $this->translator);
         $this->container->set('property_accessor', $this->propertyAccessor);
         $this->container->set('session', $this->session);
@@ -364,6 +373,13 @@ abstract class AbstractLugResourceExtensionTest extends \PHPUnit_Framework_TestC
         );
     }
 
+    public function testSecurity()
+    {
+        $this->compileContainer();
+
+        $this->assertInstanceOf(SecurityChecker::class, $this->container->get('lug.resource.security.checker'));
+    }
+
     /**
      * @param ContainerBuilder $container
      * @param string           $configuration
@@ -380,6 +396,14 @@ abstract class AbstractLugResourceExtensionTest extends \PHPUnit_Framework_TestC
         }
 
         $this->container->compile();
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|AuthorizationCheckerInterface
+     */
+    private function createAuthorizationCheckerMock()
+    {
+        return $this->getMock(AuthorizationCheckerInterface::class);
     }
 
     /**

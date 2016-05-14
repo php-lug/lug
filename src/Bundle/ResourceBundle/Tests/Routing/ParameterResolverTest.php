@@ -1111,6 +1111,43 @@ class ParameterResolverTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($groups, $this->parameterResolver->resolveValidationGroups());
     }
 
+    public function testResolveVoterWithoutRequest()
+    {
+        $this->assertFalse($this->parameterResolver->resolveVoter());
+    }
+
+    public function testResolveVoterDefault()
+    {
+        $this->requestStack
+            ->expects($this->once())
+            ->method('getMasterRequest')
+            ->will($this->returnValue($request = $this->createRequestMock()));
+
+        $request->attributes
+            ->expects($this->once())
+            ->method('get')
+            ->with($this->identicalTo('_lug_voter'), $this->identicalTo(false))
+            ->will($this->returnValue(false));
+
+        $this->assertFalse($this->parameterResolver->resolveVoter());
+    }
+
+    public function testResolveVoterExplicit()
+    {
+        $this->requestStack
+            ->expects($this->once())
+            ->method('getMasterRequest')
+            ->will($this->returnValue($request = $this->createRequestMock()));
+
+        $request->attributes
+            ->expects($this->once())
+            ->method('get')
+            ->with($this->identicalTo('_lug_voter'), $this->identicalTo(false))
+            ->will($this->returnValue(true));
+
+        $this->assertTrue($this->parameterResolver->resolveVoter());
+    }
+
     /**
      * @return \PHPUnit_Framework_MockObject_MockObject|RequestStack
      */

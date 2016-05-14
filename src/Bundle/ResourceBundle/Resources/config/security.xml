@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+
+This file is part of the Lug package.
+
+(c) Eric GELOEN <geloen.eric@gmail.com>
+
+For the full copyright and license information, please read the LICENSE
+file that was distributed with this source code.
+
+-->
+
+<container xmlns="http://symfony.com/schema/dic/services">
+    <services>
+        <service
+            id="lug.resource.security.checker"
+            class="Lug\Bundle\ResourceBundle\Security\SecurityChecker"
+        >
+            <argument type="service" id="security.authorization_checker" />
+            <argument type="service" id="lug.resource.routing.parameter_resolver" />
+        </service>
+    </services>
+</container>

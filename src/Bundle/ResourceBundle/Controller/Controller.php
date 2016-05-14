@@ -23,6 +23,7 @@ use Lug\Bundle\ResourceBundle\Rest\Action\ActionEvent;
 use Lug\Bundle\ResourceBundle\Rest\RestEvents;
 use Lug\Bundle\ResourceBundle\Rest\View\ViewEvent;
 use Lug\Bundle\ResourceBundle\Routing\ParameterResolverInterface;
+use Lug\Bundle\ResourceBundle\Security\SecurityCheckerInterface;
 use Lug\Component\Grid\Model\Builder\GridBuilderInterface;
 use Lug\Component\Grid\Model\GridInterface;
 use Lug\Component\Resource\Controller\ControllerInterface;
@@ -208,6 +209,8 @@ class Controller extends FOSRestController implements ControllerInterface
         if ($result instanceof Pagerfanta) {
             $result->setCurrentPage($this->getParameterResolver()->resolveCurrentPage());
             $result->setMaxPerPage($this->getParameterResolver()->resolveMaxPerPage());
+        } elseif (!$this->getSecurityChecker()->isGranted($action, $result)) {
+            throw $this->createAccessDeniedException();
         }
 
         return $result;
@@ -348,6 +351,14 @@ class Controller extends FOSRestController implements ControllerInterface
     private function getDomainManager()
     {
         return $this->get('lug.resource.registry.domain_manager')[$this->resource->getName()];
+    }
+
+    /**
+     * @return SecurityCheckerInterface
+     */
+    private function getSecurityChecker()
+    {
+        return $this->get('lug.resource.security.checker');
     }
 
     /**

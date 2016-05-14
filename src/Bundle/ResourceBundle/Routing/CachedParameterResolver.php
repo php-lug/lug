@@ -254,4 +254,14 @@ class CachedParameterResolver implements ParameterResolverInterface
             ? $this->cache[$key] = $this->parameterResolver->resolveValidationGroups()
             : $this->cache[$key];
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function resolveVoter()
+    {
+        return !isset($this->cache[$key = 'voter'])
+            ? $this->cache[$key] = $this->parameterResolver->resolveVoter()
+            : $this->cache[$key];
+    }
 }

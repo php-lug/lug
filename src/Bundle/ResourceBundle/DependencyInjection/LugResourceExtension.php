@@ -38,6 +38,7 @@ class LugResourceExtension extends Extension
             'repository',
             'rest',
             'routing',
+            'security',
         ];
 
         foreach ($resources as $resource) {

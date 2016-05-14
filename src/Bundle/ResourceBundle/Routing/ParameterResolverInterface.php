@@ -130,4 +130,9 @@ interface ParameterResolverInterface
      * @return string|null
      */
     public function resolveValidationGroups();
+
+    /**
+     * @return bool
+     */
+    public function resolveVoter();
 }
