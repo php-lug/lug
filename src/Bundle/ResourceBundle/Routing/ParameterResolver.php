@@ -301,6 +301,14 @@ class ParameterResolver implements ParameterResolverInterface
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function resolveVoter()
+    {
+        return $this->resolveParameter('voter', false);
+    }
+
+    /**
      * @param string $parameter
      * @param mixed  $default
      *

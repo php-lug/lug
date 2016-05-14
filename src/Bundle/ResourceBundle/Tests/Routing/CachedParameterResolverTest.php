@@ -310,6 +310,17 @@ class CachedParameterResolverTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($groups, $this->cachedParameterResolver->resolveValidationGroups());
     }
 
+    public function testResolveVoter()
+    {
+        $this->parameterResolver
+            ->expects($this->once())
+            ->method('resolveVoter')
+            ->will($this->returnValue(true));
+
+        $this->assertTrue($this->cachedParameterResolver->resolveVoter());
+        $this->assertTrue($this->cachedParameterResolver->resolveVoter());
+    }
+
     /**
      * @return \PHPUnit_Framework_MockObject_MockObject|ParameterResolverInterface
      */
