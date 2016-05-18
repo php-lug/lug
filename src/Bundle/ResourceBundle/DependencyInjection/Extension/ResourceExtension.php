@@ -160,6 +160,8 @@ class ResourceExtension extends ConfigurableExtension
         } elseif ($choiceForm !== $resource->getChoiceForm()) {
             $container->setAlias($choiceForm, $resource->getChoiceForm());
         }
+
+        $container->addClassResource(new \ReflectionClass($resource));
     }
 
     /**
