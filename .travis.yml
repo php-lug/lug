@@ -17,6 +17,9 @@ addons:
         - chromium-browser
         - parallel
 
+branches:
+    only: master
+
 env:
     global:
         - SYMFONY_ENV=test
