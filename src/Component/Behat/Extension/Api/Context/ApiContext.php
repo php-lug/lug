@@ -111,6 +111,17 @@ class ApiContext implements ApiContextInterface
      */
     public function setHeader($header, $value)
     {
+        $this->headers[$header] = [$value];
+    }
+
+    /**
+     * @param string $header
+     * @param string $value
+     *
+     * @Given I add the header ":header" with value ":value"
+     */
+    public function addHeader($header, $value)
+    {
         $this->headers[$header][] = $value;
     }
 
