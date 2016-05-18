@@ -35,13 +35,19 @@ class ReplaceBase64FileExtensionPassTest extends \PHPUnit_Framework_TestCase
         $this->compiler = new ReplaceBase64FileExtensionPass();
     }
 
-    public function testProcess()
+    public function testProcessWithService()
     {
         $container = $this->createContainerBuilderMock();
         $container
             ->expects($this->once())
+            ->method('hasDefinition')
+            ->with($this->identicalTo($service = 'ivory.base64_file.form.extension'))
+            ->will($this->returnValue(true));
+
+        $container
+            ->expects($this->once())
             ->method('getDefinition')
-            ->with($this->identicalTo('ivory.base64_file.form.extension'))
+            ->with($this->identicalTo($service))
             ->will($this->returnValue($definition = $this->createDefinitionMock()));
 
         $definition
@@ -57,6 +63,22 @@ class ReplaceBase64FileExtensionPassTest extends \PHPUnit_Framework_TestCase
                 return $reference instanceof Reference
                     && (string) $reference === 'lug.resource.routing.parameter_resolver';
             }));
+
+        $this->compiler->process($container);
+    }
+
+    public function testProcessWithoutService()
+    {
+        $container = $this->createContainerBuilderMock();
+        $container
+            ->expects($this->once())
+            ->method('hasDefinition')
+            ->with($this->identicalTo($service = 'ivory.base64_file.form.extension'))
+            ->will($this->returnValue(false));
+
+        $container
+            ->expects($this->never())
+            ->method('getDefinition');
 
         $this->compiler->process($container);
     }

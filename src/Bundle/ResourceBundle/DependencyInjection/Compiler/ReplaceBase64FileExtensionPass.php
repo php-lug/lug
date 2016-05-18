@@ -26,8 +26,12 @@ class ReplaceBase64FileExtensionPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
+        if (!$container->hasDefinition($service = 'ivory.base64_file.form.extension')) {
+            return;
+        }
+
         $container
-            ->getDefinition('ivory.base64_file.form.extension')
+            ->getDefinition($service)
             ->setClass(Base64FileExtension::class)
             ->addArgument(new Reference('lug.resource.routing.parameter_resolver'));
     }
