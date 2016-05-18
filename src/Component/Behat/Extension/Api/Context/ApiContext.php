@@ -115,6 +115,16 @@ class ApiContext implements ApiContextInterface
     }
 
     /**
+     * @param string $header
+     *
+     * @Given I remove the header ":header"
+     */
+    public function removeHeader($header)
+    {
+        unset($this->headers[$header]);
+    }
+
+    /**
      * @param string $method
      * @param string $url
      *
