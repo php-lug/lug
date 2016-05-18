@@ -24,6 +24,7 @@
         "stof/doctrine-extensions-bundle": "^1.1",
         "friendsofsymfony/rest-bundle": "dev-lug",
         "jms/serializer-bundle": "^1.0",
+        "egeloen/base64-file-bundle": "^1.0",
         "willdurand/hateoas-bundle": "^1.0",
         "a2lix/translation-form-bundle": "^2.0",
         "white-october/pagerfanta-bundle": "^1.0",

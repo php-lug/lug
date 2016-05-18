@@ -21,6 +21,7 @@ use Lug\Bundle\ResourceBundle\DependencyInjection\Compiler\RegisterManagerTagPas
 use Lug\Bundle\ResourceBundle\DependencyInjection\Compiler\RegisterMessageListenerPass;
 use Lug\Bundle\ResourceBundle\DependencyInjection\Compiler\RegisterRepositoryPass;
 use Lug\Bundle\ResourceBundle\DependencyInjection\Compiler\RegisterResourcePass;
+use Lug\Bundle\ResourceBundle\DependencyInjection\Compiler\ReplaceBase64FileExtensionPass;
 use Lug\Bundle\ResourceBundle\DependencyInjection\Compiler\ReplaceBooleanExtensionPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
@@ -46,6 +47,7 @@ class LugResourceBundle extends Bundle
             ->addCompilerPass(new ConfigureResolveTargetEntitySubscriberPass())
             ->addCompilerPass(new RegisterFlashListenerPass())
             ->addCompilerPass(new RegisterMessageListenerPass())
+            ->addCompilerPass(new ReplaceBase64FileExtensionPass())
             ->addCompilerPass(new ReplaceBooleanExtensionPass());
     }
 }

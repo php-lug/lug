@@ -15,6 +15,7 @@ use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
 use Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle;
 use Doctrine\Bundle\MongoDBBundle\DoctrineMongoDBBundle;
 use FOS\RestBundle\FOSRestBundle;
+use Ivory\Base64FileBundle\IvoryBase64FileBundle;
 use JMS\SerializerBundle\JMSSerializerBundle;
 use Knp\Bundle\MenuBundle\KnpMenuBundle;
 use Lug\Bundle\AdminBundle\LugAdminBundle;
@@ -75,6 +76,7 @@ class AppKernel extends Kernel
             new FOSRestBundle(),
             new JMSSerializerBundle(),
             new BazingaHateoasBundle(),
+            new IvoryBase64FileBundle(),
             new A2lixTranslationFormBundle(),
             new WhiteOctoberPagerfantaBundle(),
             new StofDoctrineExtensionsBundle(),

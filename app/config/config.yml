@@ -12,6 +12,7 @@ imports:
     - { resource: bundles/a2lix_translation_form.yml }
     - { resource: bundles/fos_rest.yml }
     - { resource: bundles/framework.yml }
+    - { resource: bundles/ivory_base64_file.yml }
     - { resource: bundles/jms_serializer.yml }
     - { resource: bundles/stof_doctrine_extensions.yml }
     - { resource: bundles/twig.yml }
