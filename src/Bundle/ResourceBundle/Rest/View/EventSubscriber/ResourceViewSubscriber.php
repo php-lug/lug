@@ -29,7 +29,7 @@ class ResourceViewSubscriber extends AbstractSubscriber
             return;
         }
 
-        $groups = $this->getParameterResolver()->resolveSerializerGroups();
+        $groups = $this->getParameterResolver()->resolveSerializerGroups($event->getResource());
         $view = $event->getView();
 
         if (!empty($groups)) {
