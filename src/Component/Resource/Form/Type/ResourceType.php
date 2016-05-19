@@ -17,7 +17,6 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraint;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -39,9 +38,6 @@ class ResourceType extends AbstractType
                 },
                 'label_prefix' => function (Options $options) {
                     return 'lug.'.$options['resource']->getName();
-                },
-                'validation_groups' => function (Options $options) {
-                    return [Constraint::DEFAULT_GROUP, 'lug.'.$options['resource']->getName()];
                 },
                 'empty_data' => function (FormInterface $form) {
                     return $form->isRequired() || !$form->isEmpty()

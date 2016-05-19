@@ -21,11 +21,12 @@ use Symfony\Component\Form\Test\FormInterface;
 interface FormFactoryInterface
 {
     /**
-     * @param string|FormTypeInterface|ResourceInterface $type
-     * @param mixed                                      $data
-     * @param mixed[]                                    $options
+     * @param ResourceInterface             $resource
+     * @param string|FormTypeInterface|null $type
+     * @param mixed                         $data
+     * @param mixed[]                       $options
      *
      * @return FormInterface
      */
-    public function create($type = null, $data = null, array $options = []);
+    public function create(ResourceInterface $resource, $type = null, $data = null, array $options = []);
 }

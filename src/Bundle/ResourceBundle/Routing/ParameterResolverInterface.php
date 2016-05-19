@@ -127,9 +127,11 @@ interface ParameterResolverInterface
     public function resolveTranslationDomain();
 
     /**
+     * @param ResourceInterface $resource
+     *
      * @return string|null
      */
-    public function resolveValidationGroups();
+    public function resolveValidationGroups(ResourceInterface $resource);
 
     /**
      * @return bool

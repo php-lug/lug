@@ -95,7 +95,7 @@ class GridViewSubscriber extends AbstractSubscriber
 
         if ($grid->getBatchForm() === null) {
             $batchForm = !isset($data['batch_form']) || !$data['batch_form'] instanceof FormInterface
-                ? $this->formFactory->create(GridBatchType::class, null, ['grid' => $grid])
+                ? $this->formFactory->create($event->getResource(), GridBatchType::class, null, ['grid' => $grid])
                 : $data['batch_form'];
 
             $grid->setBatchForm($batchForm->createView());

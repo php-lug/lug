@@ -248,10 +248,10 @@ class CachedParameterResolver implements ParameterResolverInterface
     /**
      * {@inheritdoc}
      */
-    public function resolveValidationGroups()
+    public function resolveValidationGroups(ResourceInterface $resource)
     {
-        return !isset($this->cache[$key = 'validation_groups'])
-            ? $this->cache[$key] = $this->parameterResolver->resolveValidationGroups()
+        return !isset($this->cache[$key = 'validation_groups_'.spl_object_hash($resource)])
+            ? $this->cache[$key] = $this->parameterResolver->resolveValidationGroups($resource)
             : $this->cache[$key];
     }
 
