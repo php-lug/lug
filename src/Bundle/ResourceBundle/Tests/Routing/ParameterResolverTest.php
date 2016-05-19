@@ -11,6 +11,7 @@
 
 namespace Lug\Bundle\ResourceBundle\Tests\Routing;
 
+use JMS\Serializer\Exclusion\GroupsExclusionStrategy;
 use Lug\Bundle\ResourceBundle\Routing\ParameterResolver;
 use Lug\Component\Resource\Model\ResourceInterface;
 use Symfony\Component\HttpFoundation\ParameterBag;
@@ -785,7 +786,16 @@ class ParameterResolverTest extends \PHPUnit_Framework_TestCase
 
     public function testResolveSerializerGroupsWithoutRequest()
     {
-        $this->assertEmpty($this->parameterResolver->resolveSerializerGroups());
+        $resource = $this->createResourceMock();
+        $resource
+            ->expects($this->once())
+            ->method('getName')
+            ->will($this->returnValue($name = 'name'));
+
+        $this->assertSame(
+            [GroupsExclusionStrategy::DEFAULT_GROUP, 'lug.'.$name],
+            $this->parameterResolver->resolveSerializerGroups($resource)
+        );
     }
 
     public function testResolveSerializerGroupsDefault()
@@ -795,13 +805,22 @@ class ParameterResolverTest extends \PHPUnit_Framework_TestCase
             ->method('getMasterRequest')
             ->will($this->returnValue($request = $this->createRequestMock()));
 
+        $resource = $this->createResourceMock();
+        $resource
+            ->expects($this->once())
+            ->method('getName')
+            ->will($this->returnValue($name = 'name'));
+
         $request->attributes
             ->expects($this->once())
             ->method('get')
-            ->with($this->identicalTo('_lug_serializer_groups'), $this->identicalTo($groups = []))
+            ->with(
+                $this->identicalTo('_lug_serializer_groups'),
+                $this->identicalTo($groups = [GroupsExclusionStrategy::DEFAULT_GROUP, 'lug.'.$name])
+            )
             ->will($this->returnValue($groups));
 
-        $this->assertEmpty($this->parameterResolver->resolveSerializerGroups());
+        $this->assertSame($groups, $this->parameterResolver->resolveSerializerGroups($resource));
     }
 
     public function testResolveSerializerGroupsExplicit()
@@ -811,13 +830,22 @@ class ParameterResolverTest extends \PHPUnit_Framework_TestCase
             ->method('getMasterRequest')
             ->will($this->returnValue($request = $this->createRequestMock()));
 
+        $resource = $this->createResourceMock();
+        $resource
+            ->expects($this->once())
+            ->method('getName')
+            ->will($this->returnValue($name = 'name'));
+
         $request->attributes
             ->expects($this->once())
             ->method('get')
-            ->with($this->identicalTo('_lug_serializer_groups'), $this->identicalTo([]))
+            ->with(
+                $this->identicalTo('_lug_serializer_groups'),
+                $this->identicalTo([GroupsExclusionStrategy::DEFAULT_GROUP, 'lug.'.$name])
+            )
             ->will($this->returnValue($groups = ['group']));
 
-        $this->assertSame($groups, $this->parameterResolver->resolveSerializerGroups());
+        $this->assertSame($groups, $this->parameterResolver->resolveSerializerGroups($resource));
     }
 
     public function testResolveSerializerNullWithoutRequest()

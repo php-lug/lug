@@ -238,10 +238,11 @@ class CachedParameterResolverTest extends \PHPUnit_Framework_TestCase
         $this->parameterResolver
             ->expects($this->once())
             ->method('resolveSerializerGroups')
+            ->with($resource = $this->createResourceMock())
             ->will($this->returnValue($groups = ['group']));
 
-        $this->assertSame($groups, $this->cachedParameterResolver->resolveSerializerGroups());
-        $this->assertSame($groups, $this->cachedParameterResolver->resolveSerializerGroups());
+        $this->assertSame($groups, $this->cachedParameterResolver->resolveSerializerGroups($resource));
+        $this->assertSame($groups, $this->cachedParameterResolver->resolveSerializerGroups($resource));
     }
 
     public function testResolveSerializerNull()

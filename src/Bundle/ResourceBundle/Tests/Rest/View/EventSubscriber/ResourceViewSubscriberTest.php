@@ -86,6 +86,7 @@ class ResourceViewSubscriberTest extends \PHPUnit_Framework_TestCase
         $this->parameterResolver
             ->expects($this->once())
             ->method('resolveSerializerGroups')
+            ->with($this->identicalTo($resource = $this->createResourceMock()))
             ->will($this->returnValue($serializerGroups = ['group']));
 
         $this->parameterResolver
@@ -98,6 +99,11 @@ class ResourceViewSubscriberTest extends \PHPUnit_Framework_TestCase
             ->expects($this->once())
             ->method('getView')
             ->will($this->returnValue($view = $this->createViewMock()));
+
+        $event
+            ->expects($this->once())
+            ->method('getResource')
+            ->will($this->returnValue($resource));
 
         $view
             ->expects($this->exactly(2))

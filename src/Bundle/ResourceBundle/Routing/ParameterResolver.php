@@ -11,6 +11,7 @@
 
 namespace Lug\Bundle\ResourceBundle\Routing;
 
+use JMS\Serializer\Exclusion\GroupsExclusionStrategy;
 use Lug\Bundle\ResourceBundle\Exception\RequestNotFoundException;
 use Lug\Bundle\ResourceBundle\Exception\RuntimeException;
 use Lug\Component\Resource\Model\ResourceInterface;
@@ -232,9 +233,12 @@ class ParameterResolver implements ParameterResolverInterface
     /**
      * {@inheritdoc}
      */
-    public function resolveSerializerGroups()
+    public function resolveSerializerGroups(ResourceInterface $resource)
     {
-        return $this->resolveParameter('serializer_groups', []);
+        return $this->resolveParameter(
+            'serializer_groups',
+            [GroupsExclusionStrategy::DEFAULT_GROUP, 'lug.'.$resource->getName()]
+        );
     }
 
     /**
