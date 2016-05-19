@@ -14,8 +14,6 @@ namespace Lug\Bundle\ResourceBundle\Form;
 use Lug\Bundle\ResourceBundle\Routing\ParameterResolverInterface;
 use Lug\Component\Resource\Model\ResourceInterface;
 use Symfony\Component\Form\FormFactoryInterface as SymfonyFormFactoryInterface;
-use Symfony\Component\Form\FormTypeInterface;
-use Symfony\Component\Form\Test\FormInterface;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -43,19 +41,15 @@ class FormFactory implements FormFactoryInterface
     }
 
     /**
-     * @param string|FormTypeInterface|ResourceInterface $type
-     * @param mixed                                      $data
-     * @param mixed[]                                    $options
-     *
-     * @return FormInterface
+     * {@inheritdoc}
      */
-    public function create($type = null, $data = null, array $options = [])
+    public function create(ResourceInterface $resource, $type = null, $data = null, array $options = [])
     {
-        if ($type instanceof ResourceInterface) {
-            $type = $this->parameterResolver->resolveForm($type);
+        if ($type === null) {
+            $type = $this->parameterResolver->resolveForm($resource);
         }
 
-        $validationGroups = $this->parameterResolver->resolveValidationGroups();
+        $validationGroups = $this->parameterResolver->resolveValidationGroups($resource);
         $translationDomain = $this->parameterResolver->resolveTranslationDomain();
 
         if (!empty($validationGroups)) {

@@ -225,7 +225,7 @@ class Controller extends FOSRestController implements ControllerInterface
      */
     private function buildForm($form = null, $object = null, array $options = [])
     {
-        return $this->getFormFactory()->create($form ?: $this->resource, $object, $options);
+        return $this->getFormFactory()->create($this->resource, $form, $object, $options);
     }
 
     /**

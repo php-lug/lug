@@ -17,6 +17,7 @@ use Lug\Component\Resource\Model\ResourceInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
+use Symfony\Component\Validator\Constraint;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -295,9 +296,9 @@ class ParameterResolver implements ParameterResolverInterface
     /**
      * {@inheritdoc}
      */
-    public function resolveValidationGroups()
+    public function resolveValidationGroups(ResourceInterface $resource)
     {
-        return $this->resolveParameter('validation_groups', []);
+        return $this->resolveParameter('validation_groups', [Constraint::DEFAULT_GROUP, 'lug.'.$resource->getName()]);
     }
 
     /**
