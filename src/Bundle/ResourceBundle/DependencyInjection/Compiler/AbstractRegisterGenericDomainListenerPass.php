@@ -18,7 +18,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-abstract class AbstractRegisterDomainListenerPass implements CompilerPassInterface
+abstract class AbstractRegisterGenericDomainListenerPass implements CompilerPassInterface
 {
     /**
      * @var string
@@ -61,7 +61,7 @@ abstract class AbstractRegisterDomainListenerPass implements CompilerPassInterfa
 
                 foreach (['create', 'update', 'delete'] as $action) {
                     foreach (['error', 'post'] as $prefix) {
-                        $flashListener->addTag('kernel.event_listener', array_merge([
+                        $flashListener->addTag('lug.resource.domain.event_listener', array_merge([
                             'event' => 'lug.'.$attribute['resource'].'.'.$prefix.'_'.$action,
                         ], $this->event));
                     }

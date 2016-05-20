@@ -56,11 +56,6 @@ abstract class AbstractLugLocaleExtensionTest extends \PHPUnit_Framework_TestCas
     private $locale;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|EventDispatcherInterface
-     */
-    private $eventDispatcher;
-
-    /**
      * @var \PHPUnit_Framework_MockObject_MockObject|RequestStack
      */
     private $requestStack;
@@ -74,6 +69,11 @@ abstract class AbstractLugLocaleExtensionTest extends \PHPUnit_Framework_TestCas
      * @var \PHPUnit_Framework_MockObject_MockObject|PropertyAccessorInterface
      */
     private $propertyAccessor;
+
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject|EventDispatcherInterface
+     */
+    private $domainEventDispatcher;
 
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject|ParameterResolverInterface
@@ -92,7 +92,7 @@ abstract class AbstractLugLocaleExtensionTest extends \PHPUnit_Framework_TestCas
     {
         $this->extension = new LugLocaleExtension(new LugLocaleBundle());
         $this->locale = 'en';
-        $this->eventDispatcher = $this->createEventDispatcherMock();
+        $this->domainEventDispatcher = $this->createEventDispatcherMock();
         $this->requestStack = $this->createRequestStackMock();
         $this->translator = $this->createTranslatorMock();
         $this->propertyAccessor = $this->createPropertyAccessorMock();
@@ -101,10 +101,10 @@ abstract class AbstractLugLocaleExtensionTest extends \PHPUnit_Framework_TestCas
         $this->container = new ContainerBuilder();
         $this->container->setParameter('locale', $this->locale);
         $this->container->set('phpunit', $this);
-        $this->container->set('event_dispatcher', $this->eventDispatcher);
         $this->container->set('request_stack', $this->requestStack);
         $this->container->set('translator', $this->translator);
         $this->container->set('property_accessor', $this->propertyAccessor);
+        $this->container->set('lug.resource.domain.event_dispatcher', $this->domainEventDispatcher);
         $this->container->set('lug.resource.routing.parameter_resolver', $this->parameterResolver);
 
         $this->container->setDefinition(
@@ -137,11 +137,13 @@ abstract class AbstractLugLocaleExtensionTest extends \PHPUnit_Framework_TestCas
         $this->compileContainer();
 
         $this->assertTrue($this->container->hasDefinition($domainSubscriberName = 'lug.locale.subscriber.domain'));
-        $this->assertTrue($this->container->getDefinition($domainSubscriberName)->hasTag('kernel.event_subscriber'));
+        $this->assertTrue(
+            $this->container->getDefinition($domainSubscriberName)->hasTag('lug.resource.domain.event_subscriber')
+        );
         $this->assertInstanceOf(LocaleDomainSubscriber::class, $this->container->get($domainSubscriberName));
 
         $this->assertTrue($this->container->hasDefinition($menuSubscriberName = 'lug.locale.subscriber.menu'));
-        $this->assertTrue($this->container->getDefinition($menuSubscriberName)->hasTag('kernel.event_subscriber'));
+        $this->assertTrue($this->container->getDefinition($menuSubscriberName)->hasTag('lug.ui.menu.event_subscriber'));
         $this->assertInstanceOf(MenuSubscriber::class, $this->container->get($menuSubscriberName));
     }
 

@@ -14,19 +14,10 @@ file that was distributed with this source code.
 <container xmlns="http://symfony.com/schema/dic/services">
     <services>
         <service
-            id="lug.ui.menu.event_dispatcher"
+            id="lug.resource.domain.event_dispatcher"
             class="Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher"
         >
             <argument type="service" id="service_container" />
-        </service>
-
-        <service
-            id="lug.ui.menu.builder"
-            class="Lug\Bundle\UiBundle\Menu\AbstractMenuBuilder"
-            abstract="true"
-        >
-            <argument type="service" id="knp_menu.factory" />
-            <argument type="service" id="lug.ui.menu.event_dispatcher" />
         </service>
     </services>
 </container>

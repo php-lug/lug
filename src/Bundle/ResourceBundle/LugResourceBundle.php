@@ -12,6 +12,7 @@
 namespace Lug\Bundle\ResourceBundle;
 
 use Lug\Bundle\ResourceBundle\DependencyInjection\Compiler\ConfigureResolveTargetEntitySubscriberPass;
+use Lug\Bundle\ResourceBundle\DependencyInjection\Compiler\RegisterDomainListenerPass;
 use Lug\Bundle\ResourceBundle\DependencyInjection\Compiler\RegisterDomainManagerPass;
 use Lug\Bundle\ResourceBundle\DependencyInjection\Compiler\RegisterDriverMappingPass;
 use Lug\Bundle\ResourceBundle\DependencyInjection\Compiler\RegisterFactoryPass;
@@ -21,6 +22,7 @@ use Lug\Bundle\ResourceBundle\DependencyInjection\Compiler\RegisterManagerTagPas
 use Lug\Bundle\ResourceBundle\DependencyInjection\Compiler\RegisterMessageListenerPass;
 use Lug\Bundle\ResourceBundle\DependencyInjection\Compiler\RegisterRepositoryPass;
 use Lug\Bundle\ResourceBundle\DependencyInjection\Compiler\RegisterResourcePass;
+use Lug\Bundle\ResourceBundle\DependencyInjection\Compiler\RegisterRestListenerPass;
 use Lug\Bundle\ResourceBundle\DependencyInjection\Compiler\ReplaceBase64FileExtensionPass;
 use Lug\Bundle\ResourceBundle\DependencyInjection\Compiler\ReplaceBooleanExtensionPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -47,6 +49,8 @@ class LugResourceBundle extends Bundle
             ->addCompilerPass(new ConfigureResolveTargetEntitySubscriberPass())
             ->addCompilerPass(new RegisterFlashListenerPass())
             ->addCompilerPass(new RegisterMessageListenerPass())
+            ->addCompilerPass(new RegisterDomainListenerPass())
+            ->addCompilerPass(new RegisterRestListenerPass())
             ->addCompilerPass(new ReplaceBase64FileExtensionPass())
             ->addCompilerPass(new ReplaceBooleanExtensionPass());
     }

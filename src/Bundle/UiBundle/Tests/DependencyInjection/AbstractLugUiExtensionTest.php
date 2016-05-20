@@ -18,6 +18,7 @@ use Lug\Bundle\UiBundle\Form\Extension\IconFormExtension;
 use Lug\Bundle\UiBundle\Menu\MenuBuilderInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\DefinitionDecorator;
+use Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -63,7 +64,7 @@ abstract class AbstractLugUiExtensionTest extends \PHPUnit_Framework_TestCase
         $this->container->loadFromExtension($this->extension->getAlias());
     }
 
-    public function testForms()
+    public function testForm()
     {
         $this->compileContainer();
 
@@ -96,6 +97,11 @@ abstract class AbstractLugUiExtensionTest extends \PHPUnit_Framework_TestCase
         $this->container->setDefinition($menuName = 'lug.ui.menu.test', $definition);
 
         $this->compileContainer();
+
+        $this->assertInstanceOf(
+            ContainerAwareEventDispatcher::class,
+            $this->container->get('lug.ui.menu.event_dispatcher')
+        );
 
         $this->assertInstanceOf($class, $this->container->get($menuName));
     }

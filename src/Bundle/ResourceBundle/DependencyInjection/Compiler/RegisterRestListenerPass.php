@@ -11,16 +11,19 @@
 
 namespace Lug\Bundle\ResourceBundle\DependencyInjection\Compiler;
 
+use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
+
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class RegisterMessageListenerPass extends AbstractRegisterGenericDomainListenerPass
+class RegisterRestListenerPass extends RegisterListenersPass
 {
     public function __construct()
     {
-        parent::__construct('lug.resource.listener.message', [
-            'method'   => 'addMessage',
-            'priority' => -1000,
-        ]);
+        parent::__construct(
+            'lug.resource.rest.event_dispatcher',
+            'lug.resource.rest.event_listener',
+            'lug.resource.rest.event_subscriber'
+        );
     }
 }

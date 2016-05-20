@@ -11,6 +11,7 @@
 
 namespace Lug\Bundle\UiBundle;
 
+use Lug\Bundle\UiBundle\DependencyInjection\Compiler\RegisterMenuListenerPass;
 use Lug\Bundle\UiBundle\DependencyInjection\Compiler\RegisterMenuPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
@@ -25,6 +26,8 @@ class LugUiBundle extends Bundle
      */
     public function build(ContainerBuilder $container)
     {
-        $container->addCompilerPass(new RegisterMenuPass());
+        $container
+            ->addCompilerPass(new RegisterMenuListenerPass())
+            ->addCompilerPass(new RegisterMenuPass());
     }
 }

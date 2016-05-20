@@ -282,7 +282,7 @@ class Controller extends FOSRestController implements ControllerInterface
      */
     private function processAction(FormInterface $form = null, $statusCode = Response::HTTP_NO_CONTENT)
     {
-        $this->getEventDispatcher()->dispatch(
+        $this->getRestEventDispatcher()->dispatch(
             RestEvents::ACTION,
             $event = new ActionEvent($this->resource, $form, $statusCode)
         );
@@ -302,7 +302,7 @@ class Controller extends FOSRestController implements ControllerInterface
      */
     private function processView(View $view)
     {
-        $this->getEventDispatcher()->dispatch(RestEvents::VIEW, $event = new ViewEvent($this->resource, $view));
+        $this->getRestEventDispatcher()->dispatch(RestEvents::VIEW, $event = new ViewEvent($this->resource, $view));
 
         return $this->handleView($event->getView());
     }
@@ -319,14 +319,6 @@ class Controller extends FOSRestController implements ControllerInterface
                 $domainException
             );
         }
-    }
-
-    /**
-     * @return EventDispatcherInterface
-     */
-    private function getEventDispatcher()
-    {
-        return $this->get('event_dispatcher');
     }
 
     /**
@@ -391,5 +383,13 @@ class Controller extends FOSRestController implements ControllerInterface
     private function getGridBatcher()
     {
         return $this->get('lug.grid.batcher');
+    }
+
+    /**
+     * @return EventDispatcherInterface
+     */
+    private function getRestEventDispatcher()
+    {
+        return $this->get('lug.resource.rest.event_dispatcher');
     }
 }

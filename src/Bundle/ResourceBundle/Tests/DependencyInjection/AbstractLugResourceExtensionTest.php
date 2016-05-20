@@ -54,6 +54,7 @@ use Lug\Component\Resource\Repository\Doctrine\MongoDB\RepositoryFactory as Doct
 use Lug\Component\Resource\Repository\Doctrine\ORM\RepositoryFactory as DoctrineORMRepositoryFactory;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormRendererInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -169,6 +170,16 @@ abstract class AbstractLugResourceExtensionTest extends \PHPUnit_Framework_TestC
         $this->assertInstanceOf(
             ResolveTargetSubscriberConfigurator::class,
             $this->container->get('lug.resource.configurator.resolve_target_entity')
+        );
+    }
+
+    public function testDomain()
+    {
+        $this->compileContainer();
+
+        $this->assertInstanceOf(
+            ContainerAwareEventDispatcher::class,
+            $this->container->get('lug.resource.domain.event_dispatcher')
         );
     }
 
@@ -329,32 +340,35 @@ abstract class AbstractLugResourceExtensionTest extends \PHPUnit_Framework_TestC
     {
         $this->compileContainer();
 
+        $this->assertInstanceOf(
+            ContainerAwareEventDispatcher::class,
+            $this->container->get('lug.resource.rest.event_dispatcher')
+        );
+
+        $tag = 'lug.resource.rest.event_subscriber';
+
         $viewActionSubscriber = 'lug.resource.rest.action.subscriber.view';
-        $this->assertTrue($this->container->getDefinition($viewActionSubscriber)->hasTag('kernel.event_subscriber'));
+        $this->assertTrue($this->container->getDefinition($viewActionSubscriber)->hasTag($tag));
         $this->assertInstanceOf(ViewActionSubscriber::class, $this->container->get($viewActionSubscriber));
 
         $apiActionSubscriber = 'lug.resource.rest.action.subscriber.api';
-        $this->assertTrue($this->container->getDefinition($apiActionSubscriber)->hasTag('kernel.event_subscriber'));
+        $this->assertTrue($this->container->getDefinition($apiActionSubscriber)->hasTag($tag));
         $this->assertInstanceOf(ApiActionSubscriber::class, $this->container->get($apiActionSubscriber));
 
         $formViewSubscriber = 'lug.resource.rest.view.subscriber.form';
-        $this->assertTrue($this->container->getDefinition($formViewSubscriber)->hasTag('kernel.event_subscriber'));
+        $this->assertTrue($this->container->getDefinition($formViewSubscriber)->hasTag($tag));
         $this->assertInstanceOf(FormViewSubscriber::class, $this->container->get($formViewSubscriber));
 
         $gridViewSubscriber = 'lug.resource.rest.view.subscriber.grid';
-        $this->assertTrue($this->container->getDefinition($gridViewSubscriber)->hasTag('kernel.event_subscriber'));
+        $this->assertTrue($this->container->getDefinition($gridViewSubscriber)->hasTag($tag));
         $this->assertInstanceOf(GridViewSubscriber::class, $this->container->get($gridViewSubscriber));
 
         $pagerfantaViewSubscriber = 'lug.resource.rest.view.subscriber.pagerfanta';
-
-        $this->assertTrue(
-            $this->container->getDefinition($pagerfantaViewSubscriber)->hasTag('kernel.event_subscriber')
-        );
-
+        $this->assertTrue($this->container->getDefinition($pagerfantaViewSubscriber)->hasTag($tag));
         $this->assertInstanceOf(PagerfantaViewSubscriber::class, $this->container->get($pagerfantaViewSubscriber));
 
         $resourceViewSubscriber = 'lug.resource.rest.view.subscriber.resource';
-        $this->assertTrue($this->container->getDefinition($resourceViewSubscriber)->hasTag('kernel.event_subscriber'));
+        $this->assertTrue($this->container->getDefinition($resourceViewSubscriber)->hasTag($tag));
         $this->assertInstanceOf(ResourceViewSubscriber::class, $this->container->get($resourceViewSubscriber));
     }
 
