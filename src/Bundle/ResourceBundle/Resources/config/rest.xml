@@ -14,6 +14,13 @@ file that was distributed with this source code.
 <container xmlns="http://symfony.com/schema/dic/services">
     <services>
         <service
+            id="lug.resource.rest.event_dispatcher"
+            class="Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher"
+        >
+            <argument type="service" id="service_container" />
+        </service>
+
+        <service
             id="lug.resource.rest.subscriber"
             class="Lug\Bundle\ResourceBundle\Rest\AbstractSubscriber"
             abstract="true"
@@ -26,7 +33,7 @@ file that was distributed with this source code.
             class="Lug\Bundle\ResourceBundle\Rest\Action\EventSubscriber\ViewActionSubscriber"
             parent="lug.resource.rest.subscriber"
         >
-            <tag name="kernel.event_subscriber" />
+            <tag name="lug.resource.rest.event_subscriber" />
         </service>
 
         <service
@@ -35,7 +42,7 @@ file that was distributed with this source code.
             parent="lug.resource.rest.subscriber"
         >
             <argument type="service" id="router" />
-            <tag name="kernel.event_subscriber" />
+            <tag name="lug.resource.rest.event_subscriber" />
         </service>
 
         <service
@@ -44,7 +51,7 @@ file that was distributed with this source code.
             parent="lug.resource.rest.subscriber"
         >
             <argument type="service" id="twig.form.renderer" />
-            <tag name="kernel.event_subscriber" />
+            <tag name="lug.resource.rest.event_subscriber" />
         </service>
 
         <service
@@ -54,7 +61,7 @@ file that was distributed with this source code.
         >
             <argument type="service" id="lug.resource.form.factory" />
             <argument type="service" id="twig.form.renderer" />
-            <tag name="kernel.event_subscriber" />
+            <tag name="lug.resource.rest.event_subscriber" />
         </service>
 
         <service
@@ -64,7 +71,7 @@ file that was distributed with this source code.
         >
             <argument type="service" id="lug.resource.hateoas.pagerfanta_representation" />
             <argument type="service" id="request_stack" />
-            <tag name="kernel.event_subscriber" />
+            <tag name="lug.resource.rest.event_subscriber" />
         </service>
 
         <service
@@ -72,7 +79,7 @@ file that was distributed with this source code.
             class="Lug\Bundle\ResourceBundle\Rest\View\EventSubscriber\ResourceViewSubscriber"
             parent="lug.resource.rest.subscriber"
         >
-            <tag name="kernel.event_subscriber" />
+            <tag name="lug.resource.rest.event_subscriber" />
         </service>
     </services>
 </container>

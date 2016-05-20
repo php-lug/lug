@@ -20,14 +20,14 @@ file that was distributed with this source code.
             <argument type="service" id="lug.locale.provider" />
             <argument type="service" id="translator" />
             <argument type="service" id="property_accessor" />
-            <tag name="kernel.event_subscriber" />
+            <tag name="lug.resource.domain.event_subscriber" />
         </service>
 
         <service
             id="lug.locale.subscriber.menu"
             class="Lug\Bundle\LocaleBundle\EventSubscriber\MenuSubscriber"
         >
-            <tag name="kernel.event_subscriber" />
+            <tag name="lug.ui.menu.event_subscriber" />
         </service>
     </services>
 </container>

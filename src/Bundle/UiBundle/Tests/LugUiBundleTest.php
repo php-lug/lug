@@ -11,6 +11,7 @@
 
 namespace Lug\Bundle\UiBundle\Tests;
 
+use Lug\Bundle\UiBundle\DependencyInjection\Compiler\RegisterMenuListenerPass;
 use Lug\Bundle\UiBundle\DependencyInjection\Compiler\RegisterMenuPass;
 use Lug\Bundle\UiBundle\LugUiBundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -43,9 +44,16 @@ class LugUiBundleTest extends \PHPUnit_Framework_TestCase
     {
         $container = $this->createContainerBuilderMock();
         $container
-            ->expects($this->once())
+            ->expects($this->at(0))
             ->method('addCompilerPass')
-            ->with($this->isInstanceOf(RegisterMenuPass::class));
+            ->with($this->isInstanceOf(RegisterMenuListenerPass::class))
+            ->will($this->returnSelf());
+
+        $container
+            ->expects($this->at(1))
+            ->method('addCompilerPass')
+            ->with($this->isInstanceOf(RegisterMenuPass::class))
+            ->will($this->returnSelf());
 
         $this->bundle->build($container);
     }

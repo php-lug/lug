@@ -305,7 +305,7 @@ class ResourceExtension extends ConfigurableExtension
     {
         $definition = new Definition($resource->getDomainManager(), [
             new Reference('lug.resource.'.$resource->getName()),
-            new Reference('event_dispatcher'),
+            new Reference('lug.resource.domain.event_dispatcher'),
             new Reference('lug.manager.'.$resource->getName()),
             new Reference('lug.repository.'.$resource->getName()),
         ]);

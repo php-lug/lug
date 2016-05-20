@@ -14,7 +14,7 @@ namespace Lug\Bundle\ResourceBundle\DependencyInjection\Compiler;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class RegisterFlashListenerPass extends AbstractRegisterDomainListenerPass
+class RegisterFlashListenerPass extends AbstractRegisterGenericDomainListenerPass
 {
     public function __construct()
     {

@@ -9,18 +9,18 @@
  * file that was distributed with this source code.
  */
 
-namespace Lug\Bundle\ResourceBundle\Tests\DependencyInjection\Compiler;
+namespace Lug\Bundle\UiBundle\Tests\DependencyInjection\Compiler;
 
-use Lug\Bundle\ResourceBundle\DependencyInjection\Compiler\RegisterDomainListenerPass;
+use Lug\Bundle\UiBundle\DependencyInjection\Compiler\RegisterMenuListenerPass;
 use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class RegisterDomainListenerPassTest extends \PHPUnit_Framework_TestCase
+class RegisterMenuListenerPassTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var RegisterDomainListenerPass
+     * @var RegisterMenuListenerPass
      */
     private $compiler;
 
@@ -29,7 +29,7 @@ class RegisterDomainListenerPassTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->compiler = new RegisterDomainListenerPass();
+        $this->compiler = new RegisterMenuListenerPass();
     }
 
     public function testInheritance()

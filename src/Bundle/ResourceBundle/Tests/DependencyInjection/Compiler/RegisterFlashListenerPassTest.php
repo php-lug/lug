@@ -65,7 +65,7 @@ class RegisterFlashListenerPassTest extends \PHPUnit_Framework_TestCase
                     ->expects($this->at($index++))
                     ->method('addTag')
                     ->with(
-                        $this->identicalTo('kernel.event_listener'),
+                        $this->identicalTo('lug.resource.domain.event_listener'),
                         $this->identicalTo([
                             'event'    => 'lug.'.$resource.'.'.$prefix.'_'.$action,
                             'method'   => 'addFlash',

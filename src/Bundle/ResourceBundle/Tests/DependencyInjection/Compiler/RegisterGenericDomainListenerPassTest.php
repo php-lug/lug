@@ -11,7 +11,7 @@
 
 namespace Lug\Bundle\ResourceBundle\Tests\DependencyInjection\Compiler;
 
-use Lug\Bundle\ResourceBundle\DependencyInjection\Compiler\RegisterMessageListenerPass;
+use Lug\Bundle\ResourceBundle\DependencyInjection\Compiler\AbstractRegisterGenericDomainListenerPass;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
@@ -19,19 +19,34 @@ use Symfony\Component\DependencyInjection\Definition;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class RegisterMessageListenerPassTest extends \PHPUnit_Framework_TestCase
+class RegisterGenericDomainListenerPassTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var RegisterMessageListenerPass
+     * @var AbstractRegisterGenericDomainListenerPass
      */
     private $compiler;
+
+    /**
+     * @var string
+     */
+    private $listener;
+
+    /**
+     * @var mixed[]
+     */
+    private $event;
 
     /**
      * {@inheritdoc}
      */
     protected function setUp()
     {
-        $this->compiler = new RegisterMessageListenerPass();
+        $this->listener = 'my.listener';
+        $this->event = ['method' => 'myMethod'];
+
+        $this->compiler = $this->getMockBuilder(AbstractRegisterGenericDomainListenerPass::class)
+            ->setConstructorArgs([$this->listener, $this->event])
+            ->getMockForAbstractClass();
     }
 
     public function testInheritance()
@@ -54,7 +69,7 @@ class RegisterMessageListenerPassTest extends \PHPUnit_Framework_TestCase
         $container
             ->expects($this->once())
             ->method('getDefinition')
-            ->with($this->identicalTo('lug.resource.listener.message'))
+            ->with($this->identicalTo($this->listener))
             ->will($this->returnValue($listener = $this->createDefinitionMock()));
 
         $index = 0;
@@ -66,11 +81,9 @@ class RegisterMessageListenerPassTest extends \PHPUnit_Framework_TestCase
                     ->method('addTag')
                     ->with(
                         $this->identicalTo('lug.resource.domain.event_listener'),
-                        $this->identicalTo([
-                            'event'    => 'lug.'.$resource.'.'.$prefix.'_'.$action,
-                            'method'   => 'addMessage',
-                            'priority' => -1000,
-                        ])
+                        $this->identicalTo(array_merge([
+                            'event' => 'lug.'.$resource.'.'.$prefix.'_'.$action,
+                        ], $this->event))
                     );
             }
         }
@@ -80,7 +93,7 @@ class RegisterMessageListenerPassTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \Lug\Bundle\ResourceBundle\Exception\TagAttributeNotFoundException
-     * @expectedExceptionMessage The attribute "resource" could not be found for the tag "lug.controller" on the "my.controller" service.
+     * @expectedExceptionFlash The attribute "resource" could not be found for the tag "lug.domain_manager" on the "my.domain_manager" service.
      */
     public function testProcessWithMissingResourceAttribute()
     {
@@ -96,7 +109,7 @@ class RegisterMessageListenerPassTest extends \PHPUnit_Framework_TestCase
         $container
             ->expects($this->once())
             ->method('getDefinition')
-            ->with($this->identicalTo('lug.resource.listener.message'))
+            ->with($this->identicalTo($this->listener))
             ->will($this->returnValue($listener = $this->createDefinitionMock()));
 
         $this->compiler->process($container);

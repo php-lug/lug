@@ -11,16 +11,16 @@
 
 namespace Lug\Bundle\ResourceBundle\Tests\DependencyInjection\Compiler;
 
-use Lug\Bundle\ResourceBundle\DependencyInjection\Compiler\RegisterDomainListenerPass;
+use Lug\Bundle\ResourceBundle\DependencyInjection\Compiler\RegisterRestListenerPass;
 use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class RegisterDomainListenerPassTest extends \PHPUnit_Framework_TestCase
+class RegisterRestListenerPassTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var RegisterDomainListenerPass
+     * @var RegisterRestListenerPass
      */
     private $compiler;
 
@@ -29,7 +29,7 @@ class RegisterDomainListenerPassTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->compiler = new RegisterDomainListenerPass();
+        $this->compiler = new RegisterRestListenerPass();
     }
 
     public function testInheritance()

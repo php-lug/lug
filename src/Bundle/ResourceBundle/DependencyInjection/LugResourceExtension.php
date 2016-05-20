@@ -30,6 +30,7 @@ class LugResourceExtension extends Extension
 
         $resources = [
             'configurator',
+            'domain',
             'event_listener',
             'event_subscriber',
             'form',

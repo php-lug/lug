@@ -12,6 +12,7 @@
 namespace Lug\Bundle\ResourceBundle\Tests;
 
 use Lug\Bundle\ResourceBundle\DependencyInjection\Compiler\ConfigureResolveTargetEntitySubscriberPass;
+use Lug\Bundle\ResourceBundle\DependencyInjection\Compiler\RegisterDomainListenerPass;
 use Lug\Bundle\ResourceBundle\DependencyInjection\Compiler\RegisterDomainManagerPass;
 use Lug\Bundle\ResourceBundle\DependencyInjection\Compiler\RegisterDriverMappingPass;
 use Lug\Bundle\ResourceBundle\DependencyInjection\Compiler\RegisterFactoryPass;
@@ -21,6 +22,7 @@ use Lug\Bundle\ResourceBundle\DependencyInjection\Compiler\RegisterManagerTagPas
 use Lug\Bundle\ResourceBundle\DependencyInjection\Compiler\RegisterMessageListenerPass;
 use Lug\Bundle\ResourceBundle\DependencyInjection\Compiler\RegisterRepositoryPass;
 use Lug\Bundle\ResourceBundle\DependencyInjection\Compiler\RegisterResourcePass;
+use Lug\Bundle\ResourceBundle\DependencyInjection\Compiler\RegisterRestListenerPass;
 use Lug\Bundle\ResourceBundle\DependencyInjection\Compiler\ReplaceBase64FileExtensionPass;
 use Lug\Bundle\ResourceBundle\DependencyInjection\Compiler\ReplaceBooleanExtensionPass;
 use Lug\Bundle\ResourceBundle\LugResourceBundle;
@@ -116,11 +118,23 @@ class LugResourceBundleTest extends \PHPUnit_Framework_TestCase
         $container
             ->expects($this->at(10))
             ->method('addCompilerPass')
-            ->with($this->isInstanceOf(ReplaceBase64FileExtensionPass::class))
+            ->with($this->isInstanceOf(RegisterDomainListenerPass::class))
             ->will($this->returnSelf());
 
         $container
             ->expects($this->at(11))
+            ->method('addCompilerPass')
+            ->with($this->isInstanceOf(RegisterRestListenerPass::class))
+            ->will($this->returnSelf());
+
+        $container
+            ->expects($this->at(12))
+            ->method('addCompilerPass')
+            ->with($this->isInstanceOf(ReplaceBase64FileExtensionPass::class))
+            ->will($this->returnSelf());
+
+        $container
+            ->expects($this->at(13))
             ->method('addCompilerPass')
             ->with($this->isInstanceOf(ReplaceBooleanExtensionPass::class))
             ->will($this->returnSelf());
