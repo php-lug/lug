@@ -5,6 +5,7 @@
 # For the full copyright and license information, please read the LICENSE
 # file that was distributed with this source code.
 
+/.php_cs.cache
 /.puli/
 /app/cache/
 /app/config/config_local.yml

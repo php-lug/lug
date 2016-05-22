@@ -23,41 +23,37 @@ Feature: Limiting locales
         And the response should contain:
             """
                 {
-                    "code": 400,
-                    "message": "Validation Failed",
-                    "errors": {
-                        "children": {
-                            "filters": {
-                                "children": {
-                                    "code": {
-                                        "children": {
-                                            "type": {},
-                                            "value": {}
-                                        }
-                                    },
-                                    "enabled": {},
-                                    "required": {},
-                                    "createdAt": {
-                                        "children": {
-                                            "type": {},
-                                            "value": {}
-                                        }
-                                    },
-                                    "updatedAt": {
-                                        "children": {
-                                            "type": {},
-                                            "value": {}
-                                        }
+                    "children": {
+                        "filters": {
+                            "children": {
+                                "code": {
+                                    "children": {
+                                        "type": {},
+                                        "value": {}
+                                    }
+                                },
+                                "enabled": {},
+                                "required": {},
+                                "createdAt": {
+                                    "children": {
+                                        "type": {},
+                                        "value": {}
+                                    }
+                                },
+                                "updatedAt": {
+                                    "children": {
+                                        "type": {},
+                                        "value": {}
                                     }
                                 }
-                            },
-                            "sorting": {},
-                            "page": {},
-                            "limit": {
-                                "errors": [
-                                    "The grid limit should be upper or equal to 1."
-                                ]
                             }
+                        },
+                        "sorting": {},
+                        "page": {},
+                        "limit": {
+                            "errors": [
+                                "The grid limit should be upper or equal to 1."
+                            ]
                         }
                     }
                 }
@@ -69,41 +65,37 @@ Feature: Limiting locales
         And the response should contain:
             """
                 {
-                    "code": 400,
-                    "message": "Validation Failed",
-                    "errors": {
-                        "children": {
-                            "filters": {
-                                "children": {
-                                    "code": {
-                                        "children": {
-                                            "type": {},
-                                            "value": {}
-                                        }
-                                    },
-                                    "enabled": {},
-                                    "required": {},
-                                    "createdAt": {
-                                        "children": {
-                                            "type": {},
-                                            "value": {}
-                                        }
-                                    },
-                                    "updatedAt": {
-                                        "children": {
-                                            "type": {},
-                                            "value": {}
-                                        }
+                    "children": {
+                        "filters": {
+                            "children": {
+                                "code": {
+                                    "children": {
+                                        "type": {},
+                                        "value": {}
+                                    }
+                                },
+                                "enabled": {},
+                                "required": {},
+                                "createdAt": {
+                                    "children": {
+                                        "type": {},
+                                        "value": {}
+                                    }
+                                },
+                                "updatedAt": {
+                                    "children": {
+                                        "type": {},
+                                        "value": {}
                                     }
                                 }
-                            },
-                            "sorting": {},
-                            "page": {},
-                            "limit": {
-                                "errors": [
-                                    "The grid limit should be lower or equal to 100."
-                                ]
                             }
+                        },
+                        "sorting": {},
+                        "page": {},
+                        "limit": {
+                            "errors": [
+                                "The grid limit should be lower or equal to 100."
+                            ]
                         }
                     }
                 }

@@ -25,18 +25,14 @@ Feature: Updating a locale
         And the response should contain:
             """
                 {
-                    "code": 400,
-                    "message": "Validation Failed",
-                    "errors": {
-                        "children": {
-                            "code": {
-                                "errors": [
-                                    "The locale code should not be blank."
-                                ]
-                            },
-                            "enabled": {},
-                            "required": {}
-                        }
+                    "children": {
+                        "code": {
+                            "errors": [
+                                "The locale code should not be blank."
+                            ]
+                        },
+                        "enabled": {},
+                        "required": {}
                     }
                 }
             """
@@ -54,25 +50,21 @@ Feature: Updating a locale
         And the response should contain:
             """
                 {
-                    "code": 400,
-                    "message": "Validation Failed",
-                    "errors": {
-                        "children": {
-                            "code": {
-                                "errors": [
-                                    "The locale code is not valid."
-                                ]
-                            },
-                            "enabled": {
-                                "errors": [
-                                    "The locale enabled flag is not valid."
-                                ]
-                            },
-                            "required": {
-                                "errors": [
-                                    "The locale required flag is not valid."
-                                ]
-                            }
+                    "children": {
+                        "code": {
+                            "errors": [
+                                "The locale code is not valid."
+                            ]
+                        },
+                        "enabled": {
+                            "errors": [
+                                "The locale enabled flag is not valid."
+                            ]
+                        },
+                        "required": {
+                            "errors": [
+                                "The locale required flag is not valid."
+                            ]
                         }
                     }
                 }
@@ -96,18 +88,14 @@ Feature: Updating a locale
         And the response should contain:
             """
                 {
-                    "code": 400,
-                    "message": "Validation Failed",
-                    "errors": {
-                        "children": {
-                            "code": {
-                                "errors": [
-                                    "The locale code already exists."
-                                ]
-                            },
-                            "enabled": {},
-                            "required": {}
-                        }
+                    "children": {
+                        "code": {
+                            "errors": [
+                                "The locale code already exists."
+                            ]
+                        },
+                        "enabled": {},
+                        "required": {}
                     }
                 }
             """

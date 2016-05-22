@@ -21,9 +21,11 @@ use Lug\Bundle\ResourceBundle\EventListener\MessageListener;
 use Lug\Bundle\ResourceBundle\EventSubscriber\Doctrine\MongoDB\ResourceSubscriber as DoctrineMongoDBResourceSubscriber;
 use Lug\Bundle\ResourceBundle\EventSubscriber\Doctrine\ORM\ResourceSubscriber as DoctrineORMResourceSubscriber;
 use Lug\Bundle\ResourceBundle\EventSubscriber\RoutingSubscriber;
+use Lug\Bundle\ResourceBundle\Form\DataTransformer\BooleanTransformer;
 use Lug\Bundle\ResourceBundle\Form\EventSubscriber\CollectionSubscriber;
 use Lug\Bundle\ResourceBundle\Form\EventSubscriber\FlashCsrfProtectionSubscriber;
 use Lug\Bundle\ResourceBundle\Form\EventSubscriber\XmlHttpRequestSubscriber;
+use Lug\Bundle\ResourceBundle\Form\Extension\BooleanExtension;
 use Lug\Bundle\ResourceBundle\Form\Extension\CollectionExtension;
 use Lug\Bundle\ResourceBundle\Form\Extension\DateExtension;
 use Lug\Bundle\ResourceBundle\Form\Extension\DateTimeExtension;
@@ -248,6 +250,13 @@ abstract class AbstractLugResourceExtensionTest extends \PHPUnit_Framework_TestC
         $csrfProtectionType = 'lug.resource.form.type.csrf_protection';
         $this->assertTrue($this->container->getDefinition($csrfProtectionType)->hasTag('form.type'));
         $this->assertInstanceOf(CsrfProtectionType::class, $this->container->get($csrfProtectionType));
+
+        $booleanTransformer = 'lug.resource.form.transformer.boolean';
+        $this->assertInstanceOf(BooleanTransformer::class, $this->container->get($booleanTransformer));
+
+        $booleanExtension = 'lug.resource.form.extension.boolean';
+        $this->assertTrue($this->container->getDefinition($booleanExtension)->hasTag('form.type_extension'));
+        $this->assertInstanceOf(BooleanExtension::class, $this->container->get($booleanExtension));
 
         $collectionSubscriber = 'lug.resource.form.subscriber.collection';
         $this->assertInstanceOf(CollectionSubscriber::class, $this->container->get($collectionSubscriber));

@@ -25,34 +25,26 @@ Feature: Batching locales
         Then the response status code should be "400"
         And the response should contain:
             """
-                <result>
-                    <code>400</code>
-                    <message>
-                        <![CDATA[Validation Failed]]>
-                    </message>
-                    <errors>
-                        <form name="grid_batch">
-                            <errors/>
-                            <form name="all">
-                                <errors/>
-                            </form>
-                            <form name="type">
-                                <errors>
-                                    <entry>
-                                        <![CDATA[The grid batch should not be blank.]]>
-                                    </entry>
-                                </errors>
-                            </form>
-                            <form name="value">
-                                <errors>
-                                    <entry>
-                                        <![CDATA[You must select at least one locale.]]>
-                                    </entry>
-                                </errors>
-                            </form>
-                        </form>
-                    </errors>
-                </result>
+                <form name="grid_batch">
+                    <errors/>
+                    <form name="all">
+                        <errors/>
+                    </form>
+                    <form name="type">
+                        <errors>
+                            <entry>
+                                <![CDATA[The grid batch should not be blank.]]>
+                            </entry>
+                        </errors>
+                    </form>
+                    <form name="value">
+                        <errors>
+                            <entry>
+                                <![CDATA[You must select at least one locale.]]>
+                            </entry>
+                        </errors>
+                    </form>
+                </form>
             """
 
     Scenario: Batching default locale (delete)
@@ -68,12 +60,11 @@ Feature: Batching locales
         Then the response status code should be "409"
         And the response should contain:
             """
-                <result xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <result>
                     <code>409</code>
                     <message>
                         <![CDATA[Conflict]]>
                     </message>
-                    <errors xsi:nil="true"/>
                 </result>
             """
         And the locales should exist:
@@ -93,12 +84,11 @@ Feature: Batching locales
         Then the response status code should be "409"
         And the response should contain:
             """
-                <result xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <result>
                     <code>409</code>
                     <message>
                         <![CDATA[Conflict]]>
                     </message>
-                    <errors xsi:nil="true"/>
                 </result>
             """
         And the locales should exist:

@@ -59,6 +59,20 @@ file that was distributed with this source code.
         </service>
 
         <service
+            id="lug.resource.form.extension.boolean"
+            class="Lug\Bundle\ResourceBundle\Form\Extension\BooleanExtension"
+        >
+            <argument type="service" id="lug.resource.routing.parameter_resolver" />
+            <argument type="service" id="lug.resource.form.transformer.boolean" />
+            <tag name="form.type_extension" extended-type="Symfony\Component\Form\Extension\Core\Type\CheckboxType" />
+        </service>
+
+        <service
+            id="lug.resource.form.transformer.boolean"
+            class="Lug\Bundle\ResourceBundle\Form\DataTransformer\BooleanTransformer"
+        />
+
+        <service
             id="lug.resource.form.extension.collection"
             class="Lug\Bundle\ResourceBundle\Form\Extension\CollectionExtension"
         >

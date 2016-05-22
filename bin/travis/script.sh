@@ -24,5 +24,5 @@ if [ "$UNIT_BUILD" = true ]; then
 fi
 
 if [ "$BDD_BUILD" = true ]; then
-    vendor/bin/behat -p all
+    vendor/bin/behat -p all -f progress
 fi

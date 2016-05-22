@@ -23,66 +23,58 @@ Feature: Limiting locales
         Then the response status code should be "400"
         And the response should contain:
             """
-                <result>
-                    <code>400</code>
-                    <message>
-                        <![CDATA[Validation Failed]]>
-                    </message>
-                    <errors>
-                        <form name="grid">
+                <form name="grid">
+                    <errors/>
+                    <form name="filters">
+                        <errors/>
+                        <form name="code">
                             <errors/>
-                            <form name="filters">
-                                <errors/>
-                                <form name="code">
-                                    <errors/>
-                                    <form name="type">
-                                        <errors/>
-                                    </form>
-                                    <form name="value">
-                                        <errors/>
-                                    </form>
-                                </form>
-                                <form name="enabled">
-                                    <errors/>
-                                </form>
-                                <form name="required">
-                                    <errors/>
-                                </form>
-                                <form name="createdAt">
-                                    <errors/>
-                                    <form name="type">
-                                        <errors/>
-                                    </form>
-                                    <form name="value">
-                                        <errors/>
-                                    </form>
-                                </form>
-                                <form name="updatedAt">
-                                    <errors/>
-                                    <form name="type">
-                                        <errors/>
-                                    </form>
-                                    <form name="value">
-                                        <errors/>
-                                    </form>
-                                </form>
-                            </form>
-                            <form name="sorting">
+                            <form name="type">
                                 <errors/>
                             </form>
-                            <form name="page">
+                            <form name="value">
                                 <errors/>
-                            </form>
-                            <form name="limit">
-                                <errors>
-                                    <entry>
-                                        <![CDATA[The grid limit should be upper or equal to 1.]]>
-                                    </entry>
-                                </errors>
                             </form>
                         </form>
-                    </errors>
-                </result>
+                        <form name="enabled">
+                            <errors/>
+                        </form>
+                        <form name="required">
+                            <errors/>
+                        </form>
+                        <form name="createdAt">
+                            <errors/>
+                            <form name="type">
+                                <errors/>
+                            </form>
+                            <form name="value">
+                                <errors/>
+                            </form>
+                        </form>
+                        <form name="updatedAt">
+                            <errors/>
+                            <form name="type">
+                                <errors/>
+                            </form>
+                            <form name="value">
+                                <errors/>
+                            </form>
+                        </form>
+                    </form>
+                    <form name="sorting">
+                        <errors/>
+                    </form>
+                    <form name="page">
+                        <errors/>
+                    </form>
+                    <form name="limit">
+                        <errors>
+                            <entry>
+                                <![CDATA[The grid limit should be upper or equal to 1.]]>
+                            </entry>
+                        </errors>
+                    </form>
+                </form>
             """
 
     Scenario: Limiting the locales (upper than max)
@@ -90,66 +82,58 @@ Feature: Limiting locales
         Then the response status code should be "400"
         And the response should contain:
             """
-                <result>
-                    <code>400</code>
-                    <message>
-                        <![CDATA[Validation Failed]]>
-                    </message>
-                    <errors>
-                        <form name="grid">
+                <form name="grid">
+                    <errors/>
+                    <form name="filters">
+                        <errors/>
+                        <form name="code">
                             <errors/>
-                            <form name="filters">
-                                <errors/>
-                                <form name="code">
-                                    <errors/>
-                                    <form name="type">
-                                        <errors/>
-                                    </form>
-                                    <form name="value">
-                                        <errors/>
-                                    </form>
-                                </form>
-                                <form name="enabled">
-                                    <errors/>
-                                </form>
-                                <form name="required">
-                                    <errors/>
-                                </form>
-                                <form name="createdAt">
-                                    <errors/>
-                                    <form name="type">
-                                        <errors/>
-                                    </form>
-                                    <form name="value">
-                                        <errors/>
-                                    </form>
-                                </form>
-                                <form name="updatedAt">
-                                    <errors/>
-                                    <form name="type">
-                                        <errors/>
-                                    </form>
-                                    <form name="value">
-                                        <errors/>
-                                    </form>
-                                </form>
-                            </form>
-                            <form name="sorting">
+                            <form name="type">
                                 <errors/>
                             </form>
-                            <form name="page">
+                            <form name="value">
                                 <errors/>
-                            </form>
-                            <form name="limit">
-                                <errors>
-                                    <entry>
-                                        <![CDATA[The grid limit should be lower or equal to 100.]]>
-                                    </entry>
-                                </errors>
                             </form>
                         </form>
-                    </errors>
-                </result>
+                        <form name="enabled">
+                            <errors/>
+                        </form>
+                        <form name="required">
+                            <errors/>
+                        </form>
+                        <form name="createdAt">
+                            <errors/>
+                            <form name="type">
+                                <errors/>
+                            </form>
+                            <form name="value">
+                                <errors/>
+                            </form>
+                        </form>
+                        <form name="updatedAt">
+                            <errors/>
+                            <form name="type">
+                                <errors/>
+                            </form>
+                            <form name="value">
+                                <errors/>
+                            </form>
+                        </form>
+                    </form>
+                    <form name="sorting">
+                        <errors/>
+                    </form>
+                    <form name="page">
+                        <errors/>
+                    </form>
+                    <form name="limit">
+                        <errors>
+                            <entry>
+                                <![CDATA[The grid limit should be lower or equal to 100.]]>
+                            </entry>
+                        </errors>
+                    </form>
+                </form>
             """
 
     Scenario: Limiting the locales

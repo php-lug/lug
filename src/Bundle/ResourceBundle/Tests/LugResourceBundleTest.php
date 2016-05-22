@@ -24,7 +24,6 @@ use Lug\Bundle\ResourceBundle\DependencyInjection\Compiler\RegisterRepositoryPas
 use Lug\Bundle\ResourceBundle\DependencyInjection\Compiler\RegisterResourcePass;
 use Lug\Bundle\ResourceBundle\DependencyInjection\Compiler\RegisterRestListenerPass;
 use Lug\Bundle\ResourceBundle\DependencyInjection\Compiler\ReplaceBase64FileExtensionPass;
-use Lug\Bundle\ResourceBundle\DependencyInjection\Compiler\ReplaceBooleanExtensionPass;
 use Lug\Bundle\ResourceBundle\LugResourceBundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
@@ -131,12 +130,6 @@ class LugResourceBundleTest extends \PHPUnit_Framework_TestCase
             ->expects($this->at(12))
             ->method('addCompilerPass')
             ->with($this->isInstanceOf(ReplaceBase64FileExtensionPass::class))
-            ->will($this->returnSelf());
-
-        $container
-            ->expects($this->at(13))
-            ->method('addCompilerPass')
-            ->with($this->isInstanceOf(ReplaceBooleanExtensionPass::class))
             ->will($this->returnSelf());
 
         $this->bundle->build($container);
