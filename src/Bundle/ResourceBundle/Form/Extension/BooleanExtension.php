@@ -11,14 +11,17 @@
 
 namespace Lug\Bundle\ResourceBundle\Form\Extension;
 
-use FOS\RestBundle\Form\Extension\BooleanExtension as FOSBooleanExtension;
+use Lug\Bundle\ResourceBundle\Form\DataTransformer\BooleanTransformer;
 use Lug\Bundle\ResourceBundle\Routing\ParameterResolverInterface;
+use Symfony\Component\Form\AbstractTypeExtension;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class BooleanExtension extends FOSBooleanExtension
+class BooleanExtension extends AbstractTypeExtension
 {
     /**
      * @var ParameterResolverInterface
@@ -26,11 +29,30 @@ class BooleanExtension extends FOSBooleanExtension
     private $parameterResolver;
 
     /**
-     * @param ParameterResolverInterface $parameterResolver
+     * @var BooleanTransformer
      */
-    public function __construct(ParameterResolverInterface $parameterResolver)
+    private $booleanTransformer;
+
+    /**
+     * @param ParameterResolverInterface $parameterResolver
+     * @param BooleanTransformer         $booleanTransformer
+     */
+    public function __construct(ParameterResolverInterface $parameterResolver, BooleanTransformer $booleanTransformer)
     {
         $this->parameterResolver = $parameterResolver;
+        $this->booleanTransformer = $booleanTransformer;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        if ($options['api']) {
+            $builder
+                ->resetViewTransformers()
+                ->addViewTransformer($this->booleanTransformer);
+        }
     }
 
     /**
@@ -38,8 +60,16 @@ class BooleanExtension extends FOSBooleanExtension
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        parent::configureOptions($resolver);
+        $resolver
+            ->setDefault('api', $this->parameterResolver->resolveApi())
+            ->setAllowedTypes('api', 'bool');
+    }
 
-        $resolver->setDefault('type', $this->parameterResolver->resolveApi() ? self::TYPE_API : self::TYPE_CHECKBOX);
+    /**
+     * {@inheritdoc}
+     */
+    public function getExtendedType()
+    {
+        return CheckboxType::class;
     }
 }

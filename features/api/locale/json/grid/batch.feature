@@ -25,21 +25,17 @@ Feature: Batching locales
         And the response should contain:
             """
                 {
-                    "code": 400,
-                    "message": "Validation Failed",
-                    "errors": {
-                        "children": {
-                            "all": {},
-                            "type": {
-                                "errors": [
-                                    "The grid batch should not be blank."
-                                ]
-                            },
-                            "value": {
-                                "errors": [
-                                    "You must select at least one locale."
-                                ]
-                            }
+                    "children": {
+                        "all": {},
+                        "type": {
+                            "errors": [
+                                "The grid batch should not be blank."
+                            ]
+                        },
+                        "value": {
+                            "errors": [
+                                "You must select at least one locale."
+                            ]
                         }
                     }
                 }

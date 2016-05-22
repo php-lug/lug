@@ -24,30 +24,22 @@ Feature: Creating a locale
         Then the response status code should be "400"
         And the response should contain:
             """
-                <result>
-                    <code>400</code>
-                    <message>
-                        <![CDATA[Validation Failed]]>
-                    </message>
-                    <errors>
-                        <form name="lug_locale">
-                            <errors/>
-                            <form name="code">
-                                <errors>
-                                    <entry>
-                                        <![CDATA[The locale code should not be blank.]]>
-                                    </entry>
-                                </errors>
-                            </form>
-                            <form name="enabled">
-                                <errors/>
-                            </form>
-                            <form name="required">
-                                <errors/>
-                            </form>
-                        </form>
-                    </errors>
-                </result>
+                <form name="lug_locale">
+                    <errors/>
+                    <form name="code">
+                        <errors>
+                            <entry>
+                                <![CDATA[The locale code should not be blank.]]>
+                            </entry>
+                        </errors>
+                    </form>
+                    <form name="enabled">
+                        <errors/>
+                    </form>
+                    <form name="required">
+                        <errors/>
+                    </form>
+                </form>
             """
 
     Scenario: Invalid locale fields
@@ -62,38 +54,30 @@ Feature: Creating a locale
         Then the response status code should be "400"
         And the response should contain:
             """
-                <result>
-                    <code>400</code>
-                    <message>
-                        <![CDATA[Validation Failed]]>
-                    </message>
-                    <errors>
-                        <form name="lug_locale">
-                            <errors/>
-                            <form name="code">
-                                <errors>
-                                    <entry>
-                                        <![CDATA[The locale code is not valid.]]>
-                                    </entry>
-                                </errors>
-                            </form>
-                            <form name="enabled">
-                                <errors>
-                                    <entry>
-                                        <![CDATA[The locale enabled flag is not valid.]]>
-                                    </entry>
-                                </errors>
-                            </form>
-                            <form name="required">
-                                <errors>
-                                    <entry>
-                                        <![CDATA[The locale required flag is not valid.]]>
-                                    </entry>
-                                </errors>
-                            </form>
-                        </form>
-                    </errors>
-                </result>
+                <form name="lug_locale">
+                    <errors/>
+                    <form name="code">
+                        <errors>
+                            <entry>
+                                <![CDATA[The locale code is not valid.]]>
+                            </entry>
+                        </errors>
+                    </form>
+                    <form name="enabled">
+                        <errors>
+                            <entry>
+                                <![CDATA[The locale enabled flag is not valid.]]>
+                            </entry>
+                        </errors>
+                    </form>
+                    <form name="required">
+                        <errors>
+                            <entry>
+                                <![CDATA[The locale required flag is not valid.]]>
+                            </entry>
+                        </errors>
+                    </form>
+                </form>
             """
 
     Scenario: Duplicating locale code
@@ -106,30 +90,22 @@ Feature: Creating a locale
         Then the response status code should be "400"
         And the response should contain:
             """
-                <result>
-                    <code>400</code>
-                    <message>
-                        <![CDATA[Validation Failed]]>
-                    </message>
-                    <errors>
-                        <form name="lug_locale">
-                            <errors/>
-                            <form name="code">
-                                <errors>
-                                    <entry>
-                                        <![CDATA[The locale code already exists.]]>
-                                    </entry>
-                                </errors>
-                            </form>
-                            <form name="enabled">
-                                <errors/>
-                            </form>
-                            <form name="required">
-                                <errors/>
-                            </form>
-                        </form>
-                    </errors>
-                </result>
+                <form name="lug_locale">
+                    <errors/>
+                    <form name="code">
+                        <errors>
+                            <entry>
+                                <![CDATA[The locale code already exists.]]>
+                            </entry>
+                        </errors>
+                    </form>
+                    <form name="enabled">
+                        <errors/>
+                    </form>
+                    <form name="required">
+                        <errors/>
+                    </form>
+                </form>
             """
 
     Scenario: Creating a locale (minimal)

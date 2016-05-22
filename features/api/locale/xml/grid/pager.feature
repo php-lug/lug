@@ -24,12 +24,11 @@ Feature: Paginating locales
         Then the response status code should be "404"
         And the response should contain:
             """
-                <result xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <result>
                     <code>404</code>
                     <message>
                         <![CDATA[Not Found]]>
                     </message>
-                    <errors xsi:nil="true"/>
                 </result>
             """
 

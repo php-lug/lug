@@ -23,12 +23,11 @@ Feature: Deleting a locale
         Then the response status code should be "409"
         And the response should contain:
             """
-                <result xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <result>
                     <code>409</code>
                     <message>
                         <![CDATA[Conflict]]>
                     </message>
-                    <errors xsi:nil="true"/>
                 </result>
             """
         And the locale "en" should exist

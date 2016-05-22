@@ -22,7 +22,7 @@
         "doctrine/doctrine-fixtures-bundle": "^2.0",
         "doctrine/mongodb-odm-bundle": "3.1.x-dev",
         "stof/doctrine-extensions-bundle": "^1.1",
-        "friendsofsymfony/rest-bundle": "dev-lug",
+        "friendsofsymfony/rest-bundle": "^2.0",
         "jms/serializer-bundle": "^1.0",
         "egeloen/base64-file-bundle": "^1.0",
         "willdurand/hateoas-bundle": "^1.0",
@@ -41,14 +41,9 @@
         "php-http/message": "^1.0",
         "php-http/guzzle6-adapter": "^1.0",
         "puli/composer-plugin": "^1.0",
-        "coduo/php-matcher": "^2.0"
+        "coduo/php-matcher": "^2.0",
+        "fabpot/php-cs-fixer": "^1.11"
     },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/egeloen/FOSRestBundle.git"
-        }
-    ],
     "scripts": {
         "post-install-cmd": [
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",

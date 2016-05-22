@@ -33,10 +33,10 @@ class ResourceViewSubscriber extends AbstractSubscriber
         $view = $event->getView();
 
         if (!empty($groups)) {
-            $view->getSerializationContext()->addGroups($groups);
+            $view->getContext()->addGroups($groups);
         }
 
-        $view->getSerializationContext()->setSerializeNull($this->getParameterResolver()->resolveSerializerNull());
+        $view->getContext()->setSerializeNull($this->getParameterResolver()->resolveSerializerNull());
     }
 
     /**

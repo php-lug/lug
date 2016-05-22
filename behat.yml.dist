@@ -24,9 +24,6 @@ default:
                         switches:
                             - start-maximized
                             - no-sandbox
-    formatters:
-        progress:
-            verbose: true
     gherkin:
         filters:
             tags: ~@javascript

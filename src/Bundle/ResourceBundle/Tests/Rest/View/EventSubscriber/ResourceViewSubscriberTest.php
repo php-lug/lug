@@ -87,12 +87,12 @@ class ResourceViewSubscriberTest extends \PHPUnit_Framework_TestCase
             ->expects($this->once())
             ->method('resolveSerializerGroups')
             ->with($this->identicalTo($resource = $this->createResourceMock()))
-            ->will($this->returnValue($serializerGroups = ['group']));
+            ->will($this->returnValue($groups = ['group']));
 
         $this->parameterResolver
             ->expects($this->once())
             ->method('resolveSerializerNull')
-            ->will($this->returnValue($serializerNull = true));
+            ->will($this->returnValue($null = true));
 
         $event = $this->createViewEventMock();
         $event
@@ -107,20 +107,13 @@ class ResourceViewSubscriberTest extends \PHPUnit_Framework_TestCase
 
         $view
             ->expects($this->exactly(2))
-            ->method('getSerializationContext')
-            ->will($this->returnValue($serializationContext = $this->createSerializationContextMock()));
-
-        $serializationContext
-            ->expects($this->once())
-            ->method('addGroups')
-            ->with($this->identicalTo($serializerGroups));
-
-        $serializationContext
-            ->expects($this->once())
-            ->method('setSerializeNull')
-            ->with($this->identicalTo($serializerNull));
+            ->method('getContext')
+            ->will($this->returnValue($context = new Context()));
 
         $this->subscriber->onApi($event);
+
+        $this->assertSame($groups, $context->getGroups());
+        $this->assertSame($null, $context->getSerializeNull());
     }
 
     public function testViewWithApi()
@@ -256,14 +249,6 @@ class ResourceViewSubscriberTest extends \PHPUnit_Framework_TestCase
     private function createViewMock()
     {
         return $this->getMock(View::class);
-    }
-
-    /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Context
-     */
-    private function createSerializationContextMock()
-    {
-        return $this->getMock(Context::class);
     }
 
     /**
