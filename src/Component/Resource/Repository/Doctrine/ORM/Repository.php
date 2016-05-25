@@ -11,7 +11,10 @@
 
 namespace Lug\Component\Resource\Repository\Doctrine\ORM;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Mapping\ClassMetadata;
+use Lug\Component\Resource\Model\ResourceInterface;
 use Lug\Component\Resource\Repository\RepositoryInterface;
 
 /**
@@ -19,5 +22,17 @@ use Lug\Component\Resource\Repository\RepositoryInterface;
  */
 class Repository extends EntityRepository implements RepositoryInterface
 {
-    use RepositoryTrait;
+    use RepositoryTrait {
+        __construct as private constructTrait;
+    }
+
+    /**
+     * @param EntityManagerInterface $em
+     * @param ClassMetadata          $class
+     * @param ResourceInterface      $resource
+     */
+    public function __construct(EntityManagerInterface $em, ClassMetadata $class, ResourceInterface $resource)
+    {
+        $this->constructTrait($em, $class, $resource);
+    }
 }

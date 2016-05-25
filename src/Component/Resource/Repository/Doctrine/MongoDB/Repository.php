@@ -11,7 +11,11 @@
 
 namespace Lug\Component\Resource\Repository\Doctrine\MongoDB;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\DocumentRepository;
+use Doctrine\ODM\MongoDB\Mapping\ClassMetadata;
+use Doctrine\ODM\MongoDB\UnitOfWork;
+use Lug\Component\Resource\Model\ResourceInterface;
 use Lug\Component\Resource\Repository\RepositoryInterface;
 
 /**
@@ -19,5 +23,22 @@ use Lug\Component\Resource\Repository\RepositoryInterface;
  */
 class Repository extends DocumentRepository implements RepositoryInterface
 {
-    use RepositoryTrait;
+    use RepositoryTrait {
+        __construct as private constructTrait;
+    }
+
+    /**
+     * @param DocumentManager   $dm
+     * @param UnitOfWork        $uow
+     * @param ClassMetadata     $class
+     * @param ResourceInterface $resource
+     */
+    public function __construct(
+        DocumentManager $dm,
+        UnitOfWork $uow,
+        ClassMetadata $class,
+        ResourceInterface $resource
+    ) {
+        $this->constructTrait($dm, $uow, $class, $resource);
+    }
 }
