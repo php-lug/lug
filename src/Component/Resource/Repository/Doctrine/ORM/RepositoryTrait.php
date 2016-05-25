@@ -11,7 +11,7 @@
 
 namespace Lug\Component\Resource\Repository\Doctrine\ORM;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\QueryBuilder;
 use Lug\Component\Grid\DataSource\Doctrine\ORM\DataSourceBuilder;
@@ -32,11 +32,11 @@ trait RepositoryTrait
     private $resource;
 
     /**
-     * @param EntityManager     $em
-     * @param ClassMetadata     $class
-     * @param ResourceInterface $resource
+     * @param EntityManagerInterface $em
+     * @param ClassMetadata          $class
+     * @param ResourceInterface      $resource
      */
-    public function __construct($em, ClassMetadata $class, ResourceInterface $resource)
+    public function __construct(EntityManagerInterface $em, ClassMetadata $class, ResourceInterface $resource)
     {
         parent::__construct($em, $class);
 

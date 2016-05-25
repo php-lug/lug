@@ -32,7 +32,7 @@ trait RepositoryTrait
      */
     private $resource;
 
-    /***
+    /**
      * @param DocumentManager   $dm
      * @param UnitOfWork        $uow
      * @param ClassMetadata     $class
