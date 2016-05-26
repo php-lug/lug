@@ -14,6 +14,8 @@ namespace Lug\Bundle\ResourceBundle\EventSubscriber\Doctrine\MongoDB;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ODM\MongoDB\Event\LoadClassMetadataEventArgs;
 use Doctrine\ODM\MongoDB\Events;
+use Doctrine\ODM\MongoDB\Mapping\ClassMetadata;
+use Doctrine\ODM\MongoDB\Mapping\MappingException;
 use Lug\Component\Registry\Model\RegistryInterface;
 use Lug\Component\Resource\Model\ResourceInterface;
 
@@ -40,10 +42,23 @@ class ResourceSubscriber implements EventSubscriber
      */
     public function loadClassMetadata(LoadClassMetadataEventArgs $event)
     {
+        /** @var ClassMetadata $classMetadata */
         $classMetadata = $event->getClassMetadata();
 
         if (($resource = $this->resolveResource($classMetadata->getName())) !== null) {
-            $classMetadata->isMappedSuperclass = false;
+            foreach ($classMetadata->parentClasses as $parentClass) {
+                try {
+                    $parentMetadata = $event->getObjectManager()->getClassMetadata($parentClass);
+                } catch (MappingException $e) {
+                    continue;
+                }
+
+                /** @var ClassMetadata $parentMetadata */
+                if ($parentMetadata->inheritanceType === ClassMetadata::INHERITANCE_TYPE_NONE) {
+                    $parentMetadata->isMappedSuperclass = true;
+                }
+            }
+
             $classMetadata->setCustomRepositoryClass($resource->getRepository());
         }
     }
