@@ -33,6 +33,6 @@ class ReplaceBase64FileExtensionPass implements CompilerPassInterface
         $container
             ->getDefinition($service)
             ->setClass(Base64FileExtension::class)
-            ->addArgument(new Reference('lug.resource.routing.parameter_resolver'));
+            ->replaceArgument(0, new Reference('lug.resource.routing.parameter_resolver'));
     }
 }

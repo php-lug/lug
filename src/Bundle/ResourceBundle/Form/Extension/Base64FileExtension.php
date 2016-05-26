@@ -30,6 +30,8 @@ class Base64FileExtension extends IvoryBase64FileExtension
      */
     public function __construct(ParameterResolverInterface $parameterResolver)
     {
+        parent::__construct(false);
+
         $this->parameterResolver = $parameterResolver;
     }
 

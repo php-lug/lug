@@ -58,11 +58,14 @@ class ReplaceBase64FileExtensionPassTest extends \PHPUnit_Framework_TestCase
 
         $definition
             ->expects($this->once())
-            ->method('addArgument')
-            ->with($this->callback(function ($reference) {
-                return $reference instanceof Reference
-                    && (string) $reference === 'lug.resource.routing.parameter_resolver';
-            }));
+            ->method('replaceArgument')
+            ->with(
+                $this->identicalTo(0),
+                $this->callback(function ($reference) {
+                    return $reference instanceof Reference
+                        && (string) $reference === 'lug.resource.routing.parameter_resolver';
+                })
+            );
 
         $this->compiler->process($container);
     }
