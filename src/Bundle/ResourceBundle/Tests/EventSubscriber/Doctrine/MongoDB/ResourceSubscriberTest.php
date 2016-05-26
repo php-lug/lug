@@ -12,9 +12,11 @@
 namespace Lug\Bundle\ResourceBundle\Tests\EventSubscriber\Doctrine\MongoDB;
 
 use Doctrine\Common\EventSubscriber;
+use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ODM\MongoDB\Event\LoadClassMetadataEventArgs;
 use Doctrine\ODM\MongoDB\Events;
 use Doctrine\ODM\MongoDB\Mapping\ClassMetadata;
+use Doctrine\ODM\MongoDB\Mapping\MappingException;
 use Lug\Bundle\ResourceBundle\EventSubscriber\Doctrine\MongoDB\ResourceSubscriber;
 use Lug\Component\Registry\Model\RegistryInterface;
 use Lug\Component\Resource\Model\ResourceInterface;
@@ -57,7 +59,7 @@ class ResourceSubscriberTest extends \PHPUnit_Framework_TestCase
         $this->assertSame([Events::loadClassMetadata], $this->resourceSubscriber->getSubscribedEvents());
     }
 
-    public function testLoadClassMetadataWithResource()
+    public function testLoadClassMetadataWithResourceAndNoParentClasses()
     {
         $event = $this->createLoadClassMetadataEventArgsMock();
         $event
@@ -90,7 +92,169 @@ class ResourceSubscriberTest extends \PHPUnit_Framework_TestCase
             ->method('setCustomRepositoryClass')
             ->with($this->identicalTo($repository));
 
-        $classMetadata->isMappedSuperclass = true;
+        $classMetadata->parentClasses = [];
+        $classMetadata->isMappedSuperclass = false;
+
+        $this->resourceSubscriber->loadClassMetadata($event);
+
+        $this->assertFalse($classMetadata->isMappedSuperclass);
+    }
+
+    public function testLoadClassMetadataWithResourceAndParentClassesWithoutInheritance()
+    {
+        $event = $this->createLoadClassMetadataEventArgsMock();
+        $event
+            ->expects($this->once())
+            ->method('getClassMetadata')
+            ->will($this->returnValue($classMetadata = $this->createClassMetadataMock()));
+
+        $classMetadata
+            ->expects($this->once())
+            ->method('getName')
+            ->will($this->returnValue($model = 'model'));
+
+        $this->serviceRegistry
+            ->expects($this->once())
+            ->method('getIterator')
+            ->will($this->returnValue(new \ArrayIterator([$resource = $this->createResourceMock()])));
+
+        $resource
+            ->expects($this->once())
+            ->method('getModel')
+            ->will($this->returnValue($model));
+
+        $classMetadata->parentClasses = [$parentClass = 'ParentClass'];
+
+        $event
+            ->expects($this->once())
+            ->method('getObjectManager')
+            ->will($this->returnValue($objectManager = $this->createObjectManagerMock()));
+
+        $objectManager
+            ->expects($this->once())
+            ->method('getClassMetadata')
+            ->with($this->identicalTo($parentClass))
+            ->will($this->returnValue($parentMetadata = $this->createClassMetadataMock()));
+
+        $parentMetadata->isMappedSuperclass = false;
+        $parentMetadata->inheritanceType = ClassMetadata::INHERITANCE_TYPE_NONE;
+
+        $resource
+            ->expects($this->once())
+            ->method('getRepository')
+            ->will($this->returnValue($repository = 'repository'));
+
+        $classMetadata
+            ->expects($this->once())
+            ->method('setCustomRepositoryClass')
+            ->with($this->identicalTo($repository));
+
+        $this->resourceSubscriber->loadClassMetadata($event);
+
+        $this->assertFalse($classMetadata->isMappedSuperclass);
+        $this->assertTrue($parentMetadata->isMappedSuperclass);
+    }
+
+    public function testLoadClassMetadataWithResourceAndParentClassesWithInheritance()
+    {
+        $event = $this->createLoadClassMetadataEventArgsMock();
+        $event
+            ->expects($this->once())
+            ->method('getClassMetadata')
+            ->will($this->returnValue($classMetadata = $this->createClassMetadataMock()));
+
+        $classMetadata
+            ->expects($this->once())
+            ->method('getName')
+            ->will($this->returnValue($model = 'model'));
+
+        $this->serviceRegistry
+            ->expects($this->once())
+            ->method('getIterator')
+            ->will($this->returnValue(new \ArrayIterator([$resource = $this->createResourceMock()])));
+
+        $resource
+            ->expects($this->once())
+            ->method('getModel')
+            ->will($this->returnValue($model));
+
+        $classMetadata->parentClasses = [$parentClass = 'ParentClass'];
+
+        $event
+            ->expects($this->once())
+            ->method('getObjectManager')
+            ->will($this->returnValue($objectManager = $this->createObjectManagerMock()));
+
+        $objectManager
+            ->expects($this->once())
+            ->method('getClassMetadata')
+            ->with($this->identicalTo($parentClass))
+            ->will($this->returnValue($parentMetadata = $this->createClassMetadataMock()));
+
+        $parentMetadata->isMappedSuperclass = false;
+        $parentMetadata->inheritanceType = ClassMetadata::INHERITANCE_TYPE_SINGLE_COLLECTION;
+
+        $resource
+            ->expects($this->once())
+            ->method('getRepository')
+            ->will($this->returnValue($repository = 'repository'));
+
+        $classMetadata
+            ->expects($this->once())
+            ->method('setCustomRepositoryClass')
+            ->with($this->identicalTo($repository));
+
+        $this->resourceSubscriber->loadClassMetadata($event);
+
+        $this->assertFalse($classMetadata->isMappedSuperclass);
+        $this->assertFalse($parentMetadata->isMappedSuperclass);
+    }
+
+    public function testLoadClassMetadataWithResourceAndParentClassesWithoutClassMetadata()
+    {
+        $event = $this->createLoadClassMetadataEventArgsMock();
+        $event
+            ->expects($this->once())
+            ->method('getClassMetadata')
+            ->will($this->returnValue($classMetadata = $this->createClassMetadataMock()));
+
+        $classMetadata
+            ->expects($this->once())
+            ->method('getName')
+            ->will($this->returnValue($model = 'model'));
+
+        $this->serviceRegistry
+            ->expects($this->once())
+            ->method('getIterator')
+            ->will($this->returnValue(new \ArrayIterator([$resource = $this->createResourceMock()])));
+
+        $resource
+            ->expects($this->once())
+            ->method('getModel')
+            ->will($this->returnValue($model));
+
+        $classMetadata->parentClasses = [$parentClass = 'ParentClass'];
+
+        $event
+            ->expects($this->once())
+            ->method('getObjectManager')
+            ->will($this->returnValue($objectManager = $this->createObjectManagerMock()));
+
+        $objectManager
+            ->expects($this->once())
+            ->method('getClassMetadata')
+            ->with($this->identicalTo($parentClass))
+            ->will($this->throwException($this->createMappingExceptionMock()));
+
+        $resource
+            ->expects($this->once())
+            ->method('getRepository')
+            ->will($this->returnValue($repository = 'repository'));
+
+        $classMetadata
+            ->expects($this->once())
+            ->method('setCustomRepositoryClass')
+            ->with($this->identicalTo($repository));
 
         $this->resourceSubscriber->loadClassMetadata($event);
 
@@ -145,6 +309,14 @@ class ResourceSubscriberTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|ObjectManager
+     */
+    private function createObjectManagerMock()
+    {
+        return $this->getMock(ObjectManager::class);
+    }
+
+    /**
      * @return \PHPUnit_Framework_MockObject_MockObject|ClassMetadata
      */
     private function createClassMetadataMock()
@@ -160,5 +332,13 @@ class ResourceSubscriberTest extends \PHPUnit_Framework_TestCase
     private function createResourceMock()
     {
         return $this->getMock(ResourceInterface::class);
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|MappingException
+     */
+    private function createMappingExceptionMock()
+    {
+        return $this->getMock(MappingException::class);
     }
 }
