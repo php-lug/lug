@@ -97,11 +97,9 @@ interface ParameterResolverInterface
     public function resolveRepositoryMethod($action);
 
     /**
-     * @param ResourceInterface $resource
-     *
      * @return string[]
      */
-    public function resolveSerializerGroups(ResourceInterface $resource);
+    public function resolveSerializerGroups();
 
     /**
      * @return bool
@@ -129,11 +127,9 @@ interface ParameterResolverInterface
     public function resolveTranslationDomain();
 
     /**
-     * @param ResourceInterface $resource
-     *
-     * @return string|null
+     * @return string[]
      */
-    public function resolveValidationGroups(ResourceInterface $resource);
+    public function resolveValidationGroups();
 
     /**
      * @return bool

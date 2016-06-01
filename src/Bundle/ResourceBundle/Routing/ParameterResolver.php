@@ -11,14 +11,12 @@
 
 namespace Lug\Bundle\ResourceBundle\Routing;
 
-use JMS\Serializer\Exclusion\GroupsExclusionStrategy;
 use Lug\Bundle\ResourceBundle\Exception\RequestNotFoundException;
 use Lug\Bundle\ResourceBundle\Exception\RuntimeException;
 use Lug\Component\Resource\Model\ResourceInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
-use Symfony\Component\Validator\Constraint;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -233,12 +231,9 @@ class ParameterResolver implements ParameterResolverInterface
     /**
      * {@inheritdoc}
      */
-    public function resolveSerializerGroups(ResourceInterface $resource)
+    public function resolveSerializerGroups()
     {
-        return $this->resolveParameter(
-            'serializer_groups',
-            [GroupsExclusionStrategy::DEFAULT_GROUP, 'lug.'.$resource->getName()]
-        );
+        return $this->resolveParameter('serializer_groups', []);
     }
 
     /**
@@ -300,9 +295,9 @@ class ParameterResolver implements ParameterResolverInterface
     /**
      * {@inheritdoc}
      */
-    public function resolveValidationGroups(ResourceInterface $resource)
+    public function resolveValidationGroups()
     {
-        return $this->resolveParameter('validation_groups', [Constraint::DEFAULT_GROUP, 'lug.'.$resource->getName()]);
+        return $this->resolveParameter('validation_groups', []);
     }
 
     /**

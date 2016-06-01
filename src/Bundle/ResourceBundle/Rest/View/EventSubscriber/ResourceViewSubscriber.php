@@ -11,6 +11,7 @@
 
 namespace Lug\Bundle\ResourceBundle\Rest\View\EventSubscriber;
 
+use JMS\Serializer\Exclusion\GroupsExclusionStrategy;
 use Lug\Bundle\ResourceBundle\Rest\AbstractSubscriber;
 use Lug\Bundle\ResourceBundle\Rest\RestEvents;
 use Lug\Bundle\ResourceBundle\Rest\View\ViewEvent;
@@ -29,13 +30,15 @@ class ResourceViewSubscriber extends AbstractSubscriber
             return;
         }
 
-        $groups = $this->getParameterResolver()->resolveSerializerGroups($event->getResource());
-        $view = $event->getView();
+        $groups = $this->getParameterResolver()->resolveSerializerGroups();
 
-        if (!empty($groups)) {
-            $view->getContext()->addGroups($groups);
+        if (empty($groups)) {
+            $groups = [GroupsExclusionStrategy::DEFAULT_GROUP, 'lug.'.$event->getResource()->getName()];
         }
 
+        $view = $event->getView();
+
+        $view->getContext()->addGroups($groups);
         $view->getContext()->setSerializeNull($this->getParameterResolver()->resolveSerializerNull());
     }
 

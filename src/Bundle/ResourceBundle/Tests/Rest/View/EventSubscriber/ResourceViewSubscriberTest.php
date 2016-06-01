@@ -13,6 +13,7 @@ namespace Lug\Bundle\ResourceBundle\Tests\Rest\View;
 
 use FOS\RestBundle\Context\Context;
 use FOS\RestBundle\View\View;
+use JMS\Serializer\Exclusion\GroupsExclusionStrategy;
 use Lug\Bundle\ResourceBundle\Rest\RestEvents;
 use Lug\Bundle\ResourceBundle\Rest\View\EventSubscriber\ResourceViewSubscriber;
 use Lug\Bundle\ResourceBundle\Rest\View\ViewEvent;
@@ -76,7 +77,7 @@ class ResourceViewSubscriberTest extends \PHPUnit_Framework_TestCase
         $this->subscriber->onApi($event);
     }
 
-    public function testApi()
+    public function testApiWithSerializerGroups()
     {
         $this->parameterResolver
             ->expects($this->once())
@@ -86,8 +87,41 @@ class ResourceViewSubscriberTest extends \PHPUnit_Framework_TestCase
         $this->parameterResolver
             ->expects($this->once())
             ->method('resolveSerializerGroups')
-            ->with($this->identicalTo($resource = $this->createResourceMock()))
             ->will($this->returnValue($groups = ['group']));
+
+        $this->parameterResolver
+            ->expects($this->once())
+            ->method('resolveSerializerNull')
+            ->will($this->returnValue($null = true));
+
+        $event = $this->createViewEventMock();
+        $event
+            ->expects($this->once())
+            ->method('getView')
+            ->will($this->returnValue($view = $this->createViewMock()));
+
+        $view
+            ->expects($this->exactly(2))
+            ->method('getContext')
+            ->will($this->returnValue($context = new Context()));
+
+        $this->subscriber->onApi($event);
+
+        $this->assertSame($groups, $context->getGroups());
+        $this->assertSame($null, $context->getSerializeNull());
+    }
+
+    public function testApiWithoutSerializerGroups()
+    {
+        $this->parameterResolver
+            ->expects($this->once())
+            ->method('resolveApi')
+            ->will($this->returnValue(true));
+
+        $this->parameterResolver
+            ->expects($this->once())
+            ->method('resolveSerializerGroups')
+            ->will($this->returnValue([]));
 
         $this->parameterResolver
             ->expects($this->once())
@@ -103,7 +137,12 @@ class ResourceViewSubscriberTest extends \PHPUnit_Framework_TestCase
         $event
             ->expects($this->once())
             ->method('getResource')
-            ->will($this->returnValue($resource));
+            ->will($this->returnValue($resource = $this->createResourceMock()));
+
+        $resource
+            ->expects($this->once())
+            ->method('getName')
+            ->will($this->returnValue($name = 'name'));
 
         $view
             ->expects($this->exactly(2))
@@ -112,7 +151,7 @@ class ResourceViewSubscriberTest extends \PHPUnit_Framework_TestCase
 
         $this->subscriber->onApi($event);
 
-        $this->assertSame($groups, $context->getGroups());
+        $this->assertSame([GroupsExclusionStrategy::DEFAULT_GROUP, 'lug.'.$name], $context->getGroups());
         $this->assertSame($null, $context->getSerializeNull());
     }
 
