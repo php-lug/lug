@@ -238,11 +238,10 @@ class CachedParameterResolverTest extends \PHPUnit_Framework_TestCase
         $this->parameterResolver
             ->expects($this->once())
             ->method('resolveSerializerGroups')
-            ->with($resource = $this->createResourceMock())
             ->will($this->returnValue($groups = ['group']));
 
-        $this->assertSame($groups, $this->cachedParameterResolver->resolveSerializerGroups($resource));
-        $this->assertSame($groups, $this->cachedParameterResolver->resolveSerializerGroups($resource));
+        $this->assertSame($groups, $this->cachedParameterResolver->resolveSerializerGroups());
+        $this->assertSame($groups, $this->cachedParameterResolver->resolveSerializerGroups());
     }
 
     public function testResolveSerializerNull()
@@ -305,11 +304,10 @@ class CachedParameterResolverTest extends \PHPUnit_Framework_TestCase
         $this->parameterResolver
             ->expects($this->once())
             ->method('resolveValidationGroups')
-            ->with($this->identicalTo($resource = $this->createResourceMock()))
             ->will($this->returnValue($groups = ['group']));
 
-        $this->assertSame($groups, $this->cachedParameterResolver->resolveValidationGroups($resource));
-        $this->assertSame($groups, $this->cachedParameterResolver->resolveValidationGroups($resource));
+        $this->assertSame($groups, $this->cachedParameterResolver->resolveValidationGroups());
+        $this->assertSame($groups, $this->cachedParameterResolver->resolveValidationGroups());
     }
 
     public function testResolveVoter()

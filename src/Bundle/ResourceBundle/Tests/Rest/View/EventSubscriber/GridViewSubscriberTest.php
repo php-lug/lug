@@ -19,7 +19,6 @@ use Lug\Bundle\ResourceBundle\Rest\RestEvents;
 use Lug\Bundle\ResourceBundle\Rest\View\EventSubscriber\GridViewSubscriber;
 use Lug\Bundle\ResourceBundle\Rest\View\ViewEvent;
 use Lug\Bundle\ResourceBundle\Routing\ParameterResolverInterface;
-use Lug\Component\Resource\Model\ResourceInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormRendererInterface;
@@ -202,11 +201,6 @@ class GridViewSubscriberTest extends \PHPUnit_Framework_TestCase
             ->method('getView')
             ->will($this->returnValue($view = $this->createViewMock()));
 
-        $event
-            ->expects($this->once())
-            ->method('getResource')
-            ->will($this->returnValue($resource = $this->createResourceMock()));
-
         $view
             ->expects($this->once())
             ->method('getData')
@@ -216,7 +210,6 @@ class GridViewSubscriberTest extends \PHPUnit_Framework_TestCase
             ->expects($this->once())
             ->method('create')
             ->with(
-                $this->identicalTo($resource),
                 $this->identicalTo(GridBatchType::class),
                 $this->isNull(),
                 $this->identicalTo(['grid' => $gridView])
@@ -392,14 +385,6 @@ class GridViewSubscriberTest extends \PHPUnit_Framework_TestCase
         return $this->getMockBuilder(ViewEvent::class)
             ->disableOriginalConstructor()
             ->getMock();
-    }
-
-    /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|ResourceInterface
-     */
-    private function createResourceMock()
-    {
-        return $this->getMock(ResourceInterface::class);
     }
 
     /**

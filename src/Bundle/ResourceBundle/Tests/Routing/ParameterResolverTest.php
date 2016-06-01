@@ -11,14 +11,12 @@
 
 namespace Lug\Bundle\ResourceBundle\Tests\Routing;
 
-use JMS\Serializer\Exclusion\GroupsExclusionStrategy;
 use Lug\Bundle\ResourceBundle\Routing\ParameterResolver;
 use Lug\Component\Resource\Model\ResourceInterface;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
-use Symfony\Component\Validator\Constraint;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -786,16 +784,7 @@ class ParameterResolverTest extends \PHPUnit_Framework_TestCase
 
     public function testResolveSerializerGroupsWithoutRequest()
     {
-        $resource = $this->createResourceMock();
-        $resource
-            ->expects($this->once())
-            ->method('getName')
-            ->will($this->returnValue($name = 'name'));
-
-        $this->assertSame(
-            [GroupsExclusionStrategy::DEFAULT_GROUP, 'lug.'.$name],
-            $this->parameterResolver->resolveSerializerGroups($resource)
-        );
+        $this->assertEmpty($this->parameterResolver->resolveSerializerGroups());
     }
 
     public function testResolveSerializerGroupsDefault()
@@ -805,22 +794,16 @@ class ParameterResolverTest extends \PHPUnit_Framework_TestCase
             ->method('getMasterRequest')
             ->will($this->returnValue($request = $this->createRequestMock()));
 
-        $resource = $this->createResourceMock();
-        $resource
-            ->expects($this->once())
-            ->method('getName')
-            ->will($this->returnValue($name = 'name'));
-
         $request->attributes
             ->expects($this->once())
             ->method('get')
             ->with(
                 $this->identicalTo('_lug_serializer_groups'),
-                $this->identicalTo($groups = [GroupsExclusionStrategy::DEFAULT_GROUP, 'lug.'.$name])
+                $this->identicalTo($groups = [])
             )
             ->will($this->returnValue($groups));
 
-        $this->assertSame($groups, $this->parameterResolver->resolveSerializerGroups($resource));
+        $this->assertEmpty($this->parameterResolver->resolveSerializerGroups());
     }
 
     public function testResolveSerializerGroupsExplicit()
@@ -830,22 +813,16 @@ class ParameterResolverTest extends \PHPUnit_Framework_TestCase
             ->method('getMasterRequest')
             ->will($this->returnValue($request = $this->createRequestMock()));
 
-        $resource = $this->createResourceMock();
-        $resource
-            ->expects($this->once())
-            ->method('getName')
-            ->will($this->returnValue($name = 'name'));
-
         $request->attributes
             ->expects($this->once())
             ->method('get')
             ->with(
                 $this->identicalTo('_lug_serializer_groups'),
-                $this->identicalTo([GroupsExclusionStrategy::DEFAULT_GROUP, 'lug.'.$name])
+                $this->identicalTo([])
             )
             ->will($this->returnValue($groups = ['group']));
 
-        $this->assertSame($groups, $this->parameterResolver->resolveSerializerGroups($resource));
+        $this->assertSame($groups, $this->parameterResolver->resolveSerializerGroups());
     }
 
     public function testResolveSerializerNullWithoutRequest()
@@ -1105,16 +1082,7 @@ class ParameterResolverTest extends \PHPUnit_Framework_TestCase
 
     public function testResolveValidationGroupsWithoutRequest()
     {
-        $resource = $this->createResourceMock();
-        $resource
-            ->expects($this->once())
-            ->method('getName')
-            ->will($this->returnValue($name = 'name'));
-
-        $this->assertSame(
-            [Constraint::DEFAULT_GROUP, 'lug.'.$name],
-            $this->parameterResolver->resolveValidationGroups($resource)
-        );
+        $this->assertEmpty($this->parameterResolver->resolveValidationGroups());
     }
 
     public function testResolveValidationGroupsDefault()
@@ -1124,22 +1092,13 @@ class ParameterResolverTest extends \PHPUnit_Framework_TestCase
             ->method('getMasterRequest')
             ->will($this->returnValue($request = $this->createRequestMock()));
 
-        $resource = $this->createResourceMock();
-        $resource
-            ->expects($this->once())
-            ->method('getName')
-            ->will($this->returnValue($name = 'name'));
-
         $request->attributes
             ->expects($this->once())
             ->method('get')
-            ->with(
-                $this->identicalTo('_lug_validation_groups'),
-                $this->identicalTo($groups = [Constraint::DEFAULT_GROUP, 'lug.'.$name])
-            )
+            ->with($this->identicalTo('_lug_validation_groups'), $this->identicalTo($groups = []))
             ->will($this->returnValue($groups));
 
-        $this->assertSame($groups, $this->parameterResolver->resolveValidationGroups($resource));
+        $this->assertEmpty($this->parameterResolver->resolveValidationGroups());
     }
 
     public function testResolveValidationGroupsExplicit()
@@ -1149,22 +1108,13 @@ class ParameterResolverTest extends \PHPUnit_Framework_TestCase
             ->method('getMasterRequest')
             ->will($this->returnValue($request = $this->createRequestMock()));
 
-        $resource = $this->createResourceMock();
-        $resource
-            ->expects($this->once())
-            ->method('getName')
-            ->will($this->returnValue($name = 'name'));
-
         $request->attributes
             ->expects($this->once())
             ->method('get')
-            ->with(
-                $this->identicalTo('_lug_validation_groups'),
-                $this->identicalTo([Constraint::DEFAULT_GROUP, 'lug.'.$name])
-            )
+            ->with($this->identicalTo('_lug_validation_groups'), $this->identicalTo([]))
             ->will($this->returnValue($groups = ['group']));
 
-        $this->assertSame($groups, $this->parameterResolver->resolveValidationGroups($resource));
+        $this->assertSame($groups, $this->parameterResolver->resolveValidationGroups());
     }
 
     public function testResolveVoterWithoutRequest()

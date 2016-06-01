@@ -188,10 +188,10 @@ class CachedParameterResolver implements ParameterResolverInterface
     /**
      * {@inheritdoc}
      */
-    public function resolveSerializerGroups(ResourceInterface $resource)
+    public function resolveSerializerGroups()
     {
-        return !isset($this->cache[$key = 'serializer_groups_'.spl_object_hash($resource)])
-            ? $this->cache[$key] = $this->parameterResolver->resolveSerializerGroups($resource)
+        return !isset($this->cache[$key = 'serializer_groups'])
+            ? $this->cache[$key] = $this->parameterResolver->resolveSerializerGroups()
             : $this->cache[$key];
     }
 
@@ -248,10 +248,10 @@ class CachedParameterResolver implements ParameterResolverInterface
     /**
      * {@inheritdoc}
      */
-    public function resolveValidationGroups(ResourceInterface $resource)
+    public function resolveValidationGroups()
     {
-        return !isset($this->cache[$key = 'validation_groups_'.spl_object_hash($resource)])
-            ? $this->cache[$key] = $this->parameterResolver->resolveValidationGroups($resource)
+        return !isset($this->cache[$key = 'validation_groups'])
+            ? $this->cache[$key] = $this->parameterResolver->resolveValidationGroups()
             : $this->cache[$key];
     }
 

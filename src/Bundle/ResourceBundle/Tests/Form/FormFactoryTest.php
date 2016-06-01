@@ -53,27 +53,6 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(BundleFormFactoryInterface::class, $this->formFactory);
     }
 
-    public function testCreateWithResourceType()
-    {
-        $this->parameterResolver
-            ->expects($this->once())
-            ->method('resolveForm')
-            ->with($this->identicalTo($resource = $this->createResourceMock()))
-            ->will($this->returnValue($resourceType = 'resource_type'));
-
-        $this->symfonyFormFactory
-            ->expects($this->once())
-            ->method('create')
-            ->with(
-                $this->identicalTo($resourceType),
-                $this->identicalTo($data = 'data'),
-                $this->identicalTo($options = ['option'])
-            )
-            ->will($this->returnValue($form = 'form'));
-
-        $this->assertSame($form, $this->formFactory->create($resource, null, $data, $options));
-    }
-
     public function testCreateWithStringType()
     {
         $this->symfonyFormFactory
@@ -86,7 +65,28 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
             )
             ->will($this->returnValue($form = 'form'));
 
-        $this->assertSame($form, $this->formFactory->create($this->createResourceMock(), $type, $data, $options));
+        $this->assertSame($form, $this->formFactory->create($type, $data, $options));
+    }
+
+    public function testCreateWithResourceType()
+    {
+        $this->parameterResolver
+            ->expects($this->once())
+            ->method('resolveForm')
+            ->with($this->identicalTo($type = $this->createResourceMock()))
+            ->will($this->returnValue($resourceType = 'resource_type'));
+
+        $this->symfonyFormFactory
+            ->expects($this->once())
+            ->method('create')
+            ->with(
+                $this->identicalTo($resourceType),
+                $this->identicalTo($data = 'data'),
+                $this->identicalTo($options = ['option'])
+            )
+            ->will($this->returnValue($form = 'form'));
+
+        $this->assertSame($form, $this->formFactory->create($type, $data, $options));
     }
 
     public function testCreateWithValidationGroups()
@@ -94,7 +94,6 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
         $this->parameterResolver
             ->expects($this->once())
             ->method('resolveValidationGroups')
-            ->with($this->identicalTo($resource = $this->createResourceMock()))
             ->will($this->returnValue($groups = ['group']));
 
         $this->symfonyFormFactory
@@ -107,7 +106,7 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
             )
             ->will($this->returnValue($form = 'form'));
 
-        $this->assertSame($form, $this->formFactory->create($resource, $type, $data, $options));
+        $this->assertSame($form, $this->formFactory->create($type, $data, $options));
     }
 
     public function testCreateWithTranslationDomain()
@@ -127,7 +126,7 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
             )
             ->will($this->returnValue($form = 'form'));
 
-        $this->assertSame($form, $this->formFactory->create($this->createResourceMock(), $type, $data, $options));
+        $this->assertSame($form, $this->formFactory->create($type, $data, $options));
     }
 
     public function testCreateWithApi()
@@ -147,7 +146,7 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
             )
             ->will($this->returnValue($form = 'form'));
 
-        $this->assertSame($form, $this->formFactory->create($this->createResourceMock(), $type, $data, $options));
+        $this->assertSame($form, $this->formFactory->create($type, $data, $options));
     }
 
     /**

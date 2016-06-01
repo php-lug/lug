@@ -17,6 +17,7 @@ use Lug\Component\Resource\Model\ResourceInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\Forms;
+use Symfony\Component\Validator\Constraint;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -54,7 +55,7 @@ class ResourceTypeTest extends \PHPUnit_Framework_TestCase
     {
         $resource = $this->createResourceMock();
         $resource
-            ->expects($this->once())
+            ->expects($this->exactly(2))
             ->method('getName')
             ->will($this->returnValue($name = 'name'));
 
@@ -80,6 +81,12 @@ class ResourceTypeTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($factory, $form->getConfig()->getOption('factory'));
         $this->assertSame($model, $form->getConfig()->getOption('data_class'));
         $this->assertSame('lug.'.$name, $form->getConfig()->getOption('label_prefix'));
+
+        $this->assertSame(
+            [Constraint::DEFAULT_GROUP, 'lug.'.$name],
+            $form->getConfig()->getOption('validation_groups')
+        );
+
         $this->assertSame($object, $form->getData());
 
         $form->createView();
