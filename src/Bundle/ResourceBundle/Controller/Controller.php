@@ -46,7 +46,7 @@ class Controller extends FOSRestController implements ControllerInterface
     /**
      * @var ResourceInterface
      */
-    private $resource;
+    protected $resource;
 
     /**
      * @param ResourceInterface $resource
@@ -191,7 +191,7 @@ class Controller extends FOSRestController implements ControllerInterface
      *
      * @return object|object[]
      */
-    private function find($action, $mandatory = true)
+    protected function find($action, $mandatory = true)
     {
         $repositoryMethod = $this->getParameterResolver()->resolveRepositoryMethod($action);
         $criteria = $this->getParameterResolver()->resolveCriteria($mandatory);
@@ -223,7 +223,7 @@ class Controller extends FOSRestController implements ControllerInterface
      *
      * @return FormInterface
      */
-    private function buildForm($form = null, $object = null, array $options = [])
+    protected function buildForm($form = null, $object = null, array $options = [])
     {
         return $this->getFormFactory()->create($form ?: $this->resource, $object, $options);
     }
@@ -234,7 +234,7 @@ class Controller extends FOSRestController implements ControllerInterface
      *
      * @return FormInterface
      */
-    private function submitForm(FormInterface $form, Request $request)
+    protected function submitForm(FormInterface $form, Request $request)
     {
         $bag = $request->isMethod('GET') || $form->getConfig()->getMethod() === 'GET'
             ? $request->query
@@ -258,7 +258,7 @@ class Controller extends FOSRestController implements ControllerInterface
     /**
      * @return GridInterface
      */
-    private function buildGrid()
+    protected function buildGrid()
     {
         return $this->getGridBuilder()->build($this->getParameterResolver()->resolveGrid($this->resource));
     }
@@ -269,7 +269,7 @@ class Controller extends FOSRestController implements ControllerInterface
      *
      * @return FormInterface
      */
-    private function submitGrid(GridInterface $grid, Request $request)
+    protected function submitGrid(GridInterface $grid, Request $request)
     {
         return $this->submitForm($this->buildForm(GridType::class, null, ['grid' => $grid]), $request);
     }
@@ -280,7 +280,7 @@ class Controller extends FOSRestController implements ControllerInterface
      *
      * @return Response
      */
-    private function processAction(FormInterface $form = null, $statusCode = Response::HTTP_NO_CONTENT)
+    protected function processAction(FormInterface $form = null, $statusCode = Response::HTTP_NO_CONTENT)
     {
         $this->getRestEventDispatcher()->dispatch(
             RestEvents::ACTION,
@@ -300,7 +300,7 @@ class Controller extends FOSRestController implements ControllerInterface
      *
      * @return Response
      */
-    private function processView(View $view)
+    protected function processView(View $view)
     {
         $this->getRestEventDispatcher()->dispatch(RestEvents::VIEW, $event = new ViewEvent($this->resource, $view));
 
@@ -310,7 +310,7 @@ class Controller extends FOSRestController implements ControllerInterface
     /**
      * @param DomainException $domainException
      */
-    private function processException(DomainException $domainException)
+    protected function processException(DomainException $domainException)
     {
         if ($this->getParameterResolver()->resolveApi()) {
             throw new HttpException(
