@@ -1159,7 +1159,7 @@ class ParameterResolverTest extends \PHPUnit_Framework_TestCase
      */
     private function createRequestStackMock()
     {
-        return $this->getMock(RequestStack::class);
+        return $this->createMock(RequestStack::class);
     }
 
     /**
@@ -1167,7 +1167,7 @@ class ParameterResolverTest extends \PHPUnit_Framework_TestCase
      */
     private function createPropertyAccessorMock()
     {
-        return $this->getMock(PropertyAccessorInterface::class);
+        return $this->createMock(PropertyAccessorInterface::class);
     }
 
     /**
@@ -1175,7 +1175,7 @@ class ParameterResolverTest extends \PHPUnit_Framework_TestCase
      */
     private function createRequestMock()
     {
-        $request = $this->getMock(Request::class);
+        $request = $this->createMock(Request::class);
         $request->attributes = $this->createParameterBagMock();
 
         return $request;
@@ -1186,7 +1186,7 @@ class ParameterResolverTest extends \PHPUnit_Framework_TestCase
      */
     private function createParameterBagMock()
     {
-        return $this->getMock(ParameterBag::class);
+        return $this->createMock(ParameterBag::class);
     }
 
     /**
@@ -1194,6 +1194,6 @@ class ParameterResolverTest extends \PHPUnit_Framework_TestCase
      */
     private function createResourceMock()
     {
-        return $this->getMock(ResourceInterface::class);
+        return $this->createMock(ResourceInterface::class);
     }
 }

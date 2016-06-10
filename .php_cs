@@ -30,5 +30,6 @@ return Config::create()
     ->fixers([
         'align_double_arrow',
         'short_array_syntax',
+        'ordered_use',
     ])
     ->finder($finder);

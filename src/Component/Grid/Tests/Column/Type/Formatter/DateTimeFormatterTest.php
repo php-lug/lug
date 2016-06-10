@@ -172,6 +172,6 @@ class DateTimeFormatterTest extends \PHPUnit_Framework_TestCase
      */
     private function createLocaleContextMock()
     {
-        return $this->getMock(LocaleContextInterface::class);
+        return $this->createMock(LocaleContextInterface::class);
     }
 }

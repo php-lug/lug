@@ -332,7 +332,7 @@ class PagerfantaViewSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     private function createParameterResolverMock()
     {
-        return $this->getMock(ParameterResolverInterface::class);
+        return $this->createMock(ParameterResolverInterface::class);
     }
 
     /**
@@ -340,7 +340,7 @@ class PagerfantaViewSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     private function createPagerfantaFactoryMock()
     {
-        return $this->getMock(PagerfantaFactory::class);
+        return $this->createMock(PagerfantaFactory::class);
     }
 
     /**
@@ -348,7 +348,7 @@ class PagerfantaViewSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     private function createRequestStackMock()
     {
-        return $this->getMock(RequestStack::class);
+        return $this->createMock(RequestStack::class);
     }
 
     /**
@@ -356,9 +356,7 @@ class PagerfantaViewSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     private function createViewEventMock()
     {
-        return $this->getMockBuilder(ViewEvent::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        return $this->createMock(ViewEvent::class);
     }
 
     /**
@@ -366,7 +364,7 @@ class PagerfantaViewSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     private function createViewMock()
     {
-        return $this->getMock(View::class);
+        return $this->createMock(View::class);
     }
 
     /**
@@ -374,9 +372,7 @@ class PagerfantaViewSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     private function createPagerfantaMock()
     {
-        return $this->getMockBuilder(Pagerfanta::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        return $this->createMock(Pagerfanta::class);
     }
 
     /**
@@ -384,7 +380,7 @@ class PagerfantaViewSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     private function createRequestMock()
     {
-        $request = $this->getMock(Request::class);
+        $request = $this->createMock(Request::class);
 
         $request->attributes = $this->createParameterBagMock();
         $request->query = $this->createParameterBagMock();
@@ -397,7 +393,7 @@ class PagerfantaViewSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     private function createParameterBagMock()
     {
-        return $this->getMock(ParameterBag::class);
+        return $this->createMock(ParameterBag::class);
     }
 
     /**
@@ -405,6 +401,6 @@ class PagerfantaViewSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     private function createResourceMock()
     {
-        return $this->getMock(ResourceInterface::class);
+        return $this->createMock(ResourceInterface::class);
     }
 }

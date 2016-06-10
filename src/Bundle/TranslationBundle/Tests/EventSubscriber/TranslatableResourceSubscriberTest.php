@@ -168,7 +168,7 @@ class TranslatableResourceSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     private function createContainerMock()
     {
-        return $this->getMock(ContainerInterface::class);
+        return $this->createMock(ContainerInterface::class);
     }
 
     /**
@@ -176,7 +176,7 @@ class TranslatableResourceSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     private function createResourceRegistryMock()
     {
-        return $this->getMock(RegistryInterface::class);
+        return $this->createMock(RegistryInterface::class);
     }
 
     /**
@@ -184,7 +184,7 @@ class TranslatableResourceSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     private function createLocaleContextMock()
     {
-        return $this->getMock(LocaleContextInterface::class);
+        return $this->createMock(LocaleContextInterface::class);
     }
 
     /**
@@ -192,9 +192,7 @@ class TranslatableResourceSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     private function createLifecycleEventArgsMock()
     {
-        return $this->getMockBuilder(LifecycleEventArgs::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        return $this->createMock(LifecycleEventArgs::class);
     }
 
     /**
@@ -202,7 +200,7 @@ class TranslatableResourceSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     private function createTranslatableMock()
     {
-        return $this->getMock(TranslatableInterface::class);
+        return $this->createMock(TranslatableInterface::class);
     }
 
     /**
@@ -210,11 +208,14 @@ class TranslatableResourceSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     private function createStdClassMock()
     {
-        return $this->getMock(\stdClass::class, [
-            'setCurrentLocale',
-            'setFallbackLocale',
-            'setTranslationClass',
-        ]);
+        return $this
+            ->getMockBuilder(\stdClass::class)
+            ->setMethods([
+                'setCurrentLocale',
+                'setFallbackLocale',
+                'setTranslationClass',
+            ])
+            ->getMock();
     }
 
     /**
@@ -222,6 +223,6 @@ class TranslatableResourceSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     private function createResourceMock()
     {
-        return $this->getMock(ResourceInterface::class);
+        return $this->createMock(ResourceInterface::class);
     }
 }

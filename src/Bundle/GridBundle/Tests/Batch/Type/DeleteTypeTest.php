@@ -234,7 +234,7 @@ class DeleteTypeTest extends \PHPUnit_Framework_TestCase
      */
     private function createServiceRegistryMock()
     {
-        return $this->getMock(RegistryInterface::class);
+        return $this->createMock(RegistryInterface::class);
     }
 
     /**
@@ -242,7 +242,7 @@ class DeleteTypeTest extends \PHPUnit_Framework_TestCase
      */
     private function createParameterResolverMock()
     {
-        return $this->getMock(ParameterResolverInterface::class);
+        return $this->createMock(ParameterResolverInterface::class);
     }
 
     /**
@@ -250,7 +250,7 @@ class DeleteTypeTest extends \PHPUnit_Framework_TestCase
      */
     private function createDomainManagerMock()
     {
-        return $this->getMock(DomainManagerInterface::class);
+        return $this->createMock(DomainManagerInterface::class);
     }
 
     /**
@@ -258,7 +258,7 @@ class DeleteTypeTest extends \PHPUnit_Framework_TestCase
      */
     private function createGridMock()
     {
-        return $this->getMock(GridInterface::class);
+        return $this->createMock(GridInterface::class);
     }
 
     /**
@@ -266,7 +266,7 @@ class DeleteTypeTest extends \PHPUnit_Framework_TestCase
      */
     private function createResourceMock()
     {
-        return $this->getMock(ResourceInterface::class);
+        return $this->createMock(ResourceInterface::class);
     }
 
     /**
@@ -274,6 +274,8 @@ class DeleteTypeTest extends \PHPUnit_Framework_TestCase
      */
     private function createDomainExceptionMock()
     {
-        return $this->getMock(DomainException::class, ['getMessage']);
+        return $this->getMockBuilder(DomainException::class)
+            ->setMethods(['getMessage'])
+            ->getMock();
     }
 }

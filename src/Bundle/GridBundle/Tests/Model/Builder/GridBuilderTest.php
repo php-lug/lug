@@ -243,7 +243,7 @@ class GridBuilderTest extends \PHPUnit_Framework_TestCase
      */
     private function createColumnBuilderMock()
     {
-        return $this->getMock(ColumnBuilderInterface::class);
+        return $this->createMock(ColumnBuilderInterface::class);
     }
 
     /**
@@ -251,7 +251,7 @@ class GridBuilderTest extends \PHPUnit_Framework_TestCase
      */
     private function createFilterBuilderMock()
     {
-        return $this->getMock(FilterBuilderInterface::class);
+        return $this->createMock(FilterBuilderInterface::class);
     }
 
     /**
@@ -259,7 +259,7 @@ class GridBuilderTest extends \PHPUnit_Framework_TestCase
      */
     private function createSortBuilderMock()
     {
-        return $this->getMock(SortBuilderInterface::class);
+        return $this->createMock(SortBuilderInterface::class);
     }
 
     /**
@@ -267,7 +267,7 @@ class GridBuilderTest extends \PHPUnit_Framework_TestCase
      */
     private function createActionBuilderMock()
     {
-        return $this->getMock(ActionBuilderInterface::class);
+        return $this->createMock(ActionBuilderInterface::class);
     }
 
     /**
@@ -275,7 +275,7 @@ class GridBuilderTest extends \PHPUnit_Framework_TestCase
      */
     private function createBatchBuilderMock()
     {
-        return $this->getMock(BatchBuilderInterface::class);
+        return $this->createMock(BatchBuilderInterface::class);
     }
 
     /**
@@ -283,7 +283,7 @@ class GridBuilderTest extends \PHPUnit_Framework_TestCase
      */
     private function createResourceMock()
     {
-        return $this->getMock(ResourceInterface::class);
+        return $this->createMock(ResourceInterface::class);
     }
 
     /**
@@ -291,7 +291,7 @@ class GridBuilderTest extends \PHPUnit_Framework_TestCase
      */
     private function createColumnMock()
     {
-        return $this->getMock(ColumnInterface::class);
+        return $this->createMock(ColumnInterface::class);
     }
 
     /**
@@ -299,7 +299,7 @@ class GridBuilderTest extends \PHPUnit_Framework_TestCase
      */
     private function createFilterMock()
     {
-        return $this->getMock(FilterInterface::class);
+        return $this->createMock(FilterInterface::class);
     }
 
     /**
@@ -307,7 +307,7 @@ class GridBuilderTest extends \PHPUnit_Framework_TestCase
      */
     private function createSortMock()
     {
-        return $this->getMock(SortInterface::class);
+        return $this->createMock(SortInterface::class);
     }
 
     /**
@@ -315,7 +315,7 @@ class GridBuilderTest extends \PHPUnit_Framework_TestCase
      */
     private function createActionMock()
     {
-        return $this->getMock(ActionInterface::class);
+        return $this->createMock(ActionInterface::class);
     }
 
     /**
@@ -323,6 +323,6 @@ class GridBuilderTest extends \PHPUnit_Framework_TestCase
      */
     private function createBatchMock()
     {
-        return $this->getMock(BatchInterface::class);
+        return $this->createMock(BatchInterface::class);
     }
 }

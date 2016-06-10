@@ -166,7 +166,7 @@ class ResourceChoiceTypeTest extends \PHPUnit_Framework_TestCase
      */
     private function createResourceMock()
     {
-        return $this->getMock(ResourceInterface::class);
+        return $this->createMock(ResourceInterface::class);
     }
 
     /**
@@ -174,7 +174,7 @@ class ResourceChoiceTypeTest extends \PHPUnit_Framework_TestCase
      */
     private function createManagerRegistryMock()
     {
-        return $this->getMock(ManagerRegistry::class);
+        return $this->createMock(ManagerRegistry::class);
     }
 
     /**
@@ -182,7 +182,7 @@ class ResourceChoiceTypeTest extends \PHPUnit_Framework_TestCase
      */
     private function createEntityManagerMock()
     {
-        return $this->getMock(EntityManagerInterface::class);
+        return $this->createMock(EntityManagerInterface::class);
     }
 
     /**
@@ -190,9 +190,7 @@ class ResourceChoiceTypeTest extends \PHPUnit_Framework_TestCase
      */
     private function createClassMetadataMock()
     {
-        return $this->getMockBuilder(ClassMetadata::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        return $this->createMock(ClassMetadata::class);
     }
 
     /**
@@ -200,9 +198,7 @@ class ResourceChoiceTypeTest extends \PHPUnit_Framework_TestCase
      */
     private function createRepositoryMock()
     {
-        return $this->getMockBuilder(EntityRepository::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        return $this->createMock(EntityRepository::class);
     }
 
     /**
@@ -222,7 +218,9 @@ class ResourceChoiceTypeTest extends \PHPUnit_Framework_TestCase
      */
     private function createQueryMock()
     {
-        return $this->getMock(\stdClass::class, ['execute', 'setParameter', 'getResult']);
+        return $this->getMockBuilder(\stdClass::class)
+            ->setMethods(['execute', 'setParameter', 'getResult'])
+            ->getMock();
     }
 
     /**
@@ -230,6 +228,6 @@ class ResourceChoiceTypeTest extends \PHPUnit_Framework_TestCase
      */
     private function createExprMock()
     {
-        return $this->getMock(Expr::class);
+        return $this->createMock(Expr::class);
     }
 }

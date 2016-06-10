@@ -216,7 +216,7 @@ class ResourceTypeTest extends \PHPUnit_Framework_TestCase
      */
     private function createServiceRegistryMock()
     {
-        return $this->getMock(RegistryInterface::class);
+        return $this->createMock(RegistryInterface::class);
     }
 
     /**
@@ -224,7 +224,7 @@ class ResourceTypeTest extends \PHPUnit_Framework_TestCase
      */
     private function createDataSourceBuilderMock()
     {
-        return $this->getMock(DataSourceBuilderInterface::class);
+        return $this->createMock(DataSourceBuilderInterface::class);
     }
 
     /**
@@ -232,7 +232,7 @@ class ResourceTypeTest extends \PHPUnit_Framework_TestCase
      */
     private function createResourceMock()
     {
-        return $this->getMock(ResourceInterface::class);
+        return $this->createMock(ResourceInterface::class);
     }
 
     /**
@@ -240,6 +240,6 @@ class ResourceTypeTest extends \PHPUnit_Framework_TestCase
      */
     private function createRepositoryMock()
     {
-        return $this->getMock(RepositoryInterface::class);
+        return $this->createMock(RepositoryInterface::class);
     }
 }

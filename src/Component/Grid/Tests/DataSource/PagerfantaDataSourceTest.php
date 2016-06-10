@@ -45,6 +45,6 @@ class PagerfantaDataSourceTest extends \PHPUnit_Framework_TestCase
      */
     private function createAdapterMock()
     {
-        return $this->getMock(AdapterInterface::class);
+        return $this->createMock(AdapterInterface::class);
     }
 }

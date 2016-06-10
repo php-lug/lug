@@ -148,9 +148,7 @@ class TranslatableRepositoryTest extends \PHPUnit_Framework_TestCase
      */
     private function createDocumentManagerMock()
     {
-        return $this->getMockBuilder(DocumentManager::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        return $this->createMock(DocumentManager::class);
     }
 
     /**
@@ -158,9 +156,7 @@ class TranslatableRepositoryTest extends \PHPUnit_Framework_TestCase
      */
     private function createUnitOfWorkMock()
     {
-        return $this->getMockBuilder(UnitOfWork::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        return $this->createMock(UnitOfWork::class);
     }
 
     /**
@@ -168,9 +164,7 @@ class TranslatableRepositoryTest extends \PHPUnit_Framework_TestCase
      */
     private function createClassMetadataMock()
     {
-        return $this->getMockBuilder(ClassMetadata::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        return $this->createMock(ClassMetadata::class);
     }
 
     /**
@@ -178,7 +172,7 @@ class TranslatableRepositoryTest extends \PHPUnit_Framework_TestCase
      */
     private function createResourceMock()
     {
-        return $this->getMock(ResourceInterface::class);
+        return $this->createMock(ResourceInterface::class);
     }
 
     /**
@@ -186,7 +180,7 @@ class TranslatableRepositoryTest extends \PHPUnit_Framework_TestCase
      */
     private function createLocaleContextMock()
     {
-        return $this->getMock(LocaleContextInterface::class);
+        return $this->createMock(LocaleContextInterface::class);
     }
 
     /**
@@ -194,9 +188,7 @@ class TranslatableRepositoryTest extends \PHPUnit_Framework_TestCase
      */
     private function createQueryBuilderMock()
     {
-        return $this->getMockBuilder(Builder::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        return $this->createMock(Builder::class);
     }
 }
 

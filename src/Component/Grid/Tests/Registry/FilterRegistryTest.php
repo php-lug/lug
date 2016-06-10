@@ -55,6 +55,6 @@ class FilterRegistryTest extends \PHPUnit_Framework_TestCase
      */
     private function createFilterMock()
     {
-        return $this->getMock(TypeInterface::class);
+        return $this->createMock(TypeInterface::class);
     }
 }

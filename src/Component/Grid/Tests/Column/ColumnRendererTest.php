@@ -113,7 +113,7 @@ class ColumnRendererTest extends \PHPUnit_Framework_TestCase
      */
     private function createServiceRegistryMock()
     {
-        return $this->getMock(RegistryInterface::class);
+        return $this->createMock(RegistryInterface::class);
     }
 
     /**
@@ -121,7 +121,7 @@ class ColumnRendererTest extends \PHPUnit_Framework_TestCase
      */
     private function createGridViewMock()
     {
-        return $this->getMock(GridViewInterface::class);
+        return $this->createMock(GridViewInterface::class);
     }
 
     /**
@@ -129,7 +129,7 @@ class ColumnRendererTest extends \PHPUnit_Framework_TestCase
      */
     private function createColumnMock()
     {
-        return $this->getMock(ColumnInterface::class);
+        return $this->createMock(ColumnInterface::class);
     }
 
     /**
@@ -137,6 +137,6 @@ class ColumnRendererTest extends \PHPUnit_Framework_TestCase
      */
     private function createColumnTypeMock()
     {
-        return $this->getMock(TypeInterface::class);
+        return $this->createMock(TypeInterface::class);
     }
 }

@@ -56,7 +56,7 @@ class GridViewFactoryTest extends \PHPUnit_Framework_TestCase
      */
     private function createGridMock()
     {
-        return $this->getMock(GridInterface::class);
+        return $this->createMock(GridInterface::class);
     }
 
     /**
@@ -64,6 +64,6 @@ class GridViewFactoryTest extends \PHPUnit_Framework_TestCase
      */
     private function createDataSourceBuilderMock()
     {
-        return $this->getMock(DataSourceBuilderInterface::class);
+        return $this->createMock(DataSourceBuilderInterface::class);
     }
 }

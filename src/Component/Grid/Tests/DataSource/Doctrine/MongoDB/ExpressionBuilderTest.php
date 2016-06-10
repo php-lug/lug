@@ -523,9 +523,7 @@ class ExpressionBuilderTest extends \PHPUnit_Framework_TestCase
      */
     private function createQueryBuilderMock()
     {
-        return $this->getMockBuilder(Builder::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        return $this->createMock(Builder::class);
     }
 
     /**
@@ -533,8 +531,6 @@ class ExpressionBuilderTest extends \PHPUnit_Framework_TestCase
      */
     private function createExprMock()
     {
-        return $this->getMockBuilder(Expr::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        return $this->createMock(Expr::class);
     }
 }

@@ -89,7 +89,7 @@ class FilterTypeTest extends \PHPUnit_Framework_TestCase
      */
     private function createDataSourceBuilderMock()
     {
-        return $this->getMock(DataSourceBuilderInterface::class);
+        return $this->createMock(DataSourceBuilderInterface::class);
     }
 
     /**
@@ -97,7 +97,7 @@ class FilterTypeTest extends \PHPUnit_Framework_TestCase
      */
     private function createFilterMock()
     {
-        return $this->getMock(FilterInterface::class);
+        return $this->createMock(FilterInterface::class);
     }
 
     /**
@@ -105,6 +105,6 @@ class FilterTypeTest extends \PHPUnit_Framework_TestCase
      */
     private function createGridMock()
     {
-        return $this->getMock(GridInterface::class);
+        return $this->createMock(GridInterface::class);
     }
 }

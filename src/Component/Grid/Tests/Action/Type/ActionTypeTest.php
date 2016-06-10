@@ -120,7 +120,7 @@ class ActionTypeTest extends \PHPUnit_Framework_TestCase
      */
     private function createGridViewMock()
     {
-        return $this->getMock(GridViewInterface::class);
+        return $this->createMock(GridViewInterface::class);
     }
 
     /**
@@ -128,6 +128,6 @@ class ActionTypeTest extends \PHPUnit_Framework_TestCase
      */
     private function createActionMock()
     {
-        return $this->getMock(ActionInterface::class);
+        return $this->createMock(ActionInterface::class);
     }
 }

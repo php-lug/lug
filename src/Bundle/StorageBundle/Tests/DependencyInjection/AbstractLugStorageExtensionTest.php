@@ -115,7 +115,7 @@ abstract class AbstractLugStorageExtensionTest extends \PHPUnit_Framework_TestCa
      */
     private function createRequestStackMock()
     {
-        return $this->getMock(RequestStack::class);
+        return $this->createMock(RequestStack::class);
     }
 
     /**
@@ -123,7 +123,7 @@ abstract class AbstractLugStorageExtensionTest extends \PHPUnit_Framework_TestCa
      */
     private function createCacheMock()
     {
-        return $this->getMock(Cache::class);
+        return $this->createMock(Cache::class);
     }
 
     /**
@@ -131,6 +131,6 @@ abstract class AbstractLugStorageExtensionTest extends \PHPUnit_Framework_TestCa
      */
     private function createSessionMock()
     {
-        return $this->getMock(SessionInterface::class);
+        return $this->createMock(SessionInterface::class);
     }
 }

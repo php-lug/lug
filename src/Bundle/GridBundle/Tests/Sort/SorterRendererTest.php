@@ -523,7 +523,7 @@ class SorterRendererTest extends \PHPUnit_Framework_TestCase
      */
     private function createRequestStackMock()
     {
-        return $this->getMock(RequestStack::class);
+        return $this->createMock(RequestStack::class);
     }
 
     /**
@@ -531,7 +531,7 @@ class SorterRendererTest extends \PHPUnit_Framework_TestCase
      */
     private function createFilterManagerMock()
     {
-        return $this->getMock(FilterManagerInterface::class);
+        return $this->createMock(FilterManagerInterface::class);
     }
 
     /**
@@ -539,7 +539,7 @@ class SorterRendererTest extends \PHPUnit_Framework_TestCase
      */
     private function createUrlGeneratorMock()
     {
-        return $this->getMock(UrlGeneratorInterface::class);
+        return $this->createMock(UrlGeneratorInterface::class);
     }
 
     /**
@@ -547,7 +547,7 @@ class SorterRendererTest extends \PHPUnit_Framework_TestCase
      */
     private function createGridMock()
     {
-        return $this->getMock(GridInterface::class);
+        return $this->createMock(GridInterface::class);
     }
 
     /**
@@ -555,7 +555,7 @@ class SorterRendererTest extends \PHPUnit_Framework_TestCase
      */
     private function createGridViewMock()
     {
-        return $this->getMock(GridViewInterface::class);
+        return $this->createMock(GridViewInterface::class);
     }
 
     /**
@@ -563,7 +563,7 @@ class SorterRendererTest extends \PHPUnit_Framework_TestCase
      */
     private function createColumnMock()
     {
-        return $this->getMock(ColumnInterface::class);
+        return $this->createMock(ColumnInterface::class);
     }
 
     /**
@@ -571,7 +571,7 @@ class SorterRendererTest extends \PHPUnit_Framework_TestCase
      */
     private function createRequestMock()
     {
-        $request = $this->getMock(Request::class);
+        $request = $this->createMock(Request::class);
         $request->query = $this->createParameterBagMock();
         $request->attributes = $this->createParameterBagMock();
 
@@ -583,6 +583,6 @@ class SorterRendererTest extends \PHPUnit_Framework_TestCase
      */
     private function createParameterBagMock()
     {
-        return $this->getMock(ParameterBag::class);
+        return $this->createMock(ParameterBag::class);
     }
 }

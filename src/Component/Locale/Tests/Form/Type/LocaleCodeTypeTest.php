@@ -81,7 +81,7 @@ class LocaleCodeTypeTest extends \PHPUnit_Framework_TestCase
      */
     private function createRepositoryMock()
     {
-        return $this->getMock(RepositoryInterface::class);
+        return $this->createMock(RepositoryInterface::class);
     }
 
     /**
@@ -89,6 +89,6 @@ class LocaleCodeTypeTest extends \PHPUnit_Framework_TestCase
      */
     private function createLocaleMock()
     {
-        return $this->getMock(LocaleInterface::class);
+        return $this->createMock(LocaleInterface::class);
     }
 }

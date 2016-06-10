@@ -147,7 +147,7 @@ class RegistryTest extends \PHPUnit_Framework_TestCase
      */
     private function createServiceMock()
     {
-        return $this->getMock(ServiceInterface::class);
+        return $this->createMock(ServiceInterface::class);
     }
 }
 

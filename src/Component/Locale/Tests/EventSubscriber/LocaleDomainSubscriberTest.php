@@ -177,7 +177,7 @@ class LocaleDomainSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     private function createLocaleProviderMock()
     {
-        return $this->getMock(LocaleProviderInterface::class);
+        return $this->createMock(LocaleProviderInterface::class);
     }
 
     /**
@@ -185,7 +185,7 @@ class LocaleDomainSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     private function createTranslatorMock()
     {
-        return $this->getMock(TranslatorInterface::class);
+        return $this->createMock(TranslatorInterface::class);
     }
 
     /**
@@ -193,7 +193,7 @@ class LocaleDomainSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     private function createPropertyAccessorMock()
     {
-        return $this->getMock(PropertyAccessorInterface::class);
+        return $this->createMock(PropertyAccessorInterface::class);
     }
 
     /**
@@ -201,9 +201,7 @@ class LocaleDomainSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     private function createDomainEventMock()
     {
-        return $this->getMockBuilder(DomainEvent::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        return $this->createMock(DomainEvent::class);
     }
 
     /**
@@ -211,7 +209,7 @@ class LocaleDomainSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     private function createResourceMock()
     {
-        return $this->getMock(ResourceInterface::class);
+        return $this->createMock(ResourceInterface::class);
     }
 
     /**
@@ -219,6 +217,6 @@ class LocaleDomainSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     private function createLocaleMock()
     {
-        return $this->getMock(LocaleInterface::class);
+        return $this->createMock(LocaleInterface::class);
     }
 }

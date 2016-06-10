@@ -97,9 +97,7 @@ class RoutingSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     private function createGetResponseEventMock()
     {
-        return $this->getMockBuilder(GetResponseEvent::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        return $this->createMock(GetResponseEvent::class);
     }
 
     /**
@@ -107,7 +105,7 @@ class RoutingSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     private function createRequestMock()
     {
-        $request = $this->getMock(Request::class);
+        $request = $this->createMock(Request::class);
         $request->attributes = $this->createParameterBagMock();
 
         return $request;
@@ -118,6 +116,6 @@ class RoutingSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     private function createParameterBagMock()
     {
-        return $this->getMock(ParameterBag::class);
+        return $this->createMock(ParameterBag::class);
     }
 }

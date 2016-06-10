@@ -355,7 +355,7 @@ class NumberTypeTest extends \PHPUnit_Framework_TestCase
      */
     private function createDataSourceBuilderMock()
     {
-        return $this->getMock(DataSourceBuilderInterface::class);
+        return $this->createMock(DataSourceBuilderInterface::class);
     }
 
     /**
@@ -363,7 +363,7 @@ class NumberTypeTest extends \PHPUnit_Framework_TestCase
      */
     private function createExpressionBuilderMock()
     {
-        return $this->getMock(ExpressionBuilderInterface::class);
+        return $this->createMock(ExpressionBuilderInterface::class);
     }
 
     /**
@@ -371,6 +371,6 @@ class NumberTypeTest extends \PHPUnit_Framework_TestCase
      */
     private function createFilterMock()
     {
-        return $this->getMock(FilterInterface::class);
+        return $this->createMock(FilterInterface::class);
     }
 }

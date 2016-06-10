@@ -16,7 +16,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\Query;
-use Doctrine\ORM\Query\Expr;
 use Doctrine\ORM\QueryBuilder;
 use Lug\Component\Resource\Form\Type\Doctrine\ORM\AbstractResourceChoiceType;
 use Lug\Component\Resource\Form\Type\Doctrine\ORM\ResourceChoiceType;
@@ -166,7 +165,7 @@ class AbstractResourceChoiceTypeTest extends \PHPUnit_Framework_TestCase
      */
     private function createResourceMock()
     {
-        return $this->getMock(ResourceInterface::class);
+        return $this->createMock(ResourceInterface::class);
     }
 
     /**
@@ -174,7 +173,7 @@ class AbstractResourceChoiceTypeTest extends \PHPUnit_Framework_TestCase
      */
     private function createManagerRegistryMock()
     {
-        return $this->getMock(ManagerRegistry::class);
+        return $this->createMock(ManagerRegistry::class);
     }
 
     /**
@@ -182,7 +181,7 @@ class AbstractResourceChoiceTypeTest extends \PHPUnit_Framework_TestCase
      */
     private function createEntityManagerMock()
     {
-        return $this->getMock(EntityManagerInterface::class);
+        return $this->createMock(EntityManagerInterface::class);
     }
 
     /**
@@ -190,9 +189,7 @@ class AbstractResourceChoiceTypeTest extends \PHPUnit_Framework_TestCase
      */
     private function createClassMetadataMock()
     {
-        return $this->getMockBuilder(ClassMetadata::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        return $this->createMock(ClassMetadata::class);
     }
 
     /**
@@ -200,9 +197,7 @@ class AbstractResourceChoiceTypeTest extends \PHPUnit_Framework_TestCase
      */
     private function createRepositoryMock()
     {
-        return $this->getMockBuilder(EntityRepository::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        return $this->createMock(EntityRepository::class);
     }
 
     /**
@@ -222,14 +217,8 @@ class AbstractResourceChoiceTypeTest extends \PHPUnit_Framework_TestCase
      */
     private function createQueryMock()
     {
-        return $this->getMock(\stdClass::class, ['execute', 'setParameter', 'getResult']);
-    }
-
-    /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Expr
-     */
-    private function createExprMock()
-    {
-        return $this->getMock(Expr::class);
+        return $this->getMockBuilder(\stdClass::class)
+            ->setMethods(['execute', 'setParameter', 'getResult'])
+            ->getMock();
     }
 }

@@ -266,7 +266,7 @@ class GridHandlerTest extends \PHPUnit_Framework_TestCase
      */
     private function createGridHandlerMock()
     {
-        return $this->getMock(BaseGridHandlerInterface::class);
+        return $this->createMock(BaseGridHandlerInterface::class);
     }
 
     /**
@@ -274,7 +274,7 @@ class GridHandlerTest extends \PHPUnit_Framework_TestCase
      */
     private function createGridMock()
     {
-        return $this->getMock(GridInterface::class);
+        return $this->createMock(GridInterface::class);
     }
 
     /**
@@ -282,7 +282,7 @@ class GridHandlerTest extends \PHPUnit_Framework_TestCase
      */
     private function createGridViewMock()
     {
-        return $this->getMock(GridViewInterface::class);
+        return $this->createMock(GridViewInterface::class);
     }
 
     /**
@@ -290,7 +290,7 @@ class GridHandlerTest extends \PHPUnit_Framework_TestCase
      */
     private function createFormMock()
     {
-        return $this->getMock(FormInterface::class);
+        return $this->createMock(FormInterface::class);
     }
 
     /**
@@ -298,6 +298,6 @@ class GridHandlerTest extends \PHPUnit_Framework_TestCase
      */
     private function createFormViewMock()
     {
-        return $this->getMock(FormView::class);
+        return $this->createMock(FormView::class);
     }
 }

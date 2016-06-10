@@ -107,7 +107,7 @@ class TextTypeTest extends \PHPUnit_Framework_TestCase
      */
     private function createPropertyAccessorMock()
     {
-        return $this->getMock(PropertyAccessorInterface::class);
+        return $this->createMock(PropertyAccessorInterface::class);
     }
 
     /**
@@ -115,6 +115,6 @@ class TextTypeTest extends \PHPUnit_Framework_TestCase
      */
     private function createColumnMock()
     {
-        return $this->getMock(ColumnInterface::class);
+        return $this->createMock(ColumnInterface::class);
     }
 }

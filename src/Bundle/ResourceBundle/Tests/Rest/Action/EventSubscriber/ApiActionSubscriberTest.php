@@ -264,7 +264,7 @@ class ApiActionSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     private function createParameterResolverMock()
     {
-        return $this->getMock(ParameterResolverInterface::class);
+        return $this->createMock(ParameterResolverInterface::class);
     }
 
     /**
@@ -272,7 +272,7 @@ class ApiActionSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     private function createUrlGeneratorMock()
     {
-        return $this->getMock(UrlGeneratorInterface::class);
+        return $this->createMock(UrlGeneratorInterface::class);
     }
 
     /**
@@ -280,9 +280,7 @@ class ApiActionSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     private function createActionEventMock()
     {
-        return $this->getMockBuilder(ActionEvent::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        return $this->createMock(ActionEvent::class);
     }
 
     /**
@@ -290,6 +288,6 @@ class ApiActionSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     private function createFormMock()
     {
-        return $this->getMock(FormInterface::class);
+        return $this->createMock(FormInterface::class);
     }
 }

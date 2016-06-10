@@ -426,7 +426,7 @@ abstract class AbstractLugResourceExtensionTest extends \PHPUnit_Framework_TestC
      */
     private function createAuthorizationCheckerMock()
     {
-        return $this->getMock(AuthorizationCheckerInterface::class);
+        return $this->createMock(AuthorizationCheckerInterface::class);
     }
 
     /**
@@ -434,7 +434,7 @@ abstract class AbstractLugResourceExtensionTest extends \PHPUnit_Framework_TestC
      */
     private function createTranslatorMock()
     {
-        return $this->getMock(TranslatorInterface::class);
+        return $this->createMock(TranslatorInterface::class);
     }
 
     /**
@@ -442,7 +442,7 @@ abstract class AbstractLugResourceExtensionTest extends \PHPUnit_Framework_TestC
      */
     private function createPropertyAccessorMock()
     {
-        return $this->getMock(PropertyAccessorInterface::class);
+        return $this->createMock(PropertyAccessorInterface::class);
     }
 
     /**
@@ -450,7 +450,7 @@ abstract class AbstractLugResourceExtensionTest extends \PHPUnit_Framework_TestC
      */
     private function createSessionMock()
     {
-        return $this->getMock(Session::class);
+        return $this->createMock(Session::class);
     }
 
     /**
@@ -458,7 +458,7 @@ abstract class AbstractLugResourceExtensionTest extends \PHPUnit_Framework_TestC
      */
     private function createFormFactoryMock()
     {
-        return $this->getMock(FormFactoryInterface::class);
+        return $this->createMock(FormFactoryInterface::class);
     }
 
     /**
@@ -466,7 +466,7 @@ abstract class AbstractLugResourceExtensionTest extends \PHPUnit_Framework_TestC
      */
     private function createFormRendererMock()
     {
-        return $this->getMock(FormRendererInterface::class);
+        return $this->createMock(FormRendererInterface::class);
     }
 
     /**
@@ -474,7 +474,7 @@ abstract class AbstractLugResourceExtensionTest extends \PHPUnit_Framework_TestC
      */
     private function createRegistryMock()
     {
-        return $this->getMock(RegistryInterface::class);
+        return $this->createMock(RegistryInterface::class);
     }
 
     /**
@@ -482,7 +482,7 @@ abstract class AbstractLugResourceExtensionTest extends \PHPUnit_Framework_TestC
      */
     private function createRouterMock()
     {
-        return $this->getMock(RouterInterface::class);
+        return $this->createMock(RouterInterface::class);
     }
 
     /**
@@ -490,7 +490,7 @@ abstract class AbstractLugResourceExtensionTest extends \PHPUnit_Framework_TestC
      */
     private function createRequestStackMock()
     {
-        return $this->getMock(RequestStack::class);
+        return $this->createMock(RequestStack::class);
     }
 
     /**
@@ -498,6 +498,6 @@ abstract class AbstractLugResourceExtensionTest extends \PHPUnit_Framework_TestC
      */
     private function createGridHandler()
     {
-        return $this->getMock(GridHandlerInterface::class);
+        return $this->createMock(GridHandlerInterface::class);
     }
 }

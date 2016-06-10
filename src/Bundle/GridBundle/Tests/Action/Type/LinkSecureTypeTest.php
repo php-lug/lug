@@ -166,7 +166,7 @@ class LinkSecureTypeTest extends \PHPUnit_Framework_TestCase
      */
     private function createUrlGeneratorMock()
     {
-        return $this->getMock(UrlGeneratorInterface::class);
+        return $this->createMock(UrlGeneratorInterface::class);
     }
 
     /**
@@ -174,7 +174,7 @@ class LinkSecureTypeTest extends \PHPUnit_Framework_TestCase
      */
     private function createPropertyAccessorMock()
     {
-        return $this->getMock(PropertyAccessorInterface::class);
+        return $this->createMock(PropertyAccessorInterface::class);
     }
 
     /**
@@ -182,7 +182,7 @@ class LinkSecureTypeTest extends \PHPUnit_Framework_TestCase
      */
     private function createFormFactoryMock()
     {
-        return $this->getMock(FormFactoryInterface::class);
+        return $this->createMock(FormFactoryInterface::class);
     }
 
     /**
@@ -190,7 +190,7 @@ class LinkSecureTypeTest extends \PHPUnit_Framework_TestCase
      */
     private function createActionMock()
     {
-        return $this->getMock(ActionInterface::class);
+        return $this->createMock(ActionInterface::class);
     }
 
     /**
@@ -198,7 +198,7 @@ class LinkSecureTypeTest extends \PHPUnit_Framework_TestCase
      */
     private function createFormMock()
     {
-        return $this->getMock(FormInterface::class);
+        return $this->createMock(FormInterface::class);
     }
 
     /**
@@ -206,6 +206,6 @@ class LinkSecureTypeTest extends \PHPUnit_Framework_TestCase
      */
     private function createFormViewMock()
     {
-        return $this->getMock(FormView::class);
+        return $this->createMock(FormView::class);
     }
 }

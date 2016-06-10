@@ -55,6 +55,6 @@ class SortRegistryTest extends \PHPUnit_Framework_TestCase
      */
     private function createSortMock()
     {
-        return $this->getMock(TypeInterface::class);
+        return $this->createMock(TypeInterface::class);
     }
 }

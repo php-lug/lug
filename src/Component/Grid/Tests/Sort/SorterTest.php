@@ -131,7 +131,7 @@ class SorterTest extends \PHPUnit_Framework_TestCase
      */
     private function createServiceRegistryMock()
     {
-        return $this->getMock(RegistryInterface::class);
+        return $this->createMock(RegistryInterface::class);
     }
 
     /**
@@ -139,7 +139,7 @@ class SorterTest extends \PHPUnit_Framework_TestCase
      */
     private function createDataSourceBuilderMock()
     {
-        return $this->getMock(DataSourceBuilderInterface::class);
+        return $this->createMock(DataSourceBuilderInterface::class);
     }
 
     /**
@@ -147,7 +147,7 @@ class SorterTest extends \PHPUnit_Framework_TestCase
      */
     private function createGridMock()
     {
-        return $this->getMock(GridInterface::class);
+        return $this->createMock(GridInterface::class);
     }
 
     /**
@@ -155,7 +155,7 @@ class SorterTest extends \PHPUnit_Framework_TestCase
      */
     private function createSortMock()
     {
-        return $this->getMock(SortInterface::class);
+        return $this->createMock(SortInterface::class);
     }
 
     /**
@@ -163,6 +163,6 @@ class SorterTest extends \PHPUnit_Framework_TestCase
      */
     private function createSortTypeMock()
     {
-        return $this->getMock(TypeInterface::class);
+        return $this->createMock(TypeInterface::class);
     }
 }

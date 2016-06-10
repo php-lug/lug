@@ -269,7 +269,7 @@ class ResourceViewSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     private function createParameterResolverMock()
     {
-        return $this->getMock(ParameterResolverInterface::class);
+        return $this->createMock(ParameterResolverInterface::class);
     }
 
     /**
@@ -277,9 +277,7 @@ class ResourceViewSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     private function createViewEventMock()
     {
-        return $this->getMockBuilder(ViewEvent::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        return $this->createMock(ViewEvent::class);
     }
 
     /**
@@ -287,7 +285,7 @@ class ResourceViewSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     private function createViewMock()
     {
-        return $this->getMock(View::class);
+        return $this->createMock(View::class);
     }
 
     /**
@@ -295,6 +293,6 @@ class ResourceViewSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     private function createResourceMock()
     {
-        return $this->getMock(ResourceInterface::class);
+        return $this->createMock(ResourceInterface::class);
     }
 }

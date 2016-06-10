@@ -90,7 +90,7 @@ class SecurityCheckerTest extends \PHPUnit_Framework_TestCase
      */
     private function createAuthorizationCheckerMock()
     {
-        return $this->getMock(AuthorizationCheckerInterface::class);
+        return $this->createMock(AuthorizationCheckerInterface::class);
     }
 
     /**
@@ -98,7 +98,7 @@ class SecurityCheckerTest extends \PHPUnit_Framework_TestCase
      */
     private function createParameterResolverMock()
     {
-        return $this->getMock(ParameterResolverInterface::class);
+        return $this->createMock(ParameterResolverInterface::class);
     }
 
     /**
@@ -106,6 +106,6 @@ class SecurityCheckerTest extends \PHPUnit_Framework_TestCase
      */
     private function createStdClassMock()
     {
-        return $this->getMock(\stdClass::class);
+        return $this->createMock(\stdClass::class);
     }
 }

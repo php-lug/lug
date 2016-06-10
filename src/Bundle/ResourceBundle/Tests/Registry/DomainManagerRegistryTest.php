@@ -59,6 +59,6 @@ class DomainManagerRegistryTest extends \PHPUnit_Framework_TestCase
      */
     private function createDomainManagerMock()
     {
-        return $this->getMock(DomainManagerInterface::class);
+        return $this->createMock(DomainManagerInterface::class);
     }
 }

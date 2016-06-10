@@ -270,7 +270,7 @@ class MessageListenerTest extends \PHPUnit_Framework_TestCase
      */
     private function createTranslatorMock()
     {
-        return $this->getMock(TranslatorInterface::class);
+        return $this->createMock(TranslatorInterface::class);
     }
 
     /**
@@ -278,7 +278,7 @@ class MessageListenerTest extends \PHPUnit_Framework_TestCase
      */
     private function createPropertyAccessorMock()
     {
-        return $this->getMock(PropertyAccessorInterface::class);
+        return $this->createMock(PropertyAccessorInterface::class);
     }
 
     /**
@@ -286,9 +286,7 @@ class MessageListenerTest extends \PHPUnit_Framework_TestCase
      */
     private function createDomainEventMock()
     {
-        return $this->getMockBuilder(DomainEvent::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        return $this->createMock(DomainEvent::class);
     }
 
     /**
@@ -296,7 +294,7 @@ class MessageListenerTest extends \PHPUnit_Framework_TestCase
      */
     private function createResourceMock()
     {
-        return $this->getMock(ResourceInterface::class);
+        return $this->createMock(ResourceInterface::class);
     }
 
     /**
@@ -304,6 +302,8 @@ class MessageListenerTest extends \PHPUnit_Framework_TestCase
      */
     private function createObjectMock()
     {
-        return $this->getMock(\stdClass::class, ['__toString']);
+        return $this->getMockBuilder(\stdClass::class)
+            ->setMethods(['__toString'])
+            ->getMock();
     }
 }

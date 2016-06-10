@@ -143,7 +143,7 @@ class FilterManagerTest extends \PHPUnit_Framework_TestCase
      */
     private function createStorageMock()
     {
-        return $this->getMock(StorageInterface::class);
+        return $this->createMock(StorageInterface::class);
     }
 
     /**
@@ -151,7 +151,7 @@ class FilterManagerTest extends \PHPUnit_Framework_TestCase
      */
     private function createGridMock()
     {
-        return $this->getMock(GridInterface::class);
+        return $this->createMock(GridInterface::class);
     }
 
     /**
@@ -159,6 +159,6 @@ class FilterManagerTest extends \PHPUnit_Framework_TestCase
      */
     private function createResourceMock()
     {
-        return $this->getMock(ResourceInterface::class);
+        return $this->createMock(ResourceInterface::class);
     }
 }

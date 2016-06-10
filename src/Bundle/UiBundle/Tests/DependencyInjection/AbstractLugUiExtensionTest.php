@@ -129,7 +129,7 @@ abstract class AbstractLugUiExtensionTest extends \PHPUnit_Framework_TestCase
      */
     private function createMenuFactoryMock()
     {
-        return $this->getMock(FactoryInterface::class);
+        return $this->createMock(FactoryInterface::class);
     }
 
     /**
@@ -137,7 +137,7 @@ abstract class AbstractLugUiExtensionTest extends \PHPUnit_Framework_TestCase
      */
     private function createEventDispatcherMock()
     {
-        return $this->getMock(EventDispatcherInterface::class);
+        return $this->createMock(EventDispatcherInterface::class);
     }
 
     /**

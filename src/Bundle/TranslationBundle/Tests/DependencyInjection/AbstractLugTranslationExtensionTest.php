@@ -179,7 +179,7 @@ abstract class AbstractLugTranslationExtensionTest extends \PHPUnit_Framework_Te
      */
     private function createLocaleRepositoryMock()
     {
-        return $this->getMock(RepositoryInterface::class);
+        return $this->createMock(RepositoryInterface::class);
     }
 
     /**
@@ -187,7 +187,7 @@ abstract class AbstractLugTranslationExtensionTest extends \PHPUnit_Framework_Te
      */
     private function createRequestStackMock()
     {
-        return $this->getMock(RequestStack::class);
+        return $this->createMock(RequestStack::class);
     }
 
     /**
@@ -195,7 +195,7 @@ abstract class AbstractLugTranslationExtensionTest extends \PHPUnit_Framework_Te
      */
     private function createLocaleContextMock()
     {
-        return $this->getMock(LocaleContextInterface::class);
+        return $this->createMock(LocaleContextInterface::class);
     }
 
     /**
@@ -203,7 +203,7 @@ abstract class AbstractLugTranslationExtensionTest extends \PHPUnit_Framework_Te
      */
     private function createLocaleProviderMock()
     {
-        return $this->getMock(LocaleProviderInterface::class);
+        return $this->createMock(LocaleProviderInterface::class);
     }
 
     /**
@@ -211,7 +211,7 @@ abstract class AbstractLugTranslationExtensionTest extends \PHPUnit_Framework_Te
      */
     private function createServiceRegistryMock()
     {
-        return $this->getMock(RegistryInterface::class);
+        return $this->createMock(RegistryInterface::class);
     }
 
     /**
@@ -219,6 +219,6 @@ abstract class AbstractLugTranslationExtensionTest extends \PHPUnit_Framework_Te
      */
     private function createParameterResolverMock()
     {
-        return $this->getMock(ParameterResolverInterface::class);
+        return $this->createMock(ParameterResolverInterface::class);
     }
 }

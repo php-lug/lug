@@ -89,7 +89,7 @@ class MenuBuilderTest extends \PHPUnit_Framework_TestCase
      */
     private function createFactoryMock()
     {
-        return $this->getMock(FactoryInterface::class);
+        return $this->createMock(FactoryInterface::class);
     }
 
     /**
@@ -97,7 +97,7 @@ class MenuBuilderTest extends \PHPUnit_Framework_TestCase
      */
     private function createEventDispatcherMock()
     {
-        return $this->getMock(EventDispatcherInterface::class);
+        return $this->createMock(EventDispatcherInterface::class);
     }
 
     /**
@@ -105,6 +105,6 @@ class MenuBuilderTest extends \PHPUnit_Framework_TestCase
      */
     private function createItemMock()
     {
-        return $this->getMock(ItemInterface::class);
+        return $this->createMock(ItemInterface::class);
     }
 }

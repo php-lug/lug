@@ -104,7 +104,7 @@ class BatcherTest extends \PHPUnit_Framework_TestCase
      */
     private function createBatcherMock()
     {
-        return $this->getMock(BaseBatcherInterface::class);
+        return $this->createMock(BaseBatcherInterface::class);
     }
 
     /**
@@ -112,7 +112,7 @@ class BatcherTest extends \PHPUnit_Framework_TestCase
      */
     private function createGridMock()
     {
-        return $this->getMock(GridInterface::class);
+        return $this->createMock(GridInterface::class);
     }
 
     /**
@@ -120,6 +120,6 @@ class BatcherTest extends \PHPUnit_Framework_TestCase
      */
     private function createFormMock()
     {
-        return $this->getMock(FormInterface::class);
+        return $this->createMock(FormInterface::class);
     }
 }

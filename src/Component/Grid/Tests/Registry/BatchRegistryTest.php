@@ -55,6 +55,6 @@ class BatchRegistryTest extends \PHPUnit_Framework_TestCase
      */
     private function createBatchMock()
     {
-        return $this->getMock(TypeInterface::class);
+        return $this->createMock(TypeInterface::class);
     }
 }

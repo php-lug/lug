@@ -116,7 +116,7 @@ class TwigTypeTest extends \PHPUnit_Framework_TestCase
      */
     private function createPropertyAccessorMock()
     {
-        return $this->getMock(PropertyAccessorInterface::class);
+        return $this->createMock(PropertyAccessorInterface::class);
     }
 
     /**
@@ -124,9 +124,7 @@ class TwigTypeTest extends \PHPUnit_Framework_TestCase
      */
     private function createTwigEnvironmentMock()
     {
-        return $this->getMockBuilder(\Twig_Environment::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        return $this->createMock(\Twig_Environment::class);
     }
 
     /**
@@ -134,6 +132,6 @@ class TwigTypeTest extends \PHPUnit_Framework_TestCase
      */
     private function createColumnMock()
     {
-        return $this->getMock(ColumnInterface::class);
+        return $this->createMock(ColumnInterface::class);
     }
 }

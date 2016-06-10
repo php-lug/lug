@@ -308,6 +308,6 @@ class ExpressionBuilderTest extends \PHPUnit_Framework_TestCase
      */
     private function createExprMock()
     {
-        return $this->getMock(Expr::class);
+        return $this->createMock(Expr::class);
     }
 }

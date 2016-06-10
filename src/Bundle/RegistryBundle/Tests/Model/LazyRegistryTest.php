@@ -263,7 +263,7 @@ class LazyRegistryTest extends \PHPUnit_Framework_TestCase
             $getMap[] = [$id, ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE, $service];
         }
 
-        $container = $this->getMock(ContainerInterface::class);
+        $container = $this->createMock(ContainerInterface::class);
         $container
             ->expects($this->any())
             ->method('has')
@@ -282,7 +282,7 @@ class LazyRegistryTest extends \PHPUnit_Framework_TestCase
      */
     private function createServiceMock()
     {
-        return $this->getMock(ServiceInterface::class);
+        return $this->createMock(ServiceInterface::class);
     }
 }
 

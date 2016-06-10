@@ -208,7 +208,7 @@ class NumberTypeTest extends \PHPUnit_Framework_TestCase
      */
     private function createPropertyAccessorMock()
     {
-        return $this->getMock(PropertyAccessorInterface::class);
+        return $this->createMock(PropertyAccessorInterface::class);
     }
 
     /**
@@ -216,7 +216,7 @@ class NumberTypeTest extends \PHPUnit_Framework_TestCase
      */
     private function createFormatterMock()
     {
-        return $this->getMock(FormatterInterface::class);
+        return $this->createMock(FormatterInterface::class);
     }
 
     /**
@@ -224,6 +224,6 @@ class NumberTypeTest extends \PHPUnit_Framework_TestCase
      */
     private function createColumnMock()
     {
-        return $this->getMock(ColumnInterface::class);
+        return $this->createMock(ColumnInterface::class);
     }
 }

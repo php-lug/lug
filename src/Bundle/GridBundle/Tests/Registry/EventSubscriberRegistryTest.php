@@ -57,6 +57,6 @@ class EventSubscriberRegistryTest extends \PHPUnit_Framework_TestCase
      */
     private function createEventSubscriberMock()
     {
-        return $this->getMock(EventSubscriberInterface::class);
+        return $this->createMock(EventSubscriberInterface::class);
     }
 }

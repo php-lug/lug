@@ -114,7 +114,7 @@ class TranslationTest extends \PHPUnit_Framework_TestCase
      */
     private function createTranslatableMock()
     {
-        return $this->getMock(TranslatableInterface::class);
+        return $this->createMock(TranslatableInterface::class);
     }
 }
 

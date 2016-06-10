@@ -290,7 +290,7 @@ class GridExtensionTest extends \PHPUnit_Framework_TestCase
      */
     private function createRendererMock()
     {
-        return $this->getMock(RendererInterface::class);
+        return $this->createMock(RendererInterface::class);
     }
 
     /**
@@ -298,9 +298,7 @@ class GridExtensionTest extends \PHPUnit_Framework_TestCase
      */
     private function createPagerfantaExtensionMock()
     {
-        return $this->getMockBuilder(PagerfantaExtension::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        return $this->createMock(PagerfantaExtension::class);
     }
 
     /**
@@ -308,7 +306,7 @@ class GridExtensionTest extends \PHPUnit_Framework_TestCase
      */
     private function createGridViewMock()
     {
-        return $this->getMock(GridViewInterface::class);
+        return $this->createMock(GridViewInterface::class);
     }
 
     /**
@@ -316,7 +314,7 @@ class GridExtensionTest extends \PHPUnit_Framework_TestCase
      */
     private function createColumnMock()
     {
-        return $this->getMock(ColumnInterface::class);
+        return $this->createMock(ColumnInterface::class);
     }
 
     /**
@@ -324,7 +322,7 @@ class GridExtensionTest extends \PHPUnit_Framework_TestCase
      */
     private function createActionMock()
     {
-        return $this->getMock(ActionInterface::class);
+        return $this->createMock(ActionInterface::class);
     }
 
     /**
@@ -332,8 +330,6 @@ class GridExtensionTest extends \PHPUnit_Framework_TestCase
      */
     private function createPagerfantaMock()
     {
-        return $this->getMockBuilder(Pagerfanta::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        return $this->createMock(Pagerfanta::class);
     }
 }
