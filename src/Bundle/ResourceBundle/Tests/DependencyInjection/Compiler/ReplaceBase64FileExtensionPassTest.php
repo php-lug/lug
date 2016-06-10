@@ -91,7 +91,7 @@ class ReplaceBase64FileExtensionPassTest extends \PHPUnit_Framework_TestCase
      */
     private function createContainerBuilderMock()
     {
-        return $this->getMock(ContainerBuilder::class);
+        return $this->createMock(ContainerBuilder::class);
     }
 
     /**
@@ -99,6 +99,6 @@ class ReplaceBase64FileExtensionPassTest extends \PHPUnit_Framework_TestCase
      */
     private function createDefinitionMock()
     {
-        return $this->getMock(Definition::class);
+        return $this->createMock(Definition::class);
     }
 }

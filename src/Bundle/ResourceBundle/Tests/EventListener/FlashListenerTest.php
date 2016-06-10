@@ -98,7 +98,7 @@ class FlashListenerTest extends \PHPUnit_Framework_TestCase
      */
     private function createSessionMock()
     {
-        return $this->getMock(Session::class);
+        return $this->createMock(Session::class);
     }
 
     /**
@@ -106,7 +106,7 @@ class FlashListenerTest extends \PHPUnit_Framework_TestCase
      */
     private function createParameterResolverMock()
     {
-        return $this->getMock(ParameterResolverInterface::class);
+        return $this->createMock(ParameterResolverInterface::class);
     }
 
     /**
@@ -114,9 +114,7 @@ class FlashListenerTest extends \PHPUnit_Framework_TestCase
      */
     private function createDomainEventMock()
     {
-        return $this->getMockBuilder(DomainEvent::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        return $this->createMock(DomainEvent::class);
     }
 
     /**
@@ -124,6 +122,6 @@ class FlashListenerTest extends \PHPUnit_Framework_TestCase
      */
     private function createFlashBagMock()
     {
-        return $this->getMock(FlashBagInterface::class);
+        return $this->createMock(FlashBagInterface::class);
     }
 }

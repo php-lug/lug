@@ -100,20 +100,23 @@ abstract class AbstractLugLocaleExtensionTest extends \PHPUnit_Framework_TestCas
 
         $this->container = new ContainerBuilder();
         $this->container->setParameter('locale', $this->locale);
-        $this->container->set('phpunit', $this);
         $this->container->set('request_stack', $this->requestStack);
         $this->container->set('translator', $this->translator);
         $this->container->set('property_accessor', $this->propertyAccessor);
         $this->container->set('lug.resource.domain.event_dispatcher', $this->domainEventDispatcher);
         $this->container->set('lug.resource.routing.parameter_resolver', $this->parameterResolver);
 
+        $this->container->set(
+            'doctrine.orm.default_entity_manager.mock_builder',
+            $this->getMockBuilder(EntityManagerInterface::class)
+        );
+
         $this->container->setDefinition(
             'doctrine.orm.default_entity_manager',
             $definition = new Definition(EntityManagerInterface::class)
         );
 
-        $definition->setFactory([new Reference('phpunit'), 'getMock']);
-        $definition->setArguments([EntityManagerInterface::class]);
+        $definition->setFactory([new Reference('doctrine.orm.default_entity_manager.mock_builder'), 'getMock']);
 
         $this->container->registerExtension($this->extension);
         $this->container->loadFromExtension($this->extension->getAlias());
@@ -237,7 +240,7 @@ abstract class AbstractLugLocaleExtensionTest extends \PHPUnit_Framework_TestCas
      */
     private function createEventDispatcherMock()
     {
-        return $this->getMock(EventDispatcherInterface::class);
+        return $this->createMock(EventDispatcherInterface::class);
     }
 
     /**
@@ -245,7 +248,7 @@ abstract class AbstractLugLocaleExtensionTest extends \PHPUnit_Framework_TestCas
      */
     private function createRequestStackMock()
     {
-        return $this->getMock(RequestStack::class);
+        return $this->createMock(RequestStack::class);
     }
 
     /**
@@ -253,7 +256,7 @@ abstract class AbstractLugLocaleExtensionTest extends \PHPUnit_Framework_TestCas
      */
     private function createTranslatorMock()
     {
-        return $this->getMock(TranslatorInterface::class);
+        return $this->createMock(TranslatorInterface::class);
     }
 
     /**
@@ -261,7 +264,7 @@ abstract class AbstractLugLocaleExtensionTest extends \PHPUnit_Framework_TestCas
      */
     private function createPropertyAccessorMock()
     {
-        return $this->getMock(PropertyAccessorInterface::class);
+        return $this->createMock(PropertyAccessorInterface::class);
     }
 
     /**
@@ -269,7 +272,7 @@ abstract class AbstractLugLocaleExtensionTest extends \PHPUnit_Framework_TestCas
      */
     private function createParameterResolverMock()
     {
-        return $this->getMock(ParameterResolverInterface::class);
+        return $this->createMock(ParameterResolverInterface::class);
     }
 
     /**
@@ -277,6 +280,6 @@ abstract class AbstractLugLocaleExtensionTest extends \PHPUnit_Framework_TestCas
      */
     private function createRepositoryMock()
     {
-        return $this->getMock(RepositoryInterface::class);
+        return $this->createMock(RepositoryInterface::class);
     }
 }

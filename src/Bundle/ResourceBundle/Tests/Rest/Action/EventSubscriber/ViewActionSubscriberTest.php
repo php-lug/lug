@@ -181,7 +181,7 @@ class ViewActionSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     private function createParameterResolverMock()
     {
-        return $this->getMock(ParameterResolverInterface::class);
+        return $this->createMock(ParameterResolverInterface::class);
     }
 
     /**
@@ -189,9 +189,7 @@ class ViewActionSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     private function createActionEventMock()
     {
-        return $this->getMockBuilder(ActionEvent::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        return $this->createMock(ActionEvent::class);
     }
 
     /**
@@ -199,6 +197,6 @@ class ViewActionSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     private function createFormMock()
     {
-        return $this->getMock(FormInterface::class);
+        return $this->createMock(FormInterface::class);
     }
 }

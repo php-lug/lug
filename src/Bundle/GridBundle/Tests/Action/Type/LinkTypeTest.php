@@ -172,7 +172,7 @@ class LinkTypeTest extends \PHPUnit_Framework_TestCase
      */
     private function createUrlGeneratorMock()
     {
-        return $this->getMock(UrlGeneratorInterface::class);
+        return $this->createMock(UrlGeneratorInterface::class);
     }
 
     /**
@@ -180,6 +180,6 @@ class LinkTypeTest extends \PHPUnit_Framework_TestCase
      */
     private function createPropertyAccessorMock()
     {
-        return $this->getMock(PropertyAccessorInterface::class);
+        return $this->createMock(PropertyAccessorInterface::class);
     }
 }

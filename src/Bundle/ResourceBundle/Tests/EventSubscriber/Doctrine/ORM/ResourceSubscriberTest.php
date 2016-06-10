@@ -240,7 +240,7 @@ class ResourceSubscriberTest extends \PHPUnit_Framework_TestCase
             ->expects($this->once())
             ->method('getClassMetadata')
             ->with($this->identicalTo($parentClass))
-            ->will($this->throwException($this->createMappingExceptionMock()));
+            ->will($this->throwException(new MappingException()));
 
         $resource
             ->expects($this->once())
@@ -291,7 +291,7 @@ class ResourceSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     private function createServiceRegistryMock()
     {
-        return $this->getMock(RegistryInterface::class);
+        return $this->createMock(RegistryInterface::class);
     }
 
     /**
@@ -299,9 +299,7 @@ class ResourceSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     private function createLoadClassMetadataEventArgsMock()
     {
-        return $this->getMockBuilder(LoadClassMetadataEventArgs::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        return $this->createMock(LoadClassMetadataEventArgs::class);
     }
 
     /**
@@ -309,7 +307,7 @@ class ResourceSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     private function createObjectManagerMock()
     {
-        return $this->getMock(ObjectManager::class);
+        return $this->createMock(ObjectManager::class);
     }
 
     /**
@@ -317,9 +315,7 @@ class ResourceSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     private function createClassMetadataMock()
     {
-        return $this->getMockBuilder(ClassMetadata::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        return $this->createMock(ClassMetadata::class);
     }
 
     /**
@@ -327,14 +323,6 @@ class ResourceSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     private function createResourceMock()
     {
-        return $this->getMock(ResourceInterface::class);
-    }
-
-    /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|MappingException
-     */
-    private function createMappingExceptionMock()
-    {
-        return $this->getMock(MappingException::class);
+        return $this->createMock(ResourceInterface::class);
     }
 }

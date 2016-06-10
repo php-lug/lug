@@ -107,7 +107,7 @@ class CookieStorageTest extends \PHPUnit_Framework_TestCase
      */
     private function createRequestStackMock()
     {
-        return $this->getMock(RequestStack::class);
+        return $this->createMock(RequestStack::class);
     }
 
     /**
@@ -115,7 +115,7 @@ class CookieStorageTest extends \PHPUnit_Framework_TestCase
      */
     private function createRequestMock()
     {
-        return $this->getMock(Request::class);
+        return $this->createMock(Request::class);
     }
 
     /**
@@ -123,6 +123,6 @@ class CookieStorageTest extends \PHPUnit_Framework_TestCase
      */
     private function createParameterBagMock()
     {
-        return $this->getMock(ParameterBag::class);
+        return $this->createMock(ParameterBag::class);
     }
 }

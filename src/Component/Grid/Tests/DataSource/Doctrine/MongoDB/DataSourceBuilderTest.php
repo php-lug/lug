@@ -225,9 +225,7 @@ class DataSourceBuilderTest extends \PHPUnit_Framework_TestCase
      */
     private function createRepositoryMock()
     {
-        return $this->getMockBuilder(Repository::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        return $this->createMock(Repository::class);
     }
 
     /**
@@ -235,10 +233,7 @@ class DataSourceBuilderTest extends \PHPUnit_Framework_TestCase
      */
     private function createQueryBuilderMock()
     {
-        return $this->getMockBuilder(Builder::class)
-            ->disableOriginalConstructor()
-            ->disableOriginalClone()
-            ->getMock();
+        return $this->createMock(Builder::class);
     }
 
     /**
@@ -246,9 +241,7 @@ class DataSourceBuilderTest extends \PHPUnit_Framework_TestCase
      */
     private function createQueryMock()
     {
-        return $this->getMockBuilder(Query::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        return $this->createMock(Query::class);
     }
 
     /**
@@ -256,6 +249,6 @@ class DataSourceBuilderTest extends \PHPUnit_Framework_TestCase
      */
     private function createIteratorMock()
     {
-        return $this->getMock(Iterator::class);
+        return $this->createMock(Iterator::class);
     }
 }

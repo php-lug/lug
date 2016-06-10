@@ -146,9 +146,7 @@ class TranslatableTypeTest extends \PHPUnit_Framework_TestCase
      */
     private function createFormRegistryMock()
     {
-        return $this->getMockBuilder(FormRegistry::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        return $this->createMock(FormRegistry::class);
     }
 
     /**
@@ -156,7 +154,7 @@ class TranslatableTypeTest extends \PHPUnit_Framework_TestCase
      */
     private function createManagerRegistryMock()
     {
-        return $this->getMock(ManagerRegistry::class);
+        return $this->createMock(ManagerRegistry::class);
     }
 
     /**
@@ -164,7 +162,7 @@ class TranslatableTypeTest extends \PHPUnit_Framework_TestCase
      */
     private function createResourceMock()
     {
-        return $this->getMock(ResourceInterface::class);
+        return $this->createMock(ResourceInterface::class);
     }
 
     /**
@@ -172,7 +170,7 @@ class TranslatableTypeTest extends \PHPUnit_Framework_TestCase
      */
     private function createFactoryMock()
     {
-        return $this->getMock(FactoryInterface::class);
+        return $this->createMock(FactoryInterface::class);
     }
 }
 

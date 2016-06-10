@@ -73,6 +73,6 @@ class LocaleContextTest extends \PHPUnit_Framework_TestCase
      */
     private function createLocaleContextMock()
     {
-        return $this->getMock(BaseLocaleContextInterface::class);
+        return $this->createMock(BaseLocaleContextInterface::class);
     }
 }

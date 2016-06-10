@@ -57,6 +57,6 @@ class ManagerRegistryTest extends \PHPUnit_Framework_TestCase
      */
     private function createObjectManagerMock()
     {
-        return $this->getMock(ObjectManager::class);
+        return $this->createMock(ObjectManager::class);
     }
 }

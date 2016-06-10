@@ -118,7 +118,7 @@ class BatcherTest extends \PHPUnit_Framework_TestCase
      */
     private function createServiceRegistryMock()
     {
-        return $this->getMock(RegistryInterface::class);
+        return $this->createMock(RegistryInterface::class);
     }
 
     /**
@@ -126,7 +126,7 @@ class BatcherTest extends \PHPUnit_Framework_TestCase
      */
     private function createGridMock()
     {
-        return $this->getMock(GridInterface::class);
+        return $this->createMock(GridInterface::class);
     }
 
     /**
@@ -134,7 +134,7 @@ class BatcherTest extends \PHPUnit_Framework_TestCase
      */
     private function createBatchMock()
     {
-        return $this->getMock(BatchInterface::class);
+        return $this->createMock(BatchInterface::class);
     }
 
     /**
@@ -142,6 +142,6 @@ class BatcherTest extends \PHPUnit_Framework_TestCase
      */
     private function createBatchTypeMock()
     {
-        return $this->getMock(TypeInterface::class);
+        return $this->createMock(TypeInterface::class);
     }
 }

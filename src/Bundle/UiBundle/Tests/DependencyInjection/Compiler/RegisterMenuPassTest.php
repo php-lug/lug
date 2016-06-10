@@ -91,6 +91,8 @@ class RegisterMenuPassTest extends \PHPUnit_Framework_TestCase
      */
     private function createContainerBuilderMock()
     {
-        return $this->getMock(ContainerBuilder::class, ['findTaggedServiceIds', 'setDefinition']);
+        return $this->getMockBuilder(ContainerBuilder::class)
+            ->setMethods(['findTaggedServiceIds', 'setDefinition'])
+            ->getMock();
     }
 }

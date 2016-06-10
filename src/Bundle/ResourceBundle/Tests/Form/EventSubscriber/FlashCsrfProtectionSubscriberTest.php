@@ -132,7 +132,7 @@ class FlashCsrfProtectionSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     private function createSessionMock()
     {
-        return $this->getMock(Session::class);
+        return $this->createMock(Session::class);
     }
 
     /**
@@ -140,7 +140,7 @@ class FlashCsrfProtectionSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     private function createTranslatorMock()
     {
-        return $this->getMock(TranslatorInterface::class);
+        return $this->createMock(TranslatorInterface::class);
     }
 
     /**
@@ -148,9 +148,7 @@ class FlashCsrfProtectionSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     private function createFormEventMock()
     {
-        return $this->getMockBuilder(FormEvent::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        return $this->createMock(FormEvent::class);
     }
 
     /**
@@ -158,7 +156,7 @@ class FlashCsrfProtectionSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     private function createFormMock()
     {
-        return $this->getMock(FormInterface::class);
+        return $this->createMock(FormInterface::class);
     }
 
     /**
@@ -166,8 +164,6 @@ class FlashCsrfProtectionSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     private function createFlashBagMock()
     {
-        return $this->getMockBuilder(FlashBagInterface::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        return $this->createMock(FlashBagInterface::class);
     }
 }

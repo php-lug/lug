@@ -219,7 +219,7 @@ class LocaleIntegrityTest extends \PHPUnit_Framework_TestCase
      */
     private function createContainerMock()
     {
-        return $this->getMock(ContainerInterface::class);
+        return $this->createMock(ContainerInterface::class);
     }
 
     /**
@@ -227,7 +227,7 @@ class LocaleIntegrityTest extends \PHPUnit_Framework_TestCase
      */
     private function createLocaleProviderMock()
     {
-        return $this->getMock(LocaleProviderInterface::class);
+        return $this->createMock(LocaleProviderInterface::class);
     }
 
     /**
@@ -235,6 +235,6 @@ class LocaleIntegrityTest extends \PHPUnit_Framework_TestCase
      */
     private function createLocaleMock()
     {
-        return $this->getMock(LocaleInterface::class);
+        return $this->createMock(LocaleInterface::class);
     }
 }

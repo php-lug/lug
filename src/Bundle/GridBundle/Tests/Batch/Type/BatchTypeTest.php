@@ -84,7 +84,7 @@ class BatchTypeTest extends \PHPUnit_Framework_TestCase
      */
     private function createBatchMock()
     {
-        return $this->getMock(BatchInterface::class);
+        return $this->createMock(BatchInterface::class);
     }
 
     /**
@@ -92,6 +92,6 @@ class BatchTypeTest extends \PHPUnit_Framework_TestCase
      */
     private function createGridMock()
     {
-        return $this->getMock(GridInterface::class);
+        return $this->createMock(GridInterface::class);
     }
 }

@@ -16,8 +16,12 @@
         "symfony/http-kernel": "^3.0"
     },
     "require-dev": {
+        "doctrine/cache": "^1.6",
         "phpunit/phpunit": "^5.0",
         "symfony/phpunit-bridge": "^3.0"
+    },
+    "suggest": {
+        "doctrine/cache": "Add Doctrine cache support"
     },
     "extra": {
         "branch-alias": {

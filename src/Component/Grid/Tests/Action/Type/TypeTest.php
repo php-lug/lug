@@ -66,6 +66,6 @@ class TypeTest extends \PHPUnit_Framework_TestCase
      */
     private function createOptionsResolverMock()
     {
-        return $this->getMock(OptionsResolver::class);
+        return $this->createMock(OptionsResolver::class);
     }
 }

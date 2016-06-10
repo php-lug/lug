@@ -16,11 +16,13 @@
         "symfony/http-kernel": "^3.0"
     },
     "require-dev": {
+        "knplabs/knp-menu-bundle": "^2.1",
         "phpunit/phpunit": "^5.0",
         "symfony/phpunit-bridge": "^3.0",
         "symfony/framework-bundle": "^3.0"
     },
     "suggest": {
+        "knplabs/knp-menu-bundle": "Add menu support",
         "symfony/framework-bundle": "Add controller support"
     },
     "extra": {

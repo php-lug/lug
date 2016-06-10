@@ -628,9 +628,7 @@ class RendererTest extends \PHPUnit_Framework_TestCase
      */
     public function createTwigEnvironmentMock()
     {
-        return $this->getMockBuilder(\Twig_Environment::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        return $this->createMock(\Twig_Environment::class);
     }
 
     /**
@@ -638,7 +636,7 @@ class RendererTest extends \PHPUnit_Framework_TestCase
      */
     private function createActionRendererMock()
     {
-        return $this->getMock(ActionRendererInterface::class);
+        return $this->createMock(ActionRendererInterface::class);
     }
 
     /**
@@ -646,7 +644,7 @@ class RendererTest extends \PHPUnit_Framework_TestCase
      */
     private function createColumnRendererMock()
     {
-        return $this->getMock(ColumnRendererInterface::class);
+        return $this->createMock(ColumnRendererInterface::class);
     }
 
     /**
@@ -654,7 +652,7 @@ class RendererTest extends \PHPUnit_Framework_TestCase
      */
     private function createSorterRendererMock()
     {
-        return $this->getMock(SorterRendererInterface::class);
+        return $this->createMock(SorterRendererInterface::class);
     }
 
     /**
@@ -662,7 +660,7 @@ class RendererTest extends \PHPUnit_Framework_TestCase
      */
     private function createGridViewMock()
     {
-        return $this->getMock(GridViewInterface::class);
+        return $this->createMock(GridViewInterface::class);
     }
 
     /**
@@ -670,7 +668,7 @@ class RendererTest extends \PHPUnit_Framework_TestCase
      */
     private function createGridMock()
     {
-        return $this->getMock(GridInterface::class);
+        return $this->createMock(GridInterface::class);
     }
 
     /**
@@ -678,7 +676,7 @@ class RendererTest extends \PHPUnit_Framework_TestCase
      */
     private function createActionMock()
     {
-        return $this->getMock(ActionInterface::class);
+        return $this->createMock(ActionInterface::class);
     }
 
     /**
@@ -686,6 +684,6 @@ class RendererTest extends \PHPUnit_Framework_TestCase
      */
     private function createColumnMock()
     {
-        return $this->getMock(ColumnInterface::class);
+        return $this->createMock(ColumnInterface::class);
     }
 }

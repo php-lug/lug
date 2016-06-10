@@ -113,9 +113,7 @@ class XmlHttpRequestSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     private function createFormEventMock()
     {
-        return $this->getMockBuilder(FormEvent::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        return $this->createMock(FormEvent::class);
     }
 
     /**
@@ -123,6 +121,6 @@ class XmlHttpRequestSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     private function createFormMock()
     {
-        return $this->getMock(FormInterface::class);
+        return $this->createMock(FormInterface::class);
     }
 }

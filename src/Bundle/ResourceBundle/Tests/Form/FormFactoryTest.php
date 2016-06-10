@@ -154,7 +154,7 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
      */
     private function createSymfonyFormFactoryMock()
     {
-        return $this->getMock(SymfonyFormFactoryInterface::class);
+        return $this->createMock(SymfonyFormFactoryInterface::class);
     }
 
     /**
@@ -162,7 +162,7 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
      */
     private function createParameterResolverMock()
     {
-        return $this->getMock(ParameterResolverInterface::class);
+        return $this->createMock(ParameterResolverInterface::class);
     }
 
     /**
@@ -170,6 +170,6 @@ class FormFactoryTest extends \PHPUnit_Framework_TestCase
      */
     private function createResourceMock()
     {
-        return $this->getMock(ResourceInterface::class);
+        return $this->createMock(ResourceInterface::class);
     }
 }

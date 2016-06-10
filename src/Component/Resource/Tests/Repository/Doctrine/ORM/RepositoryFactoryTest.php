@@ -126,7 +126,7 @@ class RepositoryFactoryTest extends \PHPUnit_Framework_TestCase
      */
     private function createResourceRegistryMock()
     {
-        return $this->getMock(RegistryInterface::class);
+        return $this->createMock(RegistryInterface::class);
     }
 
     /**
@@ -134,7 +134,7 @@ class RepositoryFactoryTest extends \PHPUnit_Framework_TestCase
      */
     private function createEntityManagerMock()
     {
-        return $this->getMock(EntityManagerInterface::class);
+        return $this->createMock(EntityManagerInterface::class);
     }
 
     /**
@@ -142,9 +142,7 @@ class RepositoryFactoryTest extends \PHPUnit_Framework_TestCase
      */
     private function createClassMetadataMock()
     {
-        return $this->getMockBuilder(ClassMetadata::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        return $this->createMock(ClassMetadata::class);
     }
 
     /**
@@ -152,7 +150,7 @@ class RepositoryFactoryTest extends \PHPUnit_Framework_TestCase
      */
     private function createConfigurationMock()
     {
-        return $this->getMock(Configuration::class);
+        return $this->createMock(Configuration::class);
     }
 
     /**
@@ -160,6 +158,6 @@ class RepositoryFactoryTest extends \PHPUnit_Framework_TestCase
      */
     private function createResourceMock()
     {
-        return $this->getMock(ResourceInterface::class);
+        return $this->createMock(ResourceInterface::class);
     }
 }

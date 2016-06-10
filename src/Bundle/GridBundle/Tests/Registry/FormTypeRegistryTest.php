@@ -55,6 +55,6 @@ class FormTypeRegistryTest extends \PHPUnit_Framework_TestCase
      */
     private function createFormTypeMock()
     {
-        return $this->getMock(FormTypeInterface::class);
+        return $this->createMock(FormTypeInterface::class);
     }
 }

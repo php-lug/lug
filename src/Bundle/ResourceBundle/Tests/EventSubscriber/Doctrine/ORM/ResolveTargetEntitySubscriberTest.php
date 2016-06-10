@@ -65,9 +65,7 @@ class ResolveTargetEntitySubscriberTest extends \PHPUnit_Framework_TestCase
      */
     private function createLoadClassMetadataEventArgsMock()
     {
-        return $this->getMockBuilder(LoadClassMetadataEventArgs::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        return $this->createMock(LoadClassMetadataEventArgs::class);
     }
 
     /**
@@ -75,8 +73,6 @@ class ResolveTargetEntitySubscriberTest extends \PHPUnit_Framework_TestCase
      */
     private function createClassMetadataMock()
     {
-        return $this->getMockBuilder(ClassMetadata::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        return $this->createMock(ClassMetadata::class);
     }
 }

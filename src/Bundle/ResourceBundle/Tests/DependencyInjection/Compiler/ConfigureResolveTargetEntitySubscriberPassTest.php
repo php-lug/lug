@@ -145,7 +145,7 @@ class ConfigureResolveTargetEntitySubscriberPassTest extends \PHPUnit_Framework_
      */
     private function createContainerBuilderMock()
     {
-        return $this->getMock(ContainerBuilder::class);
+        return $this->createMock(ContainerBuilder::class);
     }
 
     /**
@@ -153,6 +153,6 @@ class ConfigureResolveTargetEntitySubscriberPassTest extends \PHPUnit_Framework_
      */
     private function createDefinitionMock()
     {
-        return $this->getMock(Definition::class);
+        return $this->createMock(Definition::class);
     }
 }

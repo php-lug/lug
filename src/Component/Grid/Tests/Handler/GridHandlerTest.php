@@ -158,7 +158,7 @@ class GridHandlerTest extends \PHPUnit_Framework_TestCase
      */
     private function createServiceRegistryMock()
     {
-        return $this->getMock(RegistryInterface::class);
+        return $this->createMock(RegistryInterface::class);
     }
 
     /**
@@ -166,7 +166,7 @@ class GridHandlerTest extends \PHPUnit_Framework_TestCase
      */
     private function createGridViewFactoryMock()
     {
-        return $this->getMock(GridViewFactoryInterface::class);
+        return $this->createMock(GridViewFactoryInterface::class);
     }
 
     /**
@@ -174,7 +174,7 @@ class GridHandlerTest extends \PHPUnit_Framework_TestCase
      */
     private function createFiltererMock()
     {
-        return $this->getMock(FiltererInterface::class);
+        return $this->createMock(FiltererInterface::class);
     }
 
     /**
@@ -182,7 +182,7 @@ class GridHandlerTest extends \PHPUnit_Framework_TestCase
      */
     private function createSorterMock()
     {
-        return $this->getMock(SorterInterface::class);
+        return $this->createMock(SorterInterface::class);
     }
 
     /**
@@ -190,7 +190,7 @@ class GridHandlerTest extends \PHPUnit_Framework_TestCase
      */
     private function createSlicerMock()
     {
-        return $this->getMock(SlicerInterface::class);
+        return $this->createMock(SlicerInterface::class);
     }
 
     /**
@@ -198,7 +198,7 @@ class GridHandlerTest extends \PHPUnit_Framework_TestCase
      */
     private function createGridMock()
     {
-        return $this->getMock(GridInterface::class);
+        return $this->createMock(GridInterface::class);
     }
 
     /**
@@ -206,7 +206,7 @@ class GridHandlerTest extends \PHPUnit_Framework_TestCase
      */
     private function createResourceMock()
     {
-        return $this->getMock(ResourceInterface::class);
+        return $this->createMock(ResourceInterface::class);
     }
 
     /**
@@ -214,7 +214,7 @@ class GridHandlerTest extends \PHPUnit_Framework_TestCase
      */
     private function createRepositoryMock()
     {
-        return $this->getMock(RepositoryInterface::class);
+        return $this->createMock(RepositoryInterface::class);
     }
 
     /**
@@ -222,7 +222,7 @@ class GridHandlerTest extends \PHPUnit_Framework_TestCase
      */
     private function createDataSourceBuilderMock()
     {
-        return $this->getMock(DataSourceBuilderInterface::class);
+        return $this->createMock(DataSourceBuilderInterface::class);
     }
 
     /**
@@ -230,6 +230,6 @@ class GridHandlerTest extends \PHPUnit_Framework_TestCase
      */
     private function createGridViewMock()
     {
-        return $this->getMock(GridViewInterface::class);
+        return $this->createMock(GridViewInterface::class);
     }
 }

@@ -259,7 +259,7 @@ class CollectionSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     private function createServiceRegistryMock()
     {
-        return $this->getMock(RegistryInterface::class);
+        return $this->createMock(RegistryInterface::class);
     }
 
     /**
@@ -267,9 +267,7 @@ class CollectionSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     private function createFormEventMock()
     {
-        return $this->getMockBuilder(FormEvent::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        return $this->createMock(FormEvent::class);
     }
 
     /**
@@ -277,7 +275,7 @@ class CollectionSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     private function createCollectionMock()
     {
-        return $this->getMock(Collection::class);
+        return $this->createMock(Collection::class);
     }
 
     /**
@@ -285,7 +283,7 @@ class CollectionSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     private function createFormMock()
     {
-        return $this->getMock(FormInterface::class);
+        return $this->createMock(FormInterface::class);
     }
 
     /**
@@ -293,7 +291,7 @@ class CollectionSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     private function createObjectManagerMock()
     {
-        return $this->getMock(ObjectManager::class);
+        return $this->createMock(ObjectManager::class);
     }
 
     /**
@@ -301,6 +299,6 @@ class CollectionSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     private function createResourceMock()
     {
-        return $this->getMock(ResourceInterface::class);
+        return $this->createMock(ResourceInterface::class);
     }
 }

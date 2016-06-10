@@ -304,7 +304,7 @@ class FormViewSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     private function createParameterResolverMock()
     {
-        return $this->getMock(ParameterResolverInterface::class);
+        return $this->createMock(ParameterResolverInterface::class);
     }
 
     /**
@@ -312,7 +312,7 @@ class FormViewSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     private function createFormRendererMock()
     {
-        return $this->getMock(FormRendererInterface::class);
+        return $this->createMock(FormRendererInterface::class);
     }
 
     /**
@@ -320,9 +320,7 @@ class FormViewSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     private function createViewEventMock()
     {
-        return $this->getMockBuilder(ViewEvent::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        return $this->createMock(ViewEvent::class);
     }
 
     /**
@@ -330,7 +328,7 @@ class FormViewSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     private function createViewMock()
     {
-        return $this->getMock(View::class);
+        return $this->createMock(View::class);
     }
 
     /**
@@ -338,7 +336,7 @@ class FormViewSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     private function createFormMock()
     {
-        return $this->getMock(FormInterface::class);
+        return $this->createMock(FormInterface::class);
     }
 
     /**
@@ -346,6 +344,6 @@ class FormViewSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     private function createFormViewMock()
     {
-        return $this->getMock(FormView::class);
+        return $this->createMock(FormView::class);
     }
 }

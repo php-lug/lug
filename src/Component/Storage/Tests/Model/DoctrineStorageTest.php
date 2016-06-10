@@ -105,6 +105,6 @@ class DoctrineStorageTest extends \PHPUnit_Framework_TestCase
      */
     private function createCacheMock()
     {
-        return $this->getMock(Cache::class);
+        return $this->createMock(Cache::class);
     }
 }

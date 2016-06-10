@@ -117,7 +117,7 @@ class LocaleProviderTest extends \PHPUNit_Framework_TestCase
      */
     private function createLocaleMock()
     {
-        return $this->getMock(LocaleInterface::class);
+        return $this->createMock(LocaleInterface::class);
     }
 
     /**
@@ -125,6 +125,6 @@ class LocaleProviderTest extends \PHPUNit_Framework_TestCase
      */
     private function createLocaleRepositoryMock()
     {
-        return $this->getMock(RepositoryInterface::class);
+        return $this->createMock(RepositoryInterface::class);
     }
 }

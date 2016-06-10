@@ -303,9 +303,7 @@ class RepositoryTest extends \PHPUnit_Framework_TestCase
      */
     private function createDocumentManagerMock()
     {
-        return $this->getMockBuilder(DocumentManager::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        return $this->createMock(DocumentManager::class);
     }
 
     /**
@@ -313,9 +311,7 @@ class RepositoryTest extends \PHPUnit_Framework_TestCase
      */
     private function createUnitOfWorkMock()
     {
-        return $this->getMockBuilder(UnitOfWork::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        return $this->createMock(UnitOfWork::class);
     }
 
     /**
@@ -323,9 +319,7 @@ class RepositoryTest extends \PHPUnit_Framework_TestCase
      */
     private function createClassMetadataMock()
     {
-        return $this->getMockBuilder(ClassMetadata::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        return $this->createMock(ClassMetadata::class);
     }
 
     /**
@@ -333,7 +327,7 @@ class RepositoryTest extends \PHPUnit_Framework_TestCase
      */
     private function createResourceMock()
     {
-        return $this->getMock(ResourceInterface::class);
+        return $this->createMock(ResourceInterface::class);
     }
 
     /**
@@ -341,9 +335,7 @@ class RepositoryTest extends \PHPUnit_Framework_TestCase
      */
     private function createQueryBuilderMock()
     {
-        return $this->getMockBuilder(Builder::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        return $this->createMock(Builder::class);
     }
 
     /**
@@ -351,9 +343,7 @@ class RepositoryTest extends \PHPUnit_Framework_TestCase
      */
     private function createQueryMock()
     {
-        return $this->getMockBuilder(Query::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        return $this->createMock(Query::class);
     }
 
     /**
@@ -361,6 +351,6 @@ class RepositoryTest extends \PHPUnit_Framework_TestCase
      */
     private function createIteratorMock()
     {
-        return $this->getMock(Iterator::class);
+        return $this->createMock(Iterator::class);
     }
 }

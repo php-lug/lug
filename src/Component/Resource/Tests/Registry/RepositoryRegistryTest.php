@@ -57,6 +57,6 @@ class RepositoryRegistryTest extends \PHPUnit_Framework_TestCase
      */
     private function createRepositoryMock()
     {
-        return $this->getMock(RepositoryInterface::class);
+        return $this->createMock(RepositoryInterface::class);
     }
 }

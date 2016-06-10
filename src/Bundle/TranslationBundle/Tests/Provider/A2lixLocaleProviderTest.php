@@ -98,7 +98,7 @@ class A2lixLocaleProviderTest extends \PHPUnit_Framework_TestCase
      */
     private function createLocaleProviderMock()
     {
-        return $this->getMock(LocaleProviderInterface::class);
+        return $this->createMock(LocaleProviderInterface::class);
     }
 
     /**
@@ -106,6 +106,6 @@ class A2lixLocaleProviderTest extends \PHPUnit_Framework_TestCase
      */
     private function createLocaleMock()
     {
-        return $this->getMock(LocaleInterface::class);
+        return $this->createMock(LocaleInterface::class);
     }
 }

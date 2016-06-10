@@ -90,7 +90,7 @@ class FilterBuilderTest extends \PHPUnit_Framework_TestCase
      */
     private function createServiceRegistryMock()
     {
-        return $this->getMock(RegistryInterface::class);
+        return $this->createMock(RegistryInterface::class);
     }
 
     /**
@@ -98,6 +98,6 @@ class FilterBuilderTest extends \PHPUnit_Framework_TestCase
      */
     private function createFormTypeMock()
     {
-        return $this->getMock(FormTypeInterface::class);
+        return $this->createMock(FormTypeInterface::class);
     }
 }

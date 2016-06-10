@@ -74,7 +74,7 @@ class ResolveTargetEntitySubscriberConfiguratorTest extends \PHPUnit_Framework_T
      */
     private function createServiceRegistryMock()
     {
-        return $this->getMock(RegistryInterface::class);
+        return $this->createMock(RegistryInterface::class);
     }
 
     /**
@@ -82,7 +82,7 @@ class ResolveTargetEntitySubscriberConfiguratorTest extends \PHPUnit_Framework_T
      */
     private function createResourceMock()
     {
-        return $this->getMock(ResourceInterface::class);
+        return $this->createMock(ResourceInterface::class);
     }
 
     /**
@@ -90,6 +90,6 @@ class ResolveTargetEntitySubscriberConfiguratorTest extends \PHPUnit_Framework_T
      */
     private function createResolveTargetSubscriberMock()
     {
-        return $this->getMock(ResolveTargetSubscriberInterface::class);
+        return $this->createMock(ResolveTargetSubscriberInterface::class);
     }
 }

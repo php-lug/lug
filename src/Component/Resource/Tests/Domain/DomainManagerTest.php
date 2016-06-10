@@ -1192,7 +1192,7 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
      */
     private function createResourceMock()
     {
-        return $this->getMock(ResourceInterface::class);
+        return $this->createMock(ResourceInterface::class);
     }
 
     /**
@@ -1200,7 +1200,7 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
      */
     private function createEventDispatcherMock()
     {
-        return $this->getMock(EventDispatcherInterface::class);
+        return $this->createMock(EventDispatcherInterface::class);
     }
 
     /**
@@ -1208,7 +1208,7 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
      */
     private function createObjectManagerMock()
     {
-        return $this->getMock(ObjectManager::class);
+        return $this->createMock(ObjectManager::class);
     }
 
     /**
@@ -1216,6 +1216,6 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
      */
     private function createRepositoryMock()
     {
-        return $this->getMock(RepositoryInterface::class);
+        return $this->createMock(RepositoryInterface::class);
     }
 }

@@ -55,6 +55,6 @@ class ColumnRegistryTest extends \PHPUnit_Framework_TestCase
      */
     private function createColumnMock()
     {
-        return $this->getMock(TypeInterface::class);
+        return $this->createMock(TypeInterface::class);
     }
 }

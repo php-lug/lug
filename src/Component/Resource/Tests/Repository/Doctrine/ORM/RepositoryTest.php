@@ -359,9 +359,7 @@ class RepositoryTest extends \PHPUnit_Framework_TestCase
      */
     private function createEntityManagerMock()
     {
-        return $this->getMockBuilder(EntityManager::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        return $this->createMock(EntityManager::class);
     }
 
     /**
@@ -369,9 +367,7 @@ class RepositoryTest extends \PHPUnit_Framework_TestCase
      */
     private function createClassMetadataMock()
     {
-        return $this->getMockBuilder(ClassMetadata::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        return $this->createMock(ClassMetadata::class);
     }
 
     /**
@@ -379,7 +375,7 @@ class RepositoryTest extends \PHPUnit_Framework_TestCase
      */
     private function createResourceMock()
     {
-        return $this->getMock(ResourceInterface::class);
+        return $this->createMock(ResourceInterface::class);
     }
 
     /**
@@ -387,9 +383,7 @@ class RepositoryTest extends \PHPUnit_Framework_TestCase
      */
     private function createQueryBuilderMock()
     {
-        return $this->getMockBuilder(QueryBuilder::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        return $this->createMock(QueryBuilder::class);
     }
 
     /**
@@ -397,7 +391,7 @@ class RepositoryTest extends \PHPUnit_Framework_TestCase
      */
     private function createExprMock()
     {
-        return $this->getMock(Expr::class);
+        return $this->createMock(Expr::class);
     }
 
     /**
@@ -405,6 +399,8 @@ class RepositoryTest extends \PHPUnit_Framework_TestCase
      */
     private function createQueryMock()
     {
-        return $this->getMock(\stdClass::class, ['getOneOrNullResult', 'getResult']);
+        return $this->getMockBuilder(\stdClass::class)
+            ->setMethods(['getOneOrNullResult', 'getResult'])
+            ->getMock();
     }
 }

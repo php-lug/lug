@@ -57,6 +57,6 @@ class FactoryRegistryTest extends \PHPUnit_Framework_TestCase
      */
     private function createFactoryMock()
     {
-        return $this->getMock(FactoryInterface::class);
+        return $this->createMock(FactoryInterface::class);
     }
 }

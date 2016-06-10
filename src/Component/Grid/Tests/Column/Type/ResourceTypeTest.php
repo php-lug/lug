@@ -313,7 +313,7 @@ class ResourceTypeTest extends \PHPUnit_Framework_TestCase
      */
     private function createPropertyAccessorMock()
     {
-        return $this->getMock(PropertyAccessorInterface::class);
+        return $this->createMock(PropertyAccessorInterface::class);
     }
 
     /**
@@ -321,7 +321,7 @@ class ResourceTypeTest extends \PHPUnit_Framework_TestCase
      */
     private function createServiceRegistryMock()
     {
-        return $this->getMock(RegistryInterface::class);
+        return $this->createMock(RegistryInterface::class);
     }
 
     /**
@@ -329,7 +329,7 @@ class ResourceTypeTest extends \PHPUnit_Framework_TestCase
      */
     private function createColumnRendererMock()
     {
-        return $this->getMock(ColumnRendererInterface::class);
+        return $this->createMock(ColumnRendererInterface::class);
     }
 
     /**
@@ -337,7 +337,7 @@ class ResourceTypeTest extends \PHPUnit_Framework_TestCase
      */
     private function createResourceMock()
     {
-        return $this->getMock(ResourceInterface::class);
+        return $this->createMock(ResourceInterface::class);
     }
 
     /**
@@ -345,7 +345,7 @@ class ResourceTypeTest extends \PHPUnit_Framework_TestCase
      */
     private function createGridViewMock()
     {
-        return $this->getMock(GridViewInterface::class);
+        return $this->createMock(GridViewInterface::class);
     }
 
     /**
@@ -353,6 +353,6 @@ class ResourceTypeTest extends \PHPUnit_Framework_TestCase
      */
     private function createColumnMock()
     {
-        return $this->getMock(ColumnInterface::class);
+        return $this->createMock(ColumnInterface::class);
     }
 }

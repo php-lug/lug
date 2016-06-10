@@ -127,7 +127,7 @@ class ResourceTypeTest extends \PHPUnit_Framework_TestCase
      */
     private function createResourceMock()
     {
-        return $this->getMock(ResourceInterface::class);
+        return $this->createMock(ResourceInterface::class);
     }
 
     /**
@@ -135,6 +135,6 @@ class ResourceTypeTest extends \PHPUnit_Framework_TestCase
      */
     private function createFactoryMock()
     {
-        return $this->getMock(FactoryInterface::class);
+        return $this->createMock(FactoryInterface::class);
     }
 }

@@ -160,7 +160,7 @@ class LocaleContextTest extends \PHPUnit_Framework_TestCase
      */
     private function createRequestStackMock()
     {
-        return $this->getMock(RequestStack::class);
+        return $this->createMock(RequestStack::class);
     }
 
     /**
@@ -168,7 +168,7 @@ class LocaleContextTest extends \PHPUnit_Framework_TestCase
      */
     private function createLocaleProviderMock()
     {
-        return $this->getMock(LocaleProviderInterface::class);
+        return $this->createMock(LocaleProviderInterface::class);
     }
 
     /**
@@ -176,7 +176,7 @@ class LocaleContextTest extends \PHPUnit_Framework_TestCase
      */
     private function createLocaleNegotiatorMock()
     {
-        return $this->getMock(LocaleNegotiatorInterface::class);
+        return $this->createMock(LocaleNegotiatorInterface::class);
     }
 
     /**
@@ -184,7 +184,7 @@ class LocaleContextTest extends \PHPUnit_Framework_TestCase
      */
     private function createParameterResolverMock()
     {
-        return $this->getMock(ParameterResolverInterface::class);
+        return $this->createMock(ParameterResolverInterface::class);
     }
 
     /**
@@ -192,7 +192,7 @@ class LocaleContextTest extends \PHPUnit_Framework_TestCase
      */
     private function createRequestMock()
     {
-        $request = $this->getMock(Request::class);
+        $request = $this->createMock(Request::class);
         $request->headers = $this->createParameterBagMock();
 
         return $request;
@@ -203,7 +203,7 @@ class LocaleContextTest extends \PHPUnit_Framework_TestCase
      */
     private function createParameterBagMock()
     {
-        return $this->getMock(ParameterBagInterface::class);
+        return $this->createMock(ParameterBagInterface::class);
     }
 
     /**
@@ -211,6 +211,6 @@ class LocaleContextTest extends \PHPUnit_Framework_TestCase
      */
     private function createLocaleMock()
     {
-        return $this->getMock(LocaleInterface::class);
+        return $this->createMock(LocaleInterface::class);
     }
 }

@@ -210,7 +210,7 @@ class LocaleTypeTest extends \PHPUnit_Framework_TestCase
      */
     private function createResourceMock()
     {
-        return $this->getMock(ResourceInterface::class);
+        return $this->createMock(ResourceInterface::class);
     }
 
     /**
@@ -218,7 +218,7 @@ class LocaleTypeTest extends \PHPUnit_Framework_TestCase
      */
     private function createFactoryMock()
     {
-        return $this->getMock(FactoryInterface::class);
+        return $this->createMock(FactoryInterface::class);
     }
 
     /**
@@ -226,7 +226,7 @@ class LocaleTypeTest extends \PHPUnit_Framework_TestCase
      */
     private function createRepositoryMock()
     {
-        return $this->getMock(RepositoryInterface::class);
+        return $this->createMock(RepositoryInterface::class);
     }
 
     /**
@@ -234,7 +234,7 @@ class LocaleTypeTest extends \PHPUnit_Framework_TestCase
      */
     private function createLocaleProviderMock()
     {
-        return $this->getMock(LocaleProviderInterface::class);
+        return $this->createMock(LocaleProviderInterface::class);
     }
 
     /**
@@ -242,6 +242,6 @@ class LocaleTypeTest extends \PHPUnit_Framework_TestCase
      */
     private function createLocaleMock()
     {
-        return $this->getMock(LocaleInterface::class);
+        return $this->createMock(LocaleInterface::class);
     }
 }

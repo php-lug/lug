@@ -192,7 +192,7 @@ class TranslatableRepositoryFactoryTest extends \PHPUnit_Framework_TestCase
      */
     private function createServiceRegistryMock()
     {
-        return $this->getMock(RegistryInterface::class);
+        return $this->createMock(RegistryInterface::class);
     }
 
     /**
@@ -200,7 +200,7 @@ class TranslatableRepositoryFactoryTest extends \PHPUnit_Framework_TestCase
      */
     private function createContainerMock()
     {
-        return $this->getMock(ContainerInterface::class);
+        return $this->createMock(ContainerInterface::class);
     }
 
     /**
@@ -208,7 +208,7 @@ class TranslatableRepositoryFactoryTest extends \PHPUnit_Framework_TestCase
      */
     private function createLocaleContextMock()
     {
-        return $this->getMock(LocaleContextInterface::class);
+        return $this->createMock(LocaleContextInterface::class);
     }
 
     /**
@@ -216,7 +216,7 @@ class TranslatableRepositoryFactoryTest extends \PHPUnit_Framework_TestCase
      */
     private function createEntityManagerMock()
     {
-        return $this->getMock(EntityManagerInterface::class);
+        return $this->createMock(EntityManagerInterface::class);
     }
 
     /**
@@ -224,9 +224,7 @@ class TranslatableRepositoryFactoryTest extends \PHPUnit_Framework_TestCase
      */
     private function createClassMetadataMock()
     {
-        return $this->getMockBuilder(ClassMetadata::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        return $this->createMock(ClassMetadata::class);
     }
 
     /**
@@ -234,7 +232,7 @@ class TranslatableRepositoryFactoryTest extends \PHPUnit_Framework_TestCase
      */
     private function createConfigurationMock()
     {
-        return $this->getMock(Configuration::class);
+        return $this->createMock(Configuration::class);
     }
 
     /**
@@ -242,6 +240,6 @@ class TranslatableRepositoryFactoryTest extends \PHPUnit_Framework_TestCase
      */
     private function createResourceMock()
     {
-        return $this->getMock(ResourceInterface::class);
+        return $this->createMock(ResourceInterface::class);
     }
 }

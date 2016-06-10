@@ -323,7 +323,7 @@ class ResourceTest extends \PHPUnit_Framework_TestCase
      */
     private function createDomainManagerClassMock()
     {
-        return $this->getMock(DomainManagerInterface::class);
+        return $this->createMock(DomainManagerInterface::class);
     }
 
     /**
@@ -331,6 +331,6 @@ class ResourceTest extends \PHPUnit_Framework_TestCase
      */
     private function createResourceMock()
     {
-        return $this->getMock(ResourceInterface::class);
+        return $this->createMock(ResourceInterface::class);
     }
 }
