@@ -86,26 +86,6 @@ interface ResourceInterface
     /**
      * @return string
      */
-    public function getController();
-
-    /**
-     * @param string $controller
-     */
-    public function setController($controller);
-
-    /**
-     * @return string
-     */
-    public function getFactory();
-
-    /**
-     * @param string $factory
-     */
-    public function setFactory($factory);
-
-    /**
-     * @return string
-     */
     public function getRepository();
 
     /**
@@ -114,52 +94,72 @@ interface ResourceInterface
     public function setRepository($repository);
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getDomainManager();
+    public function getFactory();
 
     /**
-     * @param string $domainManager
+     * @param string|null $factory
      */
-    public function setDomainManager($domainManager);
+    public function setFactory($factory);
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getForm();
 
     /**
-     * @param string $form
+     * @param string|null $form
      */
     public function setForm($form);
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getChoiceForm();
 
     /**
-     * @param string $choiceForm
+     * @param string|null $choiceForm
      */
     public function setChoiceForm($choiceForm);
 
     /**
-     * @return string
+     * @return string|null
+     */
+    public function getDomainManager();
+
+    /**
+     * @param string|null $domainManager
+     */
+    public function setDomainManager($domainManager);
+
+    /**
+     * @return string|null
+     */
+    public function getController();
+
+    /**
+     * @param string|null $controller
+     */
+    public function setController($controller);
+
+    /**
+     * @return string|null
      */
     public function getIdPropertyPath();
 
     /**
-     * @param string $idPropertyPath
+     * @param string|null $idPropertyPath
      */
     public function setIdPropertyPath($idPropertyPath);
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getLabelPropertyPath();
 
     /**
-     * @param string $labelPropertyPath
+     * @param string|null $labelPropertyPath
      */
     public function setLabelPropertyPath($labelPropertyPath);
 

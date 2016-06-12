@@ -67,42 +67,7 @@ class ResourceTest extends \PHPUnit_Framework_TestCase
     /**
      * @var string
      */
-    private $factory;
-
-    /**
-     * @var string
-     */
     private $repository;
-
-    /**
-     * @var string
-     */
-    private $form;
-
-    /**
-     * @var string
-     */
-    private $choiceForm;
-
-    /**
-     * @var string
-     */
-    private $controller;
-
-    /**
-     * @var string
-     */
-    private $domainManager;
-
-    /**
-     * @var string
-     */
-    private $idPropertyPath = 'id';
-
-    /**
-     * @var string
-     */
-    private $labelPropertyPath = 'label';
 
     /**
      * {@inheritdoc}
@@ -116,14 +81,6 @@ class ResourceTest extends \PHPUnit_Framework_TestCase
         $this->driverMappingFormat = ResourceInterface::DRIVER_MAPPING_FORMAT_XML;
         $this->interfaces = [\ArrayAccess::class, \Countable::class];
         $this->model = \ArrayIterator::class;
-        $this->factory = $this->createFactoryClassMock();
-        $this->repository = $this->createRepositoryClassMock();
-        $this->form = $this->createFormClassMock();
-        $this->choiceForm = $this->createFormClassMock();
-        $this->controller = $this->createControllerClassMock();
-        $this->domainManager = $this->createDomainManagerClassMock();
-        $this->idPropertyPath = 'id';
-        $this->labelPropertyPath = 'label';
 
         $this->resource = new Resource(
             $this->name,
@@ -133,14 +90,7 @@ class ResourceTest extends \PHPUnit_Framework_TestCase
             $this->driverMappingFormat,
             $this->interfaces,
             $this->model,
-            $this->controller,
-            $this->factory,
-            $this->repository,
-            $this->domainManager,
-            $this->form,
-            $this->choiceForm,
-            $this->idPropertyPath,
-            $this->labelPropertyPath
+            $this->repository
         );
     }
 
@@ -158,14 +108,14 @@ class ResourceTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($this->driverMappingFormat, $this->resource->getDriverMappingFormat());
         $this->assertSame($this->interfaces, $this->resource->getInterfaces());
         $this->assertSame($this->model, $this->resource->getModel());
-        $this->assertSame($this->factory, $this->resource->getFactory());
         $this->assertSame($this->repository, $this->resource->getRepository());
-        $this->assertSame($this->form, $this->resource->getForm());
-        $this->assertSame($this->choiceForm, $this->resource->getChoiceForm());
-        $this->assertSame($this->controller, $this->resource->getController());
-        $this->assertSame($this->domainManager, $this->resource->getDomainManager());
-        $this->assertSame($this->idPropertyPath, $this->resource->getIdPropertyPath());
-        $this->assertSame($this->labelPropertyPath, $this->resource->getLabelPropertyPath());
+        $this->assertNull($this->resource->getFactory());
+        $this->assertNull($this->resource->getForm());
+        $this->assertNull($this->resource->getChoiceForm());
+        $this->assertNull($this->resource->getDomainManager());
+        $this->assertNull($this->resource->getController());
+        $this->assertNull($this->resource->getIdPropertyPath());
+        $this->assertNull($this->resource->getLabelPropertyPath());
         $this->assertNull($this->resource->getTranslation());
     }
 
@@ -181,17 +131,32 @@ class ResourceTest extends \PHPUnit_Framework_TestCase
             $this->driverMappingFormat,
             $this->interfaces,
             $this->model,
-            $this->controller,
-            $this->factory,
             $this->repository,
-            $this->domainManager,
-            $this->form,
-            $this->choiceForm,
-            $this->idPropertyPath,
-            $this->labelPropertyPath,
+            $factory = $this->createFactoryClassMock(),
+            $form = $this->createFormClassMock(),
+            $choiceForm = $this->createFormClassMock(),
+            $domainManager = $this->createDomainManagerClassMock(),
+            $controller = $this->createControllerClassMock(),
+            $idPropertyPath = 'id',
+            $labelPropertyPath = 'label',
             $translation
         );
 
+        $this->assertSame($this->name, $this->resource->getName());
+        $this->assertSame($this->driver, $this->resource->getDriver());
+        $this->assertSame($this->driverManager, $this->resource->getDriverManager());
+        $this->assertSame($this->driverMappingPath, $this->resource->getDriverMappingPath());
+        $this->assertSame($this->driverMappingFormat, $this->resource->getDriverMappingFormat());
+        $this->assertSame($this->interfaces, $this->resource->getInterfaces());
+        $this->assertSame($this->model, $this->resource->getModel());
+        $this->assertSame($this->repository, $this->resource->getRepository());
+        $this->assertSame($factory, $this->resource->getFactory());
+        $this->assertSame($form, $this->resource->getForm());
+        $this->assertSame($choiceForm, $this->resource->getChoiceForm());
+        $this->assertSame($domainManager, $this->resource->getDomainManager());
+        $this->assertSame($controller, $this->resource->getController());
+        $this->assertSame($idPropertyPath, $this->resource->getIdPropertyPath());
+        $this->assertSame($labelPropertyPath, $this->resource->getLabelPropertyPath());
         $this->assertSame($translation, $this->resource->getTranslation());
     }
 
@@ -258,18 +223,18 @@ class ResourceTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($choiceForm, $this->resource->getChoiceForm());
     }
 
-    public function testController()
-    {
-        $this->resource->setController($controller = $this->createControllerClassMock());
-
-        $this->assertSame($controller, $this->resource->getController());
-    }
-
     public function testDomainManager()
     {
         $this->resource->setDomainManager($domainManager = $this->createDomainManagerClassMock());
 
         $this->assertSame($domainManager, $this->resource->getDomainManager());
+    }
+
+    public function testController()
+    {
+        $this->resource->setController($controller = $this->createControllerClassMock());
+
+        $this->assertSame($controller, $this->resource->getController());
     }
 
     public function testIdPropertyPath()

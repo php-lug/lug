@@ -54,40 +54,40 @@ class Resource implements ResourceInterface
     /**
      * @var string
      */
-    private $controller;
+    private $repository;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $factory;
 
     /**
-     * @var string
-     */
-    private $repository;
-
-    /**
-     * @var string
-     */
-    private $domainManager;
-
-    /**
-     * @var string
+     * @var string|null
      */
     private $form;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $choiceForm;
 
     /**
-     * @var string
+     * @var string|null
+     */
+    private $domainManager;
+
+    /**
+     * @var string|null
+     */
+    private $controller;
+
+    /**
+     * @var string|null
      */
     private $idPropertyPath;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $labelPropertyPath;
 
@@ -104,14 +104,14 @@ class Resource implements ResourceInterface
      * @param string                 $driverMappingFormat
      * @param string|string[]        $interfaces
      * @param string                 $model
-     * @param string                 $controller
-     * @param string                 $factory
      * @param string                 $repository
-     * @param string                 $domainManager
-     * @param string                 $form
-     * @param string                 $choiceForm
-     * @param string                 $idPropertyPath
-     * @param string                 $labelPropertyPath
+     * @param string|null            $factory
+     * @param string|null            $form
+     * @param string|null            $choiceForm
+     * @param string|null            $domainManager
+     * @param string|null            $controller
+     * @param string|null            $idPropertyPath
+     * @param string|null            $labelPropertyPath
      * @param ResourceInterface|null $translation
      */
     public function __construct(
@@ -122,14 +122,14 @@ class Resource implements ResourceInterface
         $driverMappingFormat,
         $interfaces,
         $model,
-        $controller,
-        $factory,
         $repository,
-        $domainManager,
-        $form,
-        $choiceForm,
-        $idPropertyPath,
-        $labelPropertyPath,
+        $factory = null,
+        $form = null,
+        $choiceForm = null,
+        $domainManager = null,
+        $controller = null,
+        $idPropertyPath = null,
+        $labelPropertyPath = null,
         ResourceInterface $translation = null
     ) {
         $this->name = $name;
@@ -141,12 +141,12 @@ class Resource implements ResourceInterface
         $this->setDriverMappingPath($driverMappingPath);
         $this->setDriverMappingFormat($driverMappingFormat);
         $this->setModel($model);
-        $this->setController($controller);
-        $this->setFactory($factory);
         $this->setRepository($repository);
-        $this->setDomainManager($domainManager);
+        $this->setFactory($factory);
         $this->setForm($form);
         $this->setChoiceForm($choiceForm);
+        $this->setDomainManager($domainManager);
+        $this->setController($controller);
         $this->setIdPropertyPath($idPropertyPath);
         $this->setLabelPropertyPath($labelPropertyPath);
     }
@@ -250,38 +250,6 @@ class Resource implements ResourceInterface
     /**
      * {@inheritdoc}
      */
-    public function getController()
-    {
-        return $this->controller;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setController($controller)
-    {
-        $this->controller = $controller;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getFactory()
-    {
-        return $this->factory;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setFactory($factory)
-    {
-        $this->factory = $factory;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function getRepository()
     {
         return $this->repository;
@@ -298,17 +266,17 @@ class Resource implements ResourceInterface
     /**
      * {@inheritdoc}
      */
-    public function getDomainManager()
+    public function getFactory()
     {
-        return $this->domainManager;
+        return $this->factory;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function setDomainManager($domainManager)
+    public function setFactory($factory)
     {
-        $this->domainManager = $domainManager;
+        $this->factory = $factory;
     }
 
     /**
@@ -341,6 +309,38 @@ class Resource implements ResourceInterface
     public function setChoiceForm($choiceForm)
     {
         $this->choiceForm = $choiceForm;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getDomainManager()
+    {
+        return $this->domainManager;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setDomainManager($domainManager)
+    {
+        $this->domainManager = $domainManager;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getController()
+    {
+        return $this->controller;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setController($controller)
+    {
+        $this->controller = $controller;
     }
 
     /**

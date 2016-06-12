@@ -89,17 +89,43 @@ class ResourceConfiguration implements ConfigurationInterface
         $resourceNode = $this->createNode($name ?: $resource->getName())->addDefaultsIfNotSet();
         $childrenNode = $resourceNode->children()
             ->append($this->createDriverNode($resource))
-            ->append($this->createClassNode('model', $resource->getModel(), $resource->getInterfaces()))
-            ->append($this->createClassNode('controller', $resource->getController(), [ControllerInterface::class]))
-            ->append($this->createClassNode('factory', $resource->getFactory(), [FactoryInterface::class]))
-            ->append($this->createClassNode('repository', $resource->getRepository(), [RepositoryInterface::class]))
+            ->append($this->createClassNode(
+                'model',
+                $resource->getModel(),
+                $resource->getInterfaces(),
+                true
+            ))
+            ->append($this->createClassNode(
+                'repository',
+                $resource->getRepository(),
+                [RepositoryInterface::class],
+                true
+            ))
+            ->append($this->createClassNode(
+                'factory',
+                $resource->getFactory(),
+                [FactoryInterface::class]
+            ))
+            ->append($this->createClassNode(
+                'form',
+                $resource->getForm(),
+                [FormTypeInterface::class]
+            ))
+            ->append($this->createClassNode(
+                'choice_form',
+                $resource->getChoiceForm(),
+                [FormTypeInterface::class]
+            ))
             ->append($this->createClassNode(
                 'domain_manager',
                 $resource->getDomainManager(),
                 [DomainManagerInterface::class]
             ))
-            ->append($this->createClassNode('form', $resource->getForm(), [FormTypeInterface::class]))
-            ->append($this->createClassNode('choice_form', $resource->getChoiceForm(), [FormTypeInterface::class]))
+            ->append($this->createClassNode(
+                'controller',
+                $resource->getController(),
+                [ControllerInterface::class]
+            ))
             ->append($this->createNode('id_property_path', 'scalar', $resource->getIdPropertyPath()))
             ->append($this->createNode('label_property_path', 'scalar', $resource->getLabelPropertyPath()));
 
@@ -145,12 +171,17 @@ class ResourceConfiguration implements ConfigurationInterface
      * @param string   $name
      * @param string   $class
      * @param string[] $interfaces
+     * @param bool     $required
      *
      * @return NodeDefinition
      */
-    private function createClassNode($name, $class, array $interfaces = [])
+    private function createClassNode($name, $class, array $interfaces = [], $required = false)
     {
-        return $this->createNode($name, 'scalar', $class, function ($class) use ($interfaces) {
+        return $this->createNode($name, 'scalar', $class, function ($class) use ($interfaces, $required) {
+            if ($class === null) {
+                return $required;
+            }
+
             if (!class_exists($class)) {
                 return true;
             }

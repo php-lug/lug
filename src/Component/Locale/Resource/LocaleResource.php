@@ -43,12 +43,12 @@ class LocaleResource extends Resource
             self::DRIVER_MAPPING_FORMAT_XML,
             LocaleInterface::class,
             Locale::class,
-            $controller,
-            Factory::class,
             $orm ? DoctrineORMRepository::class : DoctrineMongoDBRepository::class,
-            DomainManager::class,
+            Factory::class,
             LocaleType::class,
             $orm ? DoctrineORMLocaleChoiceType::class : DoctrineMongoDBLocaleChoiceType::class,
+            DomainManager::class,
+            $controller,
             'code',
             'code'
         );
