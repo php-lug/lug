@@ -64,7 +64,7 @@ class ResourceWebContext extends AbstractResourceContext implements MinkAwareCon
      *
      * @return string
      */
-    public function getResourceRoute($resource, $action)
+    private function getResourceRoute($resource, $action)
     {
         return 'lug_admin_'.str_replace([' ', '.'], '_', $resource).'_'.$action;
     }

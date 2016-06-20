@@ -24,13 +24,17 @@ abstract class AbstractResourceContext implements KernelAwareContext
     /**
      * @param string $resource
      * @param mixed  $criteria
+     *
+     * @return object|null
      */
     public function assertResourceFound($resource, array $criteria)
     {
         \PHPUnit_Framework_Assert::assertNotNull(
-            $this->findResource($resource, $criteria),
+            $result = $this->findResource($resource, $criteria),
             sprintf('The resource "%s" could not be found. (%s)', $resource, json_encode($criteria))
         );
+
+        return $result;
     }
 
     /**
@@ -51,7 +55,7 @@ abstract class AbstractResourceContext implements KernelAwareContext
      *
      * @return object|null
      */
-    public function findResource($resource, array &$criteria)
+    private function findResource($resource, array &$criteria)
     {
         array_walk_recursive($criteria, function (&$value) {
             if ($value === 'yes') {
