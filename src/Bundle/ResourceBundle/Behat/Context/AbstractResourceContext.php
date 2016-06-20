@@ -28,7 +28,7 @@ abstract class AbstractResourceContext implements KernelAwareContext
     public function assertResourceFound($resource, array $criteria)
     {
         \PHPUnit_Framework_Assert::assertNotNull(
-            $this->getResource($resource, $criteria),
+            $this->findResource($resource, $criteria),
             sprintf('The resource "%s" could not be found. (%s)', $resource, json_encode($criteria))
         );
     }
@@ -40,7 +40,7 @@ abstract class AbstractResourceContext implements KernelAwareContext
     public function assertResourceNotFound($resource, array $criteria)
     {
         \PHPUnit_Framework_Assert::assertNull(
-            $this->getResource($resource, $criteria),
+            $this->findResource($resource, $criteria),
             sprintf('The resource "%s" could be found. (%s)', $resource, json_encode($criteria))
         );
     }
@@ -51,7 +51,7 @@ abstract class AbstractResourceContext implements KernelAwareContext
      *
      * @return object|null
      */
-    private function getResource($resource, array &$criteria)
+    protected function findResource($resource, array &$criteria)
     {
         array_walk_recursive($criteria, function (&$value) {
             if ($value === 'yes') {
