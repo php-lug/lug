@@ -51,7 +51,7 @@ abstract class AbstractResourceContext implements KernelAwareContext
      *
      * @return object|null
      */
-    protected function findResource($resource, array &$criteria)
+    public function findResource($resource, array &$criteria)
     {
         array_walk_recursive($criteria, function (&$value) {
             if ($value === 'yes') {
