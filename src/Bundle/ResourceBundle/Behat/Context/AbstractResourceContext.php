@@ -28,7 +28,7 @@ abstract class AbstractResourceContext implements KernelAwareContext
     public function assertResourceFound($resource, array $criteria)
     {
         \PHPUnit_Framework_Assert::assertNotNull(
-            $this->getResource($resource, $criteria) !== null,
+            $this->getResource($resource, $criteria),
             sprintf('The resource "%s" could not be found. (%s)', $resource, json_encode($criteria))
         );
     }
