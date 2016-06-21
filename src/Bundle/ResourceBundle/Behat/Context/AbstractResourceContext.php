@@ -65,6 +65,8 @@ abstract class AbstractResourceContext implements KernelAwareContext
             }
         });
 
+        $this->getManager($resource)->clear();
+
         return $this->getRepository($resource)->findOneBy($criteria);
     }
 }
