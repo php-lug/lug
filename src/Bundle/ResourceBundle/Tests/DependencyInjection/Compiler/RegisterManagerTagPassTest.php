@@ -70,15 +70,9 @@ class RegisterManagerTagPassTest extends \PHPUnit_Framework_TestCase
 
         $aliasDefinition
             ->expects($this->once())
-            ->method('hasTag')
-            ->with($this->identicalTo($tag = 'lug.manager'))
-            ->will($this->returnValue(false));
-
-        $aliasDefinition
-            ->expects($this->once())
             ->method('addTag')
             ->with(
-                $this->identicalTo($tag),
+                $this->identicalTo('lug.manager'),
                 $this->identicalTo(['resource' => $resourceName])
             );
 
