@@ -26,11 +26,10 @@ class RegisterManagerTagPass implements CompilerPassInterface
     {
         foreach (array_keys($container->findTaggedServiceIds('lug.resource')) as $service) {
             $resource = $container->getDefinition($service)->getArgument(0);
-            $manager = $container->getDefinition((string) $container->getAlias('lug.manager.'.$resource));
 
-            if (!$manager->hasTag($tag = 'lug.manager')) {
-                $manager->addTag($tag, ['resource' => $resource]);
-            }
+            $container
+                ->getDefinition((string) $container->getAlias('lug.manager.'.$resource))
+                ->addTag('lug.manager', ['resource' => $resource]);
         }
     }
 }
