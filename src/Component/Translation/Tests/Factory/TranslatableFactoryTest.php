@@ -19,6 +19,8 @@ use Lug\Component\Translation\Model\TranslatableInterface;
 use Lug\Component\Translation\Model\TranslatableTrait;
 use Lug\Component\Translation\Model\TranslationInterface;
 use Lug\Component\Translation\Model\TranslationTrait;
+use Symfony\Component\PropertyAccess\PropertyAccess;
+use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -36,6 +38,11 @@ class TranslatableFactoryTest extends \PHPUnit_Framework_TestCase
     private $resource;
 
     /**
+     * @var \PHPUnit_Framework_MockObject_MockObject|PropertyAccessorInterface
+     */
+    private $propertyAccessor;
+
+    /**
      * @var \PHPUnit_Framework_MockObject_MockObject|LocaleContextInterface
      */
     private $localeContext;
@@ -46,9 +53,10 @@ class TranslatableFactoryTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->resource = $this->createResourceMock();
+        $this->propertyAccessor = PropertyAccess::createPropertyAccessor();
         $this->localeContext = $this->createLocaleContextMock();
 
-        $this->factory = new TranslatableFactory($this->resource, $this->localeContext);
+        $this->factory = new TranslatableFactory($this->resource, $this->propertyAccessor, $this->localeContext);
     }
 
     public function testInheritance()
@@ -56,7 +64,43 @@ class TranslatableFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(Factory::class, $this->factory);
     }
 
-    public function testCreate()
+    public function testCreateWithOptions()
+    {
+        $this->resource
+            ->expects($this->once())
+            ->method('getModel')
+            ->will($this->returnValue($translatableClass = TranslatableTest::class));
+
+        $this->resource
+            ->expects($this->once())
+            ->method('getTranslation')
+            ->will($this->returnValue($translationResource = $this->createResourceMock()));
+
+        $translationResource
+            ->expects($this->once())
+            ->method('getModel')
+            ->will($this->returnValue($translationClass = TranslationTest::class));
+
+        $this->localeContext
+            ->expects($this->once())
+            ->method('getLocales')
+            ->will($this->returnValue($locales = ['fr', 'es']));
+
+        $this->localeContext
+            ->expects($this->once())
+            ->method('getFallbackLocale')
+            ->will($this->returnValue($fallbackLocale = 'en'));
+
+        $translatable = $this->factory->create(['name' => $name = 'foo']);
+
+        $this->assertInstanceOf($translatableClass, $translatable);
+        $this->assertSame($name, $translatable->getName());
+        $this->assertSame($locales, $translatable->getLocales());
+        $this->assertSame($fallbackLocale, $translatable->getFallbackLocale());
+        $this->assertSame($translationClass, $translatable->getTranslationClass());
+    }
+
+    public function testCreateWithoutOptions()
     {
         $this->resource
             ->expects($this->once())
@@ -114,6 +158,27 @@ class TranslatableFactoryTest extends \PHPUnit_Framework_TestCase
 class TranslatableTest implements TranslatableInterface
 {
     use TranslatableTrait;
+
+    /**
+     * @var string
+     */
+    private $name;
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
 }
 
 /**
