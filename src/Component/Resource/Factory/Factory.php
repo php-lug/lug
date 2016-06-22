@@ -12,6 +12,7 @@
 namespace Lug\Component\Resource\Factory;
 
 use Lug\Component\Resource\Model\ResourceInterface;
+use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -24,11 +25,18 @@ class Factory implements FactoryInterface
     private $resource;
 
     /**
-     * @param ResourceInterface $resource
+     * @var PropertyAccessorInterface
      */
-    public function __construct(ResourceInterface $resource)
+    private $propertyAccessor;
+
+    /**
+     * @param ResourceInterface         $resource
+     * @param PropertyAccessorInterface $propertyAccessor
+     */
+    public function __construct(ResourceInterface $resource, PropertyAccessorInterface $propertyAccessor)
     {
         $this->resource = $resource;
+        $this->propertyAccessor = $propertyAccessor;
     }
 
     /**
@@ -37,7 +45,12 @@ class Factory implements FactoryInterface
     public function create(array $options = [])
     {
         $class = $this->resource->getModel();
+        $object = new $class();
 
-        return new $class();
+        foreach ($options as $propertyPath => $value) {
+            $this->propertyAccessor->setValue($object, $propertyPath, $value);
+        }
+
+        return $object;
     }
 }

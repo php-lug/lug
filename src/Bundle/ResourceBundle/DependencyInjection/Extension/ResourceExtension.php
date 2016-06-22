@@ -230,7 +230,10 @@ class ResourceExtension extends ConfigurableExtension
      */
     private function createFactoryDefinition(ResourceInterface $resource)
     {
-        $arguments = [new Reference('lug.resource.'.$resource->getName())];
+        $arguments = [
+            new Reference('lug.resource.'.$resource->getName()),
+            new Reference('property_accessor'),
+        ];
 
         if (is_a($resource->getFactory(), TranslatableFactory::class, true)) {
             $arguments[] = new Reference('lug.translation.context.locale');

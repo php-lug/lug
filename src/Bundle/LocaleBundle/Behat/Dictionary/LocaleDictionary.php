@@ -71,18 +71,21 @@ trait LocaleDictionary
         \DateTime $updatedAt = null,
         $flush = true
     ) {
-        $locale = $this->getLocaleFactory()->create();
-        $locale->setCode($code);
-        $locale->setEnabled($enabled);
-        $locale->setRequired($required);
+        $options = [
+            'code'     => $code,
+            'enabled'  => $enabled,
+            'required' => $required,
+        ];
 
         if ($createdAt !== null) {
-            $locale->setCreatedAt($createdAt);
+            $options['createdAt'] = $createdAt;
         }
 
         if ($updatedAt !== null) {
-            $locale->setUpdatedAt($updatedAt);
+            $options['updatedAt'] = $updatedAt;
         }
+
+        $locale = $this->getLocaleFactory()->create($options);
 
         $manager = $this->getLocaleManager();
         $manager->persist($locale);

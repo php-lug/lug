@@ -14,6 +14,7 @@ namespace Lug\Component\Translation\Factory;
 use Lug\Component\Resource\Factory\Factory;
 use Lug\Component\Resource\Model\ResourceInterface;
 use Lug\Component\Translation\Context\LocaleContextInterface;
+use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -31,12 +32,16 @@ class TranslatableFactory extends Factory
     private $localeContext;
 
     /**
-     * @param ResourceInterface      $resource
-     * @param LocaleContextInterface $localeContext
+     * @param ResourceInterface         $resource
+     * @param PropertyAccessorInterface $propertyAccessor
+     * @param LocaleContextInterface    $localeContext
      */
-    public function __construct(ResourceInterface $resource, LocaleContextInterface $localeContext)
-    {
-        parent::__construct($resource);
+    public function __construct(
+        ResourceInterface $resource,
+        PropertyAccessorInterface $propertyAccessor,
+        LocaleContextInterface $localeContext
+    ) {
+        parent::__construct($resource, $propertyAccessor);
 
         $this->resource = $resource;
         $this->localeContext = $localeContext;
@@ -47,12 +52,10 @@ class TranslatableFactory extends Factory
      */
     public function create(array $options = [])
     {
-        $translatable = parent::create($options);
-
-        $translatable->setLocales($this->localeContext->getLocales());
-        $translatable->setFallbackLocale($this->localeContext->getFallbackLocale());
-        $translatable->setTranslationClass($this->resource->getTranslation()->getModel());
-
-        return $translatable;
+        return parent::create(array_merge($options, [
+            'locales'          => $this->localeContext->getLocales(),
+            'fallbackLocale'   => $this->localeContext->getFallbackLocale(),
+            'translationClass' => $this->resource->getTranslation()->getModel(),
+        ]));
     }
 }

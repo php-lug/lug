@@ -13,7 +13,6 @@ namespace Lug\Bundle\LocaleBundle\DataFixtures;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Lug\Bundle\ResourceBundle\DataFixtures\ORM\AbstractDriverFixture;
-use Lug\Component\Locale\Model\LocaleInterface;
 use Symfony\Component\Intl\Intl;
 
 /**
@@ -29,7 +28,11 @@ abstract class AbstractLocaleFixture extends AbstractDriverFixture
         $defaultCode = $this->getContainer()->getParameter('lug.locale');
 
         foreach (array_keys(Intl::getLocaleBundle()->getLocaleNames()) as $code) {
-            $locale = $this->createLocale($code, $default = $code === $defaultCode, $default);
+            $locale = $this->getFactory()->create([
+                'code'     => $code,
+                'enabled'  => $code === $defaultCode,
+                'required' => $code === $defaultCode,
+            ]);
 
             $manager->persist($locale);
             $this->setReference('lug.locale.'.$code, $locale);
@@ -44,22 +47,5 @@ abstract class AbstractLocaleFixture extends AbstractDriverFixture
     protected function getResourceName()
     {
         return 'locale';
-    }
-
-    /**
-     * @param string $code
-     * @param bool   $enabled
-     * @param bool   $required
-     *
-     * @return LocaleInterface
-     */
-    private function createLocale($code, $enabled, $required)
-    {
-        $locale = $this->getFactory()->create();
-        $locale->setCode($code);
-        $locale->setEnabled($enabled);
-        $locale->setRequired($required);
-
-        return $locale;
     }
 }
