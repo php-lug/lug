@@ -42,7 +42,7 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
     private $eventDispatcher;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|EntityManagerInterface
+     * @var \PHPUnit_Framework_MockObject_MockObject|ObjectManager
      */
     private $objectManager;
 
@@ -485,7 +485,7 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
         $this->domainManager->create($object);
     }
 
-    public function testUpdate()
+    public function testUpdateWithManagedObject()
     {
         $this->resource
             ->expects($this->exactly(4))
@@ -494,8 +494,86 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
 
         $this->objectManager
             ->expects($this->once())
+            ->method('contains')
+            ->with($this->identicalTo($object = new \stdClass()))
+            ->will($this->returnValue(true));
+
+        $this->objectManager
+            ->expects($this->never())
+            ->method('persist');
+
+        $this->objectManager
+            ->expects($this->once())
+            ->method('flush');
+
+        $this->eventDispatcher
+            ->expects($this->at(0))
+            ->method('dispatch')
+            ->with(
+                $this->identicalTo('lug.'.$name.'.pre_'.($updateAction = 'update')),
+                $this->callback(function (DomainEvent $event) use ($updateAction, $object) {
+                    return $event->getResource() === $this->resource
+                    && $event->getObject() === $object
+                    && $event->getAction() === $updateAction;
+                })
+            );
+
+        $this->eventDispatcher
+            ->expects($this->at(1))
+            ->method('dispatch')
+            ->with(
+                $this->identicalTo('lug.'.$name.'.pre_'.($flushAction = 'flush')),
+                $this->callback(function (DomainEvent $event) use ($flushAction, $object) {
+                    return $event->getResource() === $this->resource
+                    && $event->getObject() === $object
+                    && $event->getAction() === $flushAction;
+                })
+            );
+
+        $this->eventDispatcher
+            ->expects($this->at(2))
+            ->method('dispatch')
+            ->with(
+                $this->identicalTo('lug.'.$name.'.post_'.$flushAction),
+                $this->callback(function (DomainEvent $event) use ($flushAction, $object) {
+                    return $event->getResource() === $this->resource
+                    && $event->getObject() === $object
+                    && $event->getAction() === $flushAction;
+                })
+            );
+
+        $this->eventDispatcher
+            ->expects($this->at(3))
+            ->method('dispatch')
+            ->with(
+                $this->identicalTo('lug.'.$name.'.post_'.$updateAction),
+                $this->callback(function (DomainEvent $event) use ($object, $updateAction) {
+                    return $event->getResource() === $this->resource
+                    && $event->getObject() === $object
+                    && $event->getAction() === $updateAction;
+                })
+            );
+
+        $this->domainManager->update($object);
+    }
+
+    public function testUpdateWithoutManagedObject()
+    {
+        $this->resource
+            ->expects($this->exactly(4))
+            ->method('getName')
+            ->will($this->returnValue($name = 'name'));
+
+        $this->objectManager
+            ->expects($this->once())
+            ->method('contains')
+            ->with($this->identicalTo($object = new \stdClass()))
+            ->will($this->returnValue(false));
+
+        $this->objectManager
+            ->expects($this->once())
             ->method('persist')
-            ->with($this->identicalTo($object = new \stdClass()));
+            ->with($this->identicalTo($object));
 
         $this->objectManager
             ->expects($this->once())

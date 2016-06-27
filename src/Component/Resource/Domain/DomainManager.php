@@ -74,7 +74,9 @@ class DomainManager extends AbstractDomainManager
      */
     protected function doUpdate($object, $flush = true)
     {
-        $this->manager->persist($object);
+        if (!$this->manager->contains($object)) {
+            $this->manager->persist($object);
+        }
 
         if ($flush) {
             $this->flush($object);
