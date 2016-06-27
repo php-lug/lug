@@ -133,7 +133,7 @@ class Controller extends FOSRestController implements ControllerInterface
      */
     public function createAction(Request $request)
     {
-        $form = $this->buildForm(null, $this->getFactory()->create());
+        $form = $this->buildForm();
 
         if ($request->isMethod('POST') && $this->submitForm($form, $request)->isValid()) {
             try {
@@ -324,7 +324,7 @@ class Controller extends FOSRestController implements ControllerInterface
     /**
      * @return FormFactoryInterface
      */
-    private function getFormFactory()
+    protected function getFormFactory()
     {
         return $this->get('lug.resource.form.factory');
     }
@@ -332,7 +332,7 @@ class Controller extends FOSRestController implements ControllerInterface
     /**
      * @return FactoryInterface
      */
-    private function getFactory()
+    protected function getFactory()
     {
         return $this->get('lug.resource.registry.factory')[$this->resource->getName()];
     }
@@ -340,7 +340,7 @@ class Controller extends FOSRestController implements ControllerInterface
     /**
      * @return DomainManagerInterface
      */
-    private function getDomainManager()
+    protected function getDomainManager()
     {
         return $this->get('lug.resource.registry.domain_manager')[$this->resource->getName()];
     }
@@ -348,7 +348,7 @@ class Controller extends FOSRestController implements ControllerInterface
     /**
      * @return SecurityCheckerInterface
      */
-    private function getSecurityChecker()
+    protected function getSecurityChecker()
     {
         return $this->get('lug.resource.security.checker');
     }
@@ -356,7 +356,7 @@ class Controller extends FOSRestController implements ControllerInterface
     /**
      * @return ParameterResolverInterface
      */
-    private function getParameterResolver()
+    protected function getParameterResolver()
     {
         return $this->get('lug.resource.routing.parameter_resolver');
     }
@@ -364,7 +364,7 @@ class Controller extends FOSRestController implements ControllerInterface
     /**
      * @return GridBuilderInterface
      */
-    private function getGridBuilder()
+    protected function getGridBuilder()
     {
         return $this->get('lug.grid.builder');
     }
@@ -372,7 +372,7 @@ class Controller extends FOSRestController implements ControllerInterface
     /**
      * @return GridHandlerInterface
      */
-    private function getGridHandler()
+    protected function getGridHandler()
     {
         return $this->get('lug.grid.handler');
     }
@@ -380,7 +380,7 @@ class Controller extends FOSRestController implements ControllerInterface
     /**
      * @return BatcherInterface
      */
-    private function getGridBatcher()
+    protected function getGridBatcher()
     {
         return $this->get('lug.grid.batcher');
     }
@@ -388,7 +388,7 @@ class Controller extends FOSRestController implements ControllerInterface
     /**
      * @return EventDispatcherInterface
      */
-    private function getRestEventDispatcher()
+    protected function getRestEventDispatcher()
     {
         return $this->get('lug.resource.rest.event_dispatcher');
     }
