@@ -28,7 +28,7 @@ trait ResourceDictionary
      *
      * @return FactoryInterface
      */
-    private function getFactory($name)
+    public function getFactory($name)
     {
         return $this->getService('lug.resource.registry.factory')[$name];
     }
@@ -38,7 +38,7 @@ trait ResourceDictionary
      *
      * @return ObjectManager
      */
-    private function getManager($name)
+    public function getManager($name)
     {
         return $this->getService('lug.resource.registry.manager')[$name];
     }
@@ -48,7 +48,7 @@ trait ResourceDictionary
      *
      * @return RepositoryInterface
      */
-    private function getRepository($name)
+    public function getRepository($name)
     {
         return $this->getService('lug.resource.registry.repository')[$name];
     }
