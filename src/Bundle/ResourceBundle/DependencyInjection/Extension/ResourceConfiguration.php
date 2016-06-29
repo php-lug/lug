@@ -88,18 +88,17 @@ class ResourceConfiguration implements ConfigurationInterface
     {
         $resourceNode = $this->createNode($name ?: $resource->getName())->addDefaultsIfNotSet();
         $childrenNode = $resourceNode->children()
-            ->append($this->createDriverNode($resource))
             ->append($this->createClassNode(
                 'model',
                 $resource->getModel(),
                 $resource->getInterfaces(),
                 true
             ))
+            ->append($this->createDriverNode($resource))
             ->append($this->createClassNode(
                 'repository',
                 $resource->getRepository(),
-                [RepositoryInterface::class],
-                true
+                [RepositoryInterface::class]
             ))
             ->append($this->createClassNode(
                 'factory',

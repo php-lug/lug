@@ -32,26 +32,6 @@ class ResourceTest extends \PHPUnit_Framework_TestCase
     /**
      * @var string
      */
-    private $driver;
-
-    /**
-     * @var string
-     */
-    private $driverManager;
-
-    /**
-     * @var string
-     */
-    private $driverMappingPath;
-
-    /**
-     * @var string
-     */
-    private $driverMappingFormat;
-
-    /**
-     * @var string
-     */
     private $name;
 
     /**
@@ -65,33 +45,15 @@ class ResourceTest extends \PHPUnit_Framework_TestCase
     private $model;
 
     /**
-     * @var string
-     */
-    private $repository;
-
-    /**
      * {@inheritdoc}
      */
     protected function setUp()
     {
         $this->name = 'name';
-        $this->driver = ResourceInterface::DRIVER_DOCTRINE_MONGODB;
-        $this->driverManager = 'my.manager';
-        $this->driverMappingPath = __DIR__;
-        $this->driverMappingFormat = ResourceInterface::DRIVER_MAPPING_FORMAT_XML;
         $this->interfaces = [\ArrayAccess::class, \Countable::class];
         $this->model = \ArrayIterator::class;
 
-        $this->resource = new Resource(
-            $this->name,
-            $this->driver,
-            $this->driverManager,
-            $this->driverMappingPath,
-            $this->driverMappingFormat,
-            $this->interfaces,
-            $this->model,
-            $this->repository
-        );
+        $this->resource = new Resource($this->name, $this->interfaces, $this->model);
     }
 
     public function testInheritance()
@@ -102,13 +64,13 @@ class ResourceTest extends \PHPUnit_Framework_TestCase
     public function testDefaultState()
     {
         $this->assertSame($this->name, $this->resource->getName());
-        $this->assertSame($this->driver, $this->resource->getDriver());
-        $this->assertSame($this->driverManager, $this->resource->getDriverManager());
-        $this->assertSame($this->driverMappingPath, $this->resource->getDriverMappingPath());
-        $this->assertSame($this->driverMappingFormat, $this->resource->getDriverMappingFormat());
         $this->assertSame($this->interfaces, $this->resource->getInterfaces());
         $this->assertSame($this->model, $this->resource->getModel());
-        $this->assertSame($this->repository, $this->resource->getRepository());
+        $this->assertNull($this->resource->getDriver());
+        $this->assertNull($this->resource->getDriverManager());
+        $this->assertNull($this->resource->getDriverMappingPath());
+        $this->assertNull($this->resource->getDriverMappingFormat());
+        $this->assertNull($this->resource->getRepository());
         $this->assertNull($this->resource->getFactory());
         $this->assertNull($this->resource->getForm());
         $this->assertNull($this->resource->getChoiceForm());
@@ -117,47 +79,6 @@ class ResourceTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($this->resource->getIdPropertyPath());
         $this->assertNull($this->resource->getLabelPropertyPath());
         $this->assertNull($this->resource->getTranslation());
-    }
-
-    public function testInitialState()
-    {
-        $translation = $this->createResourceMock();
-
-        $this->resource = new Resource(
-            $this->name,
-            $this->driver,
-            $this->driverManager,
-            $this->driverMappingPath,
-            $this->driverMappingFormat,
-            $this->interfaces,
-            $this->model,
-            $this->repository,
-            $factory = $this->createFactoryClassMock(),
-            $form = $this->createFormClassMock(),
-            $choiceForm = $this->createFormClassMock(),
-            $domainManager = $this->createDomainManagerClassMock(),
-            $controller = $this->createControllerClassMock(),
-            $idPropertyPath = 'id',
-            $labelPropertyPath = 'label',
-            $translation
-        );
-
-        $this->assertSame($this->name, $this->resource->getName());
-        $this->assertSame($this->driver, $this->resource->getDriver());
-        $this->assertSame($this->driverManager, $this->resource->getDriverManager());
-        $this->assertSame($this->driverMappingPath, $this->resource->getDriverMappingPath());
-        $this->assertSame($this->driverMappingFormat, $this->resource->getDriverMappingFormat());
-        $this->assertSame($this->interfaces, $this->resource->getInterfaces());
-        $this->assertSame($this->model, $this->resource->getModel());
-        $this->assertSame($this->repository, $this->resource->getRepository());
-        $this->assertSame($factory, $this->resource->getFactory());
-        $this->assertSame($form, $this->resource->getForm());
-        $this->assertSame($choiceForm, $this->resource->getChoiceForm());
-        $this->assertSame($domainManager, $this->resource->getDomainManager());
-        $this->assertSame($controller, $this->resource->getController());
-        $this->assertSame($idPropertyPath, $this->resource->getIdPropertyPath());
-        $this->assertSame($labelPropertyPath, $this->resource->getLabelPropertyPath());
-        $this->assertSame($translation, $this->resource->getTranslation());
     }
 
     public function testDriver()
@@ -176,7 +97,7 @@ class ResourceTest extends \PHPUnit_Framework_TestCase
 
     public function testDriverMappingPath()
     {
-        $this->resource->setDriverMappingPath($driverMappingPath = __DIR__.'/default');
+        $this->resource->setDriverMappingPath($driverMappingPath = __DIR__);
 
         $this->assertSame($driverMappingPath, $this->resource->getDriverMappingPath());
     }
@@ -249,6 +170,13 @@ class ResourceTest extends \PHPUnit_Framework_TestCase
         $this->resource->setLabelPropertyPath($labelPropertyPath = 'label');
 
         $this->assertSame($labelPropertyPath, $this->resource->getLabelPropertyPath());
+    }
+
+    public function testTranslation()
+    {
+        $this->resource->setTranslation($translation = $this->createResourceMock());
+
+        $this->assertSame($translation, $this->resource->getTranslation());
     }
 
     /**

@@ -56,9 +56,8 @@ class RegisterValidationMetadataPassTest extends \PHPUnit_Framework_TestCase
 
         $localeResource
             ->expects($this->once())
-            ->method('getArgument')
-            ->with($this->identicalTo(1))
-            ->will($this->returnValue($driver));
+            ->method('getMethodCalls')
+            ->will($this->returnValue([['setDriver', [$driver]]]));
 
         $validatorBuilder
             ->expects($this->once())
@@ -84,13 +83,29 @@ class RegisterValidationMetadataPassTest extends \PHPUnit_Framework_TestCase
 
         $localeResource
             ->expects($this->once())
-            ->method('getArgument')
-            ->with($this->identicalTo(1))
-            ->will($this->returnValue('foo'));
+            ->method('getMethodCalls')
+            ->will($this->returnValue([['setDriver', ['foo']]]));
 
         $validatorBuilder
             ->expects($this->never())
             ->method('addMethodCall');
+
+        $this->compiler->process($container);
+    }
+
+    public function testProcessWithoutDriver()
+    {
+        $container = $this->createContainerBuilderMock();
+        $container
+            ->expects($this->once())
+            ->method('getDefinition')
+            ->with($this->identicalTo('lug.resource.locale'))
+            ->will($this->returnValue($localeResource = $this->createDefinitionMock()));
+
+        $localeResource
+            ->expects($this->once())
+            ->method('getMethodCalls')
+            ->will($this->returnValue([]));
 
         $this->compiler->process($container);
     }

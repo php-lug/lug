@@ -35,21 +35,79 @@ class RegisterDriverMappingPass implements CompilerPassInterface
     }
 
     /**
-     * @param Definition $resource
+     * @param Definition $definition
      *
      * @return CompilerPassInterface
      */
-    private function getCompilerPass(Definition $resource)
+    private function getCompilerPass(Definition $definition)
     {
-        $driver = $resource->getArgument(1);
-        $path = $resource->getArgument(3);
-        $format = $resource->getArgument(4);
-        $model = $resource->getArgument(6);
+        $driver = $this->getResourceDriver($definition);
+
+        if ($driver === null) {
+            return;
+        }
 
         $class = $this->getCompilerPassClass($driver);
-        $method = $this->getCompilerPassMethod($format);
+        $method = $this->getCompilerPassMethod($this->getResourceDriverMappingFormat($definition));
+        $path = $this->getResourceDriverMappingPath($definition);
+        $model = $this->getResourceModel($definition);
 
         return $class::$method([$path => ClassUtils::getRealNamespace($model)], []);
+    }
+
+    /**
+     * @param Definition $definition
+     *
+     * @return string|null
+     */
+    private function getResourceModel(Definition $definition)
+    {
+        return $definition->getArgument(2);
+    }
+
+    /**
+     * @param Definition $definition
+     *
+     * @return string|null
+     */
+    private function getResourceDriver(Definition $definition)
+    {
+        return $this->getResourceMetadata($definition, 'setDriver');
+    }
+
+    /**
+     * @param Definition $definition
+     *
+     * @return string|null
+     */
+    private function getResourceDriverMappingPath(Definition $definition)
+    {
+        return $this->getResourceMetadata($definition, 'setDriverMappingPath');
+    }
+
+    /**
+     * @param Definition $definition
+     *
+     * @return string|null
+     */
+    private function getResourceDriverMappingFormat(Definition $definition)
+    {
+        return $this->getResourceMetadata($definition, 'setDriverMappingFormat');
+    }
+
+    /**
+     * @param Definition $definition
+     * @param string     $method
+     *
+     * @return string
+     */
+    private function getResourceMetadata(Definition $definition, $method)
+    {
+        foreach ($definition->getMethodCalls() as $methodCall) {
+            if ($methodCall[0] === $method) {
+                return $methodCall[1][0];
+            }
+        }
     }
 
     /**

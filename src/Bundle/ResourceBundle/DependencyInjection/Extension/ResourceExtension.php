@@ -93,11 +93,11 @@ class ResourceExtension extends ConfigurableExtension
      */
     private function configureResource(ResourceInterface $resource, array $config)
     {
+        $resource->setModel($config['model']);
         $resource->setDriver($config['driver']['name']);
         $resource->setDriverManager($config['driver']['manager']);
         $resource->setDriverMappingPath($config['driver']['mapping']['path']);
         $resource->setDriverMappingFormat($config['driver']['mapping']['format']);
-        $resource->setModel($config['model']);
         $resource->setRepository($config['repository']);
         $resource->setFactory(isset($config['factory']) ? $config['factory'] : null);
         $resource->setForm(isset($config['form']) ? $config['form'] : null);
@@ -114,24 +114,25 @@ class ResourceExtension extends ConfigurableExtension
      */
     private function loadResource(ResourceInterface $resource, ContainerBuilder $container)
     {
-        $name = $resource->getName();
-        $repository = 'lug.repository.'.$name;
-        $factory = 'lug.factory.'.$name;
-        $form = 'lug.form.type.'.$name;
-        $choiceForm = $form.'.choice';
-        $domainManager = 'lug.domain_manager.'.$name;
-        $controller = 'lug.controller.'.$name;
-
         $container->setDefinition('lug.resource.'.$resource->getName(), $this->createResourceDefinition($resource));
-        $container->setAlias('lug.manager.'.$resource->getName(), $this->createManagerAlias($resource));
 
-        if (class_exists($resource->getRepository())) {
-            $container->setDefinition($repository, $this->createRepositoryDefinition($resource));
-        } elseif ($repository !== $resource->getRepository()) {
-            $container->setAlias($repository, $resource->getRepository());
+        if ($resource->getDriverManager() !== null) {
+            $container->setAlias('lug.manager.'.$resource->getName(), $this->createManagerAlias($resource));
+        }
+
+        if ($resource->getRepository() !== null) {
+            $repository = 'lug.repository.'.$resource->getName();
+
+            if (class_exists($resource->getRepository())) {
+                $container->setDefinition($repository, $this->createRepositoryDefinition($resource));
+            } elseif ($repository !== $resource->getRepository()) {
+                $container->setAlias($repository, $resource->getRepository());
+            }
         }
 
         if ($resource->getFactory() !== null) {
+            $factory = 'lug.factory.'.$resource->getName();
+
             if (class_exists($resource->getFactory())) {
                 $container->setDefinition($factory, $this->createFactoryDefinition($resource));
             } elseif ($factory !== $resource->getFactory()) {
@@ -140,6 +141,8 @@ class ResourceExtension extends ConfigurableExtension
         }
 
         if ($resource->getForm() !== null) {
+            $form = 'lug.form.type.'.$resource->getName();
+
             if (class_exists($resource->getForm())) {
                 $container->setDefinition($form, $this->createFormDefinition($resource));
             } elseif ($form !== $resource->getForm()) {
@@ -148,6 +151,8 @@ class ResourceExtension extends ConfigurableExtension
         }
 
         if ($resource->getChoiceForm() !== null) {
+            $choiceForm = 'lug.form.type.'.$resource->getName().'.choice';
+
             if (class_exists($resource->getChoiceForm())) {
                 $container->setDefinition($choiceForm, $this->createChoiceFormDefinition($resource));
             } elseif ($choiceForm !== $resource->getChoiceForm()) {
@@ -156,6 +161,8 @@ class ResourceExtension extends ConfigurableExtension
         }
 
         if ($resource->getDomainManager() !== null) {
+            $domainManager = 'lug.domain_manager.'.$resource->getName();
+
             if (class_exists($resource->getDomainManager())) {
                 $container->setDefinition($domainManager, $this->createDomainManagerDefinition($resource));
             } elseif ($domainManager !== $resource->getDomainManager()) {
@@ -164,6 +171,8 @@ class ResourceExtension extends ConfigurableExtension
         }
 
         if ($resource->getController() !== null) {
+            $controller = 'lug.controller.'.$resource->getName();
+
             if (class_exists($resource->getController())) {
                 $container->setDefinition($controller, $this->createControllerDefinition($resource));
             } elseif ($controller !== $resource->getController()) {
@@ -171,7 +180,7 @@ class ResourceExtension extends ConfigurableExtension
             }
         }
 
-        $container->addClassResource(new \ReflectionClass($resource));
+        $container->addObjectResource($resource);
     }
 
     /**
@@ -181,30 +190,33 @@ class ResourceExtension extends ConfigurableExtension
      */
     private function createResourceDefinition(ResourceInterface $resource)
     {
-        $arguments = [
+        $definition = new Definition(Resource::class, [
             $resource->getName(),
-            $resource->getDriver(),
-            $resource->getDriverManager(),
-            $resource->getDriverMappingPath(),
-            $resource->getDriverMappingFormat(),
             $resource->getInterfaces(),
             $resource->getModel(),
-            $resource->getRepository(),
-            $resource->getFactory(),
-            $resource->getForm(),
-            $resource->getChoiceForm(),
-            $resource->getDomainManager(),
-            $resource->getController(),
-            $resource->getIdPropertyPath(),
-            $resource->getLabelPropertyPath(),
-        ];
+        ]);
+
+        $definition
+            ->addMethodCall('setDriver', [$resource->getDriver()])
+            ->addMethodCall('setDriverManager', [$resource->getDriverManager()])
+            ->addMethodCall('setDriverMappingPath', [$resource->getDriverMappingPath()])
+            ->addMethodCall('setDriverMappingFormat', [$resource->getDriverMappingFormat()])
+            ->addMethodCall('setRepository', [$resource->getRepository()])
+            ->addMethodCall('setFactory', [$resource->getFactory()])
+            ->addMethodCall('setForm', [$resource->getForm()])
+            ->addMethodCall('setChoiceForm', [$resource->getChoiceForm()])
+            ->addMethodCall('setDomainManager', [$resource->getDomainManager()])
+            ->addMethodCall('setController', [$resource->getController()])
+            ->addMethodCall('setIdPropertyPath', [$resource->getIdPropertyPath()])
+            ->addMethodCall('setLabelPropertyPath', [$resource->getLabelPropertyPath()])
+            ->addTag('lug.resource');
 
         if ($resource->getTranslation() !== null) {
-            $arguments[] = new Reference('lug.resource.'.$resource->getTranslation()->getName());
+            $definition->addMethodCall(
+                'setTranslation',
+                [new Reference('lug.resource.'.$resource->getTranslation()->getName())]
+            );
         }
-
-        $definition = new Definition(Resource::class, $arguments);
-        $definition->addTag('lug.resource');
 
         return $definition;
     }
