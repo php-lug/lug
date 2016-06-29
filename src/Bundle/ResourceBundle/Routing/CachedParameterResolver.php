@@ -218,6 +218,16 @@ class CachedParameterResolver implements ParameterResolverInterface
     /**
      * {@inheritdoc}
      */
+    public function resolveStatusCode($statusCode)
+    {
+        return !isset($this->cache[$key = 'status_code_'.$statusCode])
+            ? $this->cache[$key] = $this->parameterResolver->resolveStatusCode($statusCode)
+            : $this->cache[$key];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function resolveTemplate()
     {
         return !isset($this->cache[$key = 'template'])

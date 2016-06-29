@@ -266,6 +266,17 @@ class CachedParameterResolverTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($sorting, $this->cachedParameterResolver->resolveSorting());
     }
 
+    public function testResolveStatusCode()
+    {
+        $this->parameterResolver
+            ->expects($this->once())
+            ->method('resolveStatusCode')
+            ->will($this->returnValue($statusCode = 200));
+
+        $this->assertSame($statusCode, $this->cachedParameterResolver->resolveStatusCode($statusCode));
+        $this->assertSame($statusCode, $this->cachedParameterResolver->resolveStatusCode($statusCode));
+    }
+
     public function testResolveTemplate()
     {
         $this->parameterResolver

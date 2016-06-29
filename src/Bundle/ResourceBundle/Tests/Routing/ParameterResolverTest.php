@@ -899,6 +899,43 @@ class ParameterResolverTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($sorting, $this->parameterResolver->resolveSorting());
     }
 
+    public function testResolveStatusCodeWithoutRequest()
+    {
+        $this->assertSame($statusCode = 200, $this->parameterResolver->resolveStatusCode($statusCode));
+    }
+
+    public function testResolveStatusCodeDefault()
+    {
+        $this->requestStack
+            ->expects($this->once())
+            ->method('getMasterRequest')
+            ->will($this->returnValue($request = $this->createRequestMock()));
+
+        $request->attributes
+            ->expects($this->once())
+            ->method('get')
+            ->with($this->identicalTo('_lug_status_code'), $this->identicalTo($statusCode = 200))
+            ->will($this->returnValue($statusCode));
+
+        $this->assertSame($statusCode, $this->parameterResolver->resolveStatusCode($statusCode));
+    }
+
+    public function testResolveStatusCodeExplicit()
+    {
+        $this->requestStack
+            ->expects($this->once())
+            ->method('getMasterRequest')
+            ->will($this->returnValue($request = $this->createRequestMock()));
+
+        $request->attributes
+            ->expects($this->once())
+            ->method('get')
+            ->with($this->identicalTo('_lug_status_code'), $this->identicalTo($defaultStatusCode = 200))
+            ->will($this->returnValue($statusCode = 201));
+
+        $this->assertSame($statusCode, $this->parameterResolver->resolveStatusCode($defaultStatusCode));
+    }
+
     public function testResolveTemplate()
     {
         $this->requestStack
