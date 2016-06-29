@@ -22,6 +22,16 @@ class Resource implements ResourceInterface
     private $name;
 
     /**
+     * @var string[]
+     */
+    private $interfaces;
+
+    /**
+     * @var string
+     */
+    private $model;
+
+    /**
      * @var string
      */
     private $driver;
@@ -40,16 +50,6 @@ class Resource implements ResourceInterface
      * @var string
      */
     private $driverMappingFormat;
-
-    /**
-     * @var string[]
-     */
-    private $interfaces;
-
-    /**
-     * @var string
-     */
-    private $model;
 
     /**
      * @var string
@@ -97,58 +97,15 @@ class Resource implements ResourceInterface
     private $translation;
 
     /**
-     * @param string                 $name
-     * @param string                 $driver
-     * @param string                 $driverManager
-     * @param string                 $driverMappingPath
-     * @param string                 $driverMappingFormat
-     * @param string|string[]        $interfaces
-     * @param string                 $model
-     * @param string                 $repository
-     * @param string|null            $factory
-     * @param string|null            $form
-     * @param string|null            $choiceForm
-     * @param string|null            $domainManager
-     * @param string|null            $controller
-     * @param string|null            $idPropertyPath
-     * @param string|null            $labelPropertyPath
-     * @param ResourceInterface|null $translation
+     * @param string          $name
+     * @param string|string[] $interfaces
+     * @param string          $model
      */
-    public function __construct(
-        $name,
-        $driver,
-        $driverManager,
-        $driverMappingPath,
-        $driverMappingFormat,
-        $interfaces,
-        $model,
-        $repository,
-        $factory = null,
-        $form = null,
-        $choiceForm = null,
-        $domainManager = null,
-        $controller = null,
-        $idPropertyPath = null,
-        $labelPropertyPath = null,
-        ResourceInterface $translation = null
-    ) {
+    public function __construct($name, $interfaces, $model)
+    {
         $this->name = $name;
         $this->interfaces = (array) $interfaces;
-        $this->translation = $translation;
-
-        $this->setDriver($driver);
-        $this->setDriverManager($driverManager);
-        $this->setDriverMappingPath($driverMappingPath);
-        $this->setDriverMappingFormat($driverMappingFormat);
-        $this->setModel($model);
-        $this->setRepository($repository);
-        $this->setFactory($factory);
-        $this->setForm($form);
-        $this->setChoiceForm($choiceForm);
-        $this->setDomainManager($domainManager);
-        $this->setController($controller);
-        $this->setIdPropertyPath($idPropertyPath);
-        $this->setLabelPropertyPath($labelPropertyPath);
+        $this->model = $model;
     }
 
     /**
@@ -157,6 +114,30 @@ class Resource implements ResourceInterface
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getInterfaces()
+    {
+        return $this->interfaces;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getModel()
+    {
+        return $this->model;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setModel($model)
+    {
+        $this->model = $model;
     }
 
     /**
@@ -221,30 +202,6 @@ class Resource implements ResourceInterface
     public function setDriverMappingFormat($driverMappingFormat)
     {
         $this->driverMappingFormat = $driverMappingFormat;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getInterfaces()
-    {
-        return $this->interfaces;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getModel()
-    {
-        return $this->model;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setModel($model)
-    {
-        $this->model = $model;
     }
 
     /**
@@ -381,5 +338,13 @@ class Resource implements ResourceInterface
     public function getTranslation()
     {
         return $this->translation;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setTranslation(ResourceInterface $translation = null)
+    {
+        $this->translation = $translation;
     }
 }

@@ -33,24 +33,21 @@ class LocaleResource extends Resource
      */
     public function __construct($controller, $driver = self::DRIVER_DOCTRINE_ORM)
     {
+        parent::__construct('locale', LocaleInterface::class, Locale::class);
+
         $orm = $driver === self::DRIVER_DOCTRINE_ORM;
 
-        parent::__construct(
-            'locale',
-            $driver,
-            'default',
-            realpath(__DIR__.'/../Resources/Doctrine'),
-            self::DRIVER_MAPPING_FORMAT_XML,
-            LocaleInterface::class,
-            Locale::class,
-            $orm ? DoctrineORMRepository::class : DoctrineMongoDBRepository::class,
-            Factory::class,
-            LocaleType::class,
-            $orm ? DoctrineORMLocaleChoiceType::class : DoctrineMongoDBLocaleChoiceType::class,
-            DomainManager::class,
-            $controller,
-            'code',
-            'code'
-        );
+        $this->setDriver($driver);
+        $this->setDriverManager('default');
+        $this->setDriverMappingPath(realpath(__DIR__.'/../Resources/Doctrine'));
+        $this->setDriverMappingFormat(self::DRIVER_MAPPING_FORMAT_XML);
+        $this->setRepository($orm ? DoctrineORMRepository::class : DoctrineMongoDBRepository::class);
+        $this->setFactory(Factory::class);
+        $this->setForm(LocaleType::class);
+        $this->setChoiceForm($orm ? DoctrineORMLocaleChoiceType::class : DoctrineMongoDBLocaleChoiceType::class);
+        $this->setDomainManager(DomainManager::class);
+        $this->setController($controller);
+        $this->setIdPropertyPath('code');
+        $this->setLabelPropertyPath('code');
     }
 }

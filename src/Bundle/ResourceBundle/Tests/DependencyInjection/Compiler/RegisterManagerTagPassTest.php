@@ -64,8 +64,14 @@ class RegisterManagerTagPassTest extends \PHPUnit_Framework_TestCase
 
         $container
             ->expects($this->once())
+            ->method('hasAlias')
+            ->with($this->identicalTo($manager = 'lug.manager.'.$resourceName))
+            ->will($this->returnValue(true));
+
+        $container
+            ->expects($this->once())
             ->method('getAlias')
-            ->with($this->identicalTo('lug.manager.'.$resourceName))
+            ->with($this->identicalTo($manager))
             ->will($this->returnValue($alias));
 
         $aliasDefinition
@@ -75,6 +81,41 @@ class RegisterManagerTagPassTest extends \PHPUnit_Framework_TestCase
                 $this->identicalTo('lug.manager'),
                 $this->identicalTo(['resource' => $resourceName])
             );
+
+        $this->compiler->process($container);
+    }
+
+    public function testProcessWithoutAlias()
+    {
+        $container = $this->createContainerBuilderMock();
+        $container
+            ->expects($this->once())
+            ->method('findTaggedServiceIds')
+            ->with($this->identicalTo('lug.resource'))
+            ->will($this->returnValue([$resource = 'my.resource' => []]));
+
+        $container
+            ->expects($this->once())
+            ->method('getDefinition')
+            ->with($this->identicalTo($resource))
+            ->will($this->returnValue($resourceDefinition = $this->createDefinitionMock()));
+
+        $resourceDefinition
+            ->expects($this->once())
+            ->method('getArgument')
+            ->with($this->identicalTo(0))
+            ->will($this->returnValue($resourceName = 'resource_name'));
+
+        $container
+            ->expects($this->once())
+            ->method('hasAlias')
+            ->with($this->identicalTo($manager = 'lug.manager.'.$resourceName))
+            ->will($this->returnValue(false));
+
+        $container
+            ->expects($this->never())
+            ->method('getAlias')
+            ->with($this->identicalTo($manager));
 
         $this->compiler->process($container);
     }

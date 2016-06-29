@@ -29,46 +29,6 @@ interface ResourceInterface
     public function getName();
 
     /**
-     * @return string
-     */
-    public function getDriver();
-
-    /**
-     * @param string $driver
-     */
-    public function setDriver($driver);
-
-    /**
-     * @return string
-     */
-    public function getDriverMappingPath();
-
-    /**
-     * @param string $driverMappingPath
-     */
-    public function setDriverMappingPath($driverMappingPath);
-
-    /**
-     * @return string
-     */
-    public function getDriverMappingFormat();
-
-    /**
-     * @param string $driverMappingFormat
-     */
-    public function setDriverMappingFormat($driverMappingFormat);
-
-    /**
-     * @return string
-     */
-    public function getDriverManager();
-
-    /**
-     * @param string $driverManager
-     */
-    public function setDriverManager($driverManager);
-
-    /**
      * @return string[]
      */
     public function getInterfaces();
@@ -84,12 +44,52 @@ interface ResourceInterface
     public function setModel($model);
 
     /**
-     * @return string
+     * @return string|null
+     */
+    public function getDriver();
+
+    /**
+     * @param string|null $driver
+     */
+    public function setDriver($driver);
+
+    /**
+     * @return string|null
+     */
+    public function getDriverMappingPath();
+
+    /**
+     * @param string|null $driverMappingPath
+     */
+    public function setDriverMappingPath($driverMappingPath);
+
+    /**
+     * @return string|null
+     */
+    public function getDriverMappingFormat();
+
+    /**
+     * @param string|null $driverMappingFormat
+     */
+    public function setDriverMappingFormat($driverMappingFormat);
+
+    /**
+     * @return string|null
+     */
+    public function getDriverManager();
+
+    /**
+     * @param string|null $driverManager
+     */
+    public function setDriverManager($driverManager);
+
+    /**
+     * @return string|null
      */
     public function getRepository();
 
     /**
-     * @param string $repository
+     * @param string|null $repository
      */
     public function setRepository($repository);
 
@@ -167,4 +167,9 @@ interface ResourceInterface
      * @return ResourceInterface|null
      */
     public function getTranslation();
+
+    /**
+     * @param ResourceInterface|null $translation
+     */
+    public function setTranslation(ResourceInterface $translation = null);
 }
