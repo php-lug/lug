@@ -93,12 +93,15 @@ class ResourceExtension extends ConfigurableExtension
      */
     private function configureResource(ResourceInterface $resource, array $config)
     {
+        $driverConfig = $config['driver'];
+        $mappingConfig = $driverConfig['mapping'];
+
         $resource->setModel($config['model']);
-        $resource->setDriver($config['driver']['name']);
-        $resource->setDriverManager($config['driver']['manager']);
-        $resource->setDriverMappingPath($config['driver']['mapping']['path']);
-        $resource->setDriverMappingFormat($config['driver']['mapping']['format']);
-        $resource->setRepository($config['repository']);
+        $resource->setDriver(isset($driverConfig['name']) ? $driverConfig['name'] : null);
+        $resource->setDriverManager(isset($driverConfig['manager']) ? $driverConfig['manager'] : null);
+        $resource->setDriverMappingPath(isset($mappingConfig['path']) ? $mappingConfig['path'] : null);
+        $resource->setDriverMappingFormat(isset($mappingConfig['format']) ? $mappingConfig['format'] : null);
+        $resource->setRepository(isset($config['repository']) ? $config['repository'] : null);
         $resource->setFactory(isset($config['factory']) ? $config['factory'] : null);
         $resource->setForm(isset($config['form']) ? $config['form'] : null);
         $resource->setChoiceForm(isset($config['choice_form']) ? $config['choice_form'] : null);
