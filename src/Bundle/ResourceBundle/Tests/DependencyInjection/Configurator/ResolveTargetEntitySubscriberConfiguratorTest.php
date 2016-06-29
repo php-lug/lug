@@ -49,6 +49,11 @@ class ResolveTargetEntitySubscriberConfiguratorTest extends \PHPUnit_Framework_T
 
         $resource
             ->expects($this->once())
+            ->method('getDriver')
+            ->will($this->returnValue(ResourceInterface::DRIVER_DOCTRINE_ORM));
+
+        $resource
+            ->expects($this->once())
             ->method('getInterfaces')
             ->will($this->returnValue([$interface = 'interface']));
 
@@ -65,6 +70,26 @@ class ResolveTargetEntitySubscriberConfiguratorTest extends \PHPUnit_Framework_T
                 $this->identicalTo($interface),
                 $this->identicalTo($model)
             );
+
+        $this->configurator->configure($subscriber);
+    }
+
+    public function testConfigureWithoutDriver()
+    {
+        $this->serviceRegistry
+            ->expects($this->once())
+            ->method('getIterator')
+            ->will($this->returnValue(new \ArrayIterator([$resource = $this->createResourceMock()])));
+
+        $resource
+            ->expects($this->once())
+            ->method('getDriver')
+            ->will($this->returnValue(null));
+
+        $subscriber = $this->createResolveTargetSubscriberMock();
+        $subscriber
+            ->expects($this->never())
+            ->method('addResolveTarget');
 
         $this->configurator->configure($subscriber);
     }

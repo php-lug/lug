@@ -30,14 +30,16 @@ class RegisterDriverMappingPass implements CompilerPassInterface
     public function process(ContainerBuilder $container)
     {
         foreach (array_keys($container->findTaggedServiceIds('lug.resource')) as $id) {
-            $this->getCompilerPass($container->getDefinition($id))->process($container);
+            if (($compiler = $this->getCompilerPass($container->getDefinition($id))) !== null) {
+                $compiler->process($container);
+            }
         }
     }
 
     /**
      * @param Definition $definition
      *
-     * @return CompilerPassInterface
+     * @return CompilerPassInterface|null
      */
     private function getCompilerPass(Definition $definition)
     {

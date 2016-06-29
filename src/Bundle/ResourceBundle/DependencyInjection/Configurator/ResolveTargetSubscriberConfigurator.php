@@ -38,6 +38,10 @@ class ResolveTargetSubscriberConfigurator
     public function configure(ResolveTargetSubscriberInterface $resolveTargetObjectSubscriber)
     {
         foreach ($this->resourceRegistry as $resource) {
+            if ($resource->getDriver() === null) {
+                continue;
+            }
+
             foreach ($resource->getInterfaces() as $interface) {
                 $resolveTargetObjectSubscriber->addResolveTarget($interface, $resource->getModel());
             }
