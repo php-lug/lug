@@ -282,6 +282,8 @@ class Controller extends FOSRestController implements ControllerInterface
      */
     protected function processAction(FormInterface $form = null, $statusCode = Response::HTTP_NO_CONTENT)
     {
+        $statusCode = $this->getParameterResolver()->resolveStatusCode($statusCode);
+
         $this->getRestEventDispatcher()->dispatch(
             RestEvents::ACTION,
             $event = new ActionEvent($this->resource, $form, $statusCode)

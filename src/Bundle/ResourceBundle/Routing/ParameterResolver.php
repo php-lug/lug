@@ -247,6 +247,14 @@ class ParameterResolver implements ParameterResolverInterface
     /**
      * {@inheritdoc}
      */
+    public function resolveStatusCode($statusCode)
+    {
+        return $this->resolveParameter('status_code', $statusCode);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function resolveSorting()
     {
         return $this->resolveParameter('sorting', []);

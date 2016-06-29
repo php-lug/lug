@@ -112,6 +112,13 @@ interface ParameterResolverInterface
     public function resolveSorting();
 
     /**
+     * @param int $statusCode
+     *
+     * @return int
+     */
+    public function resolveStatusCode($statusCode);
+
+    /**
      * @return string
      */
     public function resolveTemplate();
