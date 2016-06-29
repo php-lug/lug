@@ -19,6 +19,7 @@ file that was distributed with this source code.
         >
             <argument type="service" id="translator" />
             <argument type="service" id="property_accessor" />
+            <argument type="service" id="lug.resource.routing.parameter_resolver" />
         </service>
 
         <service

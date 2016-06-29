@@ -10,6 +10,7 @@
 
 namespace Lug\Bundle\ResourceBundle\EventListener;
 
+use Lug\Bundle\ResourceBundle\Routing\ParameterResolverInterface;
 use Lug\Component\Resource\Domain\DomainEvent;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 use Symfony\Component\Translation\TranslatorInterface;
@@ -30,13 +31,23 @@ class MessageListener
     private $propertyAccessor;
 
     /**
-     * @param TranslatorInterface       $translator
-     * @param PropertyAccessorInterface $propertyAccessor
+     * @var ParameterResolverInterface
      */
-    public function __construct(TranslatorInterface $translator, PropertyAccessorInterface $propertyAccessor)
-    {
+    private $parameterResolver;
+
+    /**
+     * @param TranslatorInterface        $translator
+     * @param PropertyAccessorInterface  $propertyAccessor
+     * @param ParameterResolverInterface $parameterResolver
+     */
+    public function __construct(
+        TranslatorInterface $translator,
+        PropertyAccessorInterface $propertyAccessor,
+        ParameterResolverInterface $parameterResolver
+    ) {
         $this->translator = $translator;
         $this->propertyAccessor = $propertyAccessor;
+        $this->parameterResolver = $parameterResolver;
     }
 
     /**
@@ -44,6 +55,10 @@ class MessageListener
      */
     public function addMessage(DomainEvent $event)
     {
+        if ($this->parameterResolver->resolveApi()) {
+            return;
+        }
+
         $messageType = $event->getMessageType();
         $message = $event->getMessage();
 
