@@ -12,6 +12,7 @@
 namespace Lug\Bundle\ResourceBundle\Tests\EventListener;
 
 use Lug\Bundle\ResourceBundle\EventListener\MessageListener;
+use Lug\Bundle\ResourceBundle\Routing\ParameterResolverInterface;
 use Lug\Component\Resource\Domain\DomainEvent;
 use Lug\Component\Resource\Model\ResourceInterface;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
@@ -38,18 +39,33 @@ class MessageListenerTest extends \PHPUnit_Framework_TestCase
     private $propertyAccessor;
 
     /**
+     * @var \PHPUnit_Framework_MockObject_MockObject|ParameterResolverInterface
+     */
+    private $parameterResolver;
+
+    /**
      * {@inheritdoc}
      */
     protected function setUp()
     {
         $this->translator = $this->createTranslatorMock();
         $this->propertyAccessor = $this->createPropertyAccessorMock();
+        $this->parameterResolver = $this->createParameterResolverMock();
 
-        $this->messageListener = new MessageListener($this->translator, $this->propertyAccessor);
+        $this->messageListener = new MessageListener(
+            $this->translator,
+            $this->propertyAccessor,
+            $this->parameterResolver
+        );
     }
 
     public function testMessageWithExplicit()
     {
+        $this->parameterResolver
+            ->expects($this->once())
+            ->method('resolveApi')
+            ->will($this->returnValue(false));
+
         $event = $this->createDomainEventMock();
         $event
             ->expects($this->once())
@@ -76,6 +92,11 @@ class MessageListenerTest extends \PHPUnit_Framework_TestCase
 
     public function testMessageTypeSuccess()
     {
+        $this->parameterResolver
+            ->expects($this->once())
+            ->method('resolveApi')
+            ->will($this->returnValue(false));
+
         $event = $this->createDomainEventMock();
         $event
             ->expects($this->once())
@@ -107,6 +128,11 @@ class MessageListenerTest extends \PHPUnit_Framework_TestCase
 
     public function testMessageTypeError()
     {
+        $this->parameterResolver
+            ->expects($this->once())
+            ->method('resolveApi')
+            ->will($this->returnValue(false));
+
         $event = $this->createDomainEventMock();
         $event
             ->expects($this->once())
@@ -138,6 +164,11 @@ class MessageListenerTest extends \PHPUnit_Framework_TestCase
 
     public function testMessageWithLabelPropertyPath()
     {
+        $this->parameterResolver
+            ->expects($this->once())
+            ->method('resolveApi')
+            ->will($this->returnValue(false));
+
         $event = $this->createDomainEventMock();
         $event
             ->expects($this->once())
@@ -207,6 +238,11 @@ class MessageListenerTest extends \PHPUnit_Framework_TestCase
 
     public function testMessageWithoutLabelPropertyPath()
     {
+        $this->parameterResolver
+            ->expects($this->once())
+            ->method('resolveApi')
+            ->will($this->returnValue(false));
+
         $event = $this->createDomainEventMock();
         $event
             ->expects($this->once())
@@ -265,6 +301,21 @@ class MessageListenerTest extends \PHPUnit_Framework_TestCase
         $this->messageListener->addMessage($event);
     }
 
+    public function testMessageWithApi()
+    {
+        $this->parameterResolver
+            ->expects($this->once())
+            ->method('resolveApi')
+            ->will($this->returnValue(true));
+
+        $event = $this->createDomainEventMock();
+        $event
+            ->expects($this->never())
+            ->method('setMessage');
+
+        $this->messageListener->addMessage($event);
+    }
+
     /**
      * @return \PHPUnit_Framework_MockObject_MockObject|TranslatorInterface
      */
@@ -279,6 +330,14 @@ class MessageListenerTest extends \PHPUnit_Framework_TestCase
     private function createPropertyAccessorMock()
     {
         return $this->createMock(PropertyAccessorInterface::class);
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|ParameterResolverInterface
+     */
+    private function createParameterResolverMock()
+    {
+        return $this->createMock(ParameterResolverInterface::class);
     }
 
     /**
