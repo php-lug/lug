@@ -92,9 +92,9 @@ class Resource implements ResourceInterface
     private $labelPropertyPath;
 
     /**
-     * @var ResourceInterface|null
+     * @var ResourceInterface[]
      */
-    private $translation;
+    private $relations = [];
 
     /**
      * @param string          $name
@@ -335,16 +335,44 @@ class Resource implements ResourceInterface
     /**
      * {@inheritdoc}
      */
-    public function getTranslation()
+    public function getRelations()
     {
-        return $this->translation;
+        return $this->relations;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function setTranslation(ResourceInterface $translation = null)
+    public function getRelation($name)
     {
-        $this->translation = $translation;
+        return isset($this->relations[$name]) ? $this->relations[$name] : null;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setRelations(array $relations)
+    {
+        $this->relations = [];
+
+        foreach ($relations as $name => $relation) {
+            $this->addRelation($name, $relation);
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function addRelation($name, ResourceInterface $resource)
+    {
+        $this->relations[$name] = $resource;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function removeRelation($name)
+    {
+        unset($this->relations[$name]);
     }
 }

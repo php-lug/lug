@@ -95,7 +95,8 @@ class TranslatableTypeTest extends \PHPUnit_Framework_TestCase
 
         $this->translatableResource
             ->expects($this->once())
-            ->method('getTranslation')
+            ->method('getRelation')
+            ->with($this->identicalTo('translation'))
             ->will($this->returnValue($translationResource = $this->createResourceMock()));
 
         $translationResource

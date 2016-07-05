@@ -164,12 +164,30 @@ interface ResourceInterface
     public function setLabelPropertyPath($labelPropertyPath);
 
     /**
-     * @return ResourceInterface|null
+     * @return ResourceInterface[]
      */
-    public function getTranslation();
+    public function getRelations();
 
     /**
-     * @param ResourceInterface|null $translation
+     * @param string $name
+     *
+     * @return ResourceInterface|null
      */
-    public function setTranslation(ResourceInterface $translation = null);
+    public function getRelation($name);
+
+    /**
+     * @param ResourceInterface[] $relations
+     */
+    public function setRelations(array $relations);
+
+    /**
+     * @param string            $name
+     * @param ResourceInterface $resource
+     */
+    public function addRelation($name, ResourceInterface $resource);
+
+    /**
+     * @param string $name
+     */
+    public function removeRelation($name);
 }

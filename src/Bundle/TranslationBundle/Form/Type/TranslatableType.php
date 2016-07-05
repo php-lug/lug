@@ -28,7 +28,7 @@ class TranslatableType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('translations', TranslationsFormsType::class, [
-            'form_type'  => $options['resource']->getTranslation()->getForm(),
+            'form_type'  => $options['resource']->getRelation('translation')->getForm(),
             'empty_data' => function () {
                 return new ArrayCollection();
             },

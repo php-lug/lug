@@ -11,6 +11,8 @@
 
 namespace Lug\Bundle\TranslationBundle;
 
+use Lug\Bundle\TranslationBundle\DependencyInjection\Compiler\ConfigureFactoryPass;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
@@ -18,4 +20,11 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
  */
 class LugTranslationBundle extends Bundle
 {
+    /**
+     * {@inheritdoc}
+     */
+    public function build(ContainerBuilder $container)
+    {
+        $container->addCompilerPass(new ConfigureFactoryPass());
+    }
 }

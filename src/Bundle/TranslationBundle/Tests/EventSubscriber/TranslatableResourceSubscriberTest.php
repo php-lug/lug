@@ -124,7 +124,8 @@ class TranslatableResourceSubscriberTest extends \PHPUnit_Framework_TestCase
 
         $resource
             ->expects($this->once())
-            ->method('getTranslation')
+            ->method('getRelation')
+            ->with($this->identicalTo('translation'))
             ->will($this->returnValue($translation = $this->createResourceMock()));
 
         $translation

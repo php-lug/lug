@@ -55,7 +55,7 @@ class TranslatableFactory extends Factory
         return parent::create(array_merge($options, [
             'locales'          => $this->localeContext->getLocales(),
             'fallbackLocale'   => $this->localeContext->getFallbackLocale(),
-            'translationClass' => $this->resource->getTranslation()->getModel(),
+            'translationClass' => $this->resource->getRelation('translation')->getModel(),
         ]));
     }
 }
