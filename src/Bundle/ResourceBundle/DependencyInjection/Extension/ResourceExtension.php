@@ -15,7 +15,6 @@ use Lug\Bundle\ResourceBundle\ResourceBundleInterface;
 use Lug\Bundle\ResourceBundle\Util\ClassUtils;
 use Lug\Component\Resource\Model\Resource;
 use Lug\Component\Resource\Model\ResourceInterface;
-use Lug\Component\Translation\Factory\TranslatableFactory;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
@@ -70,9 +69,9 @@ class ResourceExtension extends ConfigurableExtension
             $this->configureResource($resource, $resourceConfig);
             $this->loadResource($resource, $container);
 
-            if ($resource->getTranslation() !== null) {
-                $this->configureResource($resource->getTranslation(), $resourceConfig['translation']);
-                $this->loadResource($resource->getTranslation(), $container);
+            foreach ($resource->getRelations() as $name => $relation) {
+                $this->configureResource($relation, $resourceConfig[$name]);
+                $this->loadResource($relation, $container);
             }
         }
 
@@ -214,11 +213,8 @@ class ResourceExtension extends ConfigurableExtension
             ->addMethodCall('setLabelPropertyPath', [$resource->getLabelPropertyPath()])
             ->addTag('lug.resource');
 
-        if ($resource->getTranslation() !== null) {
-            $definition->addMethodCall(
-                'setTranslation',
-                [new Reference('lug.resource.'.$resource->getTranslation()->getName())]
-            );
+        foreach ($resource->getRelations() as $name => $relation) {
+            $definition->addMethodCall('addRelation', [$name, new Reference('lug.resource.'.$relation->getName())]);
         }
 
         return $definition;
@@ -231,11 +227,9 @@ class ResourceExtension extends ConfigurableExtension
      */
     private function createManagerAlias(ResourceInterface $resource)
     {
-        if ($resource->getDriver() === ResourceInterface::DRIVER_DOCTRINE_MONGODB) {
-            return 'doctrine_mongodb.odm.'.$resource->getDriverManager().'_document_manager';
-        }
-
-        return 'doctrine.orm.'.$resource->getDriverManager().'_entity_manager';
+        return $resource->getDriver() === ResourceInterface::DRIVER_DOCTRINE_MONGODB
+            ? 'doctrine_mongodb.odm.'.$resource->getDriverManager().'_document_manager'
+            : 'doctrine.orm.'.$resource->getDriverManager().'_entity_manager';
     }
 
     /**
@@ -245,16 +239,11 @@ class ResourceExtension extends ConfigurableExtension
      */
     private function createFactoryDefinition(ResourceInterface $resource)
     {
-        $arguments = [
+        $definition = new Definition($resource->getFactory(), [
             new Reference('lug.resource.'.$resource->getName()),
             new Reference('property_accessor'),
-        ];
+        ]);
 
-        if (is_a($resource->getFactory(), TranslatableFactory::class, true)) {
-            $arguments[] = new Reference('lug.translation.context.locale');
-        }
-
-        $definition = new Definition($resource->getFactory(), $arguments);
         $definition->addTag('lug.factory', ['resource' => $resource->getName()]);
 
         return $definition;

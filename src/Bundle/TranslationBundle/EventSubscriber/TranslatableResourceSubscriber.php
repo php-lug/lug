@@ -58,7 +58,7 @@ class TranslatableResourceSubscriber implements EventSubscriber
 
         foreach ($this->getResourceRegistry() as $resource) {
             if ($resource->getModel() === $class) {
-                $entity->setTranslationClass($resource->getTranslation()->getModel());
+                $entity->setTranslationClass($resource->getRelation('translation')->getModel());
 
                 break;
             }

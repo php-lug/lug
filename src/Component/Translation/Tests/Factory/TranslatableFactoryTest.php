@@ -73,7 +73,8 @@ class TranslatableFactoryTest extends \PHPUnit_Framework_TestCase
 
         $this->resource
             ->expects($this->once())
-            ->method('getTranslation')
+            ->method('getRelation')
+            ->with($this->identicalTo('translation'))
             ->will($this->returnValue($translationResource = $this->createResourceMock()));
 
         $translationResource
@@ -109,7 +110,8 @@ class TranslatableFactoryTest extends \PHPUnit_Framework_TestCase
 
         $this->resource
             ->expects($this->once())
-            ->method('getTranslation')
+            ->method('getRelation')
+            ->with($this->identicalTo('translation'))
             ->will($this->returnValue($translationResource = $this->createResourceMock()));
 
         $translationResource

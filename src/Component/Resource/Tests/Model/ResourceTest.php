@@ -78,7 +78,7 @@ class ResourceTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($this->resource->getController());
         $this->assertNull($this->resource->getIdPropertyPath());
         $this->assertNull($this->resource->getLabelPropertyPath());
-        $this->assertNull($this->resource->getTranslation());
+        $this->assertEmpty($this->resource->getRelations());
     }
 
     public function testDriver()
@@ -172,11 +172,28 @@ class ResourceTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($labelPropertyPath, $this->resource->getLabelPropertyPath());
     }
 
-    public function testTranslation()
+    public function testSetRelations()
     {
-        $this->resource->setTranslation($translation = $this->createResourceMock());
+        $this->resource->setRelations($relations = ['name' => $this->createResourceMock()]);
 
-        $this->assertSame($translation, $this->resource->getTranslation());
+        $this->assertSame($relations, $this->resource->getRelations());
+    }
+
+    public function testAddRelation()
+    {
+        $this->resource->addRelation($name = 'name', $relation = $this->createResourceMock());
+
+        $this->assertSame([$name => $relation], $this->resource->getRelations());
+        $this->assertSame($relation, $this->resource->getRelation($name));
+    }
+
+    public function testRemoveRelation()
+    {
+        $this->resource->addRelation($name = 'name', $this->createResourceMock());
+        $this->resource->removeRelation($name);
+
+        $this->assertEmpty($this->resource->getRelations());
+        $this->assertNull($this->resource->getRelation($name));
     }
 
     /**

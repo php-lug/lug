@@ -128,8 +128,8 @@ class ResourceConfiguration implements ConfigurationInterface
             ->append($this->createNode('id_property_path', 'scalar', $resource->getIdPropertyPath()))
             ->append($this->createNode('label_property_path', 'scalar', $resource->getLabelPropertyPath()));
 
-        if ($resource->getTranslation() !== null) {
-            $childrenNode->append($this->createResourceNode($resource->getTranslation(), 'translation'));
+        foreach ($resource->getRelations() as $name => $relation) {
+            $childrenNode->append($this->createResourceNode($relation, $name));
         }
 
         return $resourceNode;

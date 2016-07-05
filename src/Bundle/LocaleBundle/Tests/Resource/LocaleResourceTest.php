@@ -67,7 +67,7 @@ class LocaleResourceTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(DomainManager::class, $this->resource->getDomainManager());
         $this->assertSame('code', $this->resource->getLabelPropertyPath());
         $this->assertSame('code', $this->resource->getIdPropertyPath());
-        $this->assertNull($this->resource->getTranslation());
+        $this->assertEmpty($this->resource->getRelations());
     }
 
     public function testMongoDBDriver()
@@ -92,6 +92,6 @@ class LocaleResourceTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(DomainManager::class, $this->resource->getDomainManager());
         $this->assertSame('code', $this->resource->getLabelPropertyPath());
         $this->assertSame('code', $this->resource->getIdPropertyPath());
-        $this->assertNull($this->resource->getTranslation());
+        $this->assertEmpty($this->resource->getRelations());
     }
 }
