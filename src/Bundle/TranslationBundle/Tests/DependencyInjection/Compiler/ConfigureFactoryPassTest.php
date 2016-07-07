@@ -43,25 +43,52 @@ class ConfigureFactoryPassTest extends \PHPUnit_Framework_TestCase
             ->expects($this->once())
             ->method('findTaggedServiceIds')
             ->with($this->identicalTo('lug.factory'))
-            ->will($this->returnValue([$service = 'service' => []]));
+            ->will($this->returnValue([
+                $factoryService = 'lug.factory.resource_name' => [['resource' => $resourceName = 'resource_name']],
+            ]));
 
         $container
-            ->expects($this->once())
+            ->expects($this->exactly(3))
             ->method('getDefinition')
-            ->with($this->identicalTo($service))
-            ->will($this->returnValue($factory = $this->createDefinitionMock()));
+            ->will($this->returnValueMap([
+                [$factoryService, $factory = $this->createDefinitionMock()],
+                [$resourceService = 'lug.resource.resource_name', $resource = $this->createDefinitionMock()],
+                [$translationService = 'lug.resource.translation_name', $translation = $this->createDefinitionMock()],
+            ]));
 
         $factory
             ->expects($this->once())
             ->method('getClass')
             ->will($this->returnValue(TranslatableFactory::class));
 
-        $factory
+        $resource
             ->expects($this->once())
+            ->method('getMethodCalls')
+            ->will($this->returnValue([['addRelation', ['translation', $translationService]]]));
+
+        $translation
+            ->expects($this->once())
+            ->method('getArgument')
+            ->with($this->identicalTo(0))
+            ->will($this->returnValue($translationName = 'translation_name'));
+
+        $factory
+            ->expects($this->at(1))
             ->method('addArgument')
             ->with($this->callback(function ($argument) {
-                return $argument instanceof Reference && (string) $argument === 'lug.translation.context.locale';
-            }));
+                return $argument instanceof Reference
+                    && (string) $argument === 'lug.translation.context.locale';
+            }))
+            ->will($this->returnSelf());
+
+        $factory
+            ->expects($this->at(2))
+            ->method('addArgument')
+            ->with($this->callback(function ($argument) use ($translationName) {
+                return $argument instanceof Reference
+                    && (string) $argument === 'lug.factory.'.$translationName;
+            }))
+            ->will($this->returnSelf());
 
         $this->compiler->process($container);
     }

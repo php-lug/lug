@@ -12,6 +12,7 @@
 namespace Lug\Component\Translation\Model;
 
 use Doctrine\Common\Collections\Collection;
+use Lug\Component\Resource\Factory\FactoryInterface;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -49,14 +50,14 @@ interface TranslatableInterface
     public function setFallbackLocale($fallbackLocale);
 
     /**
-     * @return string
+     * @return FactoryInterface
      */
-    public function getTranslationClass();
+    public function getTranslationFactory();
 
     /**
-     * @param string $translationClass
+     * @param FactoryInterface $translationFactory
      */
-    public function setTranslationClass($translationClass);
+    public function setTranslationFactory(FactoryInterface $translationFactory);
 
     /**
      * @return TranslationInterface[]|Collection
@@ -69,6 +70,11 @@ interface TranslatableInterface
      * @return TranslationInterface
      */
     public function getTranslation($allowCreate = false);
+
+    /**
+     * @param TranslationInterface[]|Collection $translations
+     */
+    public function setTranslations($translations);
 
     /**
      * @param TranslationInterface $translation

@@ -12,6 +12,7 @@
 namespace Lug\Component\Translation\Tests\Factory;
 
 use Lug\Component\Resource\Factory\Factory;
+use Lug\Component\Resource\Factory\FactoryInterface;
 use Lug\Component\Resource\Model\ResourceInterface;
 use Lug\Component\Translation\Context\LocaleContextInterface;
 use Lug\Component\Translation\Factory\TranslatableFactory;
@@ -48,6 +49,11 @@ class TranslatableFactoryTest extends \PHPUnit_Framework_TestCase
     private $localeContext;
 
     /**
+     * @var \PHPUnit_Framework_MockObject_MockObject|FactoryInterface
+     */
+    private $translationFactory;
+
+    /**
      * {@inheritdoc}
      */
     protected function setUp()
@@ -55,8 +61,14 @@ class TranslatableFactoryTest extends \PHPUnit_Framework_TestCase
         $this->resource = $this->createResourceMock();
         $this->propertyAccessor = PropertyAccess::createPropertyAccessor();
         $this->localeContext = $this->createLocaleContextMock();
+        $this->translationFactory = $this->createFactoryMock();
 
-        $this->factory = new TranslatableFactory($this->resource, $this->propertyAccessor, $this->localeContext);
+        $this->factory = new TranslatableFactory(
+            $this->resource,
+            $this->propertyAccessor,
+            $this->localeContext,
+            $this->translationFactory
+        );
     }
 
     public function testInheritance()
@@ -70,17 +82,6 @@ class TranslatableFactoryTest extends \PHPUnit_Framework_TestCase
             ->expects($this->once())
             ->method('getModel')
             ->will($this->returnValue($translatableClass = TranslatableTest::class));
-
-        $this->resource
-            ->expects($this->once())
-            ->method('getRelation')
-            ->with($this->identicalTo('translation'))
-            ->will($this->returnValue($translationResource = $this->createResourceMock()));
-
-        $translationResource
-            ->expects($this->once())
-            ->method('getModel')
-            ->will($this->returnValue($translationClass = TranslationTest::class));
 
         $this->localeContext
             ->expects($this->once())
@@ -98,7 +99,7 @@ class TranslatableFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($name, $translatable->getName());
         $this->assertSame($locales, $translatable->getLocales());
         $this->assertSame($fallbackLocale, $translatable->getFallbackLocale());
-        $this->assertSame($translationClass, $translatable->getTranslationClass());
+        $this->assertSame($this->translationFactory, $translatable->getTranslationFactory());
     }
 
     public function testCreateWithoutOptions()
@@ -107,17 +108,6 @@ class TranslatableFactoryTest extends \PHPUnit_Framework_TestCase
             ->expects($this->once())
             ->method('getModel')
             ->will($this->returnValue($translatableClass = TranslatableTest::class));
-
-        $this->resource
-            ->expects($this->once())
-            ->method('getRelation')
-            ->with($this->identicalTo('translation'))
-            ->will($this->returnValue($translationResource = $this->createResourceMock()));
-
-        $translationResource
-            ->expects($this->once())
-            ->method('getModel')
-            ->will($this->returnValue($translationClass = TranslationTest::class));
 
         $this->localeContext
             ->expects($this->once())
@@ -134,7 +124,7 @@ class TranslatableFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf($translatableClass, $translatable);
         $this->assertSame($locales, $translatable->getLocales());
         $this->assertSame($fallbackLocale, $translatable->getFallbackLocale());
-        $this->assertSame($translationClass, $translatable->getTranslationClass());
+        $this->assertSame($this->translationFactory, $translatable->getTranslationFactory());
     }
 
     /**
@@ -151,6 +141,14 @@ class TranslatableFactoryTest extends \PHPUnit_Framework_TestCase
     private function createLocaleContextMock()
     {
         return $this->createMock(LocaleContextInterface::class);
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|FactoryInterface
+     */
+    private function createFactoryMock()
+    {
+        return $this->createMock(FactoryInterface::class);
     }
 }
 
