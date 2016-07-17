@@ -34,6 +34,11 @@ class ActionEventTest extends \PHPUnit_Framework_TestCase
     private $resource;
 
     /**
+     * @var string
+     */
+    private $action;
+
+    /**
      * @var \PHPUnit_Framework_MockObject_MockObject|FormInterface
      */
     private $form;
@@ -49,10 +54,11 @@ class ActionEventTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->resource = $this->createResourceMock();
+        $this->action = 'create';
         $this->form = $this->createFormMock();
         $this->statusCode = Response::HTTP_CREATED;
 
-        $this->event = new ActionEvent($this->resource, $this->form, $this->statusCode);
+        $this->event = new ActionEvent($this->resource, $this->action, $this->form, $this->statusCode);
     }
 
     public function testInheritance()
@@ -62,9 +68,10 @@ class ActionEventTest extends \PHPUnit_Framework_TestCase
 
     public function testDefaultState()
     {
-        $this->event = new ActionEvent($this->resource);
+        $this->event = new ActionEvent($this->resource, $this->action);
 
         $this->assertSame($this->resource, $this->event->getResource());
+        $this->assertSame($this->action, $this->event->getAction());
         $this->assertNull($this->event->getForm());
         $this->assertSame(Response::HTTP_NO_CONTENT, $this->event->getStatusCode());
         $this->assertNull($this->event->getView());
@@ -73,6 +80,7 @@ class ActionEventTest extends \PHPUnit_Framework_TestCase
     public function testInitialState()
     {
         $this->assertSame($this->resource, $this->event->getResource());
+        $this->assertSame($this->action, $this->event->getAction());
         $this->assertSame($this->form, $this->event->getForm());
         $this->assertSame($this->statusCode, $this->event->getStatusCode());
         $this->assertNull($this->event->getView());
@@ -83,7 +91,6 @@ class ActionEventTest extends \PHPUnit_Framework_TestCase
         $this->event->setView($view = $this->createViewMock());
 
         $this->assertSame($view, $this->event->getView());
-        $this->assertTrue($this->event->isPropagationStopped());
     }
 
     /**

@@ -25,11 +25,18 @@ abstract class AbstractEvent extends Event
     private $resource;
 
     /**
-     * @param ResourceInterface $resource
+     * @var string
      */
-    public function __construct(ResourceInterface $resource)
+    private $action;
+
+    /**
+     * @param ResourceInterface $resource
+     * @param string            $action
+     */
+    public function __construct(ResourceInterface $resource, $action)
     {
         $this->resource = $resource;
+        $this->action = $action;
     }
 
     /**
@@ -38,5 +45,13 @@ abstract class AbstractEvent extends Event
     public function getResource()
     {
         return $this->resource;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAction()
+    {
+        return $this->action;
     }
 }

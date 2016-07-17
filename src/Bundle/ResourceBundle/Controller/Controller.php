@@ -63,7 +63,7 @@ class Controller extends FOSRestController implements ControllerInterface
      */
     public function indexAction(Request $request)
     {
-        return $this->processView($this->view($this->find('index', false)));
+        return $this->processView($action = 'index', $this->view($this->find($action, false)));
     }
 
     /**
@@ -73,7 +73,7 @@ class Controller extends FOSRestController implements ControllerInterface
      */
     public function gridAction(Request $request)
     {
-        return $this->processView($this->view([
+        return $this->processView('grid', $this->view([
             'form' => $form = $this->submitGrid($grid = $this->buildGrid(), $request),
             'grid' => $this->getGridHandler()->handle($grid, $form),
         ]));
@@ -92,7 +92,7 @@ class Controller extends FOSRestController implements ControllerInterface
         );
 
         if (($api = $this->getParameterResolver()->resolveApi()) && !$form->isValid()) {
-            return $this->processAction($form);
+            return $this->processAction('batch', $form);
         }
 
         $batchForm = $this->buildForm(GridBatchType::class, null, ['grid' => $view]);
@@ -106,14 +106,14 @@ class Controller extends FOSRestController implements ControllerInterface
         }
 
         if (!$api && !$batchForm->isValid()) {
-            return $this->processView($this->view([
+            return $this->processView('batch', $this->view([
                 'batch_form' => $batchForm,
                 'form'       => $form,
                 'grid'       => $view,
             ]));
         }
 
-        return $this->processAction($batchForm);
+        return $this->processAction('batch', $batchForm);
     }
 
     /**
@@ -123,7 +123,7 @@ class Controller extends FOSRestController implements ControllerInterface
      */
     public function showAction(Request $request)
     {
-        return $this->processView($this->view($this->find('show')));
+        return $this->processView($action = 'show', $this->view($this->find($action)));
     }
 
     /**
@@ -143,7 +143,7 @@ class Controller extends FOSRestController implements ControllerInterface
             }
         }
 
-        return $this->processAction($form, Response::HTTP_CREATED);
+        return $this->processAction('create', $form, Response::HTTP_CREATED);
     }
 
     /**
@@ -153,7 +153,7 @@ class Controller extends FOSRestController implements ControllerInterface
      */
     public function updateAction(Request $request)
     {
-        $form = $this->buildForm(null, $this->find('update'));
+        $form = $this->buildForm(null, $this->find($action = 'update'));
 
         if (in_array($request->getMethod(), ['POST', 'PUT', 'PATCH'], true)
             && $this->submitForm($form, $request)->isValid()) {
@@ -164,7 +164,7 @@ class Controller extends FOSRestController implements ControllerInterface
             }
         }
 
-        return $this->processAction($form);
+        return $this->processAction($action, $form);
     }
 
     /**
@@ -182,7 +182,7 @@ class Controller extends FOSRestController implements ControllerInterface
             }
         }
 
-        return $this->processAction();
+        return $this->processAction('delete');
     }
 
     /**
@@ -275,18 +275,19 @@ class Controller extends FOSRestController implements ControllerInterface
     }
 
     /**
+     * @param string             $action
      * @param FormInterface|null $form
      * @param int                $statusCode
      *
      * @return Response
      */
-    protected function processAction(FormInterface $form = null, $statusCode = Response::HTTP_NO_CONTENT)
+    protected function processAction($action, FormInterface $form = null, $statusCode = Response::HTTP_NO_CONTENT)
     {
         $statusCode = $this->getParameterResolver()->resolveStatusCode($statusCode);
 
         $this->getRestEventDispatcher()->dispatch(
             RestEvents::ACTION,
-            $event = new ActionEvent($this->resource, $form, $statusCode)
+            $event = new ActionEvent($this->resource, $action, $form, $statusCode)
         );
 
         $view = $event->getView();
@@ -294,17 +295,21 @@ class Controller extends FOSRestController implements ControllerInterface
 
         return $statusCode >= 300 && $statusCode < 400
             ? $this->handleView($view)
-            : $this->processView($view);
+            : $this->processView($action, $view);
     }
 
     /**
-     * @param View $view
+     * @param string $action
+     * @param View   $view
      *
      * @return Response
      */
-    protected function processView(View $view)
+    protected function processView($action, View $view)
     {
-        $this->getRestEventDispatcher()->dispatch(RestEvents::VIEW, $event = new ViewEvent($this->resource, $view));
+        $this->getRestEventDispatcher()->dispatch(
+            RestEvents::VIEW,
+            $event = new ViewEvent($this->resource, $action, $view)
+        );
 
         return $this->handleView($event->getView());
     }

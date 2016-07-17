@@ -32,6 +32,11 @@ class ViewEventTest extends \PHPUnit_Framework_TestCase
     private $resource;
 
     /**
+     * @var string
+     */
+    private $action;
+
+    /**
      * @var \PHPUnit_Framework_MockObject_MockObject|View
      */
     private $view;
@@ -42,9 +47,10 @@ class ViewEventTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->resource = $this->createResourceMock();
+        $this->action = 'create';
         $this->view = $this->createViewMock();
 
-        $this->event = new ViewEvent($this->resource, $this->view);
+        $this->event = new ViewEvent($this->resource, $this->action, $this->view);
     }
 
     public function testInheritance()
@@ -55,6 +61,7 @@ class ViewEventTest extends \PHPUnit_Framework_TestCase
     public function testInitialState()
     {
         $this->assertSame($this->resource, $this->event->getResource());
+        $this->assertSame($this->action, $this->event->getAction());
         $this->assertSame($this->view, $this->event->getView());
     }
 

@@ -27,11 +27,12 @@ class ViewEvent extends AbstractEvent
 
     /**
      * @param ResourceInterface $resource
+     * @param string            $action
      * @param View              $view
      */
-    public function __construct(ResourceInterface $resource, View $view)
+    public function __construct(ResourceInterface $resource, $action, View $view)
     {
-        parent::__construct($resource);
+        parent::__construct($resource, $action);
 
         $this->view = $view;
     }
