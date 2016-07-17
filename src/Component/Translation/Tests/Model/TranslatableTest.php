@@ -12,6 +12,7 @@
 namespace Lug\Component\Translation\Tests\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Lug\Component\Resource\Factory\FactoryInterface;
 use Lug\Component\Translation\Model\TranslatableInterface;
 use Lug\Component\Translation\Model\TranslatableTrait;
 use Lug\Component\Translation\Model\TranslationInterface;
@@ -46,7 +47,7 @@ class TranslatableTest extends \PHPUnit_Framework_TestCase
         $this->assertEmpty($this->translatable->getLocales());
         $this->assertFalse($this->translatable->hasFallbackLocale());
         $this->assertNull($this->translatable->getFallbackLocale());
-        $this->assertNull($this->translatable->getTranslationClass());
+        $this->assertNull($this->translatable->getTranslationFactory());
         $this->assertInstanceOf(ArrayCollection::class, $this->translatable->getTranslations());
         $this->assertTrue($this->translatable->getTranslations()->isEmpty());
     }
@@ -67,11 +68,11 @@ class TranslatableTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($fallbackLocale, $this->translatable->getFallbackLocale());
     }
 
-    public function testTranslationClass()
+    public function testTranslationFactory()
     {
-        $this->translatable->setTranslationClass($translationClass = ConcreteTranslatableTranslation::class);
+        $this->translatable->setTranslationFactory($translationFactory = $this->createFactoryMock());
 
-        $this->assertSame($translationClass, $this->translatable->getTranslationClass());
+        $this->assertSame($translationFactory, $this->translatable->getTranslationFactory());
     }
 
     public function testAddTranslation()
@@ -208,20 +209,34 @@ class TranslatableTest extends \PHPUnit_Framework_TestCase
     {
         $this->translatable->setLocales([$locale = 'fr_FR']);
         $this->translatable->setFallbackLocale('en_EN');
-        $this->translatable->setTranslationClass($translationClass = ConcreteTranslatableTranslation::class);
+        $this->translatable->setTranslationFactory($translationFactory = $this->createFactoryMock());
 
-        $translation = $this->translatable->getTranslation(true);
+        $translationFactory
+            ->expects($this->once())
+            ->method('create')
+            ->with($this->identicalTo(['locale' => $locale]))
+            ->will($this->returnValue($translation = $this->createTranslationMock()));
 
-        $this->assertInstanceOf($translationClass, $translation);
-        $this->assertSame($locale, $translation->getLocale());
-        $this->assertSame([$locale => $translation], $this->translatable->getTranslations()->toArray());
+        $this->assertSame($translation, $this->translatable->getTranslation(true));
     }
 
     public function testLocale()
     {
         $this->translatable->setLocales([$locale = 'fr_FR']);
         $this->translatable->setFallbackLocale('en_EN');
-        $this->translatable->setTranslationClass(ConcreteTranslatableTranslation::class);
+        $this->translatable->setTranslationFactory($translationFactory = $this->createFactoryMock());
+
+        $translationFactory
+            ->expects($this->once())
+            ->method('create')
+            ->with($this->identicalTo(['locale' => $locale]))
+            ->will($this->returnValue($translation = $this->createTranslationMock()));
+
+        $translation
+            ->expects($this->exactly(3))
+            ->method('getLocale')
+            ->will($this->returnValue($locale));
+
         $this->translatable->getTranslation(true);
 
         $this->assertSame($locale, $this->translatable->getLocale());
@@ -273,6 +288,14 @@ class TranslatableTest extends \PHPUnit_Framework_TestCase
     private function createTranslationMock()
     {
         return $this->createMock(TranslationInterface::class);
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|FactoryInterface
+     */
+    private function createFactoryMock()
+    {
+        return $this->createMock(FactoryInterface::class);
     }
 }
 

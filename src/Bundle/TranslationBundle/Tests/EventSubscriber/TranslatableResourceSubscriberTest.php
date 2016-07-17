@@ -16,6 +16,7 @@ use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Events;
 use Lug\Bundle\TranslationBundle\EventSubscriber\TranslatableResourceSubscriber;
 use Lug\Component\Registry\Model\RegistryInterface;
+use Lug\Component\Resource\Factory\FactoryInterface;
 use Lug\Component\Resource\Model\ResourceInterface;
 use Lug\Component\Translation\Context\LocaleContextInterface;
 use Lug\Component\Translation\Model\TranslatableInterface;
@@ -47,13 +48,19 @@ class TranslatableResourceSubscriberTest extends \PHPUnit_Framework_TestCase
     private $localeContext;
 
     /**
+     * @var \PHPUnit_Framework_MockObject_MockObject|RegistryInterface
+     */
+    private $factoryRegistry;
+
+    /**
      * {@inheritdoc}
      */
     protected function setUp()
     {
         $this->container = $this->createContainerMock();
-        $this->resourceRegistry = $this->createResourceRegistryMock();
+        $this->resourceRegistry = $this->createRegistryMock();
         $this->localeContext = $this->createLocaleContextMock();
+        $this->factoryRegistry = $this->createRegistryMock();
 
         $this->container
             ->expects($this->any())
@@ -68,6 +75,11 @@ class TranslatableResourceSubscriberTest extends \PHPUnit_Framework_TestCase
                     'lug.translation.context.locale',
                     ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE,
                     $this->localeContext,
+                ],
+                [
+                    'lug.resource.registry.factory',
+                    ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE,
+                    $this->factoryRegistry,
                 ],
             ]));
 
@@ -130,13 +142,19 @@ class TranslatableResourceSubscriberTest extends \PHPUnit_Framework_TestCase
 
         $translation
             ->expects($this->once())
-            ->method('getModel')
-            ->will($this->returnValue($model = 'model'));
+            ->method('getName')
+            ->will($this->returnValue($name = 'name'));
+
+        $this->factoryRegistry
+            ->expects($this->once())
+            ->method('offsetGet')
+            ->with($this->identicalTo($name))
+            ->will($this->returnValue($translationFactory = $this->createFactoryMock()));
 
         $translatable
             ->expects($this->once())
-            ->method('setTranslationClass')
-            ->with($this->identicalTo($model));
+            ->method('setTranslationFactory')
+            ->with($this->identicalTo($translationFactory));
 
         $this->translatableResourceSubscriber->postLoad($event);
     }
@@ -159,7 +177,7 @@ class TranslatableResourceSubscriberTest extends \PHPUnit_Framework_TestCase
 
         $entity
             ->expects($this->never())
-            ->method('setTranslationClass');
+            ->method('setTranslationFactory');
 
         $this->translatableResourceSubscriber->postLoad($event);
     }
@@ -175,7 +193,7 @@ class TranslatableResourceSubscriberTest extends \PHPUnit_Framework_TestCase
     /**
      * @return \PHPUnit_Framework_MockObject_MockObject|RegistryInterface
      */
-    private function createResourceRegistryMock()
+    private function createRegistryMock()
     {
         return $this->createMock(RegistryInterface::class);
     }
@@ -214,7 +232,7 @@ class TranslatableResourceSubscriberTest extends \PHPUnit_Framework_TestCase
             ->setMethods([
                 'setCurrentLocale',
                 'setFallbackLocale',
-                'setTranslationClass',
+                'setTranslationFactory',
             ])
             ->getMock();
     }
@@ -225,5 +243,13 @@ class TranslatableResourceSubscriberTest extends \PHPUnit_Framework_TestCase
     private function createResourceMock()
     {
         return $this->createMock(ResourceInterface::class);
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|FactoryInterface
+     */
+    private function createFactoryMock()
+    {
+        return $this->createMock(FactoryInterface::class);
     }
 }

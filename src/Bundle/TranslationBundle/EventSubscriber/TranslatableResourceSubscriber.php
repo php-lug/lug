@@ -16,6 +16,8 @@ use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Events;
 use Lug\Bundle\ResourceBundle\Util\ClassUtils;
 use Lug\Component\Registry\Model\RegistryInterface;
+use Lug\Component\Resource\Factory\FactoryInterface;
+use Lug\Component\Resource\Model\ResourceInterface;
 use Lug\Component\Translation\Context\LocaleContextInterface;
 use Lug\Component\Translation\Model\TranslatableInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -50,19 +52,12 @@ class TranslatableResourceSubscriber implements EventSubscriber
         }
 
         $localeContext = $this->getLocaleContext();
+        $resource = $this->getResource(ClassUtils::getClass($entity));
+        $translationFactory = $this->getTranslationFactory($resource->getRelation('translation')->getName());
 
         $entity->setLocales($localeContext->getLocales());
         $entity->setFallbackLocale($localeContext->getFallbackLocale());
-
-        $class = ClassUtils::getClass($entity);
-
-        foreach ($this->getResourceRegistry() as $resource) {
-            if ($resource->getModel() === $class) {
-                $entity->setTranslationClass($resource->getRelation('translation')->getModel());
-
-                break;
-            }
-        }
+        $entity->setTranslationFactory($translationFactory);
     }
 
     /**
@@ -71,6 +66,32 @@ class TranslatableResourceSubscriber implements EventSubscriber
     public function getSubscribedEvents()
     {
         return [Events::postLoad];
+    }
+
+    /**
+     * @param string $class
+     *
+     * @return ResourceInterface|null
+     */
+    private function getResource($class)
+    {
+        foreach ($this->getResourceRegistry() as $resource) {
+            if ($resource->getModel() === $class) {
+                return $resource;
+            }
+        }
+    }
+
+    /**
+     * @param string $resource
+     *
+     * @return FactoryInterface
+     */
+    private function getTranslationFactory($resource)
+    {
+        $factoryRegistry = $this->container->get('lug.resource.registry.factory');
+
+        return $factoryRegistry[$resource];
     }
 
     /**

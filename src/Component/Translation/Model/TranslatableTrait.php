@@ -13,6 +13,7 @@ namespace Lug\Component\Translation\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Lug\Component\Resource\Factory\FactoryInterface;
 use Lug\Component\Translation\Exception\LocaleNotFoundException;
 use Lug\Component\Translation\Exception\TranslationNotFoundException;
 
@@ -32,9 +33,9 @@ trait TranslatableTrait
     private $fallbackLocale;
 
     /**
-     * @var string
+     * @var FactoryInterface
      */
-    private $translationClass;
+    private $translationFactory;
 
     /**
      * @var TranslationInterface[]|Collection
@@ -93,19 +94,19 @@ trait TranslatableTrait
     }
 
     /**
-     * @return string
+     * @return FactoryInterface
      */
-    public function getTranslationClass()
+    public function getTranslationFactory()
     {
-        return $this->translationClass;
+        return $this->translationFactory;
     }
 
     /**
-     * @param string $translationClass
+     * @param FactoryInterface $translationFactory
      */
-    public function setTranslationClass($translationClass)
+    public function setTranslationFactory(FactoryInterface $translationFactory)
     {
-        $this->translationClass = $translationClass;
+        $this->translationFactory = $translationFactory;
     }
 
     /**
@@ -138,11 +139,7 @@ trait TranslatableTrait
         }
 
         if ($translation === null && $allowCreate) {
-            $class = $this->getTranslationClass();
-
-            $translation = new $class();
-            $translation->setLocale(reset($locales));
-
+            $translation = $this->getTranslationFactory()->create(['locale' => reset($locales)]);
             $this->addTranslation($translation);
         }
 
@@ -159,6 +156,18 @@ trait TranslatableTrait
         }
 
         return $translation;
+    }
+
+    /**
+     * @param TranslationInterface[]|Collection $translations
+     */
+    public function setTranslations($translations)
+    {
+        $this->translations->clear();
+
+        foreach ($translations as $translation) {
+            $this->addTranslation($translation);
+        }
     }
 
     /**

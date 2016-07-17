@@ -29,9 +29,32 @@ class ConfigureFactoryPass implements CompilerPassInterface
         foreach ($container->findTaggedServiceIds('lug.factory') as $service => $attributes) {
             $factory = $container->getDefinition($service);
 
-            if (is_a($factory->getClass(), TranslatableFactory::class, true)) {
-                $factory->addArgument(new Reference('lug.translation.context.locale'));
+            if (!is_a($factory->getClass(), TranslatableFactory::class, true)) {
+                continue;
+            }
+
+            $factory
+                ->addArgument(new Reference('lug.translation.context.locale'))
+                ->addArgument($this->getTranslationFactory($attributes[0]['resource'], $container));
+        }
+    }
+
+    /**
+     * @param string           $resource
+     * @param ContainerBuilder $container
+     *
+     * @return Reference
+     */
+    private function getTranslationFactory($resource, ContainerBuilder $container)
+    {
+        $translation = null;
+
+        foreach ($container->getDefinition('lug.resource.'.$resource)->getMethodCalls() as $methodCall) {
+            if ($methodCall[0] === 'addRelation' && $methodCall[1][0] === 'translation') {
+                $translation = $container->getDefinition((string) $methodCall[1][1])->getArgument(0);
             }
         }
+
+        return new Reference('lug.factory.'.$translation);
     }
 }
