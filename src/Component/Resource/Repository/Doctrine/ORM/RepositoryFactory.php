@@ -17,7 +17,7 @@ use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\Repository\RepositoryFactory as RepositoryFactoryInterface;
 use Lug\Component\Registry\Model\RegistryInterface;
 use Lug\Component\Resource\Model\ResourceInterface;
-use Lug\Component\Resource\Repository\RepositoryInterface as BaseRepositoryInterface;
+use Lug\Component\Resource\Repository\RepositoryInterface;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -94,7 +94,7 @@ class RepositoryFactory implements RepositoryFactoryInterface
         ClassMetadata $metadata,
         ResourceInterface $resource = null
     ) {
-        if ($resource !== null && is_a($class, BaseRepositoryInterface::class, true)) {
+        if ($resource !== null && is_a($class, RepositoryInterface::class, true)) {
             return new $class($entityManager, $metadata, $resource);
         }
 

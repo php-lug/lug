@@ -16,6 +16,7 @@ use Doctrine\ODM\MongoDB\Mapping\ClassMetadata;
 use Lug\Component\Resource\Model\ResourceInterface;
 use Lug\Component\Resource\Repository\Doctrine\MongoDB\RepositoryFactory;
 use Lug\Component\Translation\Context\LocaleContextInterface;
+use Lug\Component\Translation\Repository\TranslatableRepositoryInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -47,7 +48,7 @@ class TranslatableRepositoryFactory extends RepositoryFactory
         ClassMetadata $metadata,
         ResourceInterface $resource = null
     ) {
-        if ($resource !== null && is_a($class, TranslatableRepository::class, true)) {
+        if ($resource !== null && is_a($class, TranslatableRepositoryInterface::class, true)) {
             return new $class(
                 $documentManager,
                 $documentManager->getUnitOfWork(),

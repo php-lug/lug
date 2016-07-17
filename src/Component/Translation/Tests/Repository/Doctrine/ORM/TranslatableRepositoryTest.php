@@ -12,6 +12,7 @@
 namespace Lug\Component\Translation\Tests\Repository\Doctrine\ORM;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Query\Expr;
@@ -24,6 +25,7 @@ use Lug\Component\Translation\Model\TranslatableTrait;
 use Lug\Component\Translation\Model\TranslationInterface;
 use Lug\Component\Translation\Model\TranslationTrait;
 use Lug\Component\Translation\Repository\Doctrine\ORM\TranslatableRepository;
+use Lug\Component\Translation\Repository\TranslatableRepositoryInterface;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -77,6 +79,12 @@ class TranslatableRepositoryTest extends \PHPUnit_Framework_TestCase
             $this->resource,
             $this->localeContext
         );
+    }
+
+    public function testInheritance()
+    {
+        $this->assertInstanceOf(TranslatableRepositoryInterface::class, $this->translatableRepository);
+        $this->assertInstanceOf(EntityRepository::class, $this->translatableRepository);
     }
 
     public function testCreateQueryBuilder()

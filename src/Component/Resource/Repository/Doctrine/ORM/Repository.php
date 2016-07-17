@@ -23,7 +23,7 @@ use Lug\Component\Resource\Repository\RepositoryInterface;
 class Repository extends EntityRepository implements RepositoryInterface
 {
     use RepositoryTrait {
-        __construct as private constructTrait;
+        __construct as private constructFromRepositoryTrait;
     }
 
     /**
@@ -33,6 +33,6 @@ class Repository extends EntityRepository implements RepositoryInterface
      */
     public function __construct(EntityManagerInterface $em, ClassMetadata $class, ResourceInterface $resource)
     {
-        $this->constructTrait($em, $class, $resource);
+        $this->constructFromRepositoryTrait($em, $class, $resource);
     }
 }

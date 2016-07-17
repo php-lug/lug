@@ -12,6 +12,7 @@
 namespace Lug\Component\Translation\Tests\Repository\Doctrine\MongoDB;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Doctrine\ODM\MongoDB\DocumentRepository;
 use Doctrine\ODM\MongoDB\Mapping\ClassMetadata;
 use Doctrine\ODM\MongoDB\Query\Builder;
 use Doctrine\ODM\MongoDB\UnitOfWork;
@@ -22,6 +23,7 @@ use Lug\Component\Translation\Model\TranslatableTrait;
 use Lug\Component\Translation\Model\TranslationInterface;
 use Lug\Component\Translation\Model\TranslationTrait;
 use Lug\Component\Translation\Repository\Doctrine\MongoDB\TranslatableRepository;
+use Lug\Component\Translation\Repository\TranslatableRepositoryInterface;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -86,6 +88,12 @@ class TranslatableRepositoryTest extends \PHPUnit_Framework_TestCase
             $this->resource,
             $this->localeContext
         );
+    }
+
+    public function testInheritance()
+    {
+        $this->assertInstanceOf(TranslatableRepositoryInterface::class, $this->translatableRepository);
+        $this->assertInstanceOf(DocumentRepository::class, $this->translatableRepository);
     }
 
     public function testCreateQueryBuilderForCollection()

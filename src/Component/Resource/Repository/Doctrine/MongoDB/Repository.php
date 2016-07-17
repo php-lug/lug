@@ -24,7 +24,7 @@ use Lug\Component\Resource\Repository\RepositoryInterface;
 class Repository extends DocumentRepository implements RepositoryInterface
 {
     use RepositoryTrait {
-        __construct as private constructTrait;
+        __construct as private constructFromRepositoryTrait;
     }
 
     /**
@@ -39,6 +39,6 @@ class Repository extends DocumentRepository implements RepositoryInterface
         ClassMetadata $class,
         ResourceInterface $resource
     ) {
-        $this->constructTrait($dm, $uow, $class, $resource);
+        $this->constructFromRepositoryTrait($dm, $uow, $class, $resource);
     }
 }
