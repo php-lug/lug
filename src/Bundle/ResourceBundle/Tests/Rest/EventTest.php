@@ -31,14 +31,20 @@ class EventTest extends \PHPUnit_Framework_TestCase
     private $resource;
 
     /**
+     * @var string
+     */
+    private $action;
+
+    /**
      * {@inheritdoc}
      */
     protected function setUp()
     {
         $this->resource = $this->createResourceMock();
+        $this->action = 'create';
 
         $this->event = $this->getMockBuilder(AbstractEvent::class)
-            ->setConstructorArgs([$this->resource])
+            ->setConstructorArgs([$this->resource, $this->action])
             ->getMockForAbstractClass();
     }
 
@@ -50,6 +56,7 @@ class EventTest extends \PHPUnit_Framework_TestCase
     public function testInitialState()
     {
         $this->assertSame($this->resource, $this->event->getResource());
+        $this->assertSame($this->action, $this->event->getAction());
     }
 
     /**

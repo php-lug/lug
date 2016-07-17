@@ -39,15 +39,17 @@ class ActionEvent extends AbstractEvent
 
     /**
      * @param ResourceInterface  $resource
+     * @param string             $action
      * @param FormInterface|null $form
      * @param int                $statusCode
      */
     public function __construct(
         ResourceInterface $resource,
+        $action,
         FormInterface $form = null,
         $statusCode = Response::HTTP_NO_CONTENT
     ) {
-        parent::__construct($resource);
+        parent::__construct($resource, $action);
 
         $this->form = $form;
         $this->statusCode = $statusCode;
@@ -83,6 +85,5 @@ class ActionEvent extends AbstractEvent
     public function setView(View $view)
     {
         $this->view = $view;
-        $this->stopPropagation();
     }
 }
