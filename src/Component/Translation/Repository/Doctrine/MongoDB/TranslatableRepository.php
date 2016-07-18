@@ -66,15 +66,17 @@ class TranslatableRepository extends Repository
     public function getProperty($property, $root = null)
     {
         if ($this->cache === null) {
-            $translatableFields = $this->getClassMetadata()->getFieldNames();
-            $translationFields = $this->getDocumentManager()
-                ->getClassMetadata($this->getClassMetadata()->getAssociationTargetClass($this->getTranslationAlias()))
-                ->getFieldNames();
+            $translationMetadata = $this
+                ->getDocumentManager()
+                ->getClassMetadata($this->getClassMetadata()->getAssociationTargetClass($this->getTranslationAlias()));
 
-            $this->cache = array_diff($translationFields, $translatableFields);
+            $this->cache = array_diff(
+                $this->getProperties($translationMetadata),
+                $this->getProperties($this->getClassMetadata())
+            );
         }
 
-        if (in_array($property, $this->cache, true)) {
+        if (in_array($this->getRootProperty($property), $this->cache, true)) {
             $root = $this->getTranslationAlias();
         }
 
@@ -87,6 +89,31 @@ class TranslatableRepository extends Repository
     private function getTranslationAlias()
     {
         return 'translations';
+    }
+
+    /**
+     * @param ClassMetadata $metadata
+     *
+     * @return string[]
+     */
+    private function getProperties(ClassMetadata $metadata)
+    {
+        return array_merge(
+            $metadata->getFieldNames(),
+            array_map(function (array $mapping) {
+                return $mapping['fieldName'];
+            }, $metadata->getEmbeddedFieldsMappings())
+        );
+    }
+
+    /**
+     * @param string $property
+     *
+     * @return string
+     */
+    private function getRootProperty($property)
+    {
+        return ($pos = strpos($property, '.')) !== false ? substr($property, 0, $pos) : $property;
     }
 
     /**

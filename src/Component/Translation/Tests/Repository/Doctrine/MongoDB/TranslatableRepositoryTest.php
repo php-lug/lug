@@ -97,6 +97,11 @@ class TranslatableRepositoryTest extends \PHPUnit_Framework_TestCase
 
         $this->classMetadata
             ->expects($this->once())
+            ->method('getEmbeddedFieldsMappings')
+            ->will($this->returnValue([]));
+
+        $this->classMetadata
+            ->expects($this->once())
             ->method('getAssociationTargetClass')
             ->with($this->identicalTo('translations'))
             ->will($this->returnValue($translationClass = TranslationTest::class));
@@ -106,6 +111,11 @@ class TranslatableRepositoryTest extends \PHPUnit_Framework_TestCase
             ->expects($this->once())
             ->method('getFieldNames')
             ->will($this->returnValue(['locale']));
+
+        $translationClassMetadata
+            ->expects($this->once())
+            ->method('getEmbeddedFieldsMappings')
+            ->will($this->returnValue([]));
 
         $this->documentManager
             ->expects($this->once())
