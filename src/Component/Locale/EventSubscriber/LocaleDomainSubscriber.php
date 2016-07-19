@@ -57,9 +57,9 @@ class LocaleDomainSubscriber implements EventSubscriberInterface
      */
     public function validateDefaultLocale(DomainEvent $event)
     {
-        $object = $event->getObject();
+        $data = $event->getData();
 
-        if ($object !== $this->localeProvider->getDefaultLocale()) {
+        if ($data !== $this->localeProvider->getDefaultLocale()) {
             return;
         }
 
@@ -72,7 +72,7 @@ class LocaleDomainSubscriber implements EventSubscriberInterface
         $event->setMessage($this->translator->trans(
             'lug.'.$resource->getName().'.'.$event->getAction().'.default',
             ['%'.$resource->getName().'%' => $this->propertyAccessor->getValue(
-                $object,
+                $data,
                 $resource->getLabelPropertyPath()
             )],
             'flashes'

@@ -70,7 +70,7 @@ class LocaleDomainSubscriberTest extends \PHPUnit_Framework_TestCase
         $domainEvent = $this->createDomainEventMock();
         $domainEvent
             ->expects($this->once())
-            ->method('getObject')
+            ->method('getData')
             ->will($this->returnValue($locale));
 
         $domainEvent
@@ -142,7 +142,7 @@ class LocaleDomainSubscriberTest extends \PHPUnit_Framework_TestCase
         $domainEvent = $this->createDomainEventMock();
         $domainEvent
             ->expects($this->once())
-            ->method('getObject')
+            ->method('getData')
             ->will($this->returnValue($this->createLocaleMock()));
 
         $domainEvent

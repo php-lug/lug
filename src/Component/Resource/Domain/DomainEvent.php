@@ -25,14 +25,14 @@ class DomainEvent extends Event
     private $resource;
 
     /**
-     * @var mixed
-     */
-    private $object;
-
-    /**
      * @var string
      */
     private $action;
+
+    /**
+     * @var mixed
+     */
+    private $data;
 
     /**
      * @var int|null
@@ -56,14 +56,14 @@ class DomainEvent extends Event
 
     /**
      * @param ResourceInterface $resource
-     * @param mixed             $object
      * @param string            $action
+     * @param mixed             $data
      */
-    public function __construct(ResourceInterface $resource, $object, $action)
+    public function __construct(ResourceInterface $resource, $action, $data = null)
     {
         $this->resource = $resource;
-        $this->object = $object;
         $this->action = $action;
+        $this->data = $data;
     }
 
     /**
@@ -75,19 +75,27 @@ class DomainEvent extends Event
     }
 
     /**
-     * @return mixed
-     */
-    public function getObject()
-    {
-        return $this->object;
-    }
-
-    /**
      * @return string
      */
     public function getAction()
     {
         return $this->action;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getData()
+    {
+        return $this->data;
+    }
+
+    /**
+     * @param mixed $data
+     */
+    public function setData($data)
+    {
+        $this->data = $data;
     }
 
     /**

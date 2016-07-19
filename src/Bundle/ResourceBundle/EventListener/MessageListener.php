@@ -67,13 +67,13 @@ class MessageListener
         }
 
         if (empty($message)) {
-            $object = $event->getObject();
+            $data = $event->getData();
             $resource = $event->getResource();
             $name = $resource->getName();
             $labelPropertyPath = $resource->getLabelPropertyPath();
             $property = $labelPropertyPath !== null
-                ? $this->propertyAccessor->getValue($object, $labelPropertyPath)
-                : (string) $object;
+                ? $this->propertyAccessor->getValue($data, $labelPropertyPath)
+                : (string) $data;
 
             $message = $this->translator->trans(
                 'lug.'.$name.'.'.$event->getAction().'.'.$messageType,

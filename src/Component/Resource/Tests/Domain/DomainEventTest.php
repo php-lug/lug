@@ -32,11 +32,6 @@ class DomainEventTest extends \PHPUnit_Framework_TestCase
     private $resource;
 
     /**
-     * @var \stdClass
-     */
-    private $object;
-
-    /**
      * @var string
      */
     private $action;
@@ -47,10 +42,9 @@ class DomainEventTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->resource = $this->createResourceMock();
-        $this->object = new \stdClass();
         $this->action = 'action';
 
-        $this->domainEvent = new DomainEvent($this->resource, $this->object, $this->action);
+        $this->domainEvent = new DomainEvent($this->resource, $this->action);
     }
 
     public function testInheritance()
@@ -58,15 +52,35 @@ class DomainEventTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(Event::class, $this->domainEvent);
     }
 
-    public function testInitialState()
+    public function testDefaultState()
     {
         $this->assertSame($this->resource, $this->domainEvent->getResource());
-        $this->assertSame($this->object, $this->domainEvent->getObject());
         $this->assertSame($this->action, $this->domainEvent->getAction());
+        $this->assertNull($this->domainEvent->getData());
         $this->assertNull($this->domainEvent->getStatusCode());
         $this->assertNull($this->domainEvent->getMessageType());
         $this->assertNull($this->domainEvent->getMessage());
         $this->assertFalse($this->domainEvent->isStopped());
+    }
+
+    public function testInitialState()
+    {
+        $this->domainEvent = new DomainEvent($this->resource, $this->action, $data = new \stdClass());
+
+        $this->assertSame($this->resource, $this->domainEvent->getResource());
+        $this->assertSame($this->action, $this->domainEvent->getAction());
+        $this->assertSame($data, $this->domainEvent->getData());
+        $this->assertNull($this->domainEvent->getStatusCode());
+        $this->assertNull($this->domainEvent->getMessageType());
+        $this->assertNull($this->domainEvent->getMessage());
+        $this->assertFalse($this->domainEvent->isStopped());
+    }
+
+    public function testData()
+    {
+        $this->domainEvent->setData($data = new \stdClass());
+
+        $this->assertSame($data, $this->domainEvent->getData());
     }
 
     public function testStatusCode()

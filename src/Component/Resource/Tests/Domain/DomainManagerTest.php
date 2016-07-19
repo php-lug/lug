@@ -88,7 +88,7 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
                 $this->identicalTo($criteria = ['criteria']),
                 $this->identicalTo($sorting = ['sorting'])
             )
-            ->will($this->returnValue($object = new \stdClass()));
+            ->will($this->returnValue($data = new \stdClass()));
 
         $this->eventDispatcher
             ->expects($this->at(0))
@@ -97,7 +97,7 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
                 $this->identicalTo('lug.'.$name.'.pre_find.'.($action = 'action')),
                 $this->callback(function (DomainEvent $event) use ($action) {
                     return $event->getResource() === $this->resource
-                        && $event->getObject() === null
+                        && $event->getData() === null
                         && $event->getAction() === 'find.'.$action;
                 })
             );
@@ -107,14 +107,14 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
             ->method('dispatch')
             ->with(
                 $this->identicalTo('lug.'.$name.'.post_find.'.$action),
-                $this->callback(function (DomainEvent $event) use ($object, $action) {
+                $this->callback(function (DomainEvent $event) use ($data, $action) {
                     return $event->getResource() === $this->resource
-                    && $event->getObject() === $object
+                    && $event->getData() === $data
                     && $event->getAction() === 'find.'.$action;
                 })
             );
 
-        $this->assertSame($object, $this->domainManager->find($action, $repositoryMethod, $criteria, $sorting));
+        $this->assertSame($data, $this->domainManager->find($action, $repositoryMethod, $criteria, $sorting));
     }
 
     public function testFindThrowException()
@@ -140,7 +140,7 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
                 $this->identicalTo('lug.'.$name.'.pre_find.'.($action = 'action')),
                 $this->callback(function (DomainEvent $event) use ($action) {
                     return $event->getResource() === $this->resource
-                        && $event->getObject() === null
+                        && $event->getData() === null
                         && $event->getAction() === 'find.'.$action;
                 })
             );
@@ -155,7 +155,7 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
                 $this->identicalTo('lug.'.$name.'.error_find.'.$action),
                 $this->callback(function (DomainEvent $event) use ($action, $statusCode, $message) {
                     $result = $event->getResource() === $this->resource
-                        && $event->getObject() === null
+                        && $event->getData() === null
                         && $event->getAction() === 'find.'.$action;
 
                     $event->setStatusCode($statusCode);
@@ -197,7 +197,7 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
                 $this->identicalTo('lug.'.$name.'.pre_find.'.($action = 'action')),
                 $this->callback(function (DomainEvent $event) use ($action) {
                     return $event->getResource() === $this->resource
-                    && $event->getObject() === null
+                    && $event->getData() === null
                     && $event->getAction() === 'find.'.$action;
                 })
             );
@@ -209,7 +209,7 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
                 $this->identicalTo('lug.'.$name.'.error_find.'.$action),
                 $this->callback(function (DomainEvent $event) use ($action) {
                     $result = $event->getResource() === $this->resource
-                        && $event->getObject() === null
+                        && $event->getData() === null
                         && $event->getAction() === 'find.'.$action;
 
                     $event->setStopped(false);
@@ -231,7 +231,7 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
         $this->objectManager
             ->expects($this->once())
             ->method('persist')
-            ->with($this->identicalTo($object = new \stdClass()));
+            ->with($this->identicalTo($data = new \stdClass()));
 
         $this->objectManager
             ->expects($this->once())
@@ -242,9 +242,9 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
             ->method('dispatch')
             ->with(
                 $this->identicalTo('lug.'.$name.'.pre_'.($createAction = 'create')),
-                $this->callback(function (DomainEvent $event) use ($createAction, $object) {
+                $this->callback(function (DomainEvent $event) use ($createAction, $data) {
                     return $event->getResource() === $this->resource
-                        && $event->getObject() === $object
+                        && $event->getData() === $data
                         && $event->getAction() === $createAction;
                 })
             );
@@ -254,9 +254,9 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
             ->method('dispatch')
             ->with(
                 $this->identicalTo('lug.'.$name.'.pre_'.($flushAction = 'flush')),
-                $this->callback(function (DomainEvent $event) use ($flushAction, $object) {
+                $this->callback(function (DomainEvent $event) use ($flushAction, $data) {
                     return $event->getResource() === $this->resource
-                        && $event->getObject() === $object
+                        && $event->getData() === $data
                         && $event->getAction() === $flushAction;
                 })
             );
@@ -266,9 +266,9 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
             ->method('dispatch')
             ->with(
                 $this->identicalTo('lug.'.$name.'.post_'.$flushAction),
-                $this->callback(function (DomainEvent $event) use ($flushAction, $object) {
+                $this->callback(function (DomainEvent $event) use ($flushAction, $data) {
                     return $event->getResource() === $this->resource
-                        && $event->getObject() === $object
+                        && $event->getData() === $data
                         && $event->getAction() === $flushAction;
                 })
             );
@@ -278,14 +278,14 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
             ->method('dispatch')
             ->with(
                 $this->identicalTo('lug.'.$name.'.post_'.$createAction),
-                $this->callback(function (DomainEvent $event) use ($object, $createAction) {
+                $this->callback(function (DomainEvent $event) use ($data, $createAction) {
                     return $event->getResource() === $this->resource
-                        && $event->getObject() === $object
+                        && $event->getData() === $data
                         && $event->getAction() === $createAction;
                 })
             );
 
-        $this->domainManager->create($object);
+        $this->domainManager->create($data);
     }
 
     public function testCreateWithoutFlush()
@@ -298,7 +298,7 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
         $this->objectManager
             ->expects($this->once())
             ->method('persist')
-            ->with($this->identicalTo($object = new \stdClass()));
+            ->with($this->identicalTo($data = new \stdClass()));
 
         $this->objectManager
             ->expects($this->never())
@@ -309,9 +309,9 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
             ->method('dispatch')
             ->with(
                 $this->identicalTo('lug.'.$name.'.pre_'.($createAction = 'create')),
-                $this->callback(function (DomainEvent $event) use ($createAction, $object) {
+                $this->callback(function (DomainEvent $event) use ($createAction, $data) {
                     return $event->getResource() === $this->resource
-                    && $event->getObject() === $object
+                    && $event->getData() === $data
                     && $event->getAction() === $createAction;
                 })
             );
@@ -321,14 +321,14 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
             ->method('dispatch')
             ->with(
                 $this->identicalTo('lug.'.$name.'.post_'.$createAction),
-                $this->callback(function (DomainEvent $event) use ($object, $createAction) {
+                $this->callback(function (DomainEvent $event) use ($data, $createAction) {
                     return $event->getResource() === $this->resource
-                    && $event->getObject() === $object
+                    && $event->getData() === $data
                     && $event->getAction() === $createAction;
                 })
             );
 
-        $this->domainManager->create($object, false);
+        $this->domainManager->create($data, false);
     }
 
     public function testCreateThrowException()
@@ -341,7 +341,7 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
         $this->objectManager
             ->expects($this->once())
             ->method('persist')
-            ->with($this->identicalTo($object = new \stdClass()));
+            ->with($this->identicalTo($data = new \stdClass()));
 
         $this->objectManager
             ->expects($this->once())
@@ -353,9 +353,9 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
             ->method('dispatch')
             ->with(
                 $this->identicalTo('lug.'.$name.'.pre_'.($createAction = 'create')),
-                $this->callback(function (DomainEvent $event) use ($createAction, $object) {
+                $this->callback(function (DomainEvent $event) use ($createAction, $data) {
                     return $event->getResource() === $this->resource
-                        && $event->getObject() === $object
+                        && $event->getData() === $data
                         && $event->getAction() === $createAction;
                 })
             );
@@ -365,9 +365,9 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
             ->method('dispatch')
             ->with(
                 $this->identicalTo('lug.'.$name.'.pre_'.($flushAction = 'flush')),
-                $this->callback(function (DomainEvent $event) use ($flushAction, $object) {
+                $this->callback(function (DomainEvent $event) use ($flushAction, $data) {
                     return $event->getResource() === $this->resource
-                        && $event->getObject() === $object
+                        && $event->getData() === $data
                         && $event->getAction() === $flushAction;
                 })
             );
@@ -377,9 +377,9 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
             ->method('dispatch')
             ->with(
                 $this->identicalTo('lug.'.$name.'.error_'.$flushAction),
-                $this->callback(function (DomainEvent $event) use ($flushAction, $object) {
+                $this->callback(function (DomainEvent $event) use ($flushAction, $data) {
                     return $event->getResource() === $this->resource
-                        && $event->getObject() === $object
+                        && $event->getData() === $data
                         && $event->getAction() === $flushAction;
                 })
             );
@@ -392,9 +392,9 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
             ->method('dispatch')
             ->with(
                 $this->identicalTo('lug.'.$name.'.error_'.$createAction),
-                $this->callback(function (DomainEvent $event) use ($object, $createAction, $statusCode, $message) {
+                $this->callback(function (DomainEvent $event) use ($data, $createAction, $statusCode, $message) {
                     $result = $event->getResource() === $this->resource
-                        && $event->getObject() === $object
+                        && $event->getData() === $data
                         && $event->getAction() === $createAction;
 
                     $event->setStatusCode($statusCode);
@@ -405,7 +405,7 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
             );
 
         try {
-            $this->domainManager->create($object);
+            $this->domainManager->create($data);
             $this->fail();
         } catch (DomainException $e) {
             $this->assertSame($statusCode, $e->getStatusCode());
@@ -423,7 +423,7 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
         $this->objectManager
             ->expects($this->once())
             ->method('persist')
-            ->with($this->identicalTo($object = new \stdClass()));
+            ->with($this->identicalTo($data = new \stdClass()));
 
         $this->objectManager
             ->expects($this->once())
@@ -435,9 +435,9 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
             ->method('dispatch')
             ->with(
                 $this->identicalTo('lug.'.$name.'.pre_'.($createAction = 'create')),
-                $this->callback(function (DomainEvent $event) use ($createAction, $object) {
+                $this->callback(function (DomainEvent $event) use ($createAction, $data) {
                     return $event->getResource() === $this->resource
-                    && $event->getObject() === $object
+                    && $event->getData() === $data
                     && $event->getAction() === $createAction;
                 })
             );
@@ -447,9 +447,9 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
             ->method('dispatch')
             ->with(
                 $this->identicalTo('lug.'.$name.'.pre_'.($flushAction = 'flush')),
-                $this->callback(function (DomainEvent $event) use ($flushAction, $object) {
+                $this->callback(function (DomainEvent $event) use ($flushAction, $data) {
                     return $event->getResource() === $this->resource
-                    && $event->getObject() === $object
+                    && $event->getData() === $data
                     && $event->getAction() === $flushAction;
                 })
             );
@@ -459,9 +459,9 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
             ->method('dispatch')
             ->with(
                 $this->identicalTo('lug.'.$name.'.error_'.$flushAction),
-                $this->callback(function (DomainEvent $event) use ($flushAction, $object) {
+                $this->callback(function (DomainEvent $event) use ($flushAction, $data) {
                     return $event->getResource() === $this->resource
-                    && $event->getObject() === $object
+                    && $event->getData() === $data
                     && $event->getAction() === $flushAction;
                 })
             );
@@ -471,9 +471,9 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
             ->method('dispatch')
             ->with(
                 $this->identicalTo('lug.'.$name.'.error_'.$createAction),
-                $this->callback(function (DomainEvent $event) use ($object, $createAction) {
+                $this->callback(function (DomainEvent $event) use ($data, $createAction) {
                     $result = $event->getResource() === $this->resource
-                        && $event->getObject() === $object
+                        && $event->getData() === $data
                         && $event->getAction() === $createAction;
 
                     $event->setStopped(false);
@@ -482,7 +482,7 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
                 })
             );
 
-        $this->domainManager->create($object);
+        $this->domainManager->create($data);
     }
 
     public function testUpdateWithManagedObject()
@@ -495,7 +495,7 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
         $this->objectManager
             ->expects($this->once())
             ->method('contains')
-            ->with($this->identicalTo($object = new \stdClass()))
+            ->with($this->identicalTo($data = new \stdClass()))
             ->will($this->returnValue(true));
 
         $this->objectManager
@@ -511,9 +511,9 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
             ->method('dispatch')
             ->with(
                 $this->identicalTo('lug.'.$name.'.pre_'.($updateAction = 'update')),
-                $this->callback(function (DomainEvent $event) use ($updateAction, $object) {
+                $this->callback(function (DomainEvent $event) use ($updateAction, $data) {
                     return $event->getResource() === $this->resource
-                    && $event->getObject() === $object
+                    && $event->getData() === $data
                     && $event->getAction() === $updateAction;
                 })
             );
@@ -523,9 +523,9 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
             ->method('dispatch')
             ->with(
                 $this->identicalTo('lug.'.$name.'.pre_'.($flushAction = 'flush')),
-                $this->callback(function (DomainEvent $event) use ($flushAction, $object) {
+                $this->callback(function (DomainEvent $event) use ($flushAction, $data) {
                     return $event->getResource() === $this->resource
-                    && $event->getObject() === $object
+                    && $event->getData() === $data
                     && $event->getAction() === $flushAction;
                 })
             );
@@ -535,9 +535,9 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
             ->method('dispatch')
             ->with(
                 $this->identicalTo('lug.'.$name.'.post_'.$flushAction),
-                $this->callback(function (DomainEvent $event) use ($flushAction, $object) {
+                $this->callback(function (DomainEvent $event) use ($flushAction, $data) {
                     return $event->getResource() === $this->resource
-                    && $event->getObject() === $object
+                    && $event->getData() === $data
                     && $event->getAction() === $flushAction;
                 })
             );
@@ -547,14 +547,14 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
             ->method('dispatch')
             ->with(
                 $this->identicalTo('lug.'.$name.'.post_'.$updateAction),
-                $this->callback(function (DomainEvent $event) use ($object, $updateAction) {
+                $this->callback(function (DomainEvent $event) use ($data, $updateAction) {
                     return $event->getResource() === $this->resource
-                    && $event->getObject() === $object
+                    && $event->getData() === $data
                     && $event->getAction() === $updateAction;
                 })
             );
 
-        $this->domainManager->update($object);
+        $this->domainManager->update($data);
     }
 
     public function testUpdateWithoutManagedObject()
@@ -567,13 +567,13 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
         $this->objectManager
             ->expects($this->once())
             ->method('contains')
-            ->with($this->identicalTo($object = new \stdClass()))
+            ->with($this->identicalTo($data = new \stdClass()))
             ->will($this->returnValue(false));
 
         $this->objectManager
             ->expects($this->once())
             ->method('persist')
-            ->with($this->identicalTo($object));
+            ->with($this->identicalTo($data));
 
         $this->objectManager
             ->expects($this->once())
@@ -584,9 +584,9 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
             ->method('dispatch')
             ->with(
                 $this->identicalTo('lug.'.$name.'.pre_'.($updateAction = 'update')),
-                $this->callback(function (DomainEvent $event) use ($updateAction, $object) {
+                $this->callback(function (DomainEvent $event) use ($updateAction, $data) {
                     return $event->getResource() === $this->resource
-                    && $event->getObject() === $object
+                    && $event->getData() === $data
                     && $event->getAction() === $updateAction;
                 })
             );
@@ -596,9 +596,9 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
             ->method('dispatch')
             ->with(
                 $this->identicalTo('lug.'.$name.'.pre_'.($flushAction = 'flush')),
-                $this->callback(function (DomainEvent $event) use ($flushAction, $object) {
+                $this->callback(function (DomainEvent $event) use ($flushAction, $data) {
                     return $event->getResource() === $this->resource
-                    && $event->getObject() === $object
+                    && $event->getData() === $data
                     && $event->getAction() === $flushAction;
                 })
             );
@@ -608,9 +608,9 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
             ->method('dispatch')
             ->with(
                 $this->identicalTo('lug.'.$name.'.post_'.$flushAction),
-                $this->callback(function (DomainEvent $event) use ($flushAction, $object) {
+                $this->callback(function (DomainEvent $event) use ($flushAction, $data) {
                     return $event->getResource() === $this->resource
-                    && $event->getObject() === $object
+                    && $event->getData() === $data
                     && $event->getAction() === $flushAction;
                 })
             );
@@ -620,14 +620,14 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
             ->method('dispatch')
             ->with(
                 $this->identicalTo('lug.'.$name.'.post_'.$updateAction),
-                $this->callback(function (DomainEvent $event) use ($object, $updateAction) {
+                $this->callback(function (DomainEvent $event) use ($data, $updateAction) {
                     return $event->getResource() === $this->resource
-                    && $event->getObject() === $object
+                    && $event->getData() === $data
                     && $event->getAction() === $updateAction;
                 })
             );
 
-        $this->domainManager->update($object);
+        $this->domainManager->update($data);
     }
 
     public function testUpdateWithoutFlush()
@@ -640,7 +640,7 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
         $this->objectManager
             ->expects($this->once())
             ->method('persist')
-            ->with($this->identicalTo($object = new \stdClass()));
+            ->with($this->identicalTo($data = new \stdClass()));
 
         $this->objectManager
             ->expects($this->never())
@@ -651,9 +651,9 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
             ->method('dispatch')
             ->with(
                 $this->identicalTo('lug.'.$name.'.pre_'.($updateAction = 'update')),
-                $this->callback(function (DomainEvent $event) use ($updateAction, $object) {
+                $this->callback(function (DomainEvent $event) use ($updateAction, $data) {
                     return $event->getResource() === $this->resource
-                    && $event->getObject() === $object
+                    && $event->getData() === $data
                     && $event->getAction() === $updateAction;
                 })
             );
@@ -663,14 +663,14 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
             ->method('dispatch')
             ->with(
                 $this->identicalTo('lug.'.$name.'.post_'.$updateAction),
-                $this->callback(function (DomainEvent $event) use ($object, $updateAction) {
+                $this->callback(function (DomainEvent $event) use ($data, $updateAction) {
                     return $event->getResource() === $this->resource
-                    && $event->getObject() === $object
+                    && $event->getData() === $data
                     && $event->getAction() === $updateAction;
                 })
             );
 
-        $this->domainManager->update($object, false);
+        $this->domainManager->update($data, false);
     }
 
     public function testUpdateThrowException()
@@ -682,8 +682,14 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
 
         $this->objectManager
             ->expects($this->once())
+            ->method('contains')
+            ->with($this->identicalTo($data = new \stdClass()))
+            ->will($this->returnValue(false));
+
+        $this->objectManager
+            ->expects($this->once())
             ->method('persist')
-            ->with($this->identicalTo($object = new \stdClass()));
+            ->with($this->identicalTo($data));
 
         $this->objectManager
             ->expects($this->once())
@@ -695,9 +701,9 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
             ->method('dispatch')
             ->with(
                 $this->identicalTo('lug.'.$name.'.pre_'.($updateAction = 'update')),
-                $this->callback(function (DomainEvent $event) use ($updateAction, $object) {
+                $this->callback(function (DomainEvent $event) use ($updateAction, $data) {
                     return $event->getResource() === $this->resource
-                    && $event->getObject() === $object
+                    && $event->getData() === $data
                     && $event->getAction() === $updateAction;
                 })
             );
@@ -707,9 +713,9 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
             ->method('dispatch')
             ->with(
                 $this->identicalTo('lug.'.$name.'.pre_'.($flushAction = 'flush')),
-                $this->callback(function (DomainEvent $event) use ($flushAction, $object) {
+                $this->callback(function (DomainEvent $event) use ($flushAction, $data) {
                     return $event->getResource() === $this->resource
-                    && $event->getObject() === $object
+                    && $event->getData() === $data
                     && $event->getAction() === $flushAction;
                 })
             );
@@ -719,9 +725,9 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
             ->method('dispatch')
             ->with(
                 $this->identicalTo('lug.'.$name.'.error_'.$flushAction),
-                $this->callback(function (DomainEvent $event) use ($flushAction, $object) {
+                $this->callback(function (DomainEvent $event) use ($flushAction, $data) {
                     return $event->getResource() === $this->resource
-                    && $event->getObject() === $object
+                    && $event->getData() === $data
                     && $event->getAction() === $flushAction;
                 })
             );
@@ -734,9 +740,9 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
             ->method('dispatch')
             ->with(
                 $this->identicalTo('lug.'.$name.'.error_'.$updateAction),
-                $this->callback(function (DomainEvent $event) use ($object, $updateAction, $statusCode, $message) {
+                $this->callback(function (DomainEvent $event) use ($data, $updateAction, $statusCode, $message) {
                     $result = $event->getResource() === $this->resource
-                        && $event->getObject() === $object
+                        && $event->getData() === $data
                         && $event->getAction() === $updateAction;
 
                     $event->setStatusCode($statusCode);
@@ -747,7 +753,7 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
             );
 
         try {
-            $this->domainManager->update($object);
+            $this->domainManager->update($data);
             $this->fail();
         } catch (DomainException $e) {
             $this->assertSame($statusCode, $e->getStatusCode());
@@ -764,8 +770,14 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
 
         $this->objectManager
             ->expects($this->once())
+            ->method('contains')
+            ->with($this->identicalTo($data = new \stdClass()))
+            ->will($this->returnValue(false));
+
+        $this->objectManager
+            ->expects($this->once())
             ->method('persist')
-            ->with($this->identicalTo($object = new \stdClass()));
+            ->with($this->identicalTo($data));
 
         $this->objectManager
             ->expects($this->once())
@@ -777,9 +789,9 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
             ->method('dispatch')
             ->with(
                 $this->identicalTo('lug.'.$name.'.pre_'.($updateAction = 'update')),
-                $this->callback(function (DomainEvent $event) use ($updateAction, $object) {
+                $this->callback(function (DomainEvent $event) use ($updateAction, $data) {
                     return $event->getResource() === $this->resource
-                    && $event->getObject() === $object
+                    && $event->getData() === $data
                     && $event->getAction() === $updateAction;
                 })
             );
@@ -789,9 +801,9 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
             ->method('dispatch')
             ->with(
                 $this->identicalTo('lug.'.$name.'.pre_'.($flushAction = 'flush')),
-                $this->callback(function (DomainEvent $event) use ($flushAction, $object) {
+                $this->callback(function (DomainEvent $event) use ($flushAction, $data) {
                     return $event->getResource() === $this->resource
-                    && $event->getObject() === $object
+                    && $event->getData() === $data
                     && $event->getAction() === $flushAction;
                 })
             );
@@ -801,9 +813,9 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
             ->method('dispatch')
             ->with(
                 $this->identicalTo('lug.'.$name.'.error_'.$flushAction),
-                $this->callback(function (DomainEvent $event) use ($flushAction, $object) {
+                $this->callback(function (DomainEvent $event) use ($flushAction, $data) {
                     return $event->getResource() === $this->resource
-                    && $event->getObject() === $object
+                    && $event->getData() === $data
                     && $event->getAction() === $flushAction;
                 })
             );
@@ -813,9 +825,9 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
             ->method('dispatch')
             ->with(
                 $this->identicalTo('lug.'.$name.'.error_'.$updateAction),
-                $this->callback(function (DomainEvent $event) use ($object, $updateAction) {
+                $this->callback(function (DomainEvent $event) use ($data, $updateAction) {
                     $result = $event->getResource() === $this->resource
-                        && $event->getObject() === $object
+                        && $event->getData() === $data
                         && $event->getAction() === $updateAction;
 
                     $event->setStopped(false);
@@ -824,7 +836,7 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
                 })
             );
 
-        $this->domainManager->update($object);
+        $this->domainManager->update($data);
     }
 
     public function testDelete()
@@ -837,7 +849,7 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
         $this->objectManager
             ->expects($this->once())
             ->method('remove')
-            ->with($this->identicalTo($object = new \stdClass()));
+            ->with($this->identicalTo($data = new \stdClass()));
 
         $this->objectManager
             ->expects($this->once())
@@ -848,9 +860,9 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
             ->method('dispatch')
             ->with(
                 $this->identicalTo('lug.'.$name.'.pre_'.($deleteAction = 'delete')),
-                $this->callback(function (DomainEvent $event) use ($deleteAction, $object) {
+                $this->callback(function (DomainEvent $event) use ($deleteAction, $data) {
                     return $event->getResource() === $this->resource
-                    && $event->getObject() === $object
+                    && $event->getData() === $data
                     && $event->getAction() === $deleteAction;
                 })
             );
@@ -860,9 +872,9 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
             ->method('dispatch')
             ->with(
                 $this->identicalTo('lug.'.$name.'.pre_'.($flushAction = 'flush')),
-                $this->callback(function (DomainEvent $event) use ($flushAction, $object) {
+                $this->callback(function (DomainEvent $event) use ($flushAction, $data) {
                     return $event->getResource() === $this->resource
-                    && $event->getObject() === $object
+                    && $event->getData() === $data
                     && $event->getAction() === $flushAction;
                 })
             );
@@ -872,9 +884,9 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
             ->method('dispatch')
             ->with(
                 $this->identicalTo('lug.'.$name.'.post_'.$flushAction),
-                $this->callback(function (DomainEvent $event) use ($flushAction, $object) {
+                $this->callback(function (DomainEvent $event) use ($flushAction, $data) {
                     return $event->getResource() === $this->resource
-                    && $event->getObject() === $object
+                    && $event->getData() === $data
                     && $event->getAction() === $flushAction;
                 })
             );
@@ -884,14 +896,14 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
             ->method('dispatch')
             ->with(
                 $this->identicalTo('lug.'.$name.'.post_'.$deleteAction),
-                $this->callback(function (DomainEvent $event) use ($object, $deleteAction) {
+                $this->callback(function (DomainEvent $event) use ($data, $deleteAction) {
                     return $event->getResource() === $this->resource
-                    && $event->getObject() === $object
+                    && $event->getData() === $data
                     && $event->getAction() === $deleteAction;
                 })
             );
 
-        $this->domainManager->delete($object);
+        $this->domainManager->delete($data);
     }
 
     public function testDeleteWithoutFlush()
@@ -904,7 +916,7 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
         $this->objectManager
             ->expects($this->once())
             ->method('remove')
-            ->with($this->identicalTo($object = new \stdClass()));
+            ->with($this->identicalTo($data = new \stdClass()));
 
         $this->objectManager
             ->expects($this->never())
@@ -915,9 +927,9 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
             ->method('dispatch')
             ->with(
                 $this->identicalTo('lug.'.$name.'.pre_'.($deleteAction = 'delete')),
-                $this->callback(function (DomainEvent $event) use ($deleteAction, $object) {
+                $this->callback(function (DomainEvent $event) use ($deleteAction, $data) {
                     return $event->getResource() === $this->resource
-                    && $event->getObject() === $object
+                    && $event->getData() === $data
                     && $event->getAction() === $deleteAction;
                 })
             );
@@ -927,14 +939,14 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
             ->method('dispatch')
             ->with(
                 $this->identicalTo('lug.'.$name.'.post_'.$deleteAction),
-                $this->callback(function (DomainEvent $event) use ($object, $deleteAction) {
+                $this->callback(function (DomainEvent $event) use ($data, $deleteAction) {
                     return $event->getResource() === $this->resource
-                    && $event->getObject() === $object
+                    && $event->getData() === $data
                     && $event->getAction() === $deleteAction;
                 })
             );
 
-        $this->domainManager->delete($object, false);
+        $this->domainManager->delete($data, false);
     }
 
     public function testDeleteThrowException()
@@ -947,7 +959,7 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
         $this->objectManager
             ->expects($this->once())
             ->method('remove')
-            ->with($this->identicalTo($object = new \stdClass()));
+            ->with($this->identicalTo($data = new \stdClass()));
 
         $this->objectManager
             ->expects($this->once())
@@ -959,9 +971,9 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
             ->method('dispatch')
             ->with(
                 $this->identicalTo('lug.'.$name.'.pre_'.($deleteAction = 'delete')),
-                $this->callback(function (DomainEvent $event) use ($deleteAction, $object) {
+                $this->callback(function (DomainEvent $event) use ($deleteAction, $data) {
                     return $event->getResource() === $this->resource
-                    && $event->getObject() === $object
+                    && $event->getData() === $data
                     && $event->getAction() === $deleteAction;
                 })
             );
@@ -971,9 +983,9 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
             ->method('dispatch')
             ->with(
                 $this->identicalTo('lug.'.$name.'.pre_'.($flushAction = 'flush')),
-                $this->callback(function (DomainEvent $event) use ($flushAction, $object) {
+                $this->callback(function (DomainEvent $event) use ($flushAction, $data) {
                     return $event->getResource() === $this->resource
-                    && $event->getObject() === $object
+                    && $event->getData() === $data
                     && $event->getAction() === $flushAction;
                 })
             );
@@ -983,9 +995,9 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
             ->method('dispatch')
             ->with(
                 $this->identicalTo('lug.'.$name.'.error_'.$flushAction),
-                $this->callback(function (DomainEvent $event) use ($flushAction, $object) {
+                $this->callback(function (DomainEvent $event) use ($flushAction, $data) {
                     return $event->getResource() === $this->resource
-                    && $event->getObject() === $object
+                    && $event->getData() === $data
                     && $event->getAction() === $flushAction;
                 })
             );
@@ -998,9 +1010,9 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
             ->method('dispatch')
             ->with(
                 $this->identicalTo('lug.'.$name.'.error_'.$deleteAction),
-                $this->callback(function (DomainEvent $event) use ($object, $deleteAction, $statusCode, $message) {
+                $this->callback(function (DomainEvent $event) use ($data, $deleteAction, $statusCode, $message) {
                     $result = $event->getResource() === $this->resource
-                        && $event->getObject() === $object
+                        && $event->getData() === $data
                         && $event->getAction() === $deleteAction;
 
                     $event->setStatusCode($statusCode);
@@ -1011,7 +1023,7 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
             );
 
         try {
-            $this->domainManager->delete($object);
+            $this->domainManager->delete($data);
             $this->fail();
         } catch (DomainException $e) {
             $this->assertSame($statusCode, $e->getStatusCode());
@@ -1029,7 +1041,7 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
         $this->objectManager
             ->expects($this->once())
             ->method('remove')
-            ->with($this->identicalTo($object = new \stdClass()));
+            ->with($this->identicalTo($data = new \stdClass()));
 
         $this->objectManager
             ->expects($this->once())
@@ -1041,9 +1053,9 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
             ->method('dispatch')
             ->with(
                 $this->identicalTo('lug.'.$name.'.pre_'.($deleteAction = 'delete')),
-                $this->callback(function (DomainEvent $event) use ($deleteAction, $object) {
+                $this->callback(function (DomainEvent $event) use ($deleteAction, $data) {
                     return $event->getResource() === $this->resource
-                    && $event->getObject() === $object
+                    && $event->getData() === $data
                     && $event->getAction() === $deleteAction;
                 })
             );
@@ -1053,9 +1065,9 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
             ->method('dispatch')
             ->with(
                 $this->identicalTo('lug.'.$name.'.pre_'.($flushAction = 'flush')),
-                $this->callback(function (DomainEvent $event) use ($flushAction, $object) {
+                $this->callback(function (DomainEvent $event) use ($flushAction, $data) {
                     return $event->getResource() === $this->resource
-                    && $event->getObject() === $object
+                    && $event->getData() === $data
                     && $event->getAction() === $flushAction;
                 })
             );
@@ -1065,9 +1077,9 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
             ->method('dispatch')
             ->with(
                 $this->identicalTo('lug.'.$name.'.error_'.$flushAction),
-                $this->callback(function (DomainEvent $event) use ($flushAction, $object) {
+                $this->callback(function (DomainEvent $event) use ($flushAction, $data) {
                     return $event->getResource() === $this->resource
-                    && $event->getObject() === $object
+                    && $event->getData() === $data
                     && $event->getAction() === $flushAction;
                 })
             );
@@ -1077,9 +1089,9 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
             ->method('dispatch')
             ->with(
                 $this->identicalTo('lug.'.$name.'.error_'.$deleteAction),
-                $this->callback(function (DomainEvent $event) use ($object, $deleteAction) {
+                $this->callback(function (DomainEvent $event) use ($data, $deleteAction) {
                     $result = $event->getResource() === $this->resource
-                        && $event->getObject() === $object
+                        && $event->getData() === $data
                         && $event->getAction() === $deleteAction;
 
                     $event->setStopped(false);
@@ -1088,7 +1100,7 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
                 })
             );
 
-        $this->domainManager->delete($object);
+        $this->domainManager->delete($data);
     }
 
     public function testFlush()
@@ -1102,16 +1114,16 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
             ->expects($this->once())
             ->method('flush');
 
-        $object = new \stdClass();
+        $data = new \stdClass();
 
         $this->eventDispatcher
             ->expects($this->at(0))
             ->method('dispatch')
             ->with(
                 $this->identicalTo('lug.'.$name.'.pre_'.($action = 'flush')),
-                $this->callback(function (DomainEvent $event) use ($action, $object) {
+                $this->callback(function (DomainEvent $event) use ($action, $data) {
                     return $event->getResource() === $this->resource
-                    && $event->getObject() === $object
+                    && $event->getData() === $data
                     && $event->getAction() === $action;
                 })
             );
@@ -1121,14 +1133,14 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
             ->method('dispatch')
             ->with(
                 $this->identicalTo('lug.'.$name.'.post_'.$action),
-                $this->callback(function (DomainEvent $event) use ($action, $object) {
+                $this->callback(function (DomainEvent $event) use ($action, $data) {
                     return $event->getResource() === $this->resource
-                    && $event->getObject() === $object
+                    && $event->getData() === $data
                     && $event->getAction() === $action;
                 })
             );
 
-        $this->domainManager->flush($object);
+        $this->domainManager->flush($data);
     }
 
     public function testFlushWithoutObject()
@@ -1149,7 +1161,7 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
                 $this->identicalTo('lug.'.$name.'.pre_'.($action = 'flush')),
                 $this->callback(function (DomainEvent $event) use ($action) {
                     return $event->getResource() === $this->resource
-                    && $event->getObject() === null
+                    && $event->getData() === null
                     && $event->getAction() === $action;
                 })
             );
@@ -1161,7 +1173,7 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
                 $this->identicalTo('lug.'.$name.'.post_'.$action),
                 $this->callback(function (DomainEvent $event) use ($action) {
                     return $event->getResource() === $this->resource
-                    && $event->getObject() === null
+                    && $event->getData() === null
                     && $event->getAction() === $action;
                 })
             );
@@ -1188,7 +1200,7 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
                 $this->identicalTo('lug.'.$name.'.pre_'.($action = 'flush')),
                 $this->callback(function (DomainEvent $event) use ($action) {
                     return $event->getResource() === $this->resource
-                    && $event->getObject() === null
+                    && $event->getData() === null
                     && $event->getAction() === $action;
                 })
             );
@@ -1203,7 +1215,7 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
                 $this->identicalTo('lug.'.$name.'.error_'.$action),
                 $this->callback(function (DomainEvent $event) use ($action, $statusCode, $message) {
                     $result = $event->getResource() === $this->resource
-                        && $event->getObject() === null
+                        && $event->getData() === null
                         && $event->getAction() === $action;
 
                     $event->setStatusCode($statusCode);
@@ -1241,7 +1253,7 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
                 $this->identicalTo('lug.'.$name.'.pre_'.($action = 'flush')),
                 $this->callback(function (DomainEvent $event) use ($action) {
                     return $event->getResource() === $this->resource
-                        && $event->getObject() === null
+                        && $event->getData() === null
                         && $event->getAction() === $action;
                 })
             );
@@ -1253,7 +1265,7 @@ class DomainManagerTest extends \PHPUnit_Framework_TestCase
                 $this->identicalTo('lug.'.$name.'.error_'.$action),
                 $this->callback(function (DomainEvent $event) use ($action) {
                     $result = $event->getResource() === $this->resource
-                        && $event->getObject() === null
+                        && $event->getData() === null
                         && $event->getAction() === $action;
 
                     $event->setStopped(false);

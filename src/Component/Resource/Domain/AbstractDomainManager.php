@@ -49,20 +49,20 @@ abstract class AbstractDomainManager implements DomainManagerInterface
      */
     public function find($action, $repositoryMethod, array $criteria, array $sorting = [])
     {
-        $event = new DomainEvent($this->resource, null, $action = 'find.'.$action);
+        $event = new DomainEvent($this->resource, $action = 'find.'.$action);
 
         try {
             $this->dispatchEvent($event, $action, self::STATE_PRE);
-            $result = $this->doFind($action, $repositoryMethod, $criteria, $sorting);
+            $event->setData($this->doFind($action, $repositoryMethod, $criteria, $sorting));
         } catch (\Exception $e) {
             $this->dispatchEvent($event, $action, self::STATE_ERROR, $e);
 
             return;
         }
 
-        $this->dispatchEvent(new DomainEvent($this->resource, $result, $action), $action, self::STATE_POST);
+        $this->dispatchEvent($event, $action, self::STATE_POST);
 
-        return $result;
+        return $event->getData();
     }
 
     /**
@@ -70,11 +70,11 @@ abstract class AbstractDomainManager implements DomainManagerInterface
      */
     public function create($object, $flush = true)
     {
-        $event = new DomainEvent($this->resource, $object, $action = 'create');
+        $event = new DomainEvent($this->resource, $action = 'create', $object);
 
         try {
             $this->dispatchEvent($event, $action, self::STATE_PRE);
-            $this->doCreate($object, $flush);
+            $this->doCreate($event->getData(), $flush);
         } catch (\Exception $e) {
             $this->dispatchEvent($event, $action, self::STATE_ERROR, $e);
 
@@ -89,11 +89,11 @@ abstract class AbstractDomainManager implements DomainManagerInterface
      */
     public function update($object, $flush = true)
     {
-        $event = new DomainEvent($this->resource, $object, $action = 'update');
+        $event = new DomainEvent($this->resource, $action = 'update', $object);
 
         try {
             $this->dispatchEvent($event, $action, self::STATE_PRE);
-            $this->doUpdate($object, $flush);
+            $this->doUpdate($event->getData(), $flush);
         } catch (\Exception $e) {
             $this->dispatchEvent($event, $action, self::STATE_ERROR, $e);
 
@@ -108,11 +108,11 @@ abstract class AbstractDomainManager implements DomainManagerInterface
      */
     public function delete($object, $flush = true)
     {
-        $event = new DomainEvent($this->resource, $object, $action = 'delete');
+        $event = new DomainEvent($this->resource, $action = 'delete', $object);
 
         try {
             $this->dispatchEvent($event, $action, self::STATE_PRE);
-            $this->doDelete($object, $flush);
+            $this->doDelete($event->getData(), $flush);
         } catch (\Exception $e) {
             $this->dispatchEvent($event, $action, self::STATE_ERROR, $e);
 
@@ -127,7 +127,7 @@ abstract class AbstractDomainManager implements DomainManagerInterface
      */
     public function flush($object = null)
     {
-        $event = new DomainEvent($this->resource, $object, $action = 'flush');
+        $event = new DomainEvent($this->resource, $action = 'flush', $object);
 
         try {
             $this->dispatchEvent($event, $action, self::STATE_PRE);
