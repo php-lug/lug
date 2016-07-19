@@ -51,7 +51,7 @@ class ParameterResolverTest extends \PHPUnit_Framework_TestCase
 
     public function testResolveApiWithoutRequest()
     {
-        $this->assertFalse($this->parameterResolver->resolveApi());
+        $this->assertTrue($this->parameterResolver->resolveApi());
     }
 
     public function testResolveApiWihApiRequest()
@@ -224,64 +224,30 @@ class ParameterResolverTest extends \PHPUnit_Framework_TestCase
     public function testResolveCurrentPageDefault()
     {
         $this->requestStack
-            ->expects($this->exactly(2))
+            ->expects($this->once())
             ->method('getMasterRequest')
             ->will($this->returnValue($request = $this->createRequestMock()));
-
-        $request->attributes
-            ->expects($this->once())
-            ->method('get')
-            ->with($this->identicalTo('_lug_page_parameter'), $this->identicalTo($pageParameter = 'page'))
-            ->will($this->returnValue($pageParameter));
 
         $request
             ->expects($this->once())
             ->method('get')
-            ->with($this->identicalTo($pageParameter), $this->identicalTo($page = 1))
+            ->with($this->identicalTo('page'), $this->identicalTo($page = 1))
             ->will($this->returnValue($page));
 
         $this->assertSame($page, $this->parameterResolver->resolveCurrentPage());
     }
 
-    public function testResolveCurrentPageExplicitParameter()
+    public function testResolveCurrentPageExplicit()
     {
         $this->requestStack
-            ->expects($this->exactly(2))
+            ->expects($this->once())
             ->method('getMasterRequest')
             ->will($this->returnValue($request = $this->createRequestMock()));
-
-        $request->attributes
-            ->expects($this->once())
-            ->method('get')
-            ->with($this->identicalTo('_lug_page_parameter'), $this->identicalTo('page'))
-            ->will($this->returnValue($pageParameter = 'p'));
 
         $request
             ->expects($this->once())
             ->method('get')
-            ->with($this->identicalTo($pageParameter), $this->identicalTo($page = 1))
-            ->will($this->returnValue($page));
-
-        $this->assertSame($page, $this->parameterResolver->resolveCurrentPage());
-    }
-
-    public function testResolveCurrentPageExplicitPage()
-    {
-        $this->requestStack
-            ->expects($this->exactly(2))
-            ->method('getMasterRequest')
-            ->will($this->returnValue($request = $this->createRequestMock()));
-
-        $request->attributes
-            ->expects($this->once())
-            ->method('get')
-            ->with($this->identicalTo('_lug_page_parameter'), $this->identicalTo($pageParameter = 'page'))
-            ->will($this->returnValue($pageParameter));
-
-        $request
-            ->expects($this->once())
-            ->method('get')
-            ->with($this->identicalTo($pageParameter), $this->identicalTo(1))
+            ->with($this->identicalTo('page'), $this->identicalTo(1))
             ->will($this->returnValue($page = 2));
 
         $this->assertSame($page, $this->parameterResolver->resolveCurrentPage());
@@ -512,7 +478,7 @@ class ParameterResolverTest extends \PHPUnit_Framework_TestCase
     public function testResolveMaxPerPageDefault()
     {
         $this->requestStack
-            ->expects($this->once())
+            ->expects($this->exactly(2))
             ->method('getMasterRequest')
             ->will($this->returnValue($request = $this->createRequestMock()));
 
@@ -522,13 +488,19 @@ class ParameterResolverTest extends \PHPUnit_Framework_TestCase
             ->with($this->identicalTo('_lug_max_per_page'), $this->identicalTo($maxPerPage = 10))
             ->will($this->returnValue($maxPerPage));
 
+        $request
+            ->expects($this->once())
+            ->method('get')
+            ->with($this->identicalTo('limit'), $this->identicalTo($maxPerPage))
+            ->will($this->returnValue($maxPerPage));
+
         $this->assertSame($maxPerPage, $this->parameterResolver->resolveMaxPerPage());
     }
 
     public function testResolveMaxPerPageExplicit()
     {
         $this->requestStack
-            ->expects($this->once())
+            ->expects($this->exactly(2))
             ->method('getMasterRequest')
             ->will($this->returnValue($request = $this->createRequestMock()));
 
@@ -538,7 +510,57 @@ class ParameterResolverTest extends \PHPUnit_Framework_TestCase
             ->with($this->identicalTo('_lug_max_per_page'), $this->identicalTo(10))
             ->will($this->returnValue($maxPerPage = 5));
 
+        $request
+            ->expects($this->once())
+            ->method('get')
+            ->with($this->identicalTo('limit'), $this->identicalTo($maxPerPage))
+            ->will($this->returnValue($maxPerPage));
+
         $this->assertSame($maxPerPage, $this->parameterResolver->resolveMaxPerPage());
+    }
+
+    public function testResolveMaxPerPageDynamic()
+    {
+        $this->requestStack
+            ->expects($this->exactly(2))
+            ->method('getMasterRequest')
+            ->will($this->returnValue($request = $this->createRequestMock()));
+
+        $request->attributes
+            ->expects($this->once())
+            ->method('get')
+            ->with($this->identicalTo('_lug_max_per_page'), $this->identicalTo(10))
+            ->will($this->returnValue(10));
+
+        $request
+            ->expects($this->once())
+            ->method('get')
+            ->with($this->identicalTo('limit'), $this->identicalTo(10))
+            ->will($this->returnValue($maxPerPage = 20));
+
+        $this->assertSame($maxPerPage, $this->parameterResolver->resolveMaxPerPage());
+    }
+
+    public function testResolveMaxPerPageTooBig()
+    {
+        $this->requestStack
+            ->expects($this->exactly(2))
+            ->method('getMasterRequest')
+            ->will($this->returnValue($request = $this->createRequestMock()));
+
+        $request->attributes
+            ->expects($this->once())
+            ->method('get')
+            ->with($this->identicalTo('_lug_max_per_page'), $this->identicalTo(10))
+            ->will($this->returnValue(10));
+
+        $request
+            ->expects($this->once())
+            ->method('get')
+            ->with($this->identicalTo('limit'), $this->identicalTo(10))
+            ->will($this->returnValue(101));
+
+        $this->assertSame(100, $this->parameterResolver->resolveMaxPerPage());
     }
 
     public function testResolveRedirectRoute()
