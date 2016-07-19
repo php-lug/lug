@@ -192,8 +192,8 @@ class MessageListenerTest extends \PHPUnit_Framework_TestCase
 
         $event
             ->expects($this->once())
-            ->method('getObject')
-            ->will($this->returnValue($object = new \stdClass()));
+            ->method('getData')
+            ->will($this->returnValue($data = new \stdClass()));
 
         $event
             ->expects($this->once())
@@ -214,7 +214,7 @@ class MessageListenerTest extends \PHPUnit_Framework_TestCase
             ->expects($this->once())
             ->method('getValue')
             ->with(
-                $this->identicalTo($object),
+                $this->identicalTo($data),
                 $this->identicalTo($labelPropertyPath)
             )
             ->will($this->returnValue($property = 'property'));
@@ -266,10 +266,10 @@ class MessageListenerTest extends \PHPUnit_Framework_TestCase
 
         $event
             ->expects($this->once())
-            ->method('getObject')
-            ->will($this->returnValue($object = $this->createObjectMock()));
+            ->method('getData')
+            ->will($this->returnValue($data = $this->createObjectMock()));
 
-        $object
+        $data
             ->expects($this->once())
             ->method('__toString')
             ->will($this->returnValue($property = 'property'));
