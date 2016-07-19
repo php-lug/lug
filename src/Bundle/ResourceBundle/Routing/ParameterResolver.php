@@ -48,13 +48,11 @@ class ParameterResolver implements ParameterResolverInterface
      */
     public function resolveApi()
     {
-        $default = false;
-
         if (($request = $this->resolveRequest()) === null) {
-            return $default;
+            return true;
         }
 
-        return $this->resolveParameter('api', $default) || $request->getRequestFormat() !== 'html';
+        return $this->resolveParameter('api', false) || $request->getRequestFormat() !== 'html';
     }
 
     /**
@@ -109,7 +107,7 @@ class ParameterResolver implements ParameterResolverInterface
             return $default;
         }
 
-        return $request->get($this->resolveParameter('page_parameter', 'page'), $default);
+        return $request->get('page', $default);
     }
 
     /**
@@ -174,7 +172,17 @@ class ParameterResolver implements ParameterResolverInterface
      */
     public function resolveMaxPerPage()
     {
-        return $this->resolveParameter('max_per_page', 10);
+        $default = $this->resolveParameter('max_per_page', 10);
+
+        if (($request = $this->resolveRequest()) === null) {
+            return $default;
+        }
+
+        if (($maxPerPage = $request->get('limit', $default)) > 100) {
+            $maxPerPage = 100;
+        }
+
+        return $maxPerPage;
     }
 
     /**
