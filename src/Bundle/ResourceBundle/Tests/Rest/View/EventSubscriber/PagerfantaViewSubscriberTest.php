@@ -141,6 +141,26 @@ class PagerfantaViewSubscriberTest extends \PHPUnit_Framework_TestCase
             ->method('getData')
             ->will($this->returnValue($pagerfanta = $this->createPagerfantaMock()));
 
+        $this->parameterResolver
+            ->expects($this->once())
+            ->method('resolveCurrentPage')
+            ->will($this->returnValue($currentPage = 2));
+
+        $pagerfanta
+            ->expects($this->once())
+            ->method('setCurrentPage')
+            ->with($this->identicalTo($currentPage));
+
+        $this->parameterResolver
+            ->expects($this->once())
+            ->method('resolveMaxPerPage')
+            ->will($this->returnValue($maxPerPage = 20));
+
+        $pagerfanta
+            ->expects($this->once())
+            ->method('setMaxPerPage')
+            ->with($this->identicalTo($maxPerPage));
+
         $pagerfanta
             ->expects($this->once())
             ->method('getIterator')
@@ -176,6 +196,26 @@ class PagerfantaViewSubscriberTest extends \PHPUnit_Framework_TestCase
             ->expects($this->once())
             ->method('getData')
             ->will($this->returnValue($pagerfanta = $this->createPagerfantaMock()));
+
+        $this->parameterResolver
+            ->expects($this->once())
+            ->method('resolveCurrentPage')
+            ->will($this->returnValue($currentPage = 2));
+
+        $pagerfanta
+            ->expects($this->once())
+            ->method('setCurrentPage')
+            ->with($this->identicalTo($currentPage));
+
+        $this->parameterResolver
+            ->expects($this->once())
+            ->method('resolveMaxPerPage')
+            ->will($this->returnValue($maxPerPage = 20));
+
+        $pagerfanta
+            ->expects($this->once())
+            ->method('setMaxPerPage')
+            ->with($this->identicalTo($maxPerPage));
 
         $this->requestStack
             ->expects($this->once())

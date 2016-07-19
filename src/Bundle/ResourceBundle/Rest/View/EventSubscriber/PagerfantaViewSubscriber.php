@@ -69,6 +69,9 @@ class PagerfantaViewSubscriber extends AbstractSubscriber
             return;
         }
 
+        $data->setCurrentPage($this->getParameterResolver()->resolveCurrentPage());
+        $data->setMaxPerPage($this->getParameterResolver()->resolveMaxPerPage());
+
         if ($this->getParameterResolver()->resolveHateoas()) {
             if (($request = $this->requestStack->getMasterRequest()) === null) {
                 throw new RequestNotFoundException();
