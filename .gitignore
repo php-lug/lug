@@ -6,12 +6,10 @@
 # file that was distributed with this source code.
 
 /.php_cs.cache
-/.puli/
 /app/config/config_local.yml
 /app/config/parameters.yml
 /behat.yml
 /node_modules/
-/puli.json
 /var/bootstrap.php.cache
 /var/cache/
 /var/logs/

@@ -14,9 +14,4 @@ use Doctrine\Common\Annotations\AnnotationRegistry;
 $loader = require __DIR__.'/../vendor/autoload.php';
 AnnotationRegistry::registerLoader([$loader, 'loadClass']);
 
-// FIXME - https://github.com/puli/issues/issues/190
-if (file_exists($puliFactory = __DIR__.'/../.puli/GeneratedPuliFactory.php')) {
-    $loader->addClassMap(['Puli\\GeneratedPuliFactory' => $puliFactory]);
-}
-
 return $loader;
