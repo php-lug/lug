@@ -12,7 +12,6 @@ framework:
     fragments: ~
     http_method_override: true
     secret: "%secret%"
-    translator: ~
     trusted_hosts: ~
     trusted_proxies: ~
     validation: ~
@@ -24,6 +23,7 @@ framework:
         strict_requirements: ~
     session:
         handler_id: ~
+        save_path: "%kernel.root_dir%/../var/sessions/%kernel.environment%"
     templating:
         engines: [twig]
     translator:

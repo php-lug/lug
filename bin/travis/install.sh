@@ -86,13 +86,13 @@ if [ "$BDD_BUILD" = true ]; then
     GULP_ENV=prod
     node_modules/.bin/gulp
 
-    php app/console server:run 127.0.0.1:8080 > /dev/null 2>&1 &
+    php bin/console server:run 127.0.0.1:8080 > /dev/null 2>&1 &
 
     if [ "$LUG_DRIVER" = "doctrine/orm" ]; then
-        php app/console doctrine:schema:update --force
+        php bin/console doctrine:schema:update --force
     fi
 
     if [ "$LUG_DRIVER" = "doctrine/mongodb" ]; then
-        php app/console doctrine:mongodb:schema:create
+        php bin/console doctrine:mongodb:schema:create
     fi
 fi
