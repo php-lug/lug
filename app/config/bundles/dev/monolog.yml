@@ -14,5 +14,4 @@ monolog:
             channels: [!event]
         console:
             type: console
-            bubble: false
             channels: [!event, !doctrine]
