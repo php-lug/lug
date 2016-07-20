@@ -8,15 +8,15 @@
 doctrine:
     dbal:
         charset: UTF8
-        dbname: %database_name%
+        dbname: "%database_name%"
         driver: pdo_mysql
-        host: %database_host%
-        password: %database_password%
-        port: %database_port%
-        user: %database_user%
-        server_version: %database_version%
+        host: "%database_host%"
+        password: "%database_password%"
+        port: "%database_port%"
+        user: "%database_user%"
+        server_version: "%database_version%"
     orm:
-        auto_generate_proxy_classes: %kernel.debug%
+        auto_generate_proxy_classes: "%kernel.debug%"
         auto_mapping: true
         naming_strategy: doctrine.orm.naming_strategy.underscore
         repository_factory: lug.translation.repository.doctrine.orm.factory

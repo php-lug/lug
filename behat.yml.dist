@@ -36,7 +36,7 @@ default:
                 - Lug\Component\Behat\Context\PurgerContext
                 - Lug\Component\Behat\Extension\Api\Context\ApiContext
             filters:
-                tags: @lug.api.locale
+                tags: "@lug.api.locale"
         lug.admin.dashboard:
             contexts: &admin_contexts
                 - Behat\MinkExtension\Context\MinkContext
@@ -50,27 +50,27 @@ default:
                 - Lug\Component\Behat\Context\PurgerContext
                 - Lug\Component\Behat\Context\RoutingContext
             filters:
-                tags: @lug.admin.dashboard
+                tags: "@lug.admin.dashboard"
         lug.admin.locale:
             contexts:
                 <<: *admin_contexts
             filters:
-                tags: @lug.admin.locale
+                tags: "@lug.admin.locale"
 
 api:
     gherkin:
         filters:
-            tags: @lug.api
+            tags: "@lug.api"
 
 admin:
     gherkin:
         filters:
-            tags: @lug.admin
+            tags: "@lug.admin"
 
 javascript:
     gherkin:
         filters:
-            tags: @javascript
+            tags: "@javascript"
 
 ui:
     extensions:

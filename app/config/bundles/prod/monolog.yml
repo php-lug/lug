@@ -13,7 +13,7 @@ monolog:
             type: fingers_crossed
         nested:
             level: debug
-            path: %kernel.logs_dir%/%kernel.environment%.log
+            path: "%kernel.logs_dir%/%kernel.environment%.log"
             type: stream
         console:
             type: console

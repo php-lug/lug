@@ -144,7 +144,7 @@ abstract class AbstractGridBatchSubscriber implements EventSubscriberInterface
 
         $config = $form->get('value')->getConfig();
         $choices = $config->getOption('choices');
-        $indexedChoices = $config->getOption('choice_list')->getChoices();
+        $indexedChoices = $config->getAttribute('choice_list')->getChoices();
 
         foreach ($values as $key => $value) {
             if (isset($indexedChoices[$value])) {
