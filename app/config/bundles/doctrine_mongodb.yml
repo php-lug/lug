@@ -8,8 +8,8 @@
 doctrine_mongodb:
     connections:
         default:
-            server: mongodb://localhost:27017
-    default_database: %database_name%
+            server: "mongodb://localhost:27017"
+    default_database: "%database_name%"
     document_managers:
         default:
             auto_mapping: true

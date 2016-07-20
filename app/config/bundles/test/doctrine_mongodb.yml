@@ -6,4 +6,4 @@
 # file that was distributed with this source code.
 
 doctrine_mongodb:
-    default_database: %database_name%_test
+    default_database: "%database_name%_test"

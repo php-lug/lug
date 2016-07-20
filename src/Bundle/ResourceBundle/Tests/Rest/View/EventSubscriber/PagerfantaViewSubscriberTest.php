@@ -186,8 +186,8 @@ class PagerfantaViewSubscriberTest extends \PHPUnit_Framework_TestCase
             ->expects($this->exactly(2))
             ->method('get')
             ->will($this->returnValueMap([
-                ['_route', null, false, $route = 'route'],
-                ['_route_params', [], false, $routeParameters = ['foo' => 'bar']],
+                ['_route', null, $route = 'route'],
+                ['_route_params', [], $routeParameters = ['foo' => 'bar']],
             ]));
 
         $request->query

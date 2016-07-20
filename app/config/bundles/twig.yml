@@ -6,6 +6,6 @@
 # file that was distributed with this source code.
 
 twig:
-    debug: %kernel.debug%
-    strict_variables: %kernel.debug%
+    debug: "%kernel.debug%"
+    strict_variables: "%kernel.debug%"
     form_themes: ["@LugUi/Form/theme.html.twig"]
