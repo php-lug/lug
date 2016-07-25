@@ -541,7 +541,29 @@ class ParameterResolverTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($maxPerPage, $this->parameterResolver->resolveMaxPerPage());
     }
 
-    public function testResolveMaxPerPageTooBig()
+    public function testResolveMaxPerPageLowerThan0()
+    {
+        $this->requestStack
+            ->expects($this->exactly(2))
+            ->method('getMasterRequest')
+            ->will($this->returnValue($request = $this->createRequestMock()));
+
+        $request->attributes
+            ->expects($this->once())
+            ->method('get')
+            ->with($this->identicalTo('_lug_max_per_page'), $this->identicalTo($default = 10))
+            ->will($this->returnValue($default));
+
+        $request
+            ->expects($this->once())
+            ->method('get')
+            ->with($this->identicalTo('limit'), $this->identicalTo($default))
+            ->will($this->returnValue(0));
+
+        $this->assertSame($default, $this->parameterResolver->resolveMaxPerPage());
+    }
+
+    public function testResolveMaxPerPageUpperThan100()
     {
         $this->requestStack
             ->expects($this->exactly(2))

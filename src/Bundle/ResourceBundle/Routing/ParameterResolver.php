@@ -178,8 +178,14 @@ class ParameterResolver implements ParameterResolverInterface
             return $default;
         }
 
-        if (($maxPerPage = $request->get('limit', $default)) > 100) {
-            $maxPerPage = 100;
+        $maxPerPage = $request->get('limit', $default);
+
+        if ($maxPerPage <= 0) {
+            return $default;
+        }
+
+        if ($maxPerPage > 100) {
+            return 100;
         }
 
         return $maxPerPage;
