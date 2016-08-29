@@ -241,9 +241,9 @@ class Controller extends FOSRestController implements ControllerInterface
             : $request->request;
 
         if ($this->getParameterResolver()->resolveApi()) {
-            $data = $bag->all();
+            $data = array_merge($bag->all(), $request->files->all());
         } else {
-            $data = $bag->get($form->getName(), []);
+            $data = array_merge($bag->get($form->getName(), []), $request->files->get($form->getName(), []));
         }
 
         array_walk_recursive($data, function (&$value) {
