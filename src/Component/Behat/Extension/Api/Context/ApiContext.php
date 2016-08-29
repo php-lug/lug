@@ -15,10 +15,13 @@ use Behat\Gherkin\Node\PyStringNode;
 use Coduo\PHPMatcher\Matcher;
 use Http\Client\Exception\HttpException;
 use Http\Client\HttpClient;
+use Http\Message\MultipartStream\MultipartStreamBuilder;
 use Http\Message\RequestFactory;
+use Http\Message\StreamFactory;
 use Lug\Component\Behat\Extension\Api\Matcher\MatcherFactory;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Symfony\Component\Config\FileLocatorInterface;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -34,6 +37,21 @@ class ApiContext implements ApiContextInterface
      * @var RequestFactory
      */
     private $requestFactory;
+
+    /**
+     * @var StreamFactory
+     */
+    private $streamFactory;
+
+    /**
+     * @var MultipartStreamBuilder|null
+     */
+    private $multipartStreamBuilder;
+
+    /**
+     * @var FileLocatorInterface
+     */
+    private $fileLocator;
 
     /**
      * @var string
@@ -60,9 +78,25 @@ class ApiContext implements ApiContextInterface
      */
     private $matcher;
 
+    /**
+     * @var resource[]
+     */
+    private $resources = [];
+
+    /**
+     * {@inheritdoc}
+     */
     public function __construct()
     {
         $this->matcher = (new MatcherFactory())->createMatcher();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function __destruct()
+    {
+        $this->reset();
     }
 
     /**
@@ -84,6 +118,22 @@ class ApiContext implements ApiContextInterface
     /**
      * {@inheritdoc}
      */
+    public function setStreamFactory(StreamFactory $streamFactory)
+    {
+        $this->streamFactory = $streamFactory;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setFileLocator(FileLocatorInterface $fileFileLocator)
+    {
+        $this->fileLocator = $fileFileLocator;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function setBaseUrl($baseUrl)
     {
         if (strrpos($baseUrl, '/') === strlen($baseUrl) - 1) {
@@ -95,12 +145,23 @@ class ApiContext implements ApiContextInterface
 
     /**
      * @BeforeScenario
+     *
+     * @Given I reset the API context
      */
     public function reset()
     {
         $this->headers = [];
         $this->request = null;
         $this->response = null;
+        $this->multipartStreamBuilder = null;
+
+        foreach ($this->resources as $resource) {
+            if (is_resource($resource)) {
+                fclose($resource);
+            }
+        }
+
+        $this->resources = [];
     }
 
     /**
@@ -133,6 +194,32 @@ class ApiContext implements ApiContextInterface
     public function removeHeader($header)
     {
         unset($this->headers[$header]);
+    }
+
+    /**
+     * @param string $name
+     * @param string $value
+     *
+     * @Given I set the field ":name" with value ":value"
+     */
+    public function setField($name, $value)
+    {
+        $this->getMultipartStreamBuilder()->addResource($name, $value);
+    }
+
+    /**
+     * @param string      $name
+     * @param string      $file
+     * @param string|null $filename
+     *
+     * @Given I set the field ":name" with file ":file"
+     * @Given I set the field ":name" with file ":file" and filename ":filename"
+     */
+    public function setFile($name, $file, $filename = null)
+    {
+        $path = $this->fileLocator->locate($file);
+        $this->resources[] = $resource = fopen($path, 'r');
+        $this->getMultipartStreamBuilder()->addResource($name, $resource, ['filename' => $filename]);
     }
 
     /**
@@ -236,6 +323,18 @@ class ApiContext implements ApiContextInterface
     }
 
     /**
+     * @return MultipartStreamBuilder
+     */
+    private function getMultipartStreamBuilder()
+    {
+        if ($this->multipartStreamBuilder === null) {
+            $this->multipartStreamBuilder = new MultipartStreamBuilder($this->streamFactory);
+        }
+
+        return $this->multipartStreamBuilder;
+    }
+
+    /**
      * @param string $url
      *
      * @return string
@@ -247,8 +346,19 @@ class ApiContext implements ApiContextInterface
 
     private function sendRequest()
     {
+        $request = $this->getRequest();
+
+        if ($this->multipartStreamBuilder !== null) {
+            $request = $request
+                ->withBody($this->multipartStreamBuilder->build())
+                ->withHeader(
+                    'Content-Type',
+                    'multipart/form-data;boundary='.$this->multipartStreamBuilder->getBoundary()
+                );
+        }
+
         try {
-            $this->response = $this->client->sendRequest($this->getRequest());
+            $this->response = $this->client->sendRequest($request);
         } catch (HttpException $e) {
             $this->response = $e->getResponse();
 
