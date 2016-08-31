@@ -31,13 +31,29 @@ abstract class AbstractRegisterGenericDomainListenerPass implements CompilerPass
     private $event;
 
     /**
-     * @param string  $listener
-     * @param mixed[] $event
+     * @var string[]
      */
-    public function __construct($listener, array $event)
+    private $actions;
+
+    /**
+     * @var string[]
+     */
+    private $prefixes;
+
+    /**
+     * AbstractRegisterGenericDomainListenerPass constructor.
+     *
+     * @param string   $listener
+     * @param mixed[]  $event
+     * @param string[] $actions
+     * @param string[] $prefixes
+     */
+    public function __construct($listener, array $event, array $actions, array $prefixes)
     {
         $this->listener = $listener;
         $this->event = $event;
+        $this->actions = $actions;
+        $this->prefixes = $prefixes;
     }
 
     /**
@@ -59,8 +75,8 @@ abstract class AbstractRegisterGenericDomainListenerPass implements CompilerPass
                     ));
                 }
 
-                foreach (['create', 'update', 'delete'] as $action) {
-                    foreach (['error', 'post'] as $prefix) {
+                foreach ($this->actions as $action) {
+                    foreach ($this->prefixes as $prefix) {
                         $flashListener->addTag('lug.resource.domain.event_listener', array_merge([
                             'event' => 'lug.'.$attribute['resource'].'.'.$prefix.'_'.$action,
                         ], $this->event));

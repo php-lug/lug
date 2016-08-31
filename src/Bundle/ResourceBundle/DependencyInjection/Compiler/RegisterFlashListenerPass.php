@@ -18,9 +18,14 @@ class RegisterFlashListenerPass extends AbstractRegisterGenericDomainListenerPas
 {
     public function __construct()
     {
-        parent::__construct('lug.resource.listener.flash', [
-            'method'   => 'addFlash',
-            'priority' => -2000,
-        ]);
+        parent::__construct(
+            'lug.resource.listener.flash',
+            [
+                'method'   => 'addFlash',
+                'priority' => -2000,
+            ],
+            ['create', 'update', 'delete'],
+            ['error', 'post']
+        );
     }
 }

@@ -37,15 +37,27 @@ class RegisterGenericDomainListenerPassTest extends \PHPUnit_Framework_TestCase
     private $event;
 
     /**
+     * @var string[]
+     */
+    private $actions;
+
+    /**
+     * @var string[]
+     */
+    private $prefixes;
+
+    /**
      * {@inheritdoc}
      */
     protected function setUp()
     {
         $this->listener = 'my.listener';
         $this->event = ['method' => 'myMethod'];
+        $this->actions = ['create', 'update', 'delete'];
+        $this->prefixes = ['error', 'post'];
 
         $this->compiler = $this->getMockBuilder(AbstractRegisterGenericDomainListenerPass::class)
-            ->setConstructorArgs([$this->listener, $this->event])
+            ->setConstructorArgs([$this->listener, $this->event, $this->actions, $this->prefixes])
             ->getMockForAbstractClass();
     }
 
@@ -74,8 +86,8 @@ class RegisterGenericDomainListenerPassTest extends \PHPUnit_Framework_TestCase
 
         $index = 0;
 
-        foreach (['create', 'update', 'delete'] as $action) {
-            foreach (['error', 'post'] as $prefix) {
+        foreach ($this->actions as $action) {
+            foreach ($this->prefixes as $prefix) {
                 $listener
                     ->expects($this->at($index++))
                     ->method('addTag')
