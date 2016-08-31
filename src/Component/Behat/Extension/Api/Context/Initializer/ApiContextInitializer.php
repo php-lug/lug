@@ -18,12 +18,19 @@ use Http\Discovery\HttpClientDiscovery;
 use Http\Discovery\MessageFactoryDiscovery;
 use Http\Message\MessageFactory;
 use Lug\Component\Behat\Extension\Api\Context\ApiContextInterface;
+use Symfony\Component\Config\FileLocator;
+use Symfony\Component\Config\FileLocatorInterface;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
 class ApiContextInitializer implements ContextInitializer
 {
+    /**
+     * @var string
+     */
+    private $baseUrl;
+
     /**
      * @var HttpClient
      */
@@ -35,18 +42,20 @@ class ApiContextInitializer implements ContextInitializer
     private $messageFactory;
 
     /**
-     * @var string
+     * @var FileLocatorInterface
      */
-    private $baseUrl;
+    private $fileLocator;
 
     /**
-     * @param string $baseUrl
+     * @param string   $baseUrl
+     * @param string[] $filePaths
      */
-    public function __construct($baseUrl)
+    public function __construct($baseUrl, array $filePaths)
     {
+        $this->baseUrl = $baseUrl;
         $this->client = HttpClientDiscovery::find();
         $this->messageFactory = MessageFactoryDiscovery::find();
-        $this->baseUrl = $baseUrl;
+        $this->fileLocator = new FileLocator($filePaths);
     }
 
     /**
@@ -58,8 +67,9 @@ class ApiContextInitializer implements ContextInitializer
             return;
         }
 
+        $context->setBaseUrl($this->baseUrl);
         $context->setClient($this->client);
         $context->setRequestFactory($this->messageFactory);
-        $context->setBaseUrl($this->baseUrl);
+        $context->setFileLocator($this->fileLocator);
     }
 }

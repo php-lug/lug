@@ -43,6 +43,9 @@ class ApiExtension implements Extension
                     ->scalarNode('base_url')
                         ->defaultValue('http://localhost')
                     ->end()
+                    ->arrayNode('file_paths')
+                        ->prototype('scalar')->end()
+                    ->end()
                 ->end()
             ->end();
     }
@@ -52,7 +55,7 @@ class ApiExtension implements Extension
      */
     public function load(ContainerBuilder $container, array $config)
     {
-        $definition = new Definition(ApiContextInitializer::class, [$config['base_url']]);
+        $definition = new Definition(ApiContextInitializer::class, [$config['base_url'], $config['file_paths']]);
         $definition->addTag(ContextExtension::INITIALIZER_TAG);
 
         $container->setDefinition('lug.api.context.initializer', $definition);

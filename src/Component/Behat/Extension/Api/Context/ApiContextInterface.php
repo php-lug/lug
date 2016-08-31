@@ -14,6 +14,8 @@ namespace Lug\Component\Behat\Extension\Api\Context;
 use Behat\Behat\Context\Context;
 use Http\Client\HttpClient;
 use Http\Message\RequestFactory;
+use Http\Message\StreamFactory;
+use Symfony\Component\Config\FileLocatorInterface;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -29,6 +31,16 @@ interface ApiContextInterface extends Context
      * @param RequestFactory $requestFactory
      */
     public function setRequestFactory(RequestFactory $requestFactory);
+
+    /**
+     * @param StreamFactory $streamFactory
+     */
+    public function setStreamFactory(StreamFactory $streamFactory);
+
+    /**
+     * @param FileLocatorInterface $fileLocator
+     */
+    public function setFileLocator(FileLocatorInterface $fileLocator);
 
     /**
      * @param string $baseUrl
