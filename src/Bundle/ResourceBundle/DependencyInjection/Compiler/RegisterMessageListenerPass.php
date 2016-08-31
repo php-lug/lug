@@ -18,9 +18,14 @@ class RegisterMessageListenerPass extends AbstractRegisterGenericDomainListenerP
 {
     public function __construct()
     {
-        parent::__construct('lug.resource.listener.message', [
-            'method'   => 'addMessage',
-            'priority' => -1000,
-        ]);
+        parent::__construct(
+            'lug.resource.listener.message',
+            [
+                'method'   => 'addMessage',
+                'priority' => -1000,
+            ],
+            ['create', 'update', 'delete'],
+            ['error', 'post']
+        );
     }
 }
