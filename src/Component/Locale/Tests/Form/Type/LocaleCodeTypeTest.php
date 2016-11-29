@@ -73,7 +73,7 @@ class LocaleCodeTypeTest extends \PHPUnit_Framework_TestCase
             ->submit($code);
 
         $this->assertSame($code, $form->getData());
-        $this->assertCount(563, $form->createView()->vars['choices']);
+        $this->assertGreaterThan(550, $form->createView()->vars['choices']);
     }
 
     /**
