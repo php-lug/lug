@@ -80,7 +80,7 @@ class ResourceType extends AbstractType
             ->setRequired('resource')
             ->setDefault('path', null)
             ->setAllowedTypes('resource', ['string', ResourceInterface::class])
-            ->setAllowedTypes('path', 'string')
+            ->setAllowedTypes('path', ['string', 'null'])
             ->setNormalizer('resource', function (Options $options, $resource) {
                 return is_string($resource) ? $this->resourceRegistry[$resource] : $resource;
             });
