@@ -79,9 +79,8 @@ class GridType extends AbstractType
                     return $options['grid']->hasOption('xml_http_request')
                         && $options['grid']->getOption('xml_http_request');
                 },
-                'method'            => 'GET',
-                'validation_groups' => false,
-                'csrf_protection'   => false,
+                'method'          => 'GET',
+                'csrf_protection' => false,
             ])
             ->setRequired('grid')
             ->setAllowedTypes('grid', GridInterface::class)
