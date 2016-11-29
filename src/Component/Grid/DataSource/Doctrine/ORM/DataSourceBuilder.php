@@ -166,9 +166,9 @@ class DataSourceBuilder implements DataSourceBuilderInterface
     /**
      * {@inheritdoc}
      */
-    public function getProperty($field)
+    public function getProperty($field, $root = null)
     {
-        return $this->repository->getProperty($field, $this->queryBuilder);
+        return $this->repository->getProperty($field, $root ?: $this->queryBuilder);
     }
 
     /**

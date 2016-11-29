@@ -78,7 +78,9 @@ class ResourceType extends AbstractType
 
         $resolver
             ->setRequired('resource')
+            ->setDefault('path', null)
             ->setAllowedTypes('resource', ['string', ResourceInterface::class])
+            ->setAllowedTypes('path', ['string', 'null'])
             ->setNormalizer('resource', function (Options $options, $resource) {
                 return is_string($resource) ? $this->resourceRegistry[$resource] : $resource;
             });
@@ -98,23 +100,31 @@ class ResourceType extends AbstractType
     protected function process($field, $data, array $options)
     {
         $builder = $options['builder'];
+        $alias = $builder->getAliases()[0];
+        $prefix = 'lug_'.str_replace('.', '', uniqid(null, true));
+        $paths = explode('.', isset($options['path']) ? $options['path'] : $field);
+        $field = array_pop($paths);
+
+        foreach ($paths as $index => $path) {
+            $builder->innerJoin($alias.'.'.$path, $alias = $prefix.$index);
+        }
 
         switch ($data['type']) {
             case self::TYPE_NOT_EQUALS:
                 return $builder->getExpressionBuilder()->neq(
-                    $builder->getProperty($field),
+                    $builder->getProperty($field, $alias),
                     $builder->createPlaceholder($field, $data['value'])
                 );
 
             case self::TYPE_EMPTY:
-                return $builder->getExpressionBuilder()->isNull($builder->getProperty($field));
+                return $builder->getExpressionBuilder()->isNull($builder->getProperty($field, $alias));
 
             case self::TYPE_NOT_EMPTY:
-                return $builder->getExpressionBuilder()->isNotNull($builder->getProperty($field));
+                return $builder->getExpressionBuilder()->isNotNull($builder->getProperty($field, $alias));
         }
 
         return $builder->getExpressionBuilder()->eq(
-            $builder->getProperty($field),
+            $builder->getProperty($field, $alias),
             $builder->createPlaceholder($field, $data['value'])
         );
     }

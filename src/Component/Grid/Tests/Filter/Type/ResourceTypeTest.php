@@ -60,6 +60,24 @@ class ResourceTypeTest extends \PHPUnit_Framework_TestCase
             'builder_condition' => AbstractType::CONDITION_AND,
             'fields_condition'  => AbstractType::CONDITION_OR,
             'fields'            => ['field'],
+            'path'              => null,
+            'filter'            => $this->createFilterMock(),
+            'resource'          => $this->createResourceMock(),
+        ], $resolver->resolve($options));
+    }
+
+    public function testConfigureOptionsWithPath()
+    {
+        $resolver = new OptionsResolver();
+        $resolver->setDefined('filter');
+
+        $this->type->configureOptions($resolver);
+
+        $this->assertSame($options = [
+            'builder_condition' => AbstractType::CONDITION_AND,
+            'fields_condition'  => AbstractType::CONDITION_OR,
+            'fields'            => ['field'],
+            'path'              => 'foo.bar',
             'filter'            => $this->createFilterMock(),
             'resource'          => $this->createResourceMock(),
         ], $resolver->resolve($options));
@@ -82,6 +100,7 @@ class ResourceTypeTest extends \PHPUnit_Framework_TestCase
             'builder_condition' => AbstractType::CONDITION_AND,
             'fields_condition'  => AbstractType::CONDITION_OR,
             'fields'            => ['field'],
+            'path'              => null,
             'filter'            => $this->createFilterMock(),
             'resource'          => $resourceName,
         ];
