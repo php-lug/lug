@@ -58,7 +58,7 @@ class GridApiContext implements Context
     {
         $data = $sortedData = $this->decodeByProperty($property, $format);
 
-        array_multisort($sortedData, $sort === 'ASC' ? SORT_ASC : SORT_DESC);
+        array_multisort($sortedData, $sort === 'ASC' ? SORT_ASC : SORT_DESC, SORT_STRING | SORT_FLAG_CASE);
 
         \PHPUnit_Framework_Assert::assertSame(
             $sortedData,

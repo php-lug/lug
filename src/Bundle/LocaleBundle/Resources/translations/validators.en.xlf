@@ -25,6 +25,11 @@ file that was distributed with this source code.
             </trans-unit>
 
             <trans-unit id="3">
+                <source>lug.locale.code.locale</source>
+                <target>The locale code is not valid.</target>
+            </trans-unit>
+
+            <trans-unit id="4">
                 <source>lug.locale.code.unique</source>
                 <target>The locale code already exists.</target>
             </trans-unit>
