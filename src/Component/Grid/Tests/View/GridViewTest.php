@@ -60,10 +60,15 @@ class GridViewTest extends \PHPUnit_Framework_TestCase
 
     public function testDataSource()
     {
+        $this->grid
+            ->expects($this->exactly(2))
+            ->method('getOptions')
+            ->will($this->returnValue($options = ['foo' => 'bar']));
+
         $this->dataSourceBuilder
             ->expects($this->once())
             ->method('createDataSource')
-            ->with($this->identicalTo([]))
+            ->with($this->identicalTo($options))
             ->will($this->returnValue($dataSource = $this->createDataSourceMock()));
 
         $this->assertSame($dataSource, $this->view->getDataSource());
@@ -72,8 +77,16 @@ class GridViewTest extends \PHPUnit_Framework_TestCase
 
     public function testDataSourceWithOptions()
     {
-        $options = $sortedOptions = ['foo' => 'bar', 'baz' => 'bat'];
+        $gridOptions = ['foo' => 'bar'];
+        $userOptions = ['baz' => 'bat'];
+
+        $sortedOptions = array_merge($gridOptions, $userOptions);
         ksort($sortedOptions);
+
+        $this->grid
+            ->expects($this->exactly(2))
+            ->method('getOptions')
+            ->will($this->returnValue($gridOptions));
 
         $this->dataSourceBuilder
             ->expects($this->once())
@@ -81,7 +94,7 @@ class GridViewTest extends \PHPUnit_Framework_TestCase
             ->with($this->identicalTo($sortedOptions))
             ->will($this->returnValue($dataSource = $this->createDataSourceMock()));
 
-        $this->assertSame($dataSource, $this->view->getDataSource($options));
+        $this->assertSame($dataSource, $this->view->getDataSource($userOptions));
         $this->assertSame($dataSource, $this->view->getDataSource($sortedOptions));
     }
 
