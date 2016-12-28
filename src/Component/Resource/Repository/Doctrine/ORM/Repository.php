@@ -50,8 +50,8 @@ class Repository extends EntityRepository implements RepositoryInterface
     {
         return new Pagerfanta(new DoctrineORMAdapter(
             $this->buildQueryBuilder($criteria, $orderBy, true),
-            false,
-            false
+            true,
+            true
         ));
     }
 

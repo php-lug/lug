@@ -120,7 +120,7 @@ class XmlHttpRequestExtensionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
+     * @expectedException \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
      */
     public function testInvalidXmlHttpRequest()
     {
@@ -128,7 +128,7 @@ class XmlHttpRequestExtensionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
+     * @expectedException \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
      */
     public function testInvalidXmlHttpRequestTrigger()
     {

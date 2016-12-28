@@ -14,6 +14,7 @@ namespace Lug\Bundle\GridBundle\Form\EventSubscriber\Filter;
 use Lug\Component\Grid\Filter\Type\ResourceType;
 use Lug\Component\Registry\Model\RegistryInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
@@ -69,19 +70,25 @@ class ResourceFilterSubscriber implements EventSubscriberInterface
      */
     private function buildForm(FormInterface $form, $data)
     {
+        $filter = $form->getConfig()->getOption('filter');
+
+        if ($filter->hasOption('form')) {
+            $resourceForm = $filter->getOption('form');
+        } else {
+            $resource = $filter->hasOption('resource') ? $filter->getOption('resource') : $filter->getName();
+            $resourceForm = $this->resourceRegistry[$resource]->getChoiceForm();
+        }
+
         $form->remove('value');
 
         if ($data === null || in_array($data, ResourceType::getSimpleTypes(), true)) {
-            $filter = $form->getConfig()->getOption('filter');
-
-            if ($filter->hasOption('form')) {
-                $resourceForm = $filter->getOption('form');
-            } else {
-                $resource = $filter->hasOption('resource') ? $filter->getOption('resource') : $filter->getName();
-                $resourceForm = $this->resourceRegistry[$resource]->getChoiceForm();
-            }
-
             $form->add('value', $resourceForm);
+        } elseif (in_array($data, ResourceType::getCompoundTypes(), true)) {
+            $form->add('value', CollectionType::class, [
+                'entry_type'   => $resourceForm,
+                'allow_add'    => true,
+                'allow_delete' => true,
+            ]);
         }
     }
 }
