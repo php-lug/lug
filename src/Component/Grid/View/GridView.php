@@ -58,6 +58,10 @@ class GridView implements GridViewInterface
      */
     public function getDataSource(array $options = [])
     {
+        if ($this->definition !== null) {
+            $options = array_merge($this->definition->getOptions(), $options);
+        }
+
         ksort($options);
 
         return isset($this->cache[$hash = sha1(json_encode($options))])
