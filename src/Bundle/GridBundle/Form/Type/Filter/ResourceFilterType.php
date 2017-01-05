@@ -40,12 +40,16 @@ class ResourceFilterType extends AbstractFilterType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $collection = $options['filter']->hasOption('collection')
+            ? $options['filter']->getOption('collection')
+            : false;
+
         $builder
             ->add($builder->create('type', ChoiceType::class, [
                 'choices' => array_combine(
                     array_map(function ($choice) use ($options) {
                         return $options['label_prefix'].'.type.'.$choice;
-                    }, $choices = ResourceType::getTypes()),
+                    }, $choices = ResourceType::getTypes($collection)),
                     $choices
                 ),
                 'choices_as_values'        => true,

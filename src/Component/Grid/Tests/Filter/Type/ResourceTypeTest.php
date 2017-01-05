@@ -60,6 +60,7 @@ class ResourceTypeTest extends \PHPUnit_Framework_TestCase
             'builder_condition' => AbstractType::CONDITION_AND,
             'fields_condition'  => AbstractType::CONDITION_OR,
             'fields'            => ['field'],
+            'collection'        => false,
             'path'              => null,
             'filter'            => $this->createFilterMock(),
             'resource'          => $this->createResourceMock(),
@@ -77,6 +78,7 @@ class ResourceTypeTest extends \PHPUnit_Framework_TestCase
             'builder_condition' => AbstractType::CONDITION_AND,
             'fields_condition'  => AbstractType::CONDITION_OR,
             'fields'            => ['field'],
+            'collection'        => true,
             'path'              => 'foo.bar',
             'filter'            => $this->createFilterMock(),
             'resource'          => $this->createResourceMock(),
@@ -100,12 +102,76 @@ class ResourceTypeTest extends \PHPUnit_Framework_TestCase
             'builder_condition' => AbstractType::CONDITION_AND,
             'fields_condition'  => AbstractType::CONDITION_OR,
             'fields'            => ['field'],
+            'collection'        => false,
             'path'              => null,
             'filter'            => $this->createFilterMock(),
             'resource'          => $resourceName,
         ];
 
         $this->assertSame(array_merge($options, ['resource' => $resource]), $resolver->resolve($options));
+    }
+
+    /**
+     * @dataProvider compoundFilterProvider
+     */
+    public function testCompoundFilter($type, $method)
+    {
+        $resource = $this->createResourceMock();
+        $resource
+            ->expects($this->once())
+            ->method('getIdPropertyPath')
+            ->will($this->returnValue($idPropertyPath = 'id'));
+
+        $builder = $this->createDataSourceBuilderMock();
+        $builder
+            ->expects($this->exactly(2))
+            ->method('getExpressionBuilder')
+            ->will($this->returnValue($expressionBuilder = $this->createExpressionBuilderMock()));
+
+        $builder
+            ->expects($this->once())
+            ->method('getProperty')
+            ->with($this->identicalTo($field = $idPropertyPath))
+            ->will($this->returnValue($property = 'property'));
+
+        $builder
+            ->expects($this->once())
+            ->method('createPlaceholder')
+            ->with(
+                $this->identicalTo($field),
+                $this->identicalTo($data = [new \stdClass()])
+            )
+            ->will($this->returnValue($placeholder = 'placeholder'));
+
+        $expressionBuilder
+            ->expects($this->once())
+            ->method($method)
+            ->with(
+                $this->identicalTo($property),
+                $this->identicalTo($placeholder)
+            )
+            ->will($this->returnValue($expression = 'expression'));
+
+        $expressionBuilder
+            ->expects($this->once())
+            ->method('orX')
+            ->with($this->identicalTo([$expression]))
+            ->will($this->returnValue($expression));
+
+        $builder
+            ->expects($this->once())
+            ->method('andWhere')
+            ->with($this->identicalTo($expression));
+
+        $this->type->filter(['type' => $type, 'value' => $data], [
+            'resource'          => $resource,
+            'builder'           => $builder,
+            'builder_condition' => AbstractType::CONDITION_AND,
+            'fields_condition'  => AbstractType::CONDITION_OR,
+            'filter'            => $this->createFilterMock(),
+            'fields'            => [$field],
+            'collection'        => true,
+        ]);
     }
 
     /**
@@ -262,6 +328,24 @@ class ResourceTypeTest extends \PHPUnit_Framework_TestCase
         ], ResourceType::getTypes());
     }
 
+    public function testCollectionTypes()
+    {
+        $this->assertSame([
+            ResourceType::TYPE_IN,
+            ResourceType::TYPE_NOT_IN,
+            ResourceType::TYPE_EMPTY,
+            ResourceType::TYPE_NOT_EMPTY,
+        ], ResourceType::getTypes(true));
+    }
+
+    public function testCompoundTypes()
+    {
+        $this->assertSame([
+            ResourceType::TYPE_IN,
+            ResourceType::TYPE_NOT_IN,
+        ], ResourceType::getCompoundTypes());
+    }
+
     public function testSimpleTypes()
     {
         $this->assertSame([
@@ -276,6 +360,17 @@ class ResourceTypeTest extends \PHPUnit_Framework_TestCase
             ResourceType::TYPE_EMPTY,
             ResourceType::TYPE_NOT_EMPTY,
         ], ResourceType::getEmptyTypes());
+    }
+
+    /**
+     * @return mixed[]
+     */
+    public function compoundFilterProvider()
+    {
+        return [
+            'in'     => [ResourceType::TYPE_IN, 'in'],
+            'not_in' => [ResourceType::TYPE_NOT_IN, 'notIn'],
+        ];
     }
 
     /**

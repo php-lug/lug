@@ -23,6 +23,8 @@ class ResourceType extends AbstractType
 {
     const TYPE_EQUALS = 'equals';
     const TYPE_NOT_EQUALS = 'not_equals';
+    const TYPE_IN = 'in';
+    const TYPE_NOT_IN = 'not_in';
     const TYPE_EMPTY = 'empty';
     const TYPE_NOT_EMPTY = 'not_empty';
 
@@ -40,11 +42,24 @@ class ResourceType extends AbstractType
     }
 
     /**
+     * @param bool $collection
+     *
      * @return string[]
      */
-    public static function getTypes()
+    public static function getTypes($collection = false)
     {
-        return array_merge(self::getSimpleTypes(), self::getEmptyTypes());
+        return array_merge($collection ? self::getCompoundTypes() : self::getSimpleTypes(), self::getEmptyTypes());
+    }
+
+    /**
+     * @return string[]
+     */
+    public static function getCompoundTypes()
+    {
+        return [
+            self::TYPE_IN,
+            self::TYPE_NOT_IN,
+        ];
     }
 
     /**
@@ -78,8 +93,12 @@ class ResourceType extends AbstractType
 
         $resolver
             ->setRequired('resource')
-            ->setDefault('path', null)
+            ->setDefaults([
+                'collection' => false,
+                'path'       => null,
+            ])
             ->setAllowedTypes('resource', ['string', ResourceInterface::class])
+            ->setAllowedTypes('collection', 'bool')
             ->setAllowedTypes('path', ['string', 'null'])
             ->setNormalizer('resource', function (Options $options, $resource) {
                 return is_string($resource) ? $this->resourceRegistry[$resource] : $resource;
@@ -102,7 +121,13 @@ class ResourceType extends AbstractType
         $builder = $options['builder'];
         $alias = $builder->getAliases()[0];
         $prefix = 'lug_'.str_replace('.', '', uniqid(null, true));
-        $paths = explode('.', isset($options['path']) ? $options['path'] : $field);
+        $path = isset($options['path']) ? $options['path'] : $field;
+
+        if (isset($options['collection']) && $options['collection']) {
+            $path .= '.'.$options['resource']->getIdPropertyPath();
+        }
+
+        $paths = explode('.', $path);
         $field = array_pop($paths);
 
         foreach ($paths as $index => $path) {
@@ -110,17 +135,29 @@ class ResourceType extends AbstractType
         }
 
         switch ($data['type']) {
-            case self::TYPE_NOT_EQUALS:
-                return $builder->getExpressionBuilder()->neq(
-                    $builder->getProperty($field, $alias),
-                    $builder->createPlaceholder($field, $data['value'])
-                );
-
             case self::TYPE_EMPTY:
                 return $builder->getExpressionBuilder()->isNull($builder->getProperty($field, $alias));
 
             case self::TYPE_NOT_EMPTY:
                 return $builder->getExpressionBuilder()->isNotNull($builder->getProperty($field, $alias));
+
+            case self::TYPE_IN:
+                return $builder->getExpressionBuilder()->in(
+                    $builder->getProperty($field, $alias),
+                    $builder->createPlaceholder($field, $data['value'])
+                );
+
+            case self::TYPE_NOT_IN:
+                return $builder->getExpressionBuilder()->notIn(
+                    $builder->getProperty($field, $alias),
+                    $builder->createPlaceholder($field, $data['value'])
+                );
+
+            case self::TYPE_NOT_EQUALS:
+                return $builder->getExpressionBuilder()->neq(
+                    $builder->getProperty($field, $alias),
+                    $builder->createPlaceholder($field, $data['value'])
+                );
         }
 
         return $builder->getExpressionBuilder()->eq(
@@ -137,10 +174,18 @@ class ResourceType extends AbstractType
         return parent::validate($data, $options)
             && is_array($data)
             && isset($data['type'])
-            && ((
-                in_array($data['type'], self::getSimpleTypes(), true)
-                && isset($data['value'])
-                && is_a($data['value'], $options['resource']->getModel())
-            ) || in_array($data['type'], self::getEmptyTypes(), true));
+            && (
+                (
+                    in_array($data['type'], self::getCompoundTypes(), true)
+                    && isset($data['value'])
+                    && is_array($data['value'])
+                )
+                || (
+                    in_array($data['type'], self::getSimpleTypes(), true)
+                    && isset($data['value'])
+                    && is_a($data['value'], $options['resource']->getModel())
+                )
+                || in_array($data['type'], self::getEmptyTypes(), true)
+            );
     }
 }

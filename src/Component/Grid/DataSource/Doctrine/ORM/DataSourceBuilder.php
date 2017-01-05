@@ -204,8 +204,8 @@ class DataSourceBuilder implements DataSourceBuilderInterface
 
         $dataSource = new PagerfantaDataSource(new DoctrineORMAdapter(
             $queryBuilder,
-            isset($options['fetch_join_collection']) ? $options['fetch_join_collection'] : false,
-            isset($options['use_output_walkers']) ? $options['use_output_walkers'] : false
+            isset($options['fetch_join_collection']) ? $options['fetch_join_collection'] : true,
+            isset($options['use_output_walkers']) ? $options['use_output_walkers'] : true
         ));
 
         $dataSource->setMaxPerPage($this->limit);
