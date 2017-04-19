@@ -206,10 +206,7 @@ class Controller extends FOSRestController implements ControllerInterface
             ));
         }
 
-        if ($result instanceof Pagerfanta) {
-            $result->setCurrentPage($this->getParameterResolver()->resolveCurrentPage());
-            $result->setMaxPerPage($this->getParameterResolver()->resolveMaxPerPage());
-        } elseif (!$this->getSecurityChecker()->isGranted($action, $result)) {
+        if (!$result instanceof Pagerfanta && !$this->getSecurityChecker()->isGranted($action, $result)) {
             throw $this->createAccessDeniedException();
         }
 
